@@ -88,11 +88,11 @@ AutoHotkey project that automates the grindy parts of DisgaeaRPG. The program do
     * Clears dark gate stages as many times as count
     * Uses DarkGateHL battle context
     * Will auto-fill AP
-* Start DoDarkGateHL
+* Start DoDarkGateMatsHuman
     * Clears dark gate stages as many times as count
     * Uses DarkGateMats battle context
     * Will auto-fill AP
-* Start DoDarkGateHL
+* Start DoDarkGateMatsMonster
     * Clears dark gate stages as many times as count
     * Uses DarkGateMats battle context
     * Will auto-fill AP
