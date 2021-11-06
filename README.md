@@ -1,5 +1,5 @@
 # autodisgaeaRPG
-AutoHotkey project that automates the grindy parts of DisgaeaRPG. I am open to publicizing the AutoHotkey code but don't see the need at the moment.
+AutoHotkey project that automates the grindy parts of DisgaeaRPG. The program does not modify DisgaeaRPG app. It simply scans BlueStacks instances for patterns and clicks or swipes accordingly. I am open to publicizing the AutoHotkey code but don't see the need at the moment.
 
 ## Setup [(video)](https://youtube.com)
 
@@ -30,3 +30,17 @@ AutoHotkey project that automates the grindy parts of DisgaeaRPG. I am open to p
     * Companions => Specify 1 or more possible companions to target (program will select the first one it finds if multiple selected).
     * AllyTarget => Specify ally that gets target upon the start of the battle.
     * Skills => If Auto Checkbox is not checked, the selected skills will be used. If multiple skills are present, it will select the first skill it finds in order the skills are presented. Modify settings.json battleOptions.skillOrder section if you would like to change the order the skills are scanned. Restart the program after modification.
+
+## General [(video)](https://youtube.com)
+
+* AutoClear
+    * Starting point is wherever there is a NEW icon
+    * Automatically clear story or event based on NEW icon
+    * Uses current selected battle context
+    * Does not auto-refil AP
+* AutoShop
+    * Main starting point is stronghold
+    * Simply buys daily items
+* DarkAssembly
+    * Starting point is a dark assembly
+    * Will keep using bribes until viability is almost certain
