@@ -37,7 +37,7 @@ AutoHotkey project that automates the grindy parts of DisgaeaRPG. The program do
     * Starting point is wherever there is a NEW icon
     * Automatically clear story or event based on NEW icon
     * Uses current selected battle context
-    * Does not auto-refil AP
+    * Does not auto-refill AP
 * AutoShop
     * Main starting point is stronghold
     * Simply buys daily items
