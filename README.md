@@ -82,3 +82,17 @@ AutoHotkey project that automates the grindy parts of DisgaeaRPG. The program do
 * ClearSingle
     * Clear item world level using specified bribe. Good for securing innocents  
     
+## DarkGate [(video)](https://youtube.com)
+
+* Start DoDarkGateHL
+    * Clears dark gate stages as many times as count
+    * Uses DarkGateHL battle context
+    * Will auto-fill AP
+* Start DoDarkGateHL
+    * Clears dark gate stages as many times as count
+    * Uses DarkGateMats battle context
+    * Will auto-fill AP
+* Start DoDarkGateHL
+    * Clears dark gate stages as many times as count
+    * Uses DarkGateMats battle context
+    * Will auto-fill AP
