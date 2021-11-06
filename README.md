@@ -44,3 +44,21 @@ AutoHotkey project that automates the grindy parts of DisgaeaRPG. The program do
 * DarkAssembly
     * Starting point is a dark assembly
     * Will keep using bribes until viability is almost certain
+
+## Event [(video)](https://youtube.com)
+
+* Select Story Banner
+    * Specifies target story banner for story based loops
+* Select Raid Banner
+    * Specifies target raid banner for raid loop
+* Start EventStoryFarm
+    * Farms specified stage as many times as the count
+    * Uses event battle context
+    * Will auto-fill AP
+* Start EventStory500Pct
+    * Clears daily 500Pct stages
+    * Uses event battle context
+    * Will auto-fill AP
+* Start EventRaidLoop
+    * Keeps clearing raids when available
+    * Uses raid battle context
