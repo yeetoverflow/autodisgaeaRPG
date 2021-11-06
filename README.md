@@ -20,7 +20,7 @@ AutoHotkey project that automates the grindy parts of DisgaeaRPG. The program do
 * Open BlueStacks DisgaeaRPG instance and autoDisgaeaRPG.exe. You should see ATTACHED at the bottom right of the program. If you see DETACHED, either enter a similar target window name to program or rename DisgaeaRPG instance appropriately then click Apply for target window.
 * Click Resize at the bottom left of the program. If you see the BlueStack instance window get change size, then you should be good to go.
 
-## Battle [(video)](https://youtube.com)
+## Battle [(video)](https://youtu.be/lxVgjwpZ8co)
 
 * This section dictates the behavior during a battle for a given context.
     * Reset Selected Context => Change the current context back to default values.
@@ -31,7 +31,7 @@ AutoHotkey project that automates the grindy parts of DisgaeaRPG. The program do
     * AllyTarget => Specify ally that gets target upon the start of the battle.
     * Skills => If Auto Checkbox is not checked, the selected skills will be used. If multiple skills are present, it will select the first skill it finds in order the skills are presented. Modify settings.json battleOptions.skillOrder section if you would like to change the order the skills are scanned. Restart the program after modification.
 
-## General [(video)](https://youtube.com)
+## General [(video)](https://youtu.be/rIw1qLvlyK8)
 
 * AutoClear
     * Starting point is wherever there is a NEW icon
@@ -45,33 +45,38 @@ AutoHotkey project that automates the grindy parts of DisgaeaRPG. The program do
     * Starting point is a dark assembly
     * Will keep using bribes until viability is almost certain
 
-## Event [(video)](https://youtube.com)
+## Event [(video)](https://youtu.be/qsnN6vmTNRw)
 
 * Select Story Banner
     * Specifies target story banner for story based loops
 * Select Raid Banner
     * Specifies target raid banner for raid loop
 * Start EventStoryFarm
+    * Main starting point is stronghold 
     * Farms specified stage as many times as the count
     * Uses event battle context
     * Will auto-fill AP
 * Start EventStory500Pct
+    * Main starting point is stronghold 
     * Clears daily 500Pct stages
     * Uses event battle context
     * Will auto-fill AP
 * Start EventRaidLoop
+    * Main starting point is stronghold 
     * Keeps clearing raids when available
     * Uses raid battle context
 
-## ItemWorld [(video)](https://youtube.com)
+## ItemWorld [(video)](https://youtu.be/P6Qh4f33LTk)
 
 * Start DoItemWorldLoop
+    * Main starting point is stronghold 
     * Will keep clearing item world as long as it can until defeated or manually stopped 
     * Will prioritize non rare/legendary items
     * Uses item world battle context
     * Will reset until an item is dropped on level 10, 20 and 30
     * Select either armor or weapon items
 * Start DoItemWorldFarmLoop
+    * Main starting point is stronghold 
     * Will keep clearing item world as long as it can until defeated or manually stopped 
     * Will only select legendary 
     * Uses item world battle context
@@ -82,17 +87,20 @@ AutoHotkey project that automates the grindy parts of DisgaeaRPG. The program do
 * ClearSingle
     * Clear item world level using specified bribe. Good for securing innocents  
     
-## DarkGate [(video)](https://youtube.com)
+## DarkGate [(video)](https://youtu.be/ARX7VNLxIj4)
 
 * Start DoDarkGateHL
+    * Main starting point is stronghold 
     * Clears dark gate stages as many times as count
     * Uses DarkGateHL battle context
     * Will auto-fill AP
 * Start DoDarkGateMatsHuman
+    * Main starting point is stronghold 
     * Clears dark gate stages as many times as count
     * Uses DarkGateMats battle context
     * Will auto-fill AP
 * Start DoDarkGateMatsMonster
+    * Main starting point is stronghold 
     * Clears dark gate stages as many times as count
     * Uses DarkGateMats battle context
     * Will auto-fill AP
