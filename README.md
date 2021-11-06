@@ -11,7 +11,6 @@ AutoHotkey project that automates the grindy parts of DisgaeaRPG. I am open to p
     * (Recommended) Memory allocation => (4 GB)
     * (Recommended) Frame rate: 60
   * Display
-    * (Recommended) Frame rate: 60
     * (Required) Display resolution => (Landscape) 1920x1080 - (*in hindsight I should have developed this in Portrait mode)
     * (Requred) Pixel density ==> 240 DPI (Medium)
   * Advanced
