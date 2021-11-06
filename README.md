@@ -62,3 +62,23 @@ AutoHotkey project that automates the grindy parts of DisgaeaRPG. The program do
 * Start EventRaidLoop
     * Keeps clearing raids when available
     * Uses raid battle context
+
+## ItemWorld [(video)](https://youtube.com)
+
+* Start DoItemWorldLoop
+    * Will keep clearing item world as long as it can until defeated or manually stopped 
+    * Will prioritize non rare/legendary items
+    * Uses item world battle context
+    * Will reset until an item is dropped on level 10, 20 and 30
+    * Select either armor or weapon items
+* Start DoItemWorldFarmLoop
+    * Will keep clearing item world as long as it can until defeated or manually stopped 
+    * Will only select legendary 
+    * Uses item world battle context
+    * Will reset until a legandary item dropped on level 100
+    * Select either armor or weapon items
+* FarmSingle
+    * Within a battle, keep resetting until target item rarity is found
+* ClearSingle
+    * Clear item world level using specified bribe. Good for securing innocents  
+    
