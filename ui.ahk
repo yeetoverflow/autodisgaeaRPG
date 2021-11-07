@@ -159,7 +159,7 @@ ResetUI() {
     Gui Add, Text, xs+10 y+10, Bluestacks Installation path:
     Gui Add, Edit, x+5 cBlack vInstallationPath w200, % settings.blueStacks.installationPath
     Gui Add, Button, x+10 gApplyInstallationPath, Apply
-    Gui Add, Text, xs+10 y+10, override adb port:
+    Gui Add, Text, xs+10, Override ADB port:
     Gui Add, Edit, x+5 cBlack vPortOverride w100, % settings.blueStacks.portOverride
     Gui Add, Button, x+10 gApplyPortOverride, Apply
 
