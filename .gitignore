@@ -1,0 +1,4 @@
+logs/*
+settings.json
+exe/logs/*
+exe/settings.json

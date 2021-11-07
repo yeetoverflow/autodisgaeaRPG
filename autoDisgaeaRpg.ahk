@@ -64,9 +64,9 @@ else {
 
     ResetUI()
 
-    WinSetTitle, % "ahk_id " . guiHwnd,, % settings.blueStacksIdentifier
+    WinSetTitle, % "ahk_id " . guiHwnd,, % settings.blueStacks.identifier
     ;WinSetTitle, % "ahk_id " . guiHwnd,, % guiHwnd
-    Menu, Tray, Tip, % settings.blueStacksIdentifier
+    Menu, Tray, Tip, % settings.blueStacks.identifier
 }
 
 Return

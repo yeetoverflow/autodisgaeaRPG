@@ -194,7 +194,10 @@ patterns.sort.descending.label := "|<>0x272728@0.77$111.zU00000000000QQ0006DU000
 patterns.sort.descending.checked := "|<>0x111111@0.77$140.00000000000000000000Dzzk00000000000000000003zzs00000000000000000001zzw0000000000000A000000zzyDs000000000003700000Dzz33U00000000000lk00003zzUkA00000000000A000000zzkA3U00000000003000000Dzw30Q0000000000Qk0000E3ry0k71w3s7sDUzkTwQTs7s0sz0A1klVW326ACA67776360ADk70QMMk1U31X1X1lVVlVU21s3k767C0s0kMkMkAMMAMM0UA1w1lzlwC0DyA6A3663660A30z0MM07XU3031X0lVUknU3U0TkC600Qs0k0kMkQMMADU0w0Dw71U0360C0A6C7763200DU3z7UA8lkklV31VnllUkz03s1zw01w7k7sDUkMDA8MADw0z0zk00000000000000002707sTw00000000000000001Us1y7z00000000000000000MA0Dnzk00000000000000006601zzw000000000000000000007zzU"
 
 defaults := {}
-defaults.blueStacksIdentifier := "DisgaeaRPG"
+defaults.blueStacks := {}
+defaults.blueStacks.identifier := "DisgaeaRPG"
+defaults.blueStacks.installationPath := "C:\Program Files\BlueStacks_nxt"
+defaults.blueStacks.portOverride := ""
 defaults.battleOptions := {}
 defaults.battleOptions.default := { allyTarget : "None", auto : 1, targetEnemyMiddle : 0, selectStandby : 0
     , companions : ["50Pct"], skills : [], singleTargetSkills : [] }
@@ -247,7 +250,8 @@ settings := InitSettings()
 InitBlueStacks()
 {
     global
-    WinGet, hwnd, ID, % settings.blueStacksIdentifier . " ahk_exe HD-Player.exe"
+    test := settings.blueStacks.identifier
+    WinGet, hwnd, ID, % settings.blueStacks.identifier . " ahk_exe HD-Player.exe"
     WinActivate, % ahk_id hwnd
     FindText().BindWindow(hwnd,3)>
     Resize()
@@ -438,7 +442,7 @@ InitSettings()
 		settings := new JsonFile(filePath) ;- Create instance.
 
         settings.battleOptions := {}
-        settings.blueStacksIdentifier := defaults.blueStacksIdentifier
+        settings.blueStacks := defaults.blueStacks
         settings.battleOptions.event := defaults.battleOptions.event
         settings.battleOptions.default := defaults.battleOptions.default
         settings.battleOptions.itemWorld := defaults.battleOptions.itemWorld
@@ -512,10 +516,18 @@ SwipeUp()
 
 Swipe(startX, startY, endX, endY)
 {
-    global blueStacksInstanceNumber
+    global blueStacksInstanceNumber, settings
 
-    ;https://developer.android.com/studio/command-line/adb
-    run, hd-adb.exe -s 127.0.0.1:%blueStacksInstanceNumber% shell input swipe %startX% %startY% %endX% %endY%, C:\Program Files\BlueStacks_nxt, Hide
+
+    if (settings.blueStacks.portOverride) {
+        port := settings.blueStacks.portOverride
+        run, hd-adb.exe -s 127.0.0.1:%port% shell input swipe %startX% %startY% %endX% %endY%, % settings.blueStacks.installationPath, Hide
+    }
+    else {
+        path := settings.blueStacks.intallationPath
+        ;https://developer.android.com/studio/command-line/adb
+        run, hd-adb.exe -s 127.0.0.1:%blueStacksInstanceNumber% shell input swipe %startX% %startY% %endX% %endY%, % settings.blueStacks.installationPath, Hide
+    }
     ;run, % "hd-adb.exe -s localhost:"  . blueStacksInstanceNumber . " shell input swipe "  . startX . " " . startY . " " . endX . " " . endY, C:\Program Files\BlueStacks_nxt, Hide
 }
 

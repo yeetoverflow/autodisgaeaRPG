@@ -150,12 +150,18 @@ ResetUI() {
 
     Gui Add, Text, 0x10 xs w400 h10
     Gui Add, Text, xs+10 y+5, Target Window:
-    Gui Add, Edit, cBlack x+10 vTargetWindow w150, % settings.blueStacksIdentifier
+    Gui Add, Edit, cBlack x+10 vTargetWindow w150, % settings.blueStacks.identifier
     Gui Add, Button, x+10 gApplyTargetWindow, Apply
     Gui, Font, Bold
     Gui Add, Text, x+10 vAttached cRed, DETACHED
     Gui, Font,
     Gui, Font, cFFFFFF
+    Gui Add, Text, xs+10 y+10, Bluestacks Installation path:
+    Gui Add, Edit, x+5 cBlack vInstallationPath w200, % settings.blueStacks.installationPath
+    Gui Add, Button, x+10 gApplyInstallationPath, Apply
+    Gui Add, Text, xs+10 y+10, override adb port:
+    Gui Add, Edit, x+5 cBlack vPortOverride w100, % settings.blueStacks.portOverride
+    Gui Add, Button, x+10 gApplyPortOverride, Apply
 
     Gui Add, Button, xs+10 y+15 gResize, Resize
     Gui Add, Button, x+10 gScreenCap, ScreenCap
@@ -188,11 +194,27 @@ ApplyTargetWindow() {
     global
     Gui, Submit, NoHide
 
-    settings.blueStacksIdentifier := targetWindow
-    WinSetTitle, % "ahk_id " . guiHwnd,, % settings.blueStacksIdentifier
-    Menu, Tray, Tip, % settings.blueStacksIdentifier
+    settings.blueStacks.identifier := targetWindow
+    WinSetTitle, % "ahk_id " . guiHwnd,, % settings.blueStacks.identifier
+    Menu, Tray, Tip, % settings.blueStacks.identifier
     settings.save(true)
     InitBlueStacks()
+}
+
+ApplyInstallationPath() {
+    global settings, installationPath
+    Gui, Submit, NoHide
+
+    settings.blueStacks.installationPath := installationPath
+    settings.save(true)
+}
+
+ApplyPortOverride() {
+    global settings, portOverride
+    Gui, Submit, NoHide
+
+    settings.blueStacks.portOverride := portOverride
+    settings.save(true)
 }
 
 AddAllyTarget() {
@@ -728,14 +750,14 @@ HandleAction(action, mode) {
 
     if (action = "Start") {
         if (A_IsCompiled) {
-            Run, % "autoDisgaeaRpg.exe id=""" . settings.blueStacksIdentifier . """ mode=" . mode
+            Run, % "autoDisgaeaRpg.exe id=""" . settings.blueStacks.identifier . """ mode=" . mode
         }
         else {
-            Run, % "autoDisgaeaRpg.ahk id=""" . settings.blueStacksIdentifier . """ mode=" . mode
+            Run, % "autoDisgaeaRpg.ahk id=""" . settings.blueStacks.identifier . """ mode=" . mode
         }
     }
     else if (action = "Stop") {
-        hwnd := GetHwnd(settings.blueStacksIdentifier, mode)
+        hwnd := GetHwnd(settings.blueStacks.identifier, mode)
         WinClose, % "ahk_id " . hwnd
         WinWaitClose, % "ahk_id " . hwnd,,5
     }
