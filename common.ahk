@@ -264,9 +264,17 @@ InitBlueStacks()
         matchesInstanceNum := 0
     }
 
+
     ;https://developer.android.com/studio/command-line/adb
     blueStacksInstanceNumber := 5555 + matchesInstanceNum * 10
-    run, hd-adb.exe connect 127.0.0.1:%blueStacksInstanceNumber% , C:\Program Files\BlueStacks_nxt, Hide
+
+    if (settings.blueStacks.portOverride) {
+        port := settings.blueStacks.portOverride
+        run, hd-adb.exe connect 127.0.0.1:%port% , % settings.blueStacks.installationPath, Hide
+    }
+    else {
+        run, hd-adb.exe connect 127.0.0.1:%blueStacksInstanceNumber% , % settings.blueStacks.installationPath, Hide
+    }
 
     if (hwnd) {
         GuiControl, +cGreen, attached

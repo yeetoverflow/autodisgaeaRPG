@@ -214,6 +214,8 @@ ApplyPortOverride() {
     Gui, Submit, NoHide
 
     settings.blueStacks.portOverride := portOverride
+    run, hd-adb.exe connect 127.0.0.1:%portOverride% , % settings.blueStacks.installationPath, Hide
+
     settings.save(true)
 }
 

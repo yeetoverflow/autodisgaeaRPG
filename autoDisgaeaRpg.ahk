@@ -303,7 +303,7 @@ Test() {
     global patterns, settings, hwndMainGui, guiHwnd
     SetStatus(A_ThisFunc)
 
-    Resize(true)
+    ;Resize(true)
     ;https://docs.microsoft.com/en-us/windows/win32/wmisdk/like-operator
     ; query := "Select * from Win32_Process where CommandLine like '%" . StrReplace(A_ScriptFullPath, "\", "\\") . "%'" . " and not CommandLine like '%code%'"
     ; queryEnum := ComObjGet("winmgmts:").ExecQuery(query)._NewEnum()
