@@ -10,7 +10,7 @@ ResetUI() {
     ;Gui, +HwndHwndMainGui
     statusBarText := "||"
     Gui Add, StatusBar,, % statusBarText
-    Gui Add, Tab3, section vTopTabs, Main|Handlers|Patterns
+    Gui Add, Tab3, section vTopTabs, Main|Settings|Handlers|Patterns
     GuiControl, choose, TopTabs, 1
 
     Gui Tab, Main
@@ -19,7 +19,11 @@ ResetUI() {
     Gui Add, Text, x+10 xs+10 ys+25, Battle
     Gui, Font,
     Gui, Font, cFFFFFF
-    Gui Add, Text,, BattleContext
+    Gui, Font, Bold
+    Gui Add, Text, x+250 vAttached cRed, DETACHED
+    Gui, Font,
+    Gui, Font, cFFFFFF
+    Gui Add, Text, xs+10 y+5, BattleContext
     Gui Add, Button, cRed x+10 gResetCurrentBattleContext, Reset Selected Context
     Gui Add, Radio, gBattleContextChanged vBattleContext xs+10 y+5 checked, Default
     Gui Add, Radio, gBattleContextChanged x+10, Event
@@ -147,19 +151,20 @@ ResetUI() {
     Gui, Font, cFFFFFF
 
     ;Gui Add, Button, xs+10 y+5 gDoDarkGate, HL/Mats
+    Gui Tab, Settings
 
-    Gui Add, Text, 0x10 xs w400 h10
-    Gui Add, Text, xs+10 y+5, Target Window:
+    ;Gui Add, Text, 0x10  w400 h10
+    Gui Add, Text, xs+10 ys+25, Target Window:
     Gui Add, Edit, cBlack x+10 vTargetWindow w150, % settings.blueStacks.identifier
     Gui Add, Button, x+10 gApplyTargetWindow, Apply
     Gui, Font, Bold
-    Gui Add, Text, x+10 vAttached cRed, DETACHED
+    Gui Add, Text, x+10 vAttached2 cRed, DETACHED
     Gui, Font,
     Gui, Font, cFFFFFF
-    Gui Add, Text, xs+10 y+10, Bluestacks Installation path:
+    Gui Add, Text, xs+10 y+15, Bluestacks Installation path:
     Gui Add, Edit, x+5 cBlack vInstallationPath w200, % settings.blueStacks.installationPath
     Gui Add, Button, x+10 gApplyInstallationPath, Apply
-    Gui Add, Text, xs+10, Override ADB port:
+    Gui Add, Text, xs+10 y+5, Override ADB port:
     Gui Add, Edit, x+5 cBlack vPortOverride w100, % settings.blueStacks.portOverride
     Gui Add, Button, x+10 gApplyPortOverride, Apply
 
@@ -170,24 +175,121 @@ ResetUI() {
     Gui Add, Link, x+170,<a href="https://github.com/yeetoverflow/autodisgaeaRPG">documentation</a>
 
     Gui Tab, Handlers
+    
     Gui Add, TreeView, h300 cBlack vHandlersTree
     Gui Add, Button, gTestHandler, Test
     TreeAdd(handlers, 0, { doChildrenPredicate : Func("PatternChildrenPredicate") })
 
-    Gui Tab, Patterns
-    Gui Add, TreeView, h300 cBlack vPatternsTree
-    Gui Add, Button, gTestPattern, Test
+    Gui, Tab, Patterns
+    Gui, Add, Text,, Filter:
+    Gui, Font, cBlack
+    Gui, Add, Edit, x+5 gFilterPatterns vPatternFilter w100
+    Gui Add, TreeView, xs+10 y+5 h300 cBlack gPatternsSelect vPatternsTree
+    Gui, Font, cBlack
+    Gui, Font, s3
+    Gui Add, Edit, w400 r20 vPatternsPreview
+    Gui, Font
+    Gui, Add, Button, gPickPatternColor, Pick Color
+    Gui, Add, Edit, x+5 w100 vPatternColorPick,
+    Gui, Add, Text, cWhite x+5, Variance: 
+    Gui Add, Edit, x+5 w30 cBlack vPatternColorVariance, 10
+    Gui, Add, Button, x+5 gApplyColorPattern, Apply
+    Gui, Add, Text, xs+10 y+5 cWhite, Gray Diff: 
+    Gui Add, Edit, x+5 w30 cBlack vPatternGrayDiff, 50
+    Gui, Add, Button, x+5 gApplyGrayPattern, Apply
+
+    Gui, Font, cFFFFFF
+    Gui Add, Button, xs+10 y+5 gTestPattern, Test
     Gui Add, Checkbox, x+10 vTestPatternMulti, Multi
+    Gui Add, Button, x+150 gSavePatterns, Save Changes
     Gui Add, Text, xs+10 y+10, FG Variance:
     Gui Add, Slider, w200 tickinterval5 tooltip vTestPatternFG
     Gui Add, Text, xs+10 y+10, BG Variance: 
     Gui Add, Slider, w200 tickinterval5 tooltip vTestPatternBG
-    TreeAdd(patterns, 0, { leafCallback : Func("InitPatterns")})
+    TreeAdd(patterns.Object(), 0, { leafCallback : Func("InitPatternsCallback")})
 
     Gui Show, w450
 
     guiHwnd := GetGuiHwnd()
     InitBlueStacks()
+}
+
+SavePatterns() {
+    global patterns
+    patterns.Save(true)
+}
+
+ApplyGrayPattern() {
+    Gui Submit, NoHide
+    global patterns, patternsTree, patternGrayDiff
+    pattern := GetPatternGrayDiff(patternGrayDiff)
+    ;MsgBox, % pattern
+
+    ascii := FindText().ASCII(pattern)
+    GuiControl,, patternsPreview, % Trim(ascii,"`n")
+
+    Gui Submit, NoHide
+    Gui TreeView, patternsTree
+    nodePath := GetNodePath()
+    segments := StrSplit(nodePath, ".")
+    target := patterns
+    
+    for k, v in segments {
+        lastParent := target
+        lastKey := v
+        target := target[v]
+    }
+
+    lastParent[lastKey] := pattern
+}
+
+ApplyColorPattern() {
+    Gui Submit, NoHide
+    global patterns, patternsTree, patternColorPick, patternColorVariance
+    pattern := GetPatternColor2Two(patternColorPick, 100-patternColorVariance)
+    ;MsgBox, % pattern
+
+    ascii := FindText().ASCII(pattern)
+    GuiControl,, patternsPreview, % Trim(ascii,"`n")
+
+    Gui Submit, NoHide
+    Gui TreeView, patternsTree
+    nodePath := GetNodePath()
+    segments := StrSplit(nodePath, ".")
+    target := patterns
+    
+    for k, v in segments {
+        lastParent := target
+        lastKey := v
+        target := target[v]
+    }
+
+    lastParent[lastKey] := pattern
+}
+
+PickPatternColor() {
+    color := GetPixelColor()
+    GuiControl,, patternColorPick, % color
+}
+
+FilterPatterns() {
+    global hwnd, patterns, patternsTree, patternFilter
+
+    Gui Submit, NoHide
+    Gui TreeView, patternsTree
+
+    ;root := TV_Add(patterns, 0, "expand")
+
+    tempRoot := {}
+    
+    TV_Delete()
+    for k, v in patterns.Object() {
+        if InStr(k, patternFilter) {
+            tempRoot[k] := v
+        }
+    }
+
+    TreeAdd(tempRoot)
 }
 
 ApplyTargetWindow() {

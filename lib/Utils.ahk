@@ -261,7 +261,6 @@ TreeAdd(node, parent := 0, opts := "", path := "") {
             Return
     }
 
-
     for k, v in node {
         if (k = "Func" || RegExMatch(k, "Arg.*")) {
             continue
@@ -353,6 +352,48 @@ LetUserSelectRect()
         ; y2 := y2 - windowY
     lusr_return:
     return
+}
+
+LetUserSelectPoint()
+{
+    ;global windowX, windowY
+    CoordMode, Mouse ; Required: change coord mode to screen vs relative.
+
+    SetSystemCursor("IDC_CROSS")
+    
+    ; Disable LButton.
+    Hotkey, *LButton, nothing, On
+
+    ; Wait for user to press LButton or Escape
+	Loop {
+		
+		if GetKeyState("LButton", "P") {
+			Break
+		}
+		if GetKeyState("Esc", "P") {
+            abort := true
+            Break
+		}
+
+		sleep, 50
+	}
+
+    if (!abort) {
+        ; Get initial coordinates.
+        MouseGetPos, x, y
+        ; Wait for user to release LButton.
+        KeyWait, LButton
+    }
+    
+    ; Re-enable LButton.
+    Hotkey, *LButton, Off
+    
+    RestoreCursors()
+    ;CoordMode, Mouse
+    return abort ? "" : { x : x, y : y }
+
+    nothing:
+    Return
 }
 
 ;https://www.autohotkey.com/board/topic/32608-changing-the-system-cursor/
@@ -447,6 +488,10 @@ RestoreCursors()
 }
 
 GetPatternGrayDiff50() {
+    return GetPatternGrayDiff(50)
+}
+
+GetPatternGrayDiff(grayDiff := 50) {
     result := LetUserSelectRect()
 
     if (!result) {
@@ -476,11 +521,10 @@ GetPatternGrayDiff50() {
         show[++k]:=1, c:=cors[k]
         
     ;------------GrayDiff2Two
-    GrayDiff := "50"
-    color:="**" GrayDiff, k:=i:=0
+    color:="**" grayDiff, k:=i:=0
     Loop % nW*nH
     {
-        j:=gray[++k]+GrayDiff
+        j:=gray[++k]+grayDiff
         , ascii[k]:=v:=( gray[k-1]>j or gray[k+1]>j
         or gray[k-nW]>j or gray[k+nW]>j
         or gray[k-nW-1]>j or gray[k-nW+1]>j
@@ -500,7 +544,80 @@ GetPatternGrayDiff50() {
         txt.=v="" ? "" : v "`n"
     }
 
-    txt:= "|<>**50$" . Format("{:d}",InStr(txt,"`n")-1) "." FindText().bit2base64(txt)
+    txt:= "|<>**" . grayDiff . "$" . Format("{:d}",InStr(txt,"`n")-1) "." FindText().bit2base64(txt)
 
     Return txt
+}
+
+GetPatternColor2Two(color, similarity) {
+    result := LetUserSelectRect()
+
+    if (!result) {
+        return
+    }
+
+    px := result.x1
+    py := result.y1
+    ww := result.x2 - result.x1
+    hh := result.y2 - result.y1
+
+    ;----------getCors
+    nW:=ww, nH:=hh
+    FindText().ScreenShot()
+    cors:=[], gray:=[], k:=0
+    Loop %nH%
+    {
+        j:=py+A_Index-1, i:=px
+        Loop %nW%
+        cors[++k]:=c:=FindText().GetColor(i++,j,0)
+        , gray[k]:=(((c>>16)&0xFF)*38+((c>>8)&0xFF)*75+(c&0xFF)*15)>>7
+    }
+
+    ;------------reset
+    show:=[], ascii:=[], bg:=""
+    Loop % nW*nH
+        show[++k]:=1, c:=cors[k]
+        
+    ;------------Color2Two
+    c:=color
+    ;UsePos:=(cmd="ColorPos2Two") ? 1:0
+    ;GuiControlGet, n,, Similar1
+    n:=similarity
+    n:=Round(n/100,2), color:=c "@" n
+    , n:=Floor(512*9*255*255*(1-n)*(1-n)), k:=i:=0
+    , rr:=(c>>16)&0xFF, gg:=(c>>8)&0xFF, bb:=c&0xFF
+    Loop % nW*nH
+    {
+      c:=cors[++k], r:=((c>>16)&0xFF)-rr
+      , g:=((c>>8)&0xFF)-gg, b:=(c&0xFF)-bb, j:=r+rr+rr
+      , ascii[k]:=v:=((1024+j)*r*r+2048*g*g+(1534-j)*b*b<=n)
+      ;if (show[k])
+      i:=(v?i+1:i-1), c:=(v?"Black":"White")
+    }
+    ;bg:=i>0 ? "1":"0"
+
+    ;-----------getTxt
+    txt:=""
+    k:=0
+    Loop %nH%
+    {
+        v:=""
+        Loop %nW% {
+            v.=ascii[++k] ? "1":"0"
+        }
+        txt.=v="" ? "" : v "`n"
+    }
+
+
+    txt:= "|<>" . color . "$" . Format("{:d}",InStr(txt,"`n")-1) "." FindText().bit2base64(txt)
+
+    Return txt
+}
+
+GetPixelColor() {
+    point := LetUserSelectPoint()
+    FindText().ScreenShot()
+    color := FindText().GetColor(point.x, point.y)
+
+    Return color
 }

@@ -21,13 +21,13 @@ handlers.MiddleClickCallback := { Func : Func("MiddleClickCallback") }
 ;A_Args.1 is the executable
 ;A_Args.2 is the mode (function to be called)
 
-TreeAdd(patterns, 0, { leafCallback : Func("InitPatterns")})
+TreeAdd(patterns.Object(), 0, { leafCallback : Func("InitPatternsCallback")})
 
 mode := StrReplace(A_Args.2, "mode=")
 ; mode := StrReplace(mode, "`n")
 ; mode := StrReplace(mode, "`r")
 
-msgToMode := { 0x1001 : "EventStoryFarm"
+msgToMode := { 0x1001 : "EventStoryFarm"static
              , 0x1002 : "EventStory500Pct"
              , 0x1003 : "EventRaidLoop"
              , 0x1004 : "DoItemWorldLoop"
@@ -303,6 +303,21 @@ Test() {
     global patterns, settings, hwndMainGui, guiHwnd
     SetStatus(A_ThisFunc)
 
+
+    ; myPatterns := new JsonFile("patterns.json")
+    ; myPatterns.Fill(patterns)
+    ; myPatterns.save(true)
+    ;color := GetPixelColor()
+
+    ;MsgBox, % color
+
+    ;pattern := GetPatternColor2Two("0xDDF2FF", 95)
+    ; pattern := GetPatternGrayDiff50()
+    ; FindText(X, Y, 0, 0, 0, 0, 0, 0, pattern, 1, 0)
+    ; FindText().MouseTip(x, y)
+    ; MsgBox, % pattern
+    ; var := 1
+
     ;Resize(true)
     ;https://docs.microsoft.com/en-us/windows/win32/wmisdk/like-operator
     ; query := "Select * from Win32_Process where CommandLine like '%" . StrReplace(A_ScriptFullPath, "\", "\\") . "%'" . " and not CommandLine like '%code%'"
@@ -437,9 +452,31 @@ TestPattern() {
             FindText().ClientToScreen(x, y, result.X, result.Y, hwnd)
             FindText().MouseTip(x, y)
         }
-
     }
     Else {
         ToolTipExpire("Pattern " . nodePath . " NOT FOUND")
+    }
+}
+
+PatternsSelect() {
+    ;https://www.autohotkey.com/docs/commands/TreeView.htm
+    if (A_GuiEvent != "S")  ; i.e. an event other than "select new tree item".
+    return  ; Do nothing.
+
+    global hwnd, patterns, patternsTree
+
+    Gui Submit, NoHide
+    Gui TreeView, patternsTree
+    nodePath := GetNodePath()
+    segments := StrSplit(nodePath, ".")
+    target := patterns
+
+    for k, v in segments
+        target := target[v]
+    
+    
+    If InStr(target, "|<") {
+        ascii := FindText().ASCII(target)
+        GuiControl,, patternsPreview, % Trim(ascii,"`n")
     }
 }

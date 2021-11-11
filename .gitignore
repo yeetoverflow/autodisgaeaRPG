@@ -1,4 +1,6 @@
 logs/*
 settings.json
+patterns.json
 exe/logs/*
 exe/settings.json
+exe/patterns.json
