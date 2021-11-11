@@ -52,7 +52,7 @@ DoDarkGate(type) {
             sleep 1000
         }
         else if InStr(result.comment, "dimensionGate.background") {
-            FindPattern(patterns.darkGates.block, { doClick : true })
+            FindPattern(patterns.dimensionGate.darkGates, { doClick : true })
             sleep 1000
         }
         else if InStr(result.comment, "darkGates.title") {

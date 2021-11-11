@@ -201,6 +201,7 @@ ResetUI() {
     Gui, Font, cFFFFFF
     Gui Add, Button, xs+10 y+5 gTestPattern, Test
     Gui Add, Checkbox, x+10 vTestPatternMulti, Multi
+    Gui Add, Button, x+10 gCopyPatternToClipboard, Copy To Clipboard
     Gui Add, Button, x+150 gSavePatterns, Save Changes
     Gui Add, Text, xs+10 y+10, FG Variance:
     Gui Add, Slider, w200 tickinterval5 tooltip vTestPatternFG
@@ -212,6 +213,23 @@ ResetUI() {
 
     guiHwnd := GetGuiHwnd()
     InitBlueStacks()
+}
+
+CopyPatternToClipboard() {
+    global patterns, patternsTree
+    Gui Submit, NoHide
+    Gui TreeView, patternsTree
+    nodePath := GetNodePath()
+    segments := StrSplit(nodePath, ".")
+    target := patterns
+    
+    for k, v in segments {
+        lastParent := target
+        lastKey := v
+        target := target[v]
+    }
+
+    Clipboard := target
 }
 
 SavePatterns() {

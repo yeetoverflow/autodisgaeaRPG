@@ -35,7 +35,7 @@ DoItemWorldLoop(type := "") {
             sleep 1000
         }
         else if InStr(result.comment, "dimensionGate.background") {
-            FindPattern(patterns.itemWorld.block, { doClick : true })
+            FindPattern(patterns.dimensionGate.itemWorld, { doClick : true })
             sleep 1000
         }
         else if InStr(result.comment, "itemWorld.title") {
