@@ -18,7 +18,7 @@ AutoHotkey project that automates the grindy parts of DisgaeaRPG. The program do
 * Install DisgaeaRPG in BlueStacks instance and make sure you are up to date.
 * Download [autoDisgaeaRPG](https://raw.githubusercontent.com/yeetoverflow/autodisgaeaRPG/main/exe/autoDisgaeaRpg.exe) executable. (Recommended) Place this in a folder.
 * Open BlueStacks DisgaeaRPG instance and autoDisgaeaRPG.exe. You should see ATTACHED at the bottom right of the program. If you see DETACHED, either enter a similar target window name to program or rename DisgaeaRPG instance appropriately then click Apply for target window.
-* Click Resize at the bottom left of the program. If you see the BlueStack instance window get change size, then you should be good to go.
+* Click Resize in the settings tab. If you see the BlueStack instance window get change size, then you should be good to go.
 
 ## Battle [(video)](https://youtu.be/lxVgjwpZ8co)
 
