@@ -38,7 +38,7 @@ DoDarkGate(type) {
     
     targetCompanions := []
     for k, v in battleOptions.companions
-        targetCompanions.push(patterns.companions[v])
+        targetCompanions.push(patterns["companions"][v])
 
     loopTargets := [patterns.stronghold.gemsIcon, patterns.dimensionGate.background, patterns.darkGates.title
         , patterns.darkGates.stage.title, patterns.companions.title, patterns.battle.title, patterns.battle.auto

@@ -12,7 +12,7 @@ EventStoryFarm() {
 
     targetCompanions := []
     for k, v in battleOptions.companions
-        targetCompanions.push(patterns.companions[v])
+        targetCompanions.push(patterns["companions"][v])
 
     loopTargets := [patterns.stronghold.gemsIcon, patterns.dimensionGate.background, patterns.dimensionGate.events.select
         , patterns.battle.start, patterns.events.title, patterns.events.stage.title, patterns.battle.prompt.battle
@@ -114,7 +114,7 @@ EventStory500Pct() {
 
     targetCompanions := []
     for k, v in battleOptions.companions
-        targetCompanions.push(patterns.companions[v])
+        targetCompanions.push(patterns["companions"][v])
 
     loopTargets := [patterns.stronghold.gemsIcon, patterns.dimensionGate.background, patterns.dimensionGate.events.select
         , patterns.battle.start, patterns.events.title, patterns.events.stage.title, patterns.battle.prompt.quitBattle, patterns.raid.message]

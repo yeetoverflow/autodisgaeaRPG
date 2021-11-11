@@ -82,7 +82,7 @@ Battle() {
 
     targetCompanion := []
     for k, v in battleOptions.companions
-        targetCompanion.push(patterns.companions[v])
+        targetCompanion.push(patterns["companions"][v])
 
     result := FindPattern([patterns.battle.auto.enabled, patterns.battle.auto.disabled]) 
     if (InStr(result.comment, "battle.auto")) {
@@ -147,7 +147,7 @@ AutoClear() {
 
     targetCompanion := []
     for k, v in battleOptions.companions
-        targetCompanion.push(patterns.companions[v])
+        targetCompanion.push(patterns["companions"][v])
 
 
     loopTargets := [patterns.new, patterns.companions.title, patterns.skip, patterns.areaClear]
