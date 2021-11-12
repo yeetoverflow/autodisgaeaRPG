@@ -303,7 +303,11 @@ Test() {
     global patterns, settings, hwndMainGui, guiHwnd
     SetStatus(A_ThisFunc)
 
+    global hwnd
 
+    WinGetPos,X,Y,W,H, % "ahk_id " . hwnd
+
+    MsgBox, %W%x%H%
     ; myPatterns := new JsonFile("patterns.json")
     ; myPatterns.Fill(patterns)
     ; myPatterns.save(true)

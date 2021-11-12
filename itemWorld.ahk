@@ -229,7 +229,11 @@ DoItemDrop() {
             ;Keep attacking the item boss/king
             While (result.IsSuccess)
             {
-                FindPattern(singleTargetActions, { doClick : true, doubleCheck : true, doubleCheckDelay : 250 })
+                result := FindPattern(patterns.battle.skills.label)
+                if (result.IsSuccess) {
+                    FindPattern(singleTargetActions, { doClick : true })
+                }
+                
                 sleep 1000
                 result := FindPattern(patterns.enemy.A)
             }
