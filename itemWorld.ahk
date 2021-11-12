@@ -255,6 +255,17 @@ DoItemDrop() {
             PollPattern(patterns.menu.giveUp, { doClick : true, predicatePattern : patterns.prompt.yes })
             PollPattern(patterns.prompt.yes, { doClick : true, predicatePattern : patterns.prompt.retry })
             PollPattern(patterns.prompt.retry, { doClick : true })
+            PollPattern(patterns.battle.auto)
+
+            if (battleOptions.allyTarget && battleOptions.allyTarget != "None") {
+                sleep 500
+                allyTarget := patterns.battle.target[battleOptions.allyTarget]
+                Loop {
+                    FindPattern(allyTarget, { doClick : true })
+                    sleep 250
+                    result := FindPattern(patterns.battle.target.on, { variancePct : 20 })
+                } until (result.IsSuccess)
+            }
         }
         sleep 1000
     }
