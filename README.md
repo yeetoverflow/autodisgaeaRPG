@@ -47,7 +47,7 @@ AutoHotkey project that automates the grindy parts of DisgaeaRPG. The program do
         * Go to Settings in BlueStacks instance
         * Go to Advanced
         * Note down the Android debug bridge port number. Ex. 127.0.0.1:5575 => 5575 is the port number
-        * Go to Patterns tab in autoDisgaeaRPG and place to port you found in the textbox then press apply
+        * Go to Settings tab in autoDisgaeaRPG and place to port you found in the Override ADB port textbox then press apply
     * If nothing worked, wallow in despair then complain in the [autoDisgaeaRPG reddit thread](https://www.reddit.com/r/DisgaeaRPGMobile/comments/qo36ua/autodisgaearpg)
 
 ## Battle [(video)](https://youtu.be/lxVgjwpZ8co)
