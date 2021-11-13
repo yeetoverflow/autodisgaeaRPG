@@ -5,7 +5,7 @@ AutoHotkey project that automates the grindy parts of DisgaeaRPG. The program do
 
 * Download and Install [BlueStacks 5.0](https://www.bluestacks.com/bluestacks-5.html). Make sure that this installs in C:\Program Files\BlueStacks_nxt else sending swipe gesture will not work.
 * Install DisgaeaRPG in BlueStacks instance and make sure you are up to date.
-* Open BlueStacks 5 Multi-Instance Manager. Name master instance into DisgaeaRPG or create an instance and name it DisgaeaRPG because program targets by window name (this is optional because we can change the window target.
+* Open BlueStacks 5 Multi-Instance Manager. Name master instance into DisgaeaRPG or create an instance and name it DisgaeaRPG because program targets by window name (this is optional because we can change the window target in the settings tab).
 * Go to Setting
   * Performance
     * (Recommended) CPU allocation => (4 Cores)
@@ -30,13 +30,20 @@ AutoHotkey project that automates the grindy parts of DisgaeaRPG. The program do
        * If clicking resize does not work, your resolution is not the target resolution. Follow the instruction above (Set desktop resolution settings). Additionally, you can attempt to set a higher resolution for your desktop if available.
     * If verify says good on both metrics, you passed
 * Patterns test
-    * Go to Patterns tab
+    * Go to stronghold in BlueStacks instance 
+    * Go to Patterns tab in autoDisgaeaRPG
     * In the filter search tabs
     * Select dimensionGate
-    * Go to stronghold in BlueStacks instance
     * Select test
        * If you see Found as a tooltip and see a box on the dimension gate button you pass
-       * If not, go cry and complain in the [autoDisgaeaRPG reddit thread](https://www.reddit.com/r/DisgaeaRPGMobile/comments/qo36ua/autodisgaearpg)
+       * If not, go cry then complain in the [autoDisgaeaRPG reddit thread](https://www.reddit.com/r/DisgaeaRPGMobile/comments/qo36ua/autodisgaearpg)
+* Swipe test
+    * Go to a screen in BlueStacks that needs swiping up or down. (Ex. ompanion select)
+    * Make sure you see green ATTACHED in Main or Setting tab in autoDisgaeaRPG
+    * Go to Handlers tab
+    * Select SwipeUp or SwipeDown
+    * If you see swiping happen you pass
+    * If not, wallow in despair then complain in the [autoDisgaeaRPG reddit thread](https://www.reddit.com/r/DisgaeaRPGMobile/comments/qo36ua/autodisgaearpg)
 
 ## Battle [(video)](https://youtu.be/lxVgjwpZ8co)
 
