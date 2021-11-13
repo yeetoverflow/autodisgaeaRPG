@@ -4,6 +4,10 @@ AutoHotkey project that automates the grindy parts of DisgaeaRPG. The program do
 ## Setup [(video)](https://youtu.be/_VhOskwU1Bw)
 
 * Download and Install [BlueStacks 5.0](https://www.bluestacks.com/bluestacks-5.html). Make sure that this installs in C:\Program Files\BlueStacks_nxt else sending swipe gesture will not work.
+* Set desktop resolution settings
+    * Right click desktop
+    * Select display settings
+    * In scale and layout, set the value to 100%
 * Open BlueStacks 5 Multi-Instance Manager. Name master instance into DisgaeaRPG or create an instance and name it DisgaeaRPG because program targets by window name (this is optional because we can change the window target.
 * Go to Setting
   * Performance
@@ -11,14 +15,28 @@ AutoHotkey project that automates the grindy parts of DisgaeaRPG. The program do
     * (Recommended) Memory allocation => (4 GB)
     * (Recommended) Frame rate: 60
   * Display
-    * (Required) Display resolution => (Landscape) 1920x1080 - (*in hindsight I should have developed this in Portrait mode)
+    * (Required) Display resolution => (Portrait) 1920x1080
     * (Requred) Pixel density ==> 240 DPI (Medium)
   * Advanced
     * (Required) Android debug bridge => Enabled (this is required to be able be able to send swipe gestures)
 * Install DisgaeaRPG in BlueStacks instance and make sure you are up to date.
 * Download [autoDisgaeaRPG](https://raw.githubusercontent.com/yeetoverflow/autodisgaeaRPG/main/exe/autoDisgaeaRpg.exe) executable. (Recommended) Place this in a folder.
-* Open BlueStacks DisgaeaRPG instance and autoDisgaeaRPG.exe. You should see ATTACHED at the bottom right of the program. If you see DETACHED, either enter a similar target window name to program or rename DisgaeaRPG instance appropriately then click Apply for target window.
-* Click Resize in the settings tab. If you see the BlueStack instance window get change size, then you should be good to go.
+* Verify test
+    * Open BlueStacks DisgaeaRPG instance and autoDisgaeaRPG.exe. Go to Settings tab in autoDisgaeaRPG program
+    * If (Window) DETACHED => BAD
+       * Either the program was opened after BlueStacks instance or the program does not know the window name of target BlueStacks instance. Make Target Window text the same as the BlueStacks window name. Click Apply. You should be good when you see a green ATTACHED text.
+    * If (Window Size) ??x?? => BAD (Target 600x1400)
+       * Click resize 
+       * If clicking resize does not work, your resolution is not the target resolution. Follow the instruction above (Set desktop resolution settings). Additionally, you can attempt to set a higher resolution for your desktop if available.
+    * If verify says good on both metrics, you passed
+* Patterns test
+    * Go to Patterns tab
+    * In the filter search tabs
+    * Select dimensionGate
+    * Go to stronghold in BlueStacks instance
+    * Select test
+       * If you see Found as a tooltip and see a box on the dimension gate button you pass
+       * If not, go cry and complain in the [autoDisgaeaRPG reddit thread](https://www.reddit.com/r/DisgaeaRPGMobile/comments/qo36ua/autodisgaearpg)
 
 ## Battle [(video)](https://youtu.be/lxVgjwpZ8co)
 
