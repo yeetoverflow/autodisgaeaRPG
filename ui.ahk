@@ -170,6 +170,7 @@ ResetUI() {
 
     Gui Add, Button, xs+10 y+15 gResize, Resize
     Gui Add, Button, x+10 gScreenCap, ScreenCap
+    Gui Add, Button, x+10 gVerify, Verify
     Gui Add, Button, x+10 gTest, Test
 
     Gui Add, Link, x+170,<a href="https://github.com/yeetoverflow/autodisgaeaRPG">documentation</a>

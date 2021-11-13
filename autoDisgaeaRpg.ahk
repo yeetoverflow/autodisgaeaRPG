@@ -299,15 +299,19 @@ AutoDarkAssembly() {
     
 }
 
-Test() {
-    global patterns, settings, hwndMainGui, guiHwnd
-    SetStatus(A_ThisFunc)
-
+Verify() {
     global hwnd
 
     WinGetPos,X,Y,W,H, % "ahk_id " . hwnd
 
-    MsgBox, %W%x%H%
+    MsgBox, % "(Window) " . (hwnd ? "ATTACHED" : "DETACHED") . " => "  . (hwnd ? "GOOD" : "BAD") . "`n"
+            . "(Window Size) " . W . "x" . H . " => " . (W = 600 && H = 1040 ? "GOOD" : "BAD (Target 600x1400)")
+}
+
+Test() {
+    global patterns, settings, hwndMainGui, guiHwnd
+    SetStatus(A_ThisFunc)
+
     ; myPatterns := new JsonFile("patterns.json")
     ; myPatterns.Fill(patterns)
     ; myPatterns.save(true)

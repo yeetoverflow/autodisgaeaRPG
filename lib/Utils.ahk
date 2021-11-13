@@ -283,6 +283,7 @@ LetUserSelectRect()
     ;global windowX, windowY
     CoordMode, Mouse ; Required: change coord mode to screen vs relative.
 
+    ToolTip, Left Click (Hold) and Drag to create a rectangle
     SetSystemCursor("IDC_CROSS")
     static r := 3
     ; Create the "selection rectangle" GUIs (one for each edge).
@@ -324,6 +325,7 @@ LetUserSelectRect()
     Loop 4
         Gui, r%A_Index%: Destroy
     RestoreCursors()
+    ToolTip
     ;CoordMode, Mouse
     return abort ? "" : { x1 : x1, y1 : y1, x2 : x2, y2 : y2 }
  
