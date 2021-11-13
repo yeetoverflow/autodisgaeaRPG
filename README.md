@@ -1,7 +1,7 @@
 # autodisgaeaRPG
 AutoHotkey project that automates the grindy parts of DisgaeaRPG. The program does not modify DisgaeaRPG app. It simply scans BlueStacks instance for patterns and clicks or swipes accordingly.
 
-## Setup [(video)](https://youtu.be/_VhOskwU1Bw)
+## Setup [(video)](https://youtu.be/P-tkhNZyf8o)
 
 * Download and Install [BlueStacks 5.0](https://www.bluestacks.com/bluestacks-5.html). Make sure that this installs in C:\Program Files\BlueStacks_nxt else sending swipe gesture will not work.
 * Install DisgaeaRPG in BlueStacks instance and make sure you are up to date.
