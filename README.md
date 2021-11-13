@@ -43,7 +43,12 @@ AutoHotkey project that automates the grindy parts of DisgaeaRPG. The program do
     * Go to Handlers tab
     * Select SwipeUp or SwipeDown
     * If you see swiping happen you pass
-    * If not, wallow in despair then complain in the [autoDisgaeaRPG reddit thread](https://www.reddit.com/r/DisgaeaRPGMobile/comments/qo36ua/autodisgaearpg)
+    * If not
+        * Go to Settings in BlueStacks instance
+        * Go to Advanced
+        * Note down the Android debug bridge port number. Ex. 127.0.0.1:5575 => 5575 is the port number
+        * 
+    * If nothng worked, wallow in despair then complain in the [autoDisgaeaRPG reddit thread](https://www.reddit.com/r/DisgaeaRPGMobile/comments/qo36ua/autodisgaearpg)
 
 ## Battle [(video)](https://youtu.be/lxVgjwpZ8co)
 
