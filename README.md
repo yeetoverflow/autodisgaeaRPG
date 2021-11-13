@@ -104,3 +104,9 @@ AutoHotkey project that automates the grindy parts of DisgaeaRPG. The program do
     * Clears dark gate stages as many times as count
     * Uses DarkGateMats battle context
     * Will auto-fill AP
+
+---
+
+If you'd like to support me:
+
+[![](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=Z2GDPP65YMA7G)
