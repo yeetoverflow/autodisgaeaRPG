@@ -38,7 +38,7 @@ AutoHotkey project that automates the grindy parts of DisgaeaRPG. The program do
        * If you see Found as a tooltip and see a box on the dimension gate button you pass
        * If not, go cry then complain in the [autoDisgaeaRPG reddit thread](https://www.reddit.com/r/DisgaeaRPGMobile/comments/qo36ua/autodisgaearpg)
 * Swipe test
-    * Go to a screen in BlueStacks that needs swiping up or down. (Ex. ompanion select)
+    * Go to a screen in BlueStacks that needs swiping up or down. (Ex. companion select)
     * Make sure you see green ATTACHED in Main or Setting tab in autoDisgaeaRPG
     * Go to Handlers tab
     * Select SwipeUp or SwipeDown
@@ -47,8 +47,8 @@ AutoHotkey project that automates the grindy parts of DisgaeaRPG. The program do
         * Go to Settings in BlueStacks instance
         * Go to Advanced
         * Note down the Android debug bridge port number. Ex. 127.0.0.1:5575 => 5575 is the port number
-        * 
-    * If nothng worked, wallow in despair then complain in the [autoDisgaeaRPG reddit thread](https://www.reddit.com/r/DisgaeaRPGMobile/comments/qo36ua/autodisgaearpg)
+        * Go to Patterns tab in autoDisgaeaRPG and place to port you found in the textbox then press apply
+    * If nothing worked, wallow in despair then complain in the [autoDisgaeaRPG reddit thread](https://www.reddit.com/r/DisgaeaRPGMobile/comments/qo36ua/autodisgaearpg)
 
 ## Battle [(video)](https://youtu.be/lxVgjwpZ8co)
 
