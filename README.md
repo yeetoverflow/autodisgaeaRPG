@@ -4,21 +4,51 @@ AutoHotkey project that automates the grindy parts of DisgaeaRPG. The program do
 ## Setup [(video)](https://youtu.be/_VhOskwU1Bw)
 
 * Download and Install [BlueStacks 5.0](https://www.bluestacks.com/bluestacks-5.html). Make sure that this installs in C:\Program Files\BlueStacks_nxt else sending swipe gesture will not work.
-* Open BlueStacks 5 Multi-Instance Manager. Name master instance into DisgaeaRPG or create an instance and name it DisgaeaRPG because program targets by window name (this is optional because we can change the window target.
-* Go to Setting
+* Install DisgaeaRPG in BlueStacks instance and make sure you are up to date.
+* Open BlueStacks 5 Multi-Instance Manager. Name master instance into DisgaeaRPG or create an instance and name it DisgaeaRPG because program targets by window name (this is optional because we can change the window target in the settings in autoDisgaeaRPG program).
+* Go to Settings in BlueStacks instance
   * Performance
     * (Recommended) CPU allocation => (4 Cores)
     * (Recommended) Memory allocation => (4 GB)
     * (Recommended) Frame rate: 60
   * Display
-    * (Required) Display resolution => (Landscape) 1920x1080 - (*in hindsight I should have developed this in Portrait mode)
+    * (Required) Display resolution => (Portrait) 1080x1920
     * (Requred) Pixel density ==> 240 DPI (Medium)
   * Advanced
     * (Required) Android debug bridge => Enabled (this is required to be able be able to send swipe gestures)
-* Install DisgaeaRPG in BlueStacks instance and make sure you are up to date.
+* Set desktop resolution settings
+    * Right click desktop
+    * Select display settings
+    * In scale and layout, set the value to 100%
 * Download [autoDisgaeaRPG](https://raw.githubusercontent.com/yeetoverflow/autodisgaeaRPG/main/exe/autoDisgaeaRpg.exe) executable. (Recommended) Place this in a folder.
-* Open BlueStacks DisgaeaRPG instance and autoDisgaeaRPG.exe. You should see ATTACHED at the bottom right of the program. If you see DETACHED, either enter a similar target window name to program or rename DisgaeaRPG instance appropriately then click Apply for target window.
-* Click Resize in the settings tab. If you see the BlueStack instance window get change size, then you should be good to go.
+* Verify test
+    * Open BlueStacks DisgaeaRPG instance and autoDisgaeaRPG.exe. Go to Settings tab in autoDisgaeaRPG program
+    * If (Window) DETACHED => BAD
+       * Either the program was opened after BlueStacks instance or the program does not know the window name of target BlueStacks instance (default target is DisgaeaRPG). Make Target Window text the same as the BlueStacks window name. Click Apply. You should be good when you see a green ATTACHED text.
+    * If (Window Size) ??x?? => BAD (Target 600x1400)
+       * Click resize 
+       * If clicking resize does not work, your resolution is not the target resolution. Follow the instruction above (Set desktop resolution settings). Additionally, you can attempt to set a higher resolution for your desktop if available.
+    * If verify says good on both metrics, you passed
+* Patterns test
+    * Go to stronghold in BlueStacks instance 
+    * Go to Patterns tab in autoDisgaeaRPG
+    * In the filter search tabs
+    * Select dimensionGate
+    * Select test
+       * If you see Found as a tooltip and see a box on the dimension gate button you pass
+       * If not, go cry then complain in the [autoDisgaeaRPG reddit thread](https://www.reddit.com/r/DisgaeaRPGMobile/comments/qo36ua/autodisgaearpg)
+* Swipe test
+    * Go to a screen in BlueStacks that needs swiping up or down. (Ex. ompanion select)
+    * Make sure you see green ATTACHED in Main or Setting tab in autoDisgaeaRPG
+    * Go to Handlers tab
+    * Select SwipeUp or SwipeDown
+    * If you see swiping happen you pass
+    * If not
+        * Go to Settings in BlueStacks instance
+        * Go to Advanced
+        * Note down the Android debug bridge port number. Ex. 127.0.0.1:5575 => 5575 is the port number
+        * 
+    * If nothng worked, wallow in despair then complain in the [autoDisgaeaRPG reddit thread](https://www.reddit.com/r/DisgaeaRPGMobile/comments/qo36ua/autodisgaearpg)
 
 ## Battle [(video)](https://youtu.be/lxVgjwpZ8co)
 
@@ -104,3 +134,9 @@ AutoHotkey project that automates the grindy parts of DisgaeaRPG. The program do
     * Clears dark gate stages as many times as count
     * Uses DarkGateMats battle context
     * Will auto-fill AP
+
+---
+
+If you'd like to support me:
+
+[![](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/donate?business=Z2GDPP65YMA7G&no_recurring=0&currency_code=USD)
