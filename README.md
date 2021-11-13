@@ -5,8 +5,8 @@ AutoHotkey project that automates the grindy parts of DisgaeaRPG. The program do
 
 * Download and Install [BlueStacks 5.0](https://www.bluestacks.com/bluestacks-5.html). Make sure that this installs in C:\Program Files\BlueStacks_nxt else sending swipe gesture will not work.
 * Install DisgaeaRPG in BlueStacks instance and make sure you are up to date.
-* Open BlueStacks 5 Multi-Instance Manager. Name master instance into DisgaeaRPG or create an instance and name it DisgaeaRPG because program targets by window name (this is optional because we can change the window target in the settings tab).
-* Go to Setting
+* Open BlueStacks 5 Multi-Instance Manager. Name master instance into DisgaeaRPG or create an instance and name it DisgaeaRPG because program targets by window name (this is optional because we can change the window target in the settings in autoDisgaeaRPG program).
+* Go to Settings in BlueStacks instance
   * Performance
     * (Recommended) CPU allocation => (4 Cores)
     * (Recommended) Memory allocation => (4 GB)
