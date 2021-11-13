@@ -12,7 +12,7 @@ AutoHotkey project that automates the grindy parts of DisgaeaRPG. The program do
     * (Recommended) Memory allocation => (4 GB)
     * (Recommended) Frame rate: 60
   * Display
-    * (Required) Display resolution => (Portrait) 1920x1080
+    * (Required) Display resolution => (Portrait) 1080x1920
     * (Requred) Pixel density ==> 240 DPI (Medium)
   * Advanced
     * (Required) Android debug bridge => Enabled (this is required to be able be able to send swipe gestures)
