@@ -312,6 +312,7 @@ Test() {
     global patterns, settings, hwndMainGui, guiHwnd
     SetStatus(A_ThisFunc)
 
+    MsgBox, % FindDrop().type
     ; myPatterns := new JsonFile("patterns.json")
     ; myPatterns.Fill(patterns)
     ; myPatterns.save(true)
