@@ -17,7 +17,7 @@ DoDarkGateMatsMonster() {
 }
 
 DoDarkGate(type) {
-    global patterns, settings, guiHwnd
+    global mode, patterns, settings, guiHwnd
     ControlGetText, gateCount, edit3, % "ahk_id " . guiHwnd
     SetStatus(gateCount, 2)
 
@@ -95,5 +95,7 @@ DoDarkGate(type) {
         }
     }
 
-    ExitApp
+    if (mode) {
+        ExitApp
+    }
 }

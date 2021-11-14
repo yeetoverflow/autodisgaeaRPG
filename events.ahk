@@ -6,7 +6,6 @@ EventStoryFarm() {
     ControlGetText, battleCount, edit2, % "ahk_id " . guiHwnd
     SetStatus(battleCount, 2)
 
-    done := false
     battleOptions := settings.battleOptions.event
     battleOptions.donePatterns := [patterns.raid.appear.advanceInStory, patterns.battle.prompt.quitBattle]
 
@@ -85,7 +84,7 @@ EventStoryFarm() {
         else if InStr(result.comment, "raid.message") {
             HandleRaid()
         }
-    } until (done)
+    }
 
     if (mode) {
         ExitApp

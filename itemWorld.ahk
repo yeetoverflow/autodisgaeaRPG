@@ -108,9 +108,14 @@ ItemWorldPreBattle() {
 ItemWorldOnBattleAction(result) {
     global patterns
 
+    IF FindPattern(patterns.prompt.innocentIsAppearing).IsSuccess {
+        FindPattern(patterns.prompt.no, { doClick : true })
+        sleep 1000
+    }
+
     IF FindPattern(patterns.itemWorld.subdue).IsSuccess
         DoSubdue()
-    Else
+    Else If (result)
         ClickResult(result)
 }
 
