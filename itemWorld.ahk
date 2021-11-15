@@ -55,9 +55,10 @@ DoItemWorldLoop(type := "") {
                     sleep 100
                 }
                 if (FindPattern(patterns["sort"]["prioritizeEquippedItems"]["checked"], { variancePct: 5 }).IsSuccess) {
-                    PollPattern(patterns["sort"]["prioritizeEquippedItems"]["label"], { variancePct: 5, doClick : true, offsetX : 70, predicatePattern : patterns["sort"]["prioritizeEquippedItems"]["unchecked"] })
+                    PollPattern(patterns["sort"]["prioritizeEquippedItems"]["checked"], { variancePct: 5, doClick : true, offsetX : 40, predicatePattern : patterns["sort"]["prioritizeEquippedItems"]["unchecked"] })
                     sleep 100
                 }
+
                 PollPattern(patterns.prompt.ok, { doClick : true, predicatePattern : itemWorld.title })
                 sortDone := true
             }
