@@ -37,7 +37,9 @@ ResetUI() {
     Gui, Font, Bold
     Gui Add, Text, cWhite xs+10, General
     Gui, Font, Normal
-    Gui Add, Button, xs+10 gAutoClear, AutoClear
+    ;Gui Add, Button, xs+10 gAutoClear, AutoClear
+    Gui, Add, Progress, xs+10 vProgressBar_AutoClear -Smooth w120 h18 c0x66FF66 border
+    Gui Add, Text, cBlack xp wp hp center vProgressText_AutoClear BackgroundTrans, Start AutoClear
     Gui Add, Button, x+10 gAutoShop, AutoShop
     ;Gui Add, Button, x+10 gAutoFriends, AutoFriends
     Gui Add, Button, x+10 gAutoDarkAssembly, DarkAssembly

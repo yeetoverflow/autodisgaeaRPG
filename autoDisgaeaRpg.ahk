@@ -34,7 +34,8 @@ msgToMode := { 0x1001 : "EventStoryFarm"static
              , 0x1005 : "DoItemWorldFarmLoop"
              , 0x1006 : "DoDarkGateHL"
              , 0x1007 : "DoDarkGateMatsHuman"
-             , 0x1008 : "DoDarkGateMatsMonster"}
+             , 0x1008 : "DoDarkGateMatsMonster"
+             , 0x1009 : "AutoClear"}
 modeToMsg := {}
 
 for k, v in msgToMode {
