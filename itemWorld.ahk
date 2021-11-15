@@ -50,8 +50,12 @@ DoItemWorldLoop(type := "") {
                     PollPattern(patterns.sort.rarity.disabled, { doClick : true, predicatePattern : patterns.sort.rarity.enabled })
                     sleep 100
                 }
-                if (FindPattern(patterns.sort[targeSortInverse].checked, { variancePct: 5 }).IsSuccess) {
-                    PollPattern(patterns.sort[targetSort].label, { variancePct: 5, doClick : true, offsetX : 40, predicatePattern : patterns.sort[targetSort].checked })
+                if (FindPattern(patterns["sort"][targeSortInverse]["checked"], { variancePct: 5 }).IsSuccess) {
+                    PollPattern(patterns["sort"][targetSort]["label"], { variancePct: 5, doClick : true, offsetX : 40, predicatePattern : patterns["sort"][targetSort]["checked"] })
+                    sleep 100
+                }
+                if (FindPattern(patterns["sort"]["prioritizeEquippedItems"]["checked"], { variancePct: 5 }).IsSuccess) {
+                    PollPattern(patterns["sort"]["prioritizeEquippedItems"]["label"], { variancePct: 5, doClick : true, offsetX : 70, predicatePattern : patterns["sort"]["prioritizeEquippedItems"]["unchecked"] })
                     sleep 100
                 }
                 PollPattern(patterns.prompt.ok, { doClick : true, predicatePattern : itemWorld.title })
