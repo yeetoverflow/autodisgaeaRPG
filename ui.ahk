@@ -5,45 +5,38 @@ ResetUI() {
 
     Gui, Destroy
     Gui, Color, 404040
-    Gui, Font, cFFFFFF
+    ;Gui, Font, cFFFFFF
 
     ;Gui, +HwndHwndMainGui
     statusBarText := "||"
     Gui Add, StatusBar,, % statusBarText
-    Gui Add, Tab3, section vTopTabs, Main|Settings|Handlers|Patterns
+    Gui Add, Tab3, cWhite section vTopTabs, Main|Settings|Handlers|Patterns
     GuiControl, choose, TopTabs, 1
 
     Gui Tab, Main
     Gui, Font, Bold
-    Gui, Font, cFFFFFF
-    Gui Add, Text, x+10 xs+10 ys+25, Battle
-    Gui, Font,
-    Gui, Font, cFFFFFF
-    Gui, Font, Bold
+    Gui Add, Text, cWhite x+10 xs+10 ys+25, Battle
     Gui Add, Text, x+250 vAttached cRed, DETACHED
-    Gui, Font,
-    Gui, Font, cFFFFFF
-    Gui Add, Text, xs+10 y+5, BattleContext
-    Gui Add, Button, cRed x+10 gResetCurrentBattleContext, Reset Selected Context
-    Gui Add, Radio, gBattleContextChanged vBattleContext xs+10 y+5 checked, Default
-    Gui Add, Radio, gBattleContextChanged x+10, Event
-    Gui Add, Radio, gBattleContextChanged x+10, ItemWorld
-    Gui Add, Radio, gBattleContextChanged x+10, Sweep
-    Gui Add, Radio, gBattleContextChanged x+10, Raid
-    Gui Add, Radio, gBattleContextChanged xs+10 y+5, DarkGateMats
-    Gui Add, Radio, gBattleContextChanged x+10, DarkGateHL
+    Gui, Font, Normal
+    Gui Add, Text, cWhite xs+10 y+5, BattleContext
+    Gui Add, Button, x+10 gResetCurrentBattleContext, Reset Selected Context
+    Gui Add, Radio, cWhite gBattleContextChanged vBattleContext xs+10 y+5 checked, Default
+    Gui Add, Radio, cWhite gBattleContextChanged x+10, Event
+    Gui Add, Radio, cWhite gBattleContextChanged x+10, ItemWorld
+    Gui Add, Radio, cWhite gBattleContextChanged x+10, Sweep
+    Gui Add, Radio, cWhite gBattleContextChanged x+10, Raid
+    Gui Add, Radio, cWhite gBattleContextChanged xs+10 y+5, DarkGateMats
+    Gui Add, Radio, cWhite gBattleContextChanged x+10, DarkGateHL
 
     CreateBattleOptionsUI(settings.battleOptions.default)
     Gui Add, Button, xs+10 y+5 gBattle, Battle
-    Gui Add, Text, x+10, Count
+    Gui Add, Text, cWhite x+10, Count: 
     Gui Add, Edit, cBlack w50 x+10 Number vBattleCount, 1
 
     Gui Add, Text, 0x10 xs w400 h10
     Gui, Font, Bold
-    Gui, Font, cFFFFFF
-    Gui Add, Text, xs+10, General
-    Gui, Font,
-    Gui, Font, cFFFFFF
+    Gui Add, Text, cWhite xs+10, General
+    Gui, Font, Normal
     Gui Add, Button, xs+10 gAutoClear, AutoClear
     Gui Add, Button, x+10 gAutoShop, AutoShop
     ;Gui Add, Button, x+10 gAutoFriends, AutoFriends
@@ -51,120 +44,89 @@ ResetUI() {
 
     Gui Add, Text, 0x10 xs w400 h10
     Gui, Font, Bold
-    Gui, Font, cFFFFFF
-    Gui Add, Text, xs+10, Event
-    Gui, Font,
-    Gui, Font, cFFFFFF
+    Gui Add, Text, cWhite xs+10, Event
+    Gui, Font, Normal
     Gui Add, Button, x+10 gSelectStoryBanner, Select Story Banner
     Gui Add, Button, x+10 gSelectRaidBanner, Select Raid Banner
 
     Gui, Add, Progress, xs+10 vProgressBar_EventStoryFarm -Smooth w120 h18 c0x66FF66 border
-    Gui, Font, cBlack
-    Gui Add, Text, xp wp hp center vProgressText_EventStoryFarm BackgroundTrans, Start EventStoryFarm
-    Gui, Font,
-    Gui, Font, cFFFFFF
-    Gui Add, Text, x+10, Count
+    Gui Add, Text, cBlack xp wp hp center vProgressText_EventStoryFarm BackgroundTrans, Start EventStoryFarm
+    Gui Add, Text, cWhite x+10, Count
     Gui Add, Edit, cBlack w50 x+10 Number, 1
-    Gui Add, Text, x+10, Stage: 
-    Gui Add, Radio, gRadioOptionChanged vEventOptions_storyTarget_oneStar x+5, OneStar
-    Gui Add, Radio, gRadioOptionChanged vEventOptions_storyTarget_exp x+5, Exp
-    Gui Add, Radio, gRadioOptionChanged vEventOptions_storyTarget_hl x+5, HL
+    Gui Add, Text, cWhite x+10, Stage: 
+    Gui Add, Radio, cWhite gRadioOptionChanged vEventOptions_storyTarget_oneStar x+5, OneStar
+    Gui Add, Radio, cWhite gRadioOptionChanged vEventOptions_storyTarget_exp x+5, Exp
+    Gui Add, Radio, cWhite gRadioOptionChanged vEventOptions_storyTarget_hl x+5, HL
     GuiControl,, % "eventOptions_storyTarget_" . settings.eventOptions.storyTarget, 1
 
     Gui, Add, Progress, xs+10 vProgressBar_EventStory500Pct -Smooth w120 h18 c0x66FF66 border
-    Gui, Font, cBlack
-    Gui Add, Text, xp wp hp center vProgressText_EventStory500Pct BackgroundTrans, Start EventStory500Pct
-    Gui, Font,
-    Gui, Font, cFFFFFF
+    Gui Add, Text, cBlack xp wp hp center vProgressText_EventStory500Pct BackgroundTrans, Start EventStory500Pct
 
     Gui, Add, Progress, x+10 vProgressBar_EventRaidLoop -Smooth w100 h18 c0x66FF66 border
-    Gui, Font, cBlack
-    Gui Add, Text, xp wp hp center vProgressText_EventRaidLoop BackgroundTrans, Start EventRaidLoop
-    Gui, Font,
-    Gui, Font, cFFFFFF
+    Gui Add, Text, cBlack xp wp hp center vProgressText_EventRaidLoop BackgroundTrans, Start EventRaidLoop
 
     Gui Add, Text, 0x10 xs w400 h10
-    Gui, Font, Bold
-    Gui, Font, cFFFFFF
-    Gui Add, Text, xs+10, ItemWorld
-    Gui, Font,
-    Gui, Font, cFFFFFF
+    Gui Font, Bold
+    Gui Add, Text, cWhite xs+10, ItemWorld
+    Gui Font, Normal
 
     Gui, Add, Progress, vProgressBar_DoItemWorldLoop -Smooth w150 h18 c0x66FF66 border
-    Gui, Font, cBlack
-    Gui Add, Text, xp wp hp center vProgressText_DoItemWorldLoop BackgroundTrans, Start DoItemWorldLoop
-    Gui, Font,
-    Gui, Font, cFFFFFF
-    Gui Add, Radio, gRadioOptionChanged vItemWorldOptions_loop_itemType_armor x+5, Armor
-    Gui Add, Radio, gRadioOptionChanged vItemWorldOptions_loop_itemType_weapon x+5, Weapon
+    Gui Add, Text, cBlack xp wp hp center vProgressText_DoItemWorldLoop BackgroundTrans, Start DoItemWorldLoop
+    Gui Add, Radio, cWhite gRadioOptionChanged vItemWorldOptions_loop_itemType_armor x+5, Armor
+    Gui Add, Radio, cWhite gRadioOptionChanged vItemWorldOptions_loop_itemType_weapon x+5, Weapon
     GuiControl,, % "itemWorldOptions_loop_itemType_" . settings.itemWorldOptions.loop.itemType, 1
 
     Gui, Add, Progress, xs+10 vProgressBar_DoItemWorldFarmLoop -Smooth w150 h18 c0x66FF66 border
-    Gui, Font, cBlack
-    Gui Add, Text, xp wp hp center vProgressText_DoItemWorldFarmLoop BackgroundTrans, Start DoItemWorldFarmLoop
-    Gui, Font,
-    Gui, Font, cFFFFFF
-    Gui Add, Radio, gRadioOptionChanged vItemWorldOptions_farmLoop_itemType_armor x+5, Armor
-    Gui Add, Radio, gRadioOptionChanged vItemWorldOptions_farmLoop_itemType_weapon x+5, Weapon
+    Gui Add, Text, cBlack xp wp hp center vProgressText_DoItemWorldFarmLoop BackgroundTrans, Start DoItemWorldFarmLoop
+    Gui Add, Radio, cWhite gRadioOptionChanged vItemWorldOptions_farmLoop_itemType_armor x+5, Armor
+    Gui Add, Radio, cWhite gRadioOptionChanged vItemWorldOptions_farmLoop_itemType_weapon x+5, Weapon
     GuiControl,, % "itemWorldOptions_farmLoop_itemType_" . settings.itemWorldOptions.farmLoop.itemType, 1
 
     Gui Add, Button, xs+10 gItemWorldFarm, FarmSingle
-    Gui Add, Text, x+10, Item Rarity: 
-    Gui Add, Radio, gRadioOptionChanged vItemWorldOptions_targetItem_legendary x+5, Legendary
-    Gui Add, Radio, gRadioOptionChanged vItemWorldOptions_targetItem_rareOrLegendary x+5, Rare/Legendary
-    Gui Add, Radio, gRadioOptionChanged vItemWorldOptions_targetItem_any x+5, Any
+    Gui Add, Text, cWhite x+10, Item Rarity: 
+    Gui Add, Radio, cWhite gRadioOptionChanged vItemWorldOptions_targetItem_legendary x+5, Legendary
+    Gui Add, Radio, cWhite gRadioOptionChanged vItemWorldOptions_targetItem_rareOrLegendary x+5, Rare/Legendary
+    Gui Add, Radio, cWhite gRadioOptionChanged vItemWorldOptions_targetItem_any x+5, Any
     GuiControl,, % "itemWorldOptions_targetItem_" . settings.itemWorldOptions.targetItem, 1
     Gui Add, Button, xs+10 y+10 gDoItem, ClearSingle
-    Gui Add, Text, x+10, Bribe: 
-    Gui Add, Radio, gRadioOptionChanged vItemWorldOptions_bribe_none x+5, None
-    Gui Add, Radio, gRadioOptionChanged vItemWorldOptions_bribe_goldenCandy x+5, GoldenCandy
-    Gui Add, Radio, gRadioOptionChanged vItemWorldOptions_bribe_goldBar x+5, GoldBar
-    Gui Add, Radio, gRadioOptionChanged vItemWorldOptions_bribe_crabMiso x+5, CrabMiso
+    Gui Add, Text, cWhite x+10, Bribe: 
+    Gui Add, Radio, cWhite gRadioOptionChanged vItemWorldOptions_bribe_none x+5, None
+    Gui Add, Radio, cWhite gRadioOptionChanged vItemWorldOptions_bribe_goldenCandy x+5, GoldenCandy
+    Gui Add, Radio, cWhite gRadioOptionChanged vItemWorldOptions_bribe_goldBar x+5, GoldBar
+    Gui Add, Radio, cWhite gRadioOptionChanged vItemWorldOptions_bribe_crabMiso x+5, CrabMiso
     GuiControl,, % "itemWorldOptions_bribe_" . settings.itemWorldOptions.bribe, 1
 
     Gui Add, Text, 0x10 xs w400 h10
     Gui, Font, Bold
-    Gui, Font, cFFFFFF
-    Gui Add, Text, xs+10, DarkGate
-    Gui, Font,
-    Gui, Font, cFFFFFF
+    Gui Add, Text, cWhite xs+10, DarkGate
+    Gui, Font, Normal
 
-    Gui Add, Text, x+10, Count:
+    Gui Add, Text, cWhite x+10, Count:
     Gui Add, Edit, cBlack w50 x+10 Number vDarkGateCount, 1
 
     Gui, Add, Progress, xs+10 vProgressBar_DoDarkGateHL -Smooth w100 h18 c0x66FF66 border
-    Gui, Font, cBlack
-    Gui Add, Text, xp wp hp center vProgressText_DoDarkGateHL BackgroundTrans, Start DoDarkGateHL
-    Gui, Font,
-    Gui, Font, cFFFFFF
+    Gui Add, Text, cBlack xp wp hp center vProgressText_DoDarkGateHL BackgroundTrans, Start DoDarkGateHL
 
     Gui, Add, Progress, x+5 vProgressBar_DoDarkGateMatsHuman -Smooth w150 h18 c0x66FF66 border
-    Gui, Font, cBlack
-    Gui Add, Text, xp wp hp center vProgressText_DoDarkGateMatsHuman BackgroundTrans, Start DoDarkGateMatsHuman
-    Gui, Font,
-    Gui, Font, cFFFFFF
+    Gui Add, Text, cBlack xp wp hp center vProgressText_DoDarkGateMatsHuman BackgroundTrans, Start DoDarkGateMatsHuman
 
     Gui, Add, Progress, x+5 vProgressBar_DoDarkGateMatsMonster -Smooth w150 h18 c0x66FF66 border
-    Gui, Font, cBlack
-    Gui Add, Text, xp wp hp center vProgressText_DoDarkGateMatsMonster BackgroundTrans, Start DoDarkGateMatsMonster
-    Gui, Font,
-    Gui, Font, cFFFFFF
+    Gui Add, Text, cBlack xp wp hp center vProgressText_DoDarkGateMatsMonster BackgroundTrans, Start DoDarkGateMatsMonster
 
     ;Gui Add, Button, xs+10 y+5 gDoDarkGate, HL/Mats
     Gui Tab, Settings
 
     ;Gui Add, Text, 0x10  w400 h10
-    Gui Add, Text, xs+10 ys+25, Target Window:
+    Gui Add, Text, cWhite xs+10 ys+25, Target Window:
     Gui Add, Edit, cBlack x+10 vTargetWindow w150, % settings.blueStacks.identifier
     Gui Add, Button, x+10 gApplyTargetWindow, Apply
     Gui, Font, Bold
-    Gui Add, Text, x+10 vAttached2 cRed, DETACHED
-    Gui, Font,
-    Gui, Font, cFFFFFF
-    Gui Add, Text, xs+10 y+15, Bluestacks Installation path:
+    Gui Add, Text, cRed x+10 vAttached2, DETACHED
+    Gui, Font, Normal
+    Gui Add, Text, cWhite xs+10 y+15, Bluestacks Installation path:
     Gui Add, Edit, x+5 cBlack vInstallationPath w200, % settings.blueStacks.installationPath
     Gui Add, Button, x+10 gApplyInstallationPath, Apply
-    Gui Add, Text, xs+10 y+5, Override ADB port:
+    Gui Add, Text, cWhite xs+10 y+5, Override ADB port:
     Gui Add, Edit, x+5 cBlack vPortOverride w100, % settings.blueStacks.portOverride
     Gui Add, Button, x+10 gApplyPortOverride, Apply
 
@@ -173,7 +135,7 @@ ResetUI() {
     Gui Add, Button, x+10 gVerify, Verify
     Gui Add, Button, x+10 gTest, Test
 
-    Gui Add, Link, x+170,<a href="https://github.com/yeetoverflow/autodisgaeaRPG">documentation</a>
+    Gui Add, Link, x+150,<a href="https://github.com/yeetoverflow/autodisgaeaRPG">documentation</a>
 
     Gui Tab, Handlers
     
@@ -182,31 +144,29 @@ ResetUI() {
     TreeAdd(handlers, 0, { doChildrenPredicate : Func("PatternChildrenPredicate") })
 
     Gui, Tab, Patterns
-    Gui, Add, Text,, Filter:
-    Gui, Font, cBlack
-    Gui, Add, Edit, x+5 gFilterPatterns vPatternFilter w100
+    Gui, Add, Text, cWhite, Filter:
+    Gui, Add, Edit, cBlack x+5 gFilterPatterns vPatternFilter w100
     Gui Add, TreeView, xs+10 y+5 h300 cBlack gPatternsSelect vPatternsTree
     Gui, Font, cBlack
     Gui, Font, s3
-    Gui Add, Edit, w400 r20 vPatternsPreview
+    Gui Add, Edit, cBlack w400 r20 vPatternsPreview
     Gui, Font
     Gui, Add, Button, gPickPatternColor, Pick Color
-    Gui, Add, Edit, x+5 w100 vPatternColorPick,
+    Gui, Add, Edit, cBlack x+5 w100 vPatternColorPick,
     Gui, Add, Text, cWhite x+5, Variance: 
-    Gui Add, Edit, x+5 w30 cBlack vPatternColorVariance, 10
+    Gui Add, Edit, cBlack x+5 w30 cBlack vPatternColorVariance, 10
     Gui, Add, Button, x+5 gApplyColorPattern, Apply
-    Gui, Add, Text, xs+10 y+5 cWhite, Gray Diff: 
-    Gui Add, Edit, x+5 w30 cBlack vPatternGrayDiff, 50
+    Gui, Add, Text, cWhite xs+10 y+5, Gray Diff: 
+    Gui Add, Edit, cBlack x+5 w30 cBlack vPatternGrayDiff, 50
     Gui, Add, Button, x+5 gApplyGrayPattern, Apply
 
-    Gui, Font, cFFFFFF
     Gui Add, Button, xs+10 y+5 gTestPattern, Test
-    Gui Add, Checkbox, x+10 vTestPatternMulti, Multi
+    Gui Add, Checkbox, cWhite x+10 vTestPatternMulti, Multi
     Gui Add, Button, x+10 gCopyPatternToClipboard, Copy To Clipboard
     Gui Add, Button, x+150 gSavePatterns, Save Changes
-    Gui Add, Text, xs+10 y+10, FG Variance:
+    Gui Add, Text, cWhite xs+10 y+10, FG Variance:
     Gui Add, Slider, w200 tickinterval5 tooltip vTestPatternFG
-    Gui Add, Text, xs+10 y+10, BG Variance: 
+    Gui Add, Text, cWhite xs+10 y+10, BG Variance: 
     Gui Add, Slider, w200 tickinterval5 tooltip vTestPatternBG
     TreeAdd(patterns.Object(), 0, { leafCallback : Func("InitPatternsCallback")})
 
@@ -575,25 +535,25 @@ IsWithIn(pos, x1, x2, y1, y2) {
 CreateBattleOptionsUI(battleOptions) {
     global
 
-    Gui Add, Checkbox, % "xs+10 y+10 gBattleOptionsCheckedChanged vBattleOptions_"
+    Gui Add, Checkbox, % "cWhite xs+10 y+10 gBattleOptionsCheckedChanged vBattleOptions_"
         . "auto", Auto
-    Gui Add, Checkbox, % "x+5 gBattleOptionsCheckedChanged vBattleOptions_"
+    Gui Add, Checkbox, % "cWhite x+5 gBattleOptionsCheckedChanged vBattleOptions_"
         . "targetEnemyMiddle", TargetEnemyMiddle
-    Gui Add, Checkbox, % "x+5 gBattleOptionsCheckedChanged vBattleOptions_"
+    Gui Add, Checkbox, % "cWhite x+5 gBattleOptionsCheckedChanged vBattleOptions_"
         . "selectStandby", SelectStandby
 
-    Gui Add, Text, xs+10 y+5, Companions:
+    Gui Add, Text, cWhite xs+10 y+5, Companions:
 
     count := 1
     for k, v in settings.battleOptions.companions {
         if (count = 1) {
-            Gui Add, Checkbox, % "gBattleOptionsMultiCheckedChanged vBattleOptions_"
+            Gui Add, Checkbox, % "cWhite gBattleOptionsMultiCheckedChanged vBattleOptions_"
                 . "companions_" . k, % k
         } else if (mod(count, 5) = 0) {
-            Gui Add, Checkbox, % "xs+10 y+5 gBattleOptionsMultiCheckedChanged vBattleOptions_"
+            Gui Add, Checkbox, % "cWhite xs+10 y+5 gBattleOptionsMultiCheckedChanged vBattleOptions_"
                 . "companions_" . k, % k
         } else {
-            Gui Add, Checkbox, % "x+5 gBattleOptionsMultiCheckedChanged vBattleOptions_"
+            Gui Add, Checkbox, % "cWhite x+5 gBattleOptionsMultiCheckedChanged vBattleOptions_"
                 . "companions_" . k, % k
         }
         count++
@@ -602,18 +562,18 @@ CreateBattleOptionsUI(battleOptions) {
     Gui Add, Button, x+5 gAddBattleCompanion, Add
 
     count := 2
-    Gui Add, Text, xs+10 y+5, AllyTarget:
-    Gui Add, Radio, % "gBattleOptionsRadioCheckedChanged vBattleOptions_allyTarget_None", None
+    Gui Add, Text, cWhite xs+10 y+5, AllyTarget:
+    Gui Add, Radio, % "cWhite gBattleOptionsRadioCheckedChanged vBattleOptions_allyTarget_None", None
     for k, v in settings.battleOptions.allyTargets  {
         if (k = "None") {
             continue
         }
 
         if (mod(count, 5) = 0) {
-            Gui Add, Radio, % "xs+10 y+5 gBattleOptionsRadioCheckedChanged vBattleOptions_"
+            Gui Add, Radio, % "cWhite xs+10 y+5 gBattleOptionsRadioCheckedChanged vBattleOptions_"
                 . "allyTarget_" . k, % k
         } else {
-            Gui Add, Radio, % "x+5 gBattleOptionsRadioCheckedChanged vBattleOptions_"
+            Gui Add, Radio, % "cWhite x+5 gBattleOptionsRadioCheckedChanged vBattleOptions_"
                 . "allyTarget_" . k, % k
         }
         count++
@@ -621,32 +581,32 @@ CreateBattleOptionsUI(battleOptions) {
     
     Gui Add, Button, x+5 gAddAllyTarget, Add
 
-    Gui Add, Text, xs+10 y+5, Skills:
+    Gui Add, Text, cWhite xs+10 y+5, Skills:
     for k, v in settings.battleOptions.skillOrder {
         if (k = 1) {
-            Gui Add, Checkbox, % "gBattleOptionsMultiCheckedChanged vBattleOptions_"
+            Gui Add, Checkbox, % "cWhite gBattleOptionsMultiCheckedChanged vBattleOptions_"
                 . "skills_" . v, % v
         } else if mod(k, 5) = 0 {
-            Gui Add, Checkbox, % "xs+10 y+5 gBattleOptionsMultiCheckedChanged vBattleOptions_"
+            Gui Add, Checkbox, % "cWhite xs+10 y+5 gBattleOptionsMultiCheckedChanged vBattleOptions_"
                 . "skills_" . v, % v
         } else {
-            Gui Add, Checkbox, % "x+5 gBattleOptionsMultiCheckedChanged vBattleOptions_"
+            Gui Add, Checkbox, % "cWhite x+5 gBattleOptionsMultiCheckedChanged vBattleOptions_"
                 . "skills_" . v, % v
         }
     }
 
     Gui Add, Button, x+5 gAddBattleSkill, Add
 
-    Gui Add, Text, xs+10 y+5, SingleTargetSkills (Used in ItemWorld):
+    Gui Add, Text, cWhite xs+10 y+5, SingleTargetSkills (Used in ItemWorld):
     for k, v in settings.battleOptions.singleTargetSkills {
         if (k = 1) {
-            Gui Add, Checkbox, % "gBattleOptionsMultiCheckedChanged vBattleOptions_"
+            Gui Add, Checkbox, % "cWhite gBattleOptionsMultiCheckedChanged vBattleOptions_"
                 . "singleTargetSkills_" . v, % v
         } else if mod(k, 5) = 0 {
-            Gui Add, Checkbox, % "xs+10 y+5 gBattleOptionsMultiCheckedChanged vBattleOptions_"
+            Gui Add, Checkbox, % "cWhite xs+10 y+5 gBattleOptionsMultiCheckedChanged vBattleOptions_"
                 . "singleTargetSkills_" . v, % v
         } else {
-            Gui Add, Checkbox, % "x+5 gBattleOptionsMultiCheckedChanged vBattleOptions_"
+            Gui Add, Checkbox, % "cWhite x+5 gBattleOptionsMultiCheckedChanged vBattleOptions_"
                 . "singleTargetSkills_" . v, % v
         }
     }
