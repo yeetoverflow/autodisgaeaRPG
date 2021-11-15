@@ -92,6 +92,14 @@ InitPatterns() {
         patterns.tabs.shop.items.blocks.goldBar := "|<>**50$29.00n0000Y000180002E0804U0Q0901C0+0C7041k/08C0LkFk0hwi01PDk02xb005lk00/Uw00L0C00i070lQ03mOs00UBk0187U02T1004u0k09q0M0300A0IQE60+V830L001UU800pE"
         patterns.tabs.shop.items.blocks.dgSkipCoupon := "|<>**50$29.8tlruTyhj+xxwGJqyDXt/SNyMbQXiuCVpCRVXWDzxvYTwnnsTz1lkHztU0cwz07LMT0qiO00s1T005yL00uA700wL4y10vzA40DaMMS3+bhb3rsCm3vkvzw41qHM81iuTU7gp741te40E"
 
+        patterns.general := {}
+        patterns.general.autoClear := {}
+        patterns.general.autoClear.new := ["|<>0xFFB3EF@0.75$56.wC7z3XXVkz3VzkwssQTssTwDCS77zC7U3nbVlznVs0wtsQTysTwDCS77zy7z3nbVlzzVs0wtsMDbsS0DCS00sy7U3zz0ky7VzkzzUQTUsTwDzk33U"
+                                         , "|<>0xFFB2F2@0.75$52.sQDwSQsQTllzltnVlz73U7bC76yQC0SQsQTtkzVtnVlzr3z7bC76zwDwSQsQPzks1tnVViz3U7bC00twC0TzkMPXkzlzz1ViD3z7zk76U"]
+        patterns.general.autoClear.skip := ["|<>0xFFFFFF@0.75$31.U0400Q0300D01s07s0y03z0Tk1zkDy0zy7zUTzXzwDzxzz7zzzznzzzzzzzzzyzzzzwTznzwDzVzs7zUzs3z0Tk1y0Dk0y07U0Q03U0A01004"
+                                         , "|<>0xFFFFFF@0.80$38.k00k00C00C003s03s00z00zU0Dw0Dw03zk3zk0zy0zy0DzsDzs3zz3zz0zzwTzwDzzjzzXzzzzzwzzzzzzzzzzzzvzzzzzwzzwTzwDzyDzy3zy3zy0zz0zz0Dz0Dz03zU3zU0zU0zU0DU0DU03k03k00k00k008008002"]
+        patterns.general.autoClear.areaClear := "|<>0xFFFFFF@0.70$99.1k00000003y600000C00000001kMk00001k0000000Q0600000T0000000300k00002M1000000s0600000HUTVy3w0700kTUz16Q3UMkVU0s06664A8VkM73060700kkk1VAC30kM1k0s06C60Q9zkM7z3i0700lzktVM730k0kk0s06C0AA+0sM706603U0lk1VVk3X0M8lk0Q1662AAC0QM3W7T01sskMlnl01X07USE03w01s7aA"
+
         patterns.slider := {}
         patterns.slider.max := "|<>0x9E9E9E@0.75$13.0TU7k1s0w0S0D07U3k1s0w0y0z0zk"
 
@@ -142,10 +150,6 @@ InitPatterns() {
         patterns.menu.button := "|<>0xCCC6CE@0.85$43.k6CTzk0Q323080C3Y00007Vk00003kwDXy6BwqANnX6qP4Akl3Ndby8MVgwn04AEoAMU26AO6AMF36R027kVVvU"
         patterns.menu.giveUp := "|<>0xFDFCFB@0.74$77.7z30000060800M2600000C0E01k0000000Q0U0700000000s100C00E00001k200M01b1Vy03U4Bwk0363660708QBVz6C4AA0C0EsT0CAAMsM0Q0VUS0QMQVzk0s130y0skP3U01k661w1lUw7001UAA7Q3X0s6203UkQAQD61UCA03zUwsDsA007k03w1zU000000000030000000000006000000000000A000000000000M1"
 
-        patterns.skip := ["|<>0xFFFFFF@0.75$31.U0400Q0300D01s07s0y03z0Tk1zkDy0zy7zUTzXzwDzxzz7zzzznzzzzzzzzzyzzzzwTznzwDzVzs7zUzs3z0Tk1y0Dk0y07U0Q03U0A01004"
-                        , "|<>0xFFFFFF@0.80$38.k00k00C00C003s03s00z00zU0Dw0Dw03zk3zk0zy0zy0DzsDzs3zz3zz0zzwTzwDzzjzzXzzzzzwzzzzzzzzzzzzvzzzzzwzzwTzwDzyDzy3zy3zy0zz0zz0Dz0Dz03zU3zU0zU0zU0DU0DU03k03k00k00k008008002"]
-        patterns.new := ["|<>0xFFB3EF@0.75$56.wC7z3XXVkz3VzkwssQTssTwDCS77zC7U3nbVlznVs0wtsQTysTwDCS77zy7z3nbVlzzVs0wtsMDbsS0DCS00sy7U3zz0ky7VzkzzUQTUsTwDzk33U"
-                    , "|<>0xFFB2F2@0.75$52.sQDwSQsQTllzltnVlz73U7bC76yQC0SQsQTtkzVtnVlzr3z7bC76zwDwSQsQPzks1tnVViz3U7bC00twC0TzkMPXkzlzz1ViD3z7zk76U"]
 
         patterns.prompt := {}
         patterns.prompt.yes := ["|<>0x1D2F4C@0.66$34.s1U003UC00070k000S60000sM0001n0D0y7A3a6ADUQQMEQ1UlU1k777k70TwDUQ1U071k700A70AAEkQ0TVyU"
@@ -192,7 +196,7 @@ InitPatterns() {
                         , "|<>0x015CAC@0.83$26.1lw1lwTkQz7y7C1lVr0QMRk767M1nVy0TkRU7s7Q1r1r0RkRs7A7D1nVlwQMQD777U"
                         , "|<>0x015CAC@0.94$25.3ly1bszkrUQsPUCABU767k3b3s1z1s0zUy0RUT0CsBU7Q6s3a3DVnVXsskkwA8Q"
                         , "|<>**50$19.noyFTn/gtZTbyhTrzhFqwhvPrzzzzyfbLInzuxzzzvPLxj/TypCjTzLtyizaFTvAxDb6o1xy07k0U"]
-        patterns.areaClear := "|<>0xFFFFFF@0.70$99.1k00000003y600000C00000001kMk00001k0000000Q0600000T0000000300k00002M1000000s0600000HUTVy3w0700kTUz16Q3UMkVU0s06664A8VkM73060700kkk1VAC30kM1k0s06C60Q9zkM7z3i0700lzktVM730k0kk0s06C0AA+0sM706603U0lk1VVk3X0M8lk0Q1662AAC0QM3W7T01sskMlnl01X07USE03w01s7aA"
+        
         patterns.stage := {}
         patterns.stage.targets := {}
         patterns.stage.back := "|<>0xFFFFFF@0.90$36.00400000A00000Q00000w00003w00007w0000Dy0000Tzzzz1zzzzz3zzzzz7zzzzzDzzzzzTzzzzzzzzzzzTzzzzzDzzzzz3zzzzz1zzzzz0zzzzz0Tzzzy0Dw00003w00001w00000w00000Q000004000U"

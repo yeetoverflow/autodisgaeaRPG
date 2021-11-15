@@ -151,16 +151,16 @@ AutoClear() {
         targetCompanion.push(patterns["companions"][v])
 
 
-    loopTargets := [patterns.new, patterns.companions.title, patterns.skip, patterns.areaClear]
+    loopTargets := [patterns.general.autoClear.new, patterns.companions.title, patterns.general.autoClear.skip, patterns.general.autoClear.areaClear]
     Loop {
         result := PollPattern(loopTargets)
 
-        if InStr(result.comment, "new") || InStr(result.comment, "skip") || InStr(result.comment, "areaClear") {
+        if InStr(result.comment, "general.autoClear.new") || InStr(result.comment, "general.autoClear.skip") || InStr(result.comment, "general.autoClear.areaClear") {
             ClickResult(result)
             sleep, 50
             ClickResult(result)
 
-            if InStr(result.comment, "skip") {
+            if InStr(result.comment, "general.autoClear.skip") {
                 PollPattern(loopTargets, { callback : Func("MiddleClickCallback") })
             }
         }
