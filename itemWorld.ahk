@@ -223,32 +223,53 @@ DoItemDrop() {
             Break
         }
         
-        PollPattern(patterns.enemy.A, { doClick : true, offsetX : 40, offsetY : -30 })
+        PollPattern(patterns.enemy.A, { variancePct : 1, doClick : true, offsetX : 40, offsetY : -30 })
         sleep 400
         result := FindPattern(patterns.enemy.target)
 
         while (!result.IsSuccess) {
-            PollPattern(patterns.enemy.A, { doClick : true, offsetX : 40, offsetY : -30 })
+            PollPattern(patterns.enemy.A, { variancePct : 1, doClick : true, offsetX : 40, offsetY : -30 })
             sleep 400
             result := FindPattern(patterns.enemy.target)
         }
 
-        ;Don't know why this keeps failing but let's just check at least 3 times
         Loop, 3 {
-            result := FindPattern(patterns.enemy.A)
-            ;Keep attacking the item boss/king
-            While (result.IsSuccess)
-            {
+            Loop {
                 result := FindPattern(patterns.battle.skills.label)
                 if (result.IsSuccess) {
-                    FindPattern(singleTargetActions, { doClick : true })
+                    result := FindPattern(singleTargetActions, { doClick : true })
+                    if (FindPattern(patterns.enemy.A, { variancePct : 1 }).IsSuccess) {
+                        ClickResult(result)
+                    }
                 }
-                
-                sleep 1000
-                result := FindPattern(patterns.enemy.A)
+                else {
+                    Break
+                }
+
+                sleep, 500
             }
-            sleep, 500
         }
+        
+        ;Don't know why this keeps failing but let's just check at least 3 times
+        ; Loop, 3 {
+        ;     result := FindPattern(patterns.enemy.A, { variancePct : 1 })
+
+        ;     ;Keep attacking the item boss/king
+        ;     While (result.IsSuccess)
+        ;     {
+        ;         result := FindPattern(patterns.battle.skills.label)
+        ;         if (result.IsSuccess) {
+        ;             result := FindPattern(singleTargetActions, { doClick : true })
+        ;             if (FindPattern(patterns.enemy.A, { variancePct : 1 }).IsSuccess) {
+        ;                 ClickResult(result)
+        ;             }
+        ;         }
+                
+        ;         sleep 1000
+        ;         result := FindPattern(patterns.enemy.A, { variancePct : 1 })
+        ;     }
+        ;     sleep, 500
+        ; }
 
         sleep 2000
         result := FindDrop()
