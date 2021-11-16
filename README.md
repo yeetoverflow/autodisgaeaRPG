@@ -103,7 +103,7 @@ AutoHotkey project that automates the grindy parts of DisgaeaRPG. The program do
     * Will keep clearing item world as long as it can until defeated or manually stopped 
     * Will prioritize non rare/legendary items
     * Uses item world battle context
-    * Will reset until an item is dropped on level 10, 20 and 30
+    * Will reset until an item is dropped on level 10, 20, 30, 40, 50, 60, 70, 80, 90 and 100
     * Select either armor or weapon items
 * Start DoItemWorldFarmLoop
     * Main starting point is stronghold 
