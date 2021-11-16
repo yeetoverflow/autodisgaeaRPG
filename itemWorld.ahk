@@ -100,7 +100,7 @@ ItemWorldPreBattle() {
     SetStatus("DoItem")
     global patterns, settings
 
-    result := FindPattern(settings.itemWorldOptions.farmTrigger, { variancePct : 5 })
+    result := FindPattern(settings.itemWorldOptions.farmTrigger, { variancePct : 1 })
 
     if (result.IsSuccess) {
         if (!FindPattern([patterns.battle.done, patterns.itemWorld.drop], { variancePct : 15 }).IsSuccess)
