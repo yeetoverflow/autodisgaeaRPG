@@ -197,7 +197,7 @@ DoItemDrop() {
 
             result := FindPattern(patterns.battle.skills.label)
             if (result.IsSuccess) {
-                result := FindPattern([patterns.battle.wave.3over3, actions], { variancePct : 5, doClick : true })
+                result := FindPattern([patterns.battle.wave.3over3, actions], { variancePct : 5, doClick : true, doubleCheck: true, doubleCheckDelay: 250 })
                 if (InStr(result.comment, "3over3")) {
                     Break
                 }
