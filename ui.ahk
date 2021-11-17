@@ -72,19 +72,21 @@ ResetUI() {
     Gui Add, Text, cWhite xs+10, ItemWorld
     Gui Font, Normal
 
-    Gui, Add, Progress, vProgressBar_DoItemWorldLoop -Smooth w150 h18 c0x66FF66 border
-    Gui Add, Text, cBlack xp wp hp center vProgressText_DoItemWorldLoop BackgroundTrans, Start DoItemWorldLoop
+    Gui, Add, Progress, vProgressBar_FarmItemWorldAnyLoop -Smooth w170 h18 c0x66FF66 border
+    Gui Add, Text, cBlack xp wp hp center vProgressText_FarmItemWorldAnyLoop BackgroundTrans, Start FarmItemWorldAnyLoop
     Gui Add, Radio, cWhite gRadioOptionChanged vItemWorldOptions_loop_itemType_armor x+5, Armor
     Gui Add, Radio, cWhite gRadioOptionChanged vItemWorldOptions_loop_itemType_weapon x+5, Weapon
     GuiControl,, % "itemWorldOptions_loop_itemType_" . settings.itemWorldOptions.loop.itemType, 1
 
-    Gui, Add, Progress, xs+10 vProgressBar_DoItemWorldFarmLoop -Smooth w150 h18 c0x66FF66 border
-    Gui Add, Text, cBlack xp wp hp center vProgressText_DoItemWorldFarmLoop BackgroundTrans, Start DoItemWorldFarmLoop
+    Gui, Add, Progress, xs+10 vProgressBar_FarmItemWorldLegendaryLoop -Smooth w170 h18 c0x66FF66 border
+    Gui Add, Text, cBlack xp wp hp center vProgressText_FarmItemWorldLegendaryLoop BackgroundTrans, Start FarmItemWorldLegendaryLoop
     Gui Add, Radio, cWhite gRadioOptionChanged vItemWorldOptions_farmLoop_itemType_armor x+5, Armor
     Gui Add, Radio, cWhite gRadioOptionChanged vItemWorldOptions_farmLoop_itemType_weapon x+5, Weapon
     GuiControl,, % "itemWorldOptions_farmLoop_itemType_" . settings.itemWorldOptions.farmLoop.itemType, 1
 
-    Gui Add, Button, xs+10 gItemWorldFarm, FarmSingle
+    Gui, Add, Progress, xs+10 vProgressBar_FarmItemWorldSingle -Smooth w140 h18 c0x66FF66 border
+    Gui Add, Text, cBlack xp wp hp center vProgressText_FarmItemWorldSingle BackgroundTrans, Start FarmItemWorldSingle
+    ;Gui Add, Button, xs+10 gFarmItemWorldSingle, FarmSingle
     Gui Add, Text, cWhite x+10, Item Rarity: 
     Gui Add, Radio, cWhite gRadioOptionChanged vItemWorldOptions_targetItem_legendary x+5, Legendary
     Gui Add, Radio, cWhite gRadioOptionChanged vItemWorldOptions_targetItem_rareOrLegendary x+5, Rare/Legendary

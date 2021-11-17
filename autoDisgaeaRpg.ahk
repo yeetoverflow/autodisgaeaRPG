@@ -14,8 +14,8 @@ handlers.DoDarkGateMatsHuman := { Func : Func("DoDarkGateMatsHuman") }
 handlers.DoDarkGateMatsMonster := { Func : Func("DoDarkGateMatsMonster") }
 handlers.SwipeUp := { Func : Func("SwipeUp") }
 handlers.SwipeDown := { Func : Func("SwipeDown") }
-handlers.DoItemWorldLoop := { Func : Func("DoItemWorldLoop") }
-handlers.DoItemWorldFarmLoop := { Func : Func("DoItemWorldFarmLoop") }
+handlers.FarmItemWorldAnyLoop := { Func : Func("FarmItemWorldAnyLoop") }
+handlers.FarmItemWorldLegendaryLoop := { Func : Func("FarmItemWorldLegendaryLoop") }
 handlers.MiddleClickCallback := { Func : Func("MiddleClickCallback") }
 
 ;A_Args.1 is the executable
@@ -30,12 +30,13 @@ mode := StrReplace(A_Args.2, "mode=")
 msgToMode := { 0x1001 : "EventStoryFarm"static
              , 0x1002 : "EventStory500Pct"
              , 0x1003 : "EventRaidLoop"
-             , 0x1004 : "DoItemWorldLoop"
-             , 0x1005 : "DoItemWorldFarmLoop"
+             , 0x1004 : "FarmItemWorldAnyLoop"
+             , 0x1005 : "FarmItemWorldLegendaryLoop"
              , 0x1006 : "DoDarkGateHL"
              , 0x1007 : "DoDarkGateMatsHuman"
              , 0x1008 : "DoDarkGateMatsMonster"
-             , 0x1009 : "AutoClear"}
+             , 0x1009 : "AutoClear"
+             , 0x1010 : "FarmItemWorldSingle" }
 modeToMsg := {}
 
 for k, v in msgToMode {
@@ -367,10 +368,23 @@ Recover(mode) {
     global patterns
 
     Resize()
-    result := FindPattern([patterns.homeScreen.disgaea, patterns.homeScreen.disgaea7ds])
+    result := FindPattern([patterns.homeScreen.disgaea])
     
     doRecover := false
     doClickDisgaeaIcon := false
+
+    if (mode = "FarmItemWorldSingle") {
+        
+        AddLog("Recover")
+        HandleAction("Stop", mode)
+        PollPattern([patterns.homeScreen.disgaea], { doClick : true, predicatePattern : patterns.criware, pollInterval : 1000 })
+        PollPattern([patterns.criware], { doClick : true, predicatePattern : patterns.prompt.unfinishedBattle, pollInterval : 1000 })
+        PollPattern(patterns.prompt.unfinishedBattle, { doClick : true, predicatePattern : patterns.prompt.resume})
+        PollPattern(patterns.prompt.resume, { doClick : true, predicatePattern : patterns.battle.auto})
+        Resize()
+        HandleAction("Start", mode)
+        Return
+    }
 
     if (result.IsSuccess) {
         doRecover := true
@@ -392,7 +406,7 @@ Recover(mode) {
         AddLog("Recover")
         HandleAction("Stop", mode)
         if (doClickDisgaeaIcon) {
-            PollPattern([patterns.homeScreen.disgaea, patterns.homeScreen.disgaea7ds], { doClick : true, predicatePattern : patterns.criware, pollInterval : 1000 })
+            PollPattern([patterns.homeScreen.disgaea], { doClick : true, predicatePattern : patterns.criware, pollInterval : 1000 })
         }
         PollPattern([patterns.criware], { doClick : true, predicatePattern : patterns.stronghold.gemsIcon, pollInterval : 1000, callback : Func("RecoverCallback") })
         Resize()

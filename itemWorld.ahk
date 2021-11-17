@@ -1,6 +1,6 @@
 #Include common.ahk
 
-DoItemWorldLoop(type := "") {
+FarmItemWorldAnyLoop(type := "") {
     global patterns, settings
     SetStatus(A_ThisFunc)
     
@@ -80,11 +80,11 @@ DoItemWorldLoop(type := "") {
     }
 }
 
-DoItemWorldFarmLoop() {
-    DoItemWorldLoop("farmLegendary")
+FarmItemWorldLegendaryLoop() {
+    FarmItemWorldAnyLoop("farmLegendary")
 }
 
-ItemWorldFarm() {
+FarmItemWorldSingle() {
     global patterns, settings
 
     settings.itemWorldOptions.farmTrigger := patterns.itemWorld.level
@@ -93,6 +93,17 @@ ItemWorldFarm() {
     battleOptions.onBattleAction := Func("ItemWorldOnBattleAction")
     battleOptions.donePatterns := [patterns.itemWorld.title]
 
+    PollPattern(patterns.battle.skills.label, { doClick : true })
+
+    result := FindDrop()
+    if (result.IsSuccess && (settings.itemWorldOptions.targetItem = "any" || InStr(settings.itemWorldOptions.targetItem, result.type))) {
+        Return
+    }
+
+    if (FindPattern(patterns.battle.wave.3over3).IsSuccess && !FindPattern(patterns.enemy.A).IsSuccess)
+    {
+        GiveUpAndTryAgain(battleOptions)
+    }
     DoItem()
 }
 
@@ -128,7 +139,7 @@ DoItemLoop() {
     SetStatus(A_ThisFunc)
     global patterns
 
-    result := FindPattern([patterns.battle.auto.enabled, patterns.battle.auto.disabled]) 
+    result := FindPattern(patterns.battle.auto) 
     if (InStr(result.comment, "battle.auto")) {
         DoItem()
     }
@@ -223,82 +234,56 @@ DoItemDrop() {
             Break
         }
         
-        PollPattern(patterns.enemy.A, { variancePct : 1, doClick : true, offsetX : 40, offsetY : -30 })
-        sleep 400
-        result := FindPattern(patterns.enemy.target)
-
-        while (!result.IsSuccess) {
+        loop {
             PollPattern(patterns.enemy.A, { variancePct : 1, doClick : true, offsetX : 40, offsetY : -30 })
             sleep 400
             result := FindPattern(patterns.enemy.target)
-        }
+        } until (result.IsSuccess)
 
-        Loop, 3 {
-            Loop {
-                result := FindPattern(patterns.battle.skills.label)
-                if (result.IsSuccess) {
-                    result := FindPattern(singleTargetActions, { doClick : true })
+        ;check 4 times just in case
+        loop 4 {
+            loop {
+                if (FindPattern(patterns.battle.skills.label.IsSuccess)) {
+                    result := FindPattern(singleTargetActions)
                     if (FindPattern(patterns.enemy.A, { variancePct : 1 }).IsSuccess) {
                         ClickResult(result)
                     }
                 }
-                else {
-                    Break
-                }
 
-                sleep, 500
-            }
+                sleep 200
+                result := FindPattern(patterns.enemy.A, { variancePct : 1 })
+            } until (!result.IsSuccess)
         }
         
-        ;Don't know why this keeps failing but let's just check at least 3 times
-        ; Loop, 3 {
-        ;     result := FindPattern(patterns.enemy.A, { variancePct : 1 })
-
-        ;     ;Keep attacking the item boss/king
-        ;     While (result.IsSuccess)
-        ;     {
-        ;         result := FindPattern(patterns.battle.skills.label)
-        ;         if (result.IsSuccess) {
-        ;             result := FindPattern(singleTargetActions, { doClick : true })
-        ;             if (FindPattern(patterns.enemy.A, { variancePct : 1 }).IsSuccess) {
-        ;                 ClickResult(result)
-        ;             }
-        ;         }
-                
-        ;         sleep 1000
-        ;         result := FindPattern(patterns.enemy.A, { variancePct : 1 })
-        ;     }
-        ;     sleep, 500
-        ; }
-
-        sleep 2000
+        sleep 1500
         result := FindDrop()
-
-        ; if (result.type = "legendary") {
-            
-        ; }
 
         if (result.IsSuccess && (settings.itemWorldOptions.targetItem = "any" || InStr(settings.itemWorldOptions.targetItem, result.type))) {
             Break
         }
         Else {
-            PollPattern(patterns.menu.button, { doClick : true, predicatePattern : patterns.menu.giveUp })
-            PollPattern(patterns.menu.giveUp, { doClick : true, predicatePattern : patterns.prompt.yes })
-            PollPattern(patterns.prompt.yes, { doClick : true, predicatePattern : patterns.prompt.retry })
-            PollPattern(patterns.prompt.retry, { doClick : true })
-            PollPattern(patterns.battle.auto)
-
-            if (battleOptions.allyTarget && battleOptions.allyTarget != "None") {
-                sleep 500
-                allyTarget := patterns.battle.target[battleOptions.allyTarget]
-                Loop {
-                    FindPattern(allyTarget, { doClick : true })
-                    sleep 250
-                    result := FindPattern(patterns.battle.target.on, { variancePct : 20 })
-                } until (result.IsSuccess)
-            }
+            GiveUpAndTryAgain(battleOptions)
         }
         sleep 1000
+    }
+}
+
+GiveUpAndTryAgain(battleOptions) {
+    global patterns
+    PollPattern(patterns.menu.button, { doClick : true, predicatePattern : patterns.menu.giveUp })
+    PollPattern(patterns.menu.giveUp, { doClick : true, predicatePattern : patterns.prompt.yes })
+    PollPattern(patterns.prompt.yes, { doClick : true, predicatePattern : patterns.prompt.retry })
+    PollPattern(patterns.prompt.retry, { doClick : true })
+    PollPattern(patterns.battle.auto)
+
+    if (battleOptions.allyTarget && battleOptions.allyTarget != "None") {
+        sleep 500
+        allyTarget := patterns.battle.target[battleOptions.allyTarget]
+        Loop {
+            FindPattern(allyTarget, { doClick : true })
+            sleep 250
+            result := FindPattern(patterns.battle.target.on, { variancePct : 20 })
+        } until (result.IsSuccess)
     }
 }
 
