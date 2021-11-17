@@ -146,7 +146,7 @@ DoItemLoop() {
 
     Loop {
         FindPattern(patterns.itemWorld.leave, { doClick : true })
-        PollPattern(patterns.itemWorld.armorDisabled, { doClick : true, predicatePattern : patterns.itemWorld.armorEnabled })
+        PollPattern(patterns.itemWorld.armorDisabled, { doClick : true, predicatePattern : patterns.itemWorld.armor.enabled })
         PollPattern(patterns.itemWorld.item.name, { doClick : true, predicatePattern : patterns.itemWorld.go })
         PollPattern(patterns.itemWorld.go, { doClick : true, predicatePattern : patterns.battle.start })
         PollPattern(patterns.battle.start, { doClick : true })
@@ -162,7 +162,7 @@ DoItem() {
 
     Loop {
         DoBattle(battleOptions)
-        result := PollPattern([patterns.itemWorld.nextLevel, patterns.itemWorld.leave], { variancePct : 10, doClick : true, doubleCheck : true, doubleCheckDelay : 250, callback : Func("MiddleClickCallback") })
+        result := PollPattern([patterns.itemWorld.nextLevel, patterns.itemWorld.leave], { predicatePattern: [patterns.itemWorld.armor.enabled, patterns.battle.auto], doClick : true, doubleCheck : true, doubleCheckDelay : 250, callback : Func("MiddleClickCallback") })
         if (InStr(result.comment, "leave")) {
             sleep 1000
             Break
