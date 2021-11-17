@@ -104,7 +104,7 @@ HandleRaid() {
 }
 
 EventStory500Pct() {
-    global patterns, settings
+    global mode, patterns, settings
     SetStatus(A_ThisFunc)
 
     done := false
