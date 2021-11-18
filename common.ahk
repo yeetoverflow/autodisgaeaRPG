@@ -540,7 +540,7 @@ MiddleClickCallback() {
     WinGetPos,X,Y,W,H, % "ahk_id " . hwnd
 
     if (W = 600 && H = 1040) {
-        Click("x550 y150")
+        Click("x550 y220")
     }
     
     ;Resize()
