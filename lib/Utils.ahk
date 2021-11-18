@@ -83,6 +83,12 @@ PollPattern(pattern, opts := "") {
             sleep, opts.pollInterval
             opts.callback()
             result := FindPattern(pattern, opts)
+
+            if (originalDoubleCheck) {
+                sleep, opts.doubleCheckDelay
+                result := FindPattern(pattern, opts)
+            }
+
             if (result.IsSuccess && originalDoClick) {
                 successResult := result
                 sleep, opts.clickDelay
