@@ -445,7 +445,12 @@ DoBattle(battleOptions) {
                 ClickResult(result)
             }
 
-            if (FindPattern([patterns.battle.done, patterns.itemWorld.title]).IsSuccess) {
+            if (FindPattern(patterns.battle.done).IsSuccess) {
+                SetStatus(A_ThisFunc . ": Done", 2)
+                Break
+            }
+
+            if (battleOptions.donePatterns && FindPattern(battleOptions.donePatterns).IsSuccess) {
                 SetStatus(A_ThisFunc . ": Done", 2)
                 Break
             }

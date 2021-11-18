@@ -12,7 +12,7 @@ FarmItemWorldAnyLoop(type := "") {
     battleOptions := settings.battleOptions.itemWorld
     battleOptions.preBattle := Func("ItemWorldPreBattle")
     battleOptions.onBattleAction := Func("ItemWorldOnBattleAction")
-    battleOptions.donePatterns := [patterns.itemWorld.title, patterns.itemWorld.leave]
+    battleOptions.donePatterns := [patterns.itemWorld.title, patterns.itemWorld.leave, patterns.itemWorld.armor]
     targetSort := "ascending"
     targetItem := patterns.itemWorld.item.name
     
