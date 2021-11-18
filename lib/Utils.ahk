@@ -73,18 +73,9 @@ PollPattern(pattern, opts := "") {
     opts.doClick := false
     opts.doubleCheck := false
 
-    result := FindPattern(pattern, opts)
-    while (!result.IsSuccess && (!opts.maxCount || count < opts.maxCount)) {
-        SetStatus("Try " . count, 2)
-        sleep, opts.pollInterval
-        opts.callback()
-        result := FindPattern(pattern, opts)
-        count++
-    }
-
     ;keep polling until predicatePattern is found
     if (opts.predicatePattern) {
-        initialResult := result
+        result := FindPattern(pattern, opts)
         targetResult := FindPattern(opts.predicatePattern, opts)
 
         while (!targetResult.IsSuccess) {
@@ -93,6 +84,7 @@ PollPattern(pattern, opts := "") {
             opts.callback()
             result := FindPattern(pattern, opts)
             if (result.IsSuccess && originalDoClick) {
+                successResult := result
                 sleep, opts.clickDelay
                 ClickResult(result)
             }
@@ -106,6 +98,17 @@ PollPattern(pattern, opts := "") {
         if (opts.maxCount && opt.maxCount >= count) {
             result.IsSuccess := false
         }
+
+        Return successResult
+    }
+
+    result := FindPattern(pattern, opts)
+    while (!result.IsSuccess && (!opts.maxCount || count < opts.maxCount)) {
+        SetStatus("Try " . count, 2)
+        sleep, opts.pollInterval
+        opts.callback()
+        result := FindPattern(pattern, opts)
+        count++
     }
 
     if (originalDoubleCheck) {
@@ -113,7 +116,7 @@ PollPattern(pattern, opts := "") {
         result := FindPattern(pattern, opts)
     }
     
-    if (originalDoClick && !opts.predicatePattern) {
+    if (originalDoClick) {
         sleep, opts.clickDelay
         ClickResult(result)
     }

@@ -12,7 +12,7 @@ FarmItemWorldAnyLoop(type := "") {
     battleOptions := settings.battleOptions.itemWorld
     battleOptions.preBattle := Func("ItemWorldPreBattle")
     battleOptions.onBattleAction := Func("ItemWorldOnBattleAction")
-    battleOptions.donePatterns := [patterns.itemWorld.title]
+    battleOptions.donePatterns := [patterns.itemWorld.title, patterns.itemWorld.leave]
     targetSort := "ascending"
     targetItem := patterns.itemWorld.item.name
     
@@ -91,7 +91,7 @@ FarmItemWorldSingle() {
     battleOptions := settings.battleOptions.itemWorld
     battleOptions.preBattle := Func("ItemWorldPreBattle")
     battleOptions.onBattleAction := Func("ItemWorldOnBattleAction")
-    battleOptions.donePatterns := [patterns.itemWorld.title]
+    battleOptions.donePatterns := [patterns.itemWorld.title, patterns.itemWorld.leave]
 
     PollPattern(patterns.battle.skills.label, { doClick : true })
 
@@ -162,7 +162,7 @@ DoItem() {
 
     Loop {
         DoBattle(battleOptions)
-        result := PollPattern([patterns.itemWorld.nextLevel, patterns.itemWorld.leave], { predicatePattern: [patterns.itemWorld.armor.enabled, patterns.battle.auto], doClick : true, doubleCheck : true, doubleCheckDelay : 250, callback : Func("MiddleClickCallback") })
+        result := PollPattern([patterns.itemWorld.nextLevel, patterns.itemWorld.leave], { predicatePattern: [patterns.itemWorld.armor, patterns.battle.auto], doClick : true, doubleCheck : true, doubleCheckDelay : 250, callback : Func("MiddleClickCallback") })
         if (InStr(result.comment, "leave")) {
             sleep 1000
             Break
