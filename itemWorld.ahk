@@ -26,7 +26,7 @@ FarmItemWorldAnyLoop(type := "") {
 
     targeSortInverse := targetSort = "ascending" ? "descending" : "ascending"
 
-    loopTargets := [patterns.stronghold.gemsIcon, patterns.dimensionGate.background, patterns.itemWorld.title, patterns.itemWorld.armor, patterns.itemWorld.leave, patterns.battle.auto]
+    loopTargets := [patterns.stronghold.gemsIcon, patterns.dimensionGate.background, patterns.itemWorld.title, patterns.itemWorld.leave, patterns.battle.auto]
     Loop {
         result := PollPattern(loopTargets)
 
@@ -38,7 +38,7 @@ FarmItemWorldAnyLoop(type := "") {
             FindPattern(patterns.dimensionGate.itemWorld, { doClick : true })
             sleep 1000
         }
-        else if InStr(result.comment, "itemWorld.title") || InStr(result.comment, "itemWorld.armor") {
+        else if InStr(result.comment, "itemWorld.title") {
             PollPattern(patterns.itemWorld.armor.disabled, { doClick : true, predicatePattern : patterns.itemWorld.armor.enabled })
             if (doWeapon) {
                 PollPattern(patterns.itemWorld.weapon.disabled, { doClick : true, predicatePattern : patterns.itemWorld.weapon.enabled })
@@ -68,6 +68,7 @@ FarmItemWorldAnyLoop(type := "") {
             PollPattern(patterns.itemWorld.go, { doClick : true, predicatePattern : patterns.battle.start })
             PollPattern(patterns.battle.start, { doClick : true })
             DoItem()
+            sleep 2000
         }
         else if InStr(result.comment, "itemWorld.leave") {
             ClickResult(result)
@@ -75,7 +76,7 @@ FarmItemWorldAnyLoop(type := "") {
         }
         else if InStr(result.comment, "battle.auto") {
             DoItem()
-            sleep 1000
+            sleep 2000
         }
     }
 }
@@ -135,25 +136,6 @@ ItemWorldOnBattleAction(result) {
         ClickResult(result)
 }
 
-; DoItemLoop() {
-;     SetStatus(A_ThisFunc)
-;     global patterns
-
-;     result := FindPattern(patterns.battle.auto) 
-;     if (InStr(result.comment, "battle.auto")) {
-;         DoItem()
-;     }
-
-;     Loop {
-;         FindPattern(patterns.itemWorld.leave, { doClick : true })
-;         PollPattern(patterns.itemWorld.armorDisabled, { doClick : true, predicatePattern : patterns.itemWorld.armor.enabled })
-;         PollPattern(patterns.itemWorld.item.name, { doClick : true, predicatePattern : patterns.itemWorld.go })
-;         PollPattern(patterns.itemWorld.go, { doClick : true, predicatePattern : patterns.battle.start })
-;         PollPattern(patterns.battle.start, { doClick : true })
-;         DoItem()
-;     }
-; }
-
 DoItem() {
     SetStatus(A_ThisFunc)
     global patterns, settings
@@ -162,8 +144,8 @@ DoItem() {
 
     Loop {
         DoBattle(battleOptions)
-        PollPattern([patterns.itemWorld.nextLevel, patterns.itemWorld.leave], { predicatePattern: [patterns.itemWorld.armor, patterns.battle.auto], doClick : true, doubleCheck : true, doubleCheckDelay : 250, callback : Func("MiddleClickCallback") })
-        if (FindPattern(patterns.itemWorld.armor).IsSuccess) {
+        result := PollPattern([patterns.itemWorld.nextLevel, patterns.itemWorld.leave], { predicatePattern: [patterns.itemWorld.title, patterns.battle.auto], doClick : true, doubleCheck : true, doubleCheckDelay : 250, callback : Func("MiddleClickCallback") })
+        if (InStr(result.comment, "itemWorld.leave")) {
             sleep 1000
             Break
         }
