@@ -163,7 +163,7 @@ DoItem() {
     Loop {
         DoBattle(battleOptions)
         PollPattern([patterns.itemWorld.nextLevel, patterns.itemWorld.leave], { predicatePattern: [patterns.itemWorld.armor, patterns.battle.auto], doClick : true, doubleCheck : true, doubleCheckDelay : 250, callback : Func("MiddleClickCallback") })
-        if (FindPattern(patterns.itemWorld.armor)) {
+        if (FindPattern(patterns.itemWorld.armor).IsSuccess) {
             sleep 1000
             Break
         }
