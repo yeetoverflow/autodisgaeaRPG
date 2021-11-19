@@ -415,21 +415,13 @@ DoBattle(battleOptions) {
     global patterns
 
     standbySelected := false
+    allyTargeted := false
 
     if (battleOptions.targetEnemyMiddle) {
         Loop {
             ClickResult({ X : 342, Y : 388 })
             sleep 250
             result := FindPattern(patterns.enemy.target, { variancePct : 20 })
-        } until (result.IsSuccess)
-    }
-
-    if (battleOptions.allyTarget && battleOptions.allyTarget != "None") {
-        allyTarget := patterns.battle.target[battleOptions.allyTarget]
-        Loop {
-            FindPattern(allyTarget, { doClick : true })
-            sleep 250
-            result := FindPattern(patterns.battle.target.on, { variancePct : 20 })
         } until (result.IsSuccess)
     }
 
@@ -489,6 +481,16 @@ DoBattle(battleOptions) {
                         standbySelected := true
                         sleep 500
                     }
+                }
+
+                if (battleOptions.allyTarget && !allyTargeted && battleOptions.allyTarget != "None") {
+                    allyTarget := patterns.battle.target[battleOptions.allyTarget]
+                    Loop {
+                        FindPattern(allyTarget, { doClick : true })
+                        sleep 250
+                        result := FindPattern(patterns.battle.target.on, { variancePct : 20 })
+                    } until (result.IsSuccess)
+                    allyTargeted := true
                 }
 
                 result := FindPattern(actions)
