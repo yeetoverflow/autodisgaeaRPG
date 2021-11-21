@@ -7,12 +7,9 @@ EventStoryFarm() {
     SetStatus(battleCount, 2)
 
     battleOptions := settings.battleOptions.event
+    battleOptions.startPatterns := [patterns.battle.start, patterns.battle.prompt.battle]
     battleOptions.donePatterns := [patterns.raid.appear.advanceInStory, patterns.battle.prompt.quitBattle]
-
-    targetCompanions := []
-    for k, v in battleOptions.companions
-        targetCompanions.push(patterns["companions"][v])
-
+   
     loopTargets := [patterns.stronghold.gemsIcon, patterns.dimensionGate.background, patterns.dimensionGate.events.select
         , patterns.battle.start, patterns.events.title, patterns.events.stage.title, patterns.battle.prompt.battle
         , patterns.raid.message, patterns.companions.title]
@@ -35,14 +32,7 @@ EventStoryFarm() {
             ClickResult(result)
             sleep 1000
         }
-        else if InStr(result.comment, "battle.prompt.battle") {
-            PollPattern(patterns.battle.prompt.battle, { doClick : true })
-            sleep 500
-            if (HandleInsufficientAP()) {
-                PollPattern(patterns.battle.prompt.battle, { doClick : true })
-                sleep 500
-            }
-            FindAndClickListTarget(targetCompanions)
+        else if InStr(result.comment, "battle.prompt.battle") || InStr(result.comment, "companions.title") {
             DoBattle(battleOptions)
             battleCount--
             ControlSetText, edit2, % battleCount,  % "ahk_id " . guiHwnd
@@ -62,24 +52,6 @@ EventStoryFarm() {
         }
         else if InStr(result.comment, "events.stage.title") {
             PollPattern(patterns.events.stage[settings.eventOptions.storyTarget], { doClick : true })
-        }
-        else if InStr(result.comment, "companions.title") {
-            FindAndClickListTarget(targetCompanions)
-            PollPattern(patterns.battle.start, { doClick : true })
-            sleep 500
-            if (HandleInsufficientAP()) {
-                PollPattern(patterns.battle.start, { doClick : true })
-                sleep 500
-            }
-            DoBattle(battleOptions)
-            battleCount--
-            ControlSetText, edit2, % battleCount,  % "ahk_id " . guiHwnd
-            SetStatus(battleCount, 2)
-            PollPattern(loopTargets, { callback : Func("MiddleClickCallback") })
-            sleep 2000
-            if (battleCount <= 0) {
-                Break
-            }
         }
         else if InStr(result.comment, "raid.message") {
             HandleRaid()
@@ -109,11 +81,8 @@ EventStory500Pct() {
 
     done := false
     battleOptions := settings.battleOptions.event
+    battleOptions.startPatterns := [patterns.battle.start, patterns.battle.prompt.battle]
     battleOptions.donePatterns := [patterns.raid.appear.advanceInStory, patterns.battle.prompt.quitBattle]
-
-    targetCompanions := []
-    for k, v in battleOptions.companions
-        targetCompanions.push(patterns["companions"][v])
 
     loopTargets := [patterns.stronghold.gemsIcon, patterns.dimensionGate.background, patterns.dimensionGate.events.select
         , patterns.battle.start, patterns.events.title, patterns.events.stage.title, patterns.battle.prompt.quitBattle, patterns.raid.message]
@@ -168,12 +137,6 @@ EventStory500Pct() {
             result := FindPattern(patterns.events.stage.500Pct)
             if (result.IsSuccess) {
                 PollPattern(patterns.events.stage.500Pct, { doClick : true, fgVariancePct : 20, bgVariancePct : 15, predicatePattern : patterns.companions.50Pct })
-                FindAndClickListTarget(targetCompanions)
-                PollPattern(patterns.battle.start, { doClick : true })
-                sleep 500
-                if (HandleInsufficientAP()) {
-                    PollPattern(patterns.battle.start, { doClick : true })
-                }
                 DoBattle(battleOptions)
                 PollPattern(loopTargets, { callback : Func("MiddleClickCallback") })
                 sleep 2000

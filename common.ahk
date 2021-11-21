@@ -12,19 +12,19 @@ defaults.blueStacks.identifier := "DisgaeaRPG"
 defaults.blueStacks.installationPath := "C:\Program Files\BlueStacks_nxt"
 defaults.blueStacks.portOverride := ""
 defaults.battleOptions := {}
-defaults.battleOptions.default := { allyTarget : "None", auto : 1, targetEnemyMiddle : 0, selectStandby : 0
+defaults.battleOptions.default := { allyTarget : "None", auto : 1, targetEnemyMiddle : 0, selectStandby : 0, autoRefillAP : 0
     , companions : ["50Pct"], skills : [], singleTargetSkills : [] }
-defaults.battleOptions.event := { allyTarget : "None", auto : 1, targetEnemyMiddle : 0, selectStandby : 0
+defaults.battleOptions.event := { allyTarget : "None", auto : 1, targetEnemyMiddle : 0, selectStandby : 0, autoRefillAP : 1
     , companions : ["50Pct"], skills : [], singleTargetSkills : [] }
-defaults.battleOptions.itemWorld := { allyTarget : "None", auto : 0, targetEnemyMiddle : 0, selectStandby : 0
+defaults.battleOptions.itemWorld := { allyTarget : "None", auto : 0, targetEnemyMiddle : 0, selectStandby : 0, autoRefillAP : 0
     , companions : [], skills : ["blastCleave", "doppelganger"], singleTargetSkills : ["annihilationCannon", "darkBeam"] }
-defaults.battleOptions.sweep := { allyTarget : "OverlordAsagi", auto : 0, targetEnemyMiddle : 0, selectStandby : 0
+defaults.battleOptions.sweep := { allyTarget : "OverlordAsagi", auto : 0, targetEnemyMiddle : 0, selectStandby : 0, autoRefillAP : 1
     , companions : ["OverlordAsagi"], skills : [ "blastCleave", "megaBraveheart"], singleTargetSkills : [] }
-defaults.battleOptions.raid := { allyTarget : "OverlordAsagi", auto : 0, targetEnemyMiddle : 1, selectStandby : 0
+defaults.battleOptions.raid := { allyTarget : "OverlordAsagi", auto : 0, targetEnemyMiddle : 1, selectStandby : 0, autoRefillAP : 0
     , companions : ["OverlordAsagi"], skills : [ "annihilationCannon", "darkBeam", "megaBraveheart"], singleTargetSkills : [] }
-defaults.battleOptions.darkGateMats := { allyTarget : "None", auto : 0, targetEnemyMiddle : 0, selectStandby : 0
+defaults.battleOptions.darkGateMats := { allyTarget : "None", auto : 0, targetEnemyMiddle : 0, selectStandby : 0, autoRefillAP : 1
     , companions : ["SantaLaharl"], skills : ["doppelganger"], singleTargetSkills : [] }
-defaults.battleOptions.darkGateHL := { allyTarget : "None", auto : 0, targetEnemyMiddle : 0, selectStandby : 0
+defaults.battleOptions.darkGateHL := { allyTarget : "None", auto : 0, targetEnemyMiddle : 0, selectStandby : 0, autoRefillAP : 1
     , companions : ["Seraphina"] , skills : ["blastCleave", "doppelganger"], singleTargetSkills : [] }
 defaults.battleOptions.skills := { "annihilationCannon": "|<battle.skills.annihilationCannon>0xFFFFFF@0.70$69.3U0000M0600kg0000300k064kTVy6Tla7Vsa36AMn6Al668MMlX6MFa0El336AMX2AkS6TwMlX4MFaAEm1X6AMn2Al26kAMlX6MFaAko1n6AMn2Alv700000000000000000000000000000000000000000000001s0000000000lU000000000A0000000000300000000000M0D3QBkC3Q0702AMlX6AMk0s01X6AMkX60700QMlXA6Mk0M0NX6ANUn60306AMlXA6Mk0A2lX6AMlX600vXSMlX3MMk01U8000040004"
                                  , "blastCleave": "|<battle.skills.blastCleave>*126$54.TsU000000E4U000s00HmU001800GFU001800GGUz7vC00HWU0g6200E6VQdpA00HlUwMt800G9UUQ9800G9VAL5800G9X8RZ800E3XAPZC00ECZ2QB200DkQzrsw0000000000000A0000001w000000061W0000008xW000000F7W03zqU0G2WD1zzzs20WUY7D+220WCJn7QmW0XCLn6McW0X0K2as1m0XDsmWczl3X+tGEc2swXDNnN4ww1WUM1962zyQTbz63wU"
@@ -115,7 +115,8 @@ InitPatterns() {
         patterns.battle.skills := {}
         patterns.battle.skills.label := ["|<>0xFCFBFB@0.77$38.DsA0Mkq3306AD0Ek033k0A00kw0310ADk0lVX3TUAkMkny3M6AA7kw1X30SDUMkk3XQ6AA0sn1X3UAAsMkw7376AAz0klX3U",
                                     , "|<>0xFBFAFA@0.70$39.00600MMz1k3X7QAC0QMz0Vk137s0C00Mz01kk37S0CAQMvy1n3X77wCkQMsDlw3X70CDUQMs0ly3X706CsQMy0lnXX7sACCQMtz1Un32U"]
-        patterns.battle.standby := "|<>0xFEC96F@0.80$87.DsC0000003Vk003z1k000000QC000zsC0000003Vk007U1s000000QC000y0D0000007Vk007s7y3y1zUDwDs77zUzlzkDy7zVzksvy7yTy3zkzwDy77DsD3XkSTD7Vlsssz1sQS3ntsQCD773wD3XkSTD3VlsssDVsQSXntsQCD77zwD3zwSS7zVzkzzz1sDzXnkzwDy3zzsC0zwSQ3zVz0Ds0000000000000700000000000007s0000000000000y000000000000074"
+        patterns.battle.standby := ["|<>0xFEC96F@0.80$87.DsC0000003Vk003z1k000000QC000zsC0000003Vk007U1s000000QC000y0D0000007Vk007s7y3y1zUDwDs77zUzlzkDy7zVzksvy7yTy3zkzwDy77DsD3XkSTD7Vlsssz1sQS3ntsQCD773wD3XkSTD3VlsssDVsQSXntsQCD77zwD3zwSS7zVzkzzz1sDzXnkzwDy3zzsC0zwSQ3zVz0Ds0000000000000700000000000007s0000000000000y000000000000074"
+                                  , "|<>0x0C0806@0.80$90.3z7k000001wy00080Y80000024V000E0Y80000024V000E0Y800000241000Uz4800000241000UMMADy7z0S41kTDUAk2E280lU4040kE6U2U280G04020kM2030280+04010k81MD328MA641VUk40YC328MA651VUk30YC33cMA651VUkTUo930MMA651VUkk0g/00MMC0701k0E0g8U0MMG0503E0E1A8k0MMH0707Q0zz7wTzzzlzzzwDkU"]
 
         patterns.battle.wave := {}
         patterns.battle.wave.1over3 := "|<>0xFFFFFF@1.00$39.y0063y7k01kTsS00Q03Vk03U0QC00s03Vk0700QC00s07Vk0C0TwC01k3zlk0A00SC03U01tk0M00TC03003lk0s00SC06007Vk1k00wC0C00D1k1U01kU"
@@ -414,8 +415,28 @@ DoBattle(battleOptions) {
     SetStatus(A_ThisFunc, 2)
     global patterns
 
+    targetCompanions := []
+    for k, v in battleOptions.companions
+        targetCompanions.push(patterns["companions"][v])
+
     standbySelected := false
     allyTargeted := false
+
+    Loop {
+        if (targetCompanions.Length() && FindPattern(patterns.companions.refresh).IsSuccess) {
+            FindAndClickListTarget(targetCompanions)
+        }
+
+        if (battleOptions.startPatterns) {
+            FindPattern(battleOptions.startPatterns, { doClick : true })
+        }
+
+        if (battleOptions.autoRefillAP) {
+            HandleInsufficientAP()
+        }
+
+        result := FindPattern(patterns.battle.auto)
+    } until (result.IsSuccess)
 
     if (battleOptions.targetEnemyMiddle) {
         Loop {
@@ -425,54 +446,28 @@ DoBattle(battleOptions) {
         } until (result.IsSuccess)
     }
 
-    if (battleOptions.auto) {
-        Loop {
+    actions := []
+
+    ;loop through skill list
+    for k, v in battleOptions.skills
+    {
+        actions.Push(patterns.battle.skills[v])
+    }
+
+    actions.Push(patterns.battle.attack)
+
+    Loop {
+        count := 0
+
+        if (battleOptions.auto) {
             FindPattern(patterns.battle.auto.disabled, { doClick : true })
             if (battleOptions.onBattleAction)
             {
                 battleOptions.onBattleAction.Call("")
             }
-
-            if (result.IsSuccess) {
-                ClickResult(result)
-            }
-
-            if (FindPattern(patterns.battle.done).IsSuccess) {
-                SetStatus(A_ThisFunc . ": Done", 2)
-                Break
-            }
-
-            if (battleOptions.donePatterns && FindPattern(battleOptions.donePatterns).IsSuccess) {
-                SetStatus(A_ThisFunc . ": Done", 2)
-                Break
-            }
-            sleep, 250
         }
-    }
-    else {
-        actions := []
-
-        ;loop through skill list
-        for k, v in battleOptions.skills
-        {
-            actions.Push(patterns.battle.skills[v])
-        }
-
-        actions.Push(patterns.battle.attack)
-
-        count := 0
-        Loop
-        {
-            battleOptions.preBattle()
-
-            result := FindPattern([patterns.battle.wave.1over3, patterns.battle.wave.2over3, patterns.battle.wave.3over3])
-            if (result.IsSuccess) {
-                RegExMatch(result.comment, "(?P<wave>\d)over(?P<numWaves>\d)", matches)
-                SetStatus(A_ThisFunc . ": " . matchesWave . "/" .  matchesNumWaves . "(" . count . ")", 2)
-            }
-
+        else {
             FindPattern(patterns.battle.auto.enabled, { doClick : true })
-
             result := FindPattern(patterns.battle.skills.label)
             if (result.IsSuccess) {
                 if (battleOptions.selectStandby && !standbySelected) {
@@ -502,25 +497,19 @@ DoBattle(battleOptions) {
                     ClickResult(result)
                 }
             }
+        }
 
-            result := FindPattern(patterns.battle.done)
-            if (result.IsSuccess) {
-                SetStatus(A_ThisFunc . ": Done", 2)
-                Break
-            }
+        if (FindPattern(patterns.battle.done).IsSuccess || (battleOptions.donePatterns && FindPattern(battleOptions.donePatterns).IsSuccess)) {
+            SetStatus(A_ThisFunc . ": Done", 2)
+            Break
+        }
 
-            if (battleOptions.donePatterns && FindPattern(battleOptions.donePatterns).IsSuccess) {
-                SetStatus(A_ThisFunc . ": Done", 2)
-                Break
-            }
+        sleep, 250
+        count++
+        SetStatus(A_ThisFunc . ": " . matchesWave . "/" .  matchesNumWaves . "(" . count . ")", 2)
 
-            sleep, 250
-            count++
-            SetStatus(A_ThisFunc . ": " . matchesWave . "/" .  matchesNumWaves . "(" . count . ")", 2)
-
-            if (mod(count, 250) = 0) {
-                Resize(true)
-            }
+        if (mod(count, 250) = 0) {
+            Resize(true)
         }
     }
 }

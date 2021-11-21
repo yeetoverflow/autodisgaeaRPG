@@ -35,10 +35,8 @@ DoDarkGate(type) {
             targetBlock := patterns.darkGates.mats.monster.block
         }
     }
-    
-    targetCompanions := []
-    for k, v in battleOptions.companions
-        targetCompanions.push(patterns["companions"][v])
+
+    battleOptions.startPatterns := [patterns.battle.start, patterns.battle.prompt.battle]
 
     loopTargets := [patterns.stronghold.gemsIcon, patterns.dimensionGate.background, patterns.darkGates.title
         , patterns.darkGates.stage.title, patterns.companions.title, patterns.battle.title, patterns.battle.auto
@@ -70,28 +68,9 @@ DoDarkGate(type) {
             FindAndClickListTarget(patterns.darkGates.stage.threeStars, patterns.companions.refresh)
             sleep 1000
         }
-        else if InStr(result.comment, "companions.title") {
-            FindAndClickListTarget(targetCompanions)
-            sleep 1000
-        }
-        else if InStr(result.comment, "battle.title") {
-            FindPattern(patterns.battle.start, { doClick : true })
-            sleep 500
-            if (HandleInsufficientAP()) {
-                PollPattern(patterns.battle.start, { variancePct : 5, doClick : true }) 
-            }
-            sleep 1000
-        }
-        else if InStr(result.comment, "battle.auto") {
+        else if InStr(result.comment, "companions.title") || InStr(result.comment, "battle.auto") || InStr(result.comment, "battle.title") || InStr(result.comment, "battle.prompt.battleAgain") {
             DoBattle(battleOptions)
             PollPattern(loopTargets, { callback : Func("MiddleClickCallback"), pollInterval : 250 })
-        }
-        else if InStr(result.comment, "battle.prompt.battleAgain") {
-            FindPattern(patterns.battle.prompt.battle, { doClick : true })
-            sleep 500
-            if (HandleInsufficientAP()) {
-                PollPattern(patterns.battle.prompt.battle, { variancePct : 5, doClick : true }) 
-            }
         }
     }
 

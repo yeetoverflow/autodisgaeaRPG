@@ -545,6 +545,8 @@ CreateBattleOptionsUI(battleOptions) {
         . "targetEnemyMiddle", TargetEnemyMiddle
     Gui Add, Checkbox, % "cWhite x+5 gBattleOptionsCheckedChanged vBattleOptions_"
         . "selectStandby", SelectStandby
+    Gui Add, Checkbox, % "cWhite x+5 gBattleOptionsCheckedChanged vBattleOptions_"
+        . "autoRefillAP", AutoRefillAP
 
     Gui Add, Text, cWhite xs+10 y+5, Companions:
 
@@ -623,9 +625,10 @@ CreateBattleOptionsUI(battleOptions) {
 InitBattleOptionsUI(battleOptions) {
     global
 
-    GuiControl,, % "battleOptions_auto", % battleOptions.auto
-    GuiControl,, % "battleOptions_targetEnemyMiddle", % battleOptions.targetEnemyMiddle
-    GuiControl,, % "battleOptions_selectStandby", % battleOptions.selectStandby
+    GuiControl,, % "battleOptions_auto", % battleOptions.auto ? 1 : 0
+    GuiControl,, % "battleOptions_targetEnemyMiddle", % battleOptions.targetEnemyMiddle ? 1 : 0
+    GuiControl,, % "battleOptions_selectStandby", % battleOptions.selectStandby ? 1 : 0
+    GuiControl,, % "battleOptions_autoRefillAP", % battleOptions.autoRefillAP ? 1 : 0
 
     for k, v in settings.battleOptions.companions {
         GuiControl,, % "battleOptions_companions_" . k, 0
