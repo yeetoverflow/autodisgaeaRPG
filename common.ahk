@@ -467,6 +467,8 @@ DoBattle(battleOptions) {
             }
         }
         else {
+            battleOptions.preBattle()
+            
             FindPattern(patterns.battle.auto.enabled, { doClick : true })
             result := FindPattern(patterns.battle.skills.label)
             if (result.IsSuccess) {
