@@ -422,6 +422,13 @@ DoBattle(battleOptions) {
     standbySelected := false
     allyTargeted := false
 
+    donePatterns := []
+    donePatterns.push(patterns.battle.done)
+
+    if (battleOptions.donePatterns) {
+        donePatterns.push(battleOptions.donePatterns)
+    }
+
     Loop {
         if (targetCompanions.Length() && FindPattern(patterns.companions.refresh).IsSuccess) {
             FindAndClickListTarget(targetCompanions)
@@ -435,7 +442,7 @@ DoBattle(battleOptions) {
             HandleInsufficientAP()
         }
 
-        result := FindPattern(patterns.battle.auto)
+        result := FindPattern([patterns.battle.auto, donePatterns])
     } until (result.IsSuccess)
 
     if (battleOptions.targetEnemyMiddle) {
@@ -468,7 +475,7 @@ DoBattle(battleOptions) {
         }
         else {
             battleOptions.preBattle()
-            
+
             FindPattern(patterns.battle.auto.enabled, { doClick : true })
             result := FindPattern(patterns.battle.skills.label)
             if (result.IsSuccess) {
@@ -501,7 +508,7 @@ DoBattle(battleOptions) {
             }
         }
 
-        if (FindPattern(patterns.battle.done).IsSuccess || (battleOptions.donePatterns && FindPattern(battleOptions.donePatterns).IsSuccess)) {
+        if (FindPattern(donePatterns).IsSuccess) {
             SetStatus(A_ThisFunc . ": Done", 2)
             Break
         }

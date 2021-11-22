@@ -64,7 +64,7 @@ FarmItemWorldAnyLoop(type := "") {
             }
             
             sleep 500
-            PollPattern(targetItem, { doClick : true, predicatePattern : patterns.itemWorld.go })
+            PollPattern(targetItem, { doClick : true, predicatePattern : patterns.itemWorld.go, pollInterval : 1500 })
             PollPattern(patterns.itemWorld.go, { doClick : true, predicatePattern : patterns.battle.start })
             PollPattern(patterns.battle.start, { doClick : true })
             DoItem()
