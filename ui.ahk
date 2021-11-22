@@ -555,7 +555,7 @@ CreateBattleOptionsUI(battleOptions) {
         if (count = 1) {
             Gui Add, Checkbox, % "cWhite gBattleOptionsMultiCheckedChanged vBattleOptions_"
                 . "companions_" . k, % k
-        } else if (mod(count, 5) = 0) {
+        } else if (mod(count, 4) = 0) {
             Gui Add, Checkbox, % "cWhite xs+10 y+5 gBattleOptionsMultiCheckedChanged vBattleOptions_"
                 . "companions_" . k, % k
         } else {
@@ -575,7 +575,7 @@ CreateBattleOptionsUI(battleOptions) {
             continue
         }
 
-        if (mod(count, 5) = 0) {
+        if (mod(count, 4) = 0) {
             Gui Add, Radio, % "cWhite xs+10 y+5 gBattleOptionsRadioCheckedChanged vBattleOptions_"
                 . "allyTarget_" . k, % k
         } else {
@@ -592,7 +592,7 @@ CreateBattleOptionsUI(battleOptions) {
         if (k = 1) {
             Gui Add, Checkbox, % "cWhite gBattleOptionsMultiCheckedChanged vBattleOptions_"
                 . "skills_" . v, % v
-        } else if mod(k, 5) = 0 {
+        } else if mod(k, 4) = 0 {
             Gui Add, Checkbox, % "cWhite xs+10 y+5 gBattleOptionsMultiCheckedChanged vBattleOptions_"
                 . "skills_" . v, % v
         } else {
@@ -608,7 +608,7 @@ CreateBattleOptionsUI(battleOptions) {
         if (k = 1) {
             Gui Add, Checkbox, % "cWhite gBattleOptionsMultiCheckedChanged vBattleOptions_"
                 . "singleTargetSkills_" . v, % v
-        } else if mod(k, 5) = 0 {
+        } else if mod(k, 4) = 0 {
             Gui Add, Checkbox, % "cWhite xs+10 y+5 gBattleOptionsMultiCheckedChanged vBattleOptions_"
                 . "singleTargetSkills_" . v, % v
         } else {
