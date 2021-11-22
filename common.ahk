@@ -432,14 +432,17 @@ DoBattle(battleOptions) {
     Loop {
         if (targetCompanions.Length() && FindPattern(patterns.companions.refresh).IsSuccess) {
             FindAndClickListTarget(targetCompanions)
+            sleep 1000
         }
 
         if (battleOptions.startPatterns) {
             FindPattern(battleOptions.startPatterns, { doClick : true })
+            sleep 1000
         }
 
         if (battleOptions.autoRefillAP) {
             HandleInsufficientAP()
+            sleep 1000
         }
 
         result := FindPattern([patterns.battle.auto, donePatterns])
