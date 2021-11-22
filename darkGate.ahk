@@ -65,7 +65,8 @@ DoDarkGate(type) {
             if (gateCount <= 0) {
                 Break
             }
-            FindAndClickListTarget(patterns.darkGates.stage.threeStars, patterns.companions.refresh)
+            ; FindAndClickListTarget(patterns.darkGates.stage.threeStars, patterns.companions.refresh)
+            ScrollUntilDetect(patterns.darkGates.stage.threeStars, { predicatePattern : patterns.companions.refresh })
             sleep 1000
         }
         else if InStr(result.comment, "companions.title") || InStr(result.comment, "battle.auto") || InStr(result.comment, "battle.title") || InStr(result.comment, "battle.prompt.battleAgain") {

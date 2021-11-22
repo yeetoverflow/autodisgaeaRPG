@@ -14,6 +14,8 @@ handlers.DoDarkGateMatsHuman := { Func : Func("DoDarkGateMatsHuman") }
 handlers.DoDarkGateMatsMonster := { Func : Func("DoDarkGateMatsMonster") }
 handlers.SwipeUp := { Func : Func("SwipeUp") }
 handlers.SwipeDown := { Func : Func("SwipeDown") }
+handlers.ScrollUp := { Func : Func("ScrollUp") }
+handlers.ScrollDown := { Func : Func("ScrollDown") }
 handlers.FarmItemWorldAnyLoop := { Func : Func("FarmItemWorldAnyLoop") }
 handlers.FarmItemWorldLegendaryLoop := { Func : Func("FarmItemWorldLegendaryLoop") }
 handlers.MiddleClickCallback := { Func : Func("MiddleClickCallback") }
@@ -106,7 +108,8 @@ Battle() {
         }
 
         if InStr(result.comment, "prompt.battle") {
-            FindAndClickListTarget(targetCompanion, { predicatePattern : patterns.battle.auto })
+            ;FindAndClickListTarget(targetCompanion, { predicatePattern : patterns.battle.auto })
+            ScrollUntilDetect(targetCompanion, { predicatePattern : patterns.battle.auto })
             sleep 500
         }
 
@@ -166,7 +169,8 @@ AutoClear() {
             }
         }
         else if InStr(result.comment, "companions.title") {
-            FindAndClickListTarget(targetCompanion, { predicatePattern : patterns.battle.start })
+            ; FindAndClickListTarget(targetCompanion, { predicatePattern : patterns.battle.start })
+            ScrollUntilDetect(targetCompanion, { predicatePattern : patterns.battle.start })
             sleep 500
             PollPattern([patterns.battle.start], { doClick : true, variancePct: 5, callback : Func("BattleMiddleClickCallback") })
             DoBattle(battleOptions)
@@ -314,7 +318,38 @@ Test() {
     global patterns, settings, hwndMainGui, guiHwnd
     SetStatus(A_ThisFunc)
 
-    MsgBox, % FindDrop().type
+
+    target := patterns.companions.guest
+
+    direction := "down"
+    Loop {
+        if (FindPattern(target, { variancePct : 20, doClick : true }).IsSuccess) {
+            Break
+        }
+
+        if (direction = "down") {
+            ScrollDown()
+        }
+        else {
+            ScrollUp()
+        }
+
+        sleep, 1000
+
+        if (FindPattern(patterns.scroll.down.max).IsSuccess) {
+            direction := "up"
+            FindPattern(patterns.companions.refresh, { variancePct : 20, doClick : true })
+            sleep 1000
+        }
+
+        if (FindPattern(patterns.scroll.up.max).IsSuccess) {
+            direction := "down"
+            FindPattern(patterns.companions.refresh, { variancePct : 20, doClick : true })
+            sleep 1000
+        }
+    }
+    
+    ; FindPattern(patterns.scroll.down.handle, { doClick : true, offSetY : 12 })
     ; myPatterns := new JsonFile("patterns.json")
     ; myPatterns.Fill(patterns)
     ; myPatterns.save(true)

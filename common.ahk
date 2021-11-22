@@ -360,6 +360,16 @@ InitPatterns() {
         patterns.darkGates.stage.2 := "|<>*97$10.TW182y9sV288VYAVWDs1U7zs"  ;use 25 percent variance
         patterns.darkGates.stage.threeStars := "|<>0x2A2219@0.58$77.zyzzzzrzzzyzzzwzzzz7zzztzzzkzzzyDzzzlzzzVzzzsDzzz3zzy1zzzkTzzy3zzw3zzz0Tzzs3zzk3zzy0TzzU7zk00Ty003zk00Q0007U000w0004000DU003s000Q001zU00Dw001w003zU00zw007w00DzU03zs00Tw00zzU0Dzs01zs03zz00Tzs03zk07zy00zzk07zU0Dzw01zz00Dz00Tzs03zy00Ty00zzk07zw00zw7Uzz0wDzsDVzszlzyDyTzlznzrzzzwzzzzjzzs"
 
+        patterns.scroll := {}
+        patterns.scroll.up := {}
+        patterns.scroll.up.handle := ["|<>0xB0A7C3@0.80$14.MEYCBDlryTzrvDwHxYq", "|<>0xADA4C0@0.78$15.AMFDWPzPzzTPvnDT/w"]
+        patterns.scroll.up.max := ["|<>*120$14.zTzbzlzwTy7z1zkTs7y1xUCA3Dkjz7zzzzzzzz0zbXnyNnqsQA3W08021A0v06mBhc"
+                                 , "|<>*120$14.zTzbzlzwTy7z1zUSs7i1lkMz4zwzzzzzzzzw3wSDTvbDPVoU4000G0Ak9d8"]
+        patterns.scroll.down := {}
+        patterns.scroll.down.handle := ["|<>0xAFA6C1@0.80$14.qHT4zvDzzRzrDlFsqA+", "|<>0xB0A7C3@0.78$14.wLzAzzzryoz97WMlX0kTs1s8"]
+        patterns.scroll.down.max := ["|<>*120$14.9hUv8Ck14008U6i3flmSxnyy0TsTzzzzzzzyDz2S1l0SM7a1tkTy7zlzwTzbzxzzTs"
+                                   , "|<>*120$13.3A0Y20JUOsRCQrywwz0zzzzzzzy7yAw7A3W1v0xkTwDz7zXztzyzU"]
+
 		patterns.save(true)
 	}
 	Else
@@ -431,7 +441,8 @@ DoBattle(battleOptions) {
 
     Loop {
         if (targetCompanions.Length() && FindPattern(patterns.companions.refresh).IsSuccess) {
-            FindAndClickListTarget(targetCompanions)
+            ;FindAndClickListTarget(targetCompanions)
+            ScrollUntilDetect(targetCompanions)
             sleep 1000
         }
 
@@ -718,6 +729,52 @@ FindAndClickListTarget(target, predicatePattern := "") {
         }
     } until (result.IsSuccess)
     
+}
+
+ScrollUp()
+{
+    global patterns
+    FindPattern(patterns.scroll.up.handle, { doClick : true, variancePct: 20, offSetY : -12 })
+}
+
+ScrollDown()
+{
+    global patterns
+    FindPattern(patterns.scroll.down.handle, { doClick : true, variancePct: 20, offSetY : 12 })
+}
+
+ScrollUntilDetect(target, opts := "") {
+    global patterns
+
+    opts := InitOps(opts, { variancePct : 20, doClick : true })
+
+    direction := "down"
+    Loop {
+        if (FindPattern(target, opts).IsSuccess) {
+            Break
+        }
+
+        if (direction = "down") {
+            ScrollDown()
+        }
+        else {
+            ScrollUp()
+        }
+
+        sleep, 1000
+
+        if (FindPattern(patterns.scroll.down.max).IsSuccess) {
+            direction := "up"
+            FindPattern(patterns.companions.refresh, { variancePct : 20, doClick : true })
+            sleep 1000
+        }
+
+        if (FindPattern(patterns.scroll.up.max).IsSuccess) {
+            direction := "down"
+            FindPattern(patterns.companions.refresh, { variancePct : 20, doClick : true })
+            sleep 1000
+        }
+    }
 }
 
 SwipeUntilDetect(pattern, opts := "") {

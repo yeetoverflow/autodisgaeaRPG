@@ -25,7 +25,8 @@ EventStoryFarm() {
             sleep 1000
         }
         else if InStr(result.comment, "dimensionGate.events.select") {
-            FindAndClickListTarget(patterns.dimensionGate.events.story)
+            ; FindAndClickListTarget(patterns.dimensionGate.events.story)
+            ScrollUntilDetect(patterns.dimensionGate.events.story)
             sleep 3000
         }
         else if InStr(result.comment, "battle.start") {
@@ -98,7 +99,8 @@ EventStory500Pct() {
             sleep 1000
         }
         else if InStr(result.comment, "dimensionGate.events.select") {
-            FindAndClickListTarget(patterns.dimensionGate.events.story)
+            ; FindAndClickListTarget(patterns.dimensionGate.events.story)
+            ScrollUntilDetect(patterns.dimensionGate.events.story)
             sleep 3000
         }
         else if InStr(result.comment, "battle.start") || InStr(result.comment, "battle.prompt.quitBattle") {
@@ -172,7 +174,8 @@ EventRaidLoop() {
             sleep 1000
         }
         else if InStr(result.comment, "dimensionGate.events.select") {
-            FindAndClickListTarget(patterns.dimensionGate.events.raid)
+            ; FindAndClickListTarget(patterns.dimensionGate.events.raid)
+            ScrollUntilDetect(patterns.dimensionGate.events.raid)
             sleep 3000
         }
         else if InStr(result.comment, "raid.activeBoss") {
