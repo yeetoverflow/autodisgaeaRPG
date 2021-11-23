@@ -65,10 +65,9 @@ AutoHotkey project that automates the grindy parts of DisgaeaRPG. The program do
 ## General [(video)](https://youtu.be/rIw1qLvlyK8)
 
 * AutoClear
+    * Uses default battle context (for the time being)
     * Starting point is wherever there is a NEW icon
     * Automatically clear story or event based on NEW icon
-    * Uses current selected battle context
-    * Does not auto-refill AP
 * AutoShop
     * Main starting point is stronghold
     * Simply buys daily items
@@ -85,15 +84,15 @@ AutoHotkey project that automates the grindy parts of DisgaeaRPG. The program do
 * Start EventStoryFarm
     * Main starting point is stronghold 
     * Farms specified stage as many times as the count
-    * Uses event battle context
+    * Uses Event battle context
 * Start EventStory500Pct
     * Main starting point is stronghold 
     * Clears daily 500Pct stages
-    * Uses event battle context
+    * Uses Event battle context
 * Start EventRaidLoop
     * Main starting point is stronghold 
     * Keeps clearing raids when available
-    * Uses raid battle context
+    * Uses Raid battle context
 
 ## ItemWorld [(video)](https://youtu.be/P6Qh4f33LTk) [(fix)](https://youtu.be/uHv4sVQZIA4)
 
