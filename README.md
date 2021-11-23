@@ -37,7 +37,7 @@ AutoHotkey project that automates the grindy parts of DisgaeaRPG. The program do
     * Select test
        * If you see Found as a tooltip and see a box on the dimension gate button you pass
        * If not, go cry then complain in the [autoDisgaeaRPG reddit thread](https://www.reddit.com/r/DisgaeaRPGMobile/comments/qo36ua/autodisgaearpg)
-* Swipe test
+* Swipe test (Obsolete - skip this if you're a newcomer)
     * Go to a screen in BlueStacks that needs swiping up or down. (Ex. companion select)
     * Make sure you see green ATTACHED in Main or Setting tab in autoDisgaeaRPG
     * Go to Handlers tab
@@ -58,6 +58,7 @@ AutoHotkey project that automates the grindy parts of DisgaeaRPG. The program do
     * TargetMiddleEnemy Checkbox => Target the middle enemy at the beginning of the battle. Good for boss battles.
     * Select Standby => Select standby companion at the beginning of the battle. Use this if you are relying on your companion.
     * Companions => Specify 1 or more possible companions to target (program will select the first one it finds if multiple selected).
+    * AutoRefillAP => Will automatically refill AP with AP pot when you run out.
     * AllyTarget => Specify ally that gets target upon the start of the battle.
     * Skills => If Auto Checkbox is not checked, the selected skills will be used. If multiple skills are present, it will select the first skill it finds in order the skills are presented. Modify settings.json battleOptions.skillOrder section if you would like to change the order the skills are scanned. Restart the program after modification.
 
@@ -85,12 +86,10 @@ AutoHotkey project that automates the grindy parts of DisgaeaRPG. The program do
     * Main starting point is stronghold 
     * Farms specified stage as many times as the count
     * Uses event battle context
-    * Will auto-fill AP
 * Start EventStory500Pct
     * Main starting point is stronghold 
     * Clears daily 500Pct stages
     * Uses event battle context
-    * Will auto-fill AP
 * Start EventRaidLoop
     * Main starting point is stronghold 
     * Keeps clearing raids when available
@@ -123,17 +122,14 @@ AutoHotkey project that automates the grindy parts of DisgaeaRPG. The program do
     * Main starting point is stronghold 
     * Clears dark gate stages as many times as count
     * Uses DarkGateHL battle context
-    * Will auto-fill AP
 * Start DoDarkGateMatsHuman
     * Main starting point is stronghold 
     * Clears dark gate stages as many times as count
     * Uses DarkGateMats battle context
-    * Will auto-fill AP
 * Start DoDarkGateMatsMonster
     * Main starting point is stronghold 
     * Clears dark gate stages as many times as count
     * Uses DarkGateMats battle context
-    * Will auto-fill AP
 
 ---
 
