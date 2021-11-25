@@ -67,6 +67,9 @@ ResetUI() {
     Gui, Add, Progress, x+10 vProgressBar_EventRaidLoop -Smooth w100 h18 c0x66FF66 border
     Gui Add, Text, cBlack xp wp hp center vProgressText_EventRaidLoop BackgroundTrans, Start EventRaidLoop
 
+    Gui, Add, Progress, x+10 vProgressBar_EventAutoClear -Smooth w100 h18 c0x66FF66 border
+    Gui Add, Text, cBlack xp wp hp center vProgressText_EventAutoClear BackgroundTrans, Start EventAutoClear
+
     Gui Add, Text, 0x10 xs w400 h10
     Gui Font, Bold
     Gui Add, Text, cWhite xs+10, ItemWorld
@@ -509,6 +512,7 @@ BattleContextChanged() {
         case 7: settings.battleContext := "darkGateHL"
     }
 
+    settings.Save()
     InitBattleOptionsUI(settings["battleOptions"][settings.battleContext])
 }
 

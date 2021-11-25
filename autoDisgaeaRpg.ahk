@@ -9,6 +9,7 @@ handlers := {}
 handlers.EventStoryFarm := { Func : Func("EventStoryFarm") }
 handlers.EventRaidLoop := { Func : Func("EventRaidLoop") }
 handlers.EventStory500Pct := { Func : Func("EventStory500Pct") }
+handlers.EventAutoClear := { Func : Func("EventAutoClear") }
 handlers.DoDarkGateHL := { Func : Func("DoDarkGateHL") }
 handlers.DoDarkGateMatsHuman := { Func : Func("DoDarkGateMatsHuman") }
 handlers.DoDarkGateMatsMonster := { Func : Func("DoDarkGateMatsMonster") }
@@ -38,7 +39,8 @@ msgToMode := { 0x1001 : "EventStoryFarm"static
              , 0x1007 : "DoDarkGateMatsHuman"
              , 0x1008 : "DoDarkGateMatsMonster"
              , 0x1009 : "AutoClear"
-             , 0x1010 : "FarmItemWorldSingle" }
+             , 0x1010 : "FarmItemWorldSingle"
+             , 0x1011 : "EventAutoClear" }
 modeToMsg := {}
 
 for k, v in msgToMode {
@@ -147,13 +149,13 @@ AutoClear() {
     SetStatus(A_ThisFunc)
 
     battleOptions := settings["battleOptions"][settings.battleContext]
+    autoRefillAP.autoRefillAP := false
     battleOptions.Callback := func("BattleMiddleClickCallback")
     battleOptions.donePatterns := [patterns.raid.appear.advanceInStory]
 
     targetCompanion := []
     for k, v in battleOptions.companions
         targetCompanion.push(patterns["companions"][v])
-
 
     loopTargets := [patterns.general.autoClear.new, patterns.companions.title, patterns.general.autoClear.skip, patterns.general.autoClear.areaClear]
     Loop {

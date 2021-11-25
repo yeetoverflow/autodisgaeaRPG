@@ -1,5 +1,63 @@
 #Include common.ahk
 
+EventAutoClear() {
+    global patterns, settings
+    SetStatus(A_ThisFunc)
+
+    battleOptions := settings.battleOptions.event
+    autoRefillAP.autoRefillAP := false
+    battleOptions.Callback := func("BattleMiddleClickCallback")
+    battleOptions.donePatterns := [patterns.raid.message]
+
+    targetCompanion := []
+    for k, v in battleOptions.companions
+        targetCompanion.push(patterns["companions"][v])
+
+    loopTargets := [patterns.stronghold.gemsIcon, patterns.dimensionGate.background, patterns.dimensionGate.events.select
+                  , patterns.battle.start, patterns.general.autoClear.new, patterns.companions.title, patterns.general.autoClear.skip, patterns.general.autoClear.areaClear, patterns.raid.message]
+    Loop {
+        result := PollPattern(loopTargets)
+
+        if InStr(result.comment, "stronghold.gemsIcon") {
+            FindPattern(patterns.tabs.dimensionGate, { doClick : true })
+            sleep 1000
+        }
+        else if InStr(result.comment, "dimensionGate.background") {
+            FindPattern(patterns.dimensionGate.events.block, { doClick : true })
+            sleep 1000
+        }
+        else if InStr(result.comment, "dimensionGate.events.select") {
+            ; FindAndClickListTarget(patterns.dimensionGate.events.story)
+            ScrollUntilDetect(patterns.dimensionGate.events.story)
+            sleep 3000
+        }
+        else if InStr(result.comment, "battle.start") {
+            ClickResult(result)
+            sleep 1000
+        }
+        else if InStr(result.comment, "general.autoClear.new") || InStr(result.comment, "general.autoClear.skip") || InStr(result.comment, "general.autoClear.areaClear") {
+            ClickResult(result)
+            sleep, 50
+            ClickResult(result)
+
+            if InStr(result.comment, "general.autoClear.skip") {
+                PollPattern(loopTargets, { callback : Func("MiddleClickCallback") })
+            }
+        }
+        else if InStr(result.comment, "companions.title") {
+            ; FindAndClickListTarget(targetCompanion, { predicatePattern : patterns.battle.start })
+            ScrollUntilDetect(targetCompanion, { predicatePattern : patterns.battle.start })
+            sleep 500
+            PollPattern([patterns.battle.start], { doClick : true, variancePct: 5, callback : Func("BattleMiddleClickCallback") })
+            DoBattle(battleOptions)
+            PollPattern(loopTargets, { callback : Func("MiddleClickCallback") })
+        }
+        else if InStr(result.comment, "raid.message") {
+            HandleRaid()
+        }
+    }
+}
+
 EventStoryFarm() {
     global patterns, settings, guiHwnd, mode
     SetStatus(A_ThisFunc)
@@ -25,7 +83,6 @@ EventStoryFarm() {
             sleep 1000
         }
         else if InStr(result.comment, "dimensionGate.events.select") {
-            ; FindAndClickListTarget(patterns.dimensionGate.events.story)
             ScrollUntilDetect(patterns.dimensionGate.events.story)
             sleep 3000
         }
@@ -82,6 +139,7 @@ EventStory500Pct() {
 
     done := false
     battleOptions := settings.battleOptions.event
+    battleOptions.autoRefillAP := false
     battleOptions.startPatterns := [patterns.battle.start, patterns.battle.prompt.battle]
     battleOptions.donePatterns := [patterns.raid.appear.advanceInStory, patterns.battle.prompt.quitBattle]
 
