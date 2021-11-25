@@ -124,10 +124,10 @@ EventStoryFarm() {
 HandleRaid() {
     global patterns
 
-    PollPattern(patterns.raid.appear.fightRaidBoss, { doClick : true })
-    PollPattern(patterns.raid.helpRequests, { doClick : true })
-    PollPattern(patterns.prompt.ok, { doClick : true })
-    PollPattern(patterns.stage.back, { doClick : true })
+    PollPattern(patterns.raid.appear.fightRaidBoss, { doClick : true, predicatePattern : patterns.raid.helpRequests })
+    PollPattern(patterns.raid.helpRequests, { doClick : true, predicatePattern : patterns.prompt.ok })
+    PollPattern(patterns.prompt.ok, { doClick : true, predicatePattern : patterns.stage.back })
+    PollPattern(patterns.stage.back, { doClick : true, predicatePattern : patterns.tabs.stronghold })
     sleep 1000
     PollPattern(patterns.tabs.stronghold, { doClick : true })
     sleep 1000
