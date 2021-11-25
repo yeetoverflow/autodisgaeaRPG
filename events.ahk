@@ -7,6 +7,7 @@ EventAutoClear() {
     battleOptions := settings.battleOptions.event
     autoRefillAP.autoRefillAP := false
     battleOptions.Callback := func("BattleMiddleClickCallback")
+    battleOptions.startPatterns := [patterns.battle.start]
     battleOptions.donePatterns := [patterns.raid.message]
 
     targetCompanion := []
