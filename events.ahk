@@ -47,9 +47,9 @@ EventAutoClear() {
         }
         else if InStr(result.comment, "companions.title") {
             ; FindAndClickListTarget(targetCompanion, { predicatePattern : patterns.battle.start })
-            ScrollUntilDetect(targetCompanion, { predicatePattern : patterns.battle.start })
+            ; ScrollUntilDetect(targetCompanion, { predicatePattern : patterns.battle.start })
             sleep 500
-            PollPattern([patterns.battle.start], { doClick : true, variancePct: 5, callback : Func("BattleMiddleClickCallback") })
+            ; PollPattern([patterns.battle.start], { doClick : true, variancePct: 5, callback : Func("BattleMiddleClickCallback") })
             DoBattle(battleOptions)
             PollPattern(loopTargets, { callback : Func("MiddleClickCallback") })
         }
@@ -251,6 +251,7 @@ EventRaidLoop() {
 
                 result := PollPattern([patterns.prompt.ok, patterns.battle.auto])
                 if InStr(result.comment, "prompt.ok") {
+                    sleep 1000
                     ClickResult(result)
                     continue
                 }
