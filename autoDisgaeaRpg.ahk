@@ -40,7 +40,9 @@ msgToMode := { 0x1001 : "EventStoryFarm"static
              , 0x1008 : "DoDarkGateMatsMonster"
              , 0x1009 : "AutoClear"
              , 0x1010 : "FarmItemWorldSingle"
-             , 0x1011 : "EventAutoClear" }
+             , 0x1011 : "EventAutoClear"
+             , 0x1012 : "EventRaidAutoClaim"
+             , 0x1013 : "EventRaidAutoVault" }
 modeToMsg := {}
 
 for k, v in msgToMode {
@@ -319,37 +321,30 @@ Verify() {
 Test() {
     global patterns, settings, hwndMainGui, guiHwnd
     SetStatus(A_ThisFunc)
-
-
-    target := patterns.companions.guest
-
-    direction := "down"
-    Loop {
-        if (FindPattern(target, { variancePct : 20, doClick : true }).IsSuccess) {
-            Break
+    
+    Loop
+    {
+        result := FindPattern([patterns.raid.claim.prize, patterns.prompt.close], { variancePct : 20 })
+        if (result.IsSuccess)
+        {
+            ClickResult(result)
         }
 
-        if (direction = "down") {
+        sleep 250
+
+        if (!result.IsSuccess)
+        {
             ScrollDown()
         }
-        else {
-            ScrollUp()
-        }
-
-        sleep, 1000
 
         if (FindPattern(patterns.scroll.down.max).IsSuccess) {
-            direction := "up"
-            FindPattern(patterns.companions.refresh, { variancePct : 20, doClick : true })
-            sleep 1000
-        }
-
-        if (FindPattern(patterns.scroll.up.max).IsSuccess) {
-            direction := "down"
-            FindPattern(patterns.companions.refresh, { variancePct : 20, doClick : true })
-            sleep 1000
+            Break
         }
     }
+
+
+    MsgBox, Done
+
     
     ; FindPattern(patterns.scroll.down.handle, { doClick : true, offSetY : 12 })
     ; myPatterns := new JsonFile("patterns.json")

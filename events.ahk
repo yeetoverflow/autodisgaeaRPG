@@ -278,3 +278,55 @@ RaidClickCallback() {
     
     ;Resize()
 }
+
+EventRaidAutoClaim() {
+    global mode, patterns
+    SetStatus(A_ThisFunc)
+    
+    Loop
+    {
+        result := FindPattern([patterns.raid.claim.prize, patterns.prompt.close], { variancePct : 20 })
+        if (result.IsSuccess)
+        {
+            ClickResult(result)
+        }
+
+        sleep 250
+
+        if (!result.IsSuccess)
+        {
+            ScrollDown()
+        }
+
+        if (FindPattern(patterns.scroll.down.max).IsSuccess) {
+            Break
+        }
+    }
+
+    if (mode) {
+        ExitApp
+    }
+}
+
+EventRaidAutoVault() {
+    global mode, patterns
+    SetStatus(A_ThisFunc)
+    
+    Loop
+    {
+        result := PollPattern([patterns.events.vault.acquired, patterns.prompt.close], { maxCount : 10 })
+        if (result.IsSuccess)
+        {
+            ClickResult(result)
+        }
+        else {
+            Break
+        }
+
+        sleep 250
+    }
+
+    if (mode) {
+        ExitApp
+    }
+}

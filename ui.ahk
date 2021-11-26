@@ -64,11 +64,17 @@ ResetUI() {
     Gui, Add, Progress, xs+10 vProgressBar_EventStory500Pct -Smooth w120 h18 c0x66FF66 border
     Gui Add, Text, cBlack xp wp hp center vProgressText_EventStory500Pct BackgroundTrans, Start EventStory500Pct
 
-    Gui, Add, Progress, x+10 vProgressBar_EventRaidLoop -Smooth w100 h18 c0x66FF66 border
-    Gui Add, Text, cBlack xp wp hp center vProgressText_EventRaidLoop BackgroundTrans, Start EventRaidLoop
-
     Gui, Add, Progress, x+10 vProgressBar_EventAutoClear -Smooth w100 h18 c0x66FF66 border
     Gui Add, Text, cBlack xp wp hp center vProgressText_EventAutoClear BackgroundTrans, Start EventAutoClear
+
+    Gui, Add, Progress, xs+10 vProgressBar_EventRaidLoop -Smooth w100 h18 c0x66FF66 border
+    Gui Add, Text, cBlack xp wp hp center vProgressText_EventRaidLoop BackgroundTrans, Start EventRaidLoop
+
+    Gui, Add, Progress, x+10 vProgressBar_EventRaidAutoClaim -Smooth w130 h18 c0x66FF66 border
+    Gui Add, Text, cBlack xp wp hp center vProgressText_EventRaidAutoClaim BackgroundTrans, Start EventRaidAutoClaim
+
+    Gui, Add, Progress, x+10 vProgressBar_EventRaidAutoVault -Smooth w130 h18 c0x66FF66 border
+    Gui Add, Text, cBlack xp wp hp center vProgressText_EventRaidAutoVault BackgroundTrans, Start EventRaidAutoVault
 
     Gui Add, Text, 0x10 xs w400 h10
     Gui Font, Bold
