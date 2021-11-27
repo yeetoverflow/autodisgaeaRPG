@@ -140,9 +140,8 @@ EventStory500Pct() {
 
     done := false
     battleOptions := settings.battleOptions.event
-    battleOptions.autoRefillAP := false
     battleOptions.startPatterns := [patterns.battle.start, patterns.battle.prompt.battle]
-    battleOptions.donePatterns := [patterns.raid.appear.advanceInStory, patterns.battle.prompt.quitBattle]
+    battleOptions.donePatterns := [patterns.raid.appear.advanceInStory, patterns.battle.prompt.quitBattle, patterns.events.title]
 
     loopTargets := [patterns.stronghold.gemsIcon, patterns.dimensionGate.background, patterns.dimensionGate.events.select
         , patterns.battle.start, patterns.events.title, patterns.events.stage.title, patterns.battle.prompt.quitBattle, patterns.raid.message]
@@ -162,7 +161,12 @@ EventStory500Pct() {
             ScrollUntilDetect(patterns.dimensionGate.events.story)
             sleep 3000
         }
-        else if InStr(result.comment, "battle.start") || InStr(result.comment, "battle.prompt.quitBattle") {
+        else if InStr(result.comment, "battle.start") {
+            DoBattle(battleOptions)
+            PollPattern(loopTargets, { callback : Func("MiddleClickCallback") })
+            sleep 2000
+        }
+        else if InStr(result.comment, "battle.prompt.quitBattle") {
             ClickResult(result)
             sleep 1000
         }
