@@ -49,9 +49,11 @@ defaults.itemWorldOptions := {}
 defaults.itemWorldOptions.bribe := "none" ;none, goldenCandy, goldBar, or crabMiso
 defaults.itemWorldOptions.targetItem := "legendary" ;any, rare, legendary
 defaults.itemWorldOptions.loop := {}
+defaults.itemWorldOptions.loop.farmLevels := [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
 defaults.itemWorldOptions.loop.itemType := "armor" ;armor, weapon
 defaults.itemWorldOptions.farmLoop := {}
 defaults.itemWorldOptions.farmLoop.itemType := "armor" ;armor, weapon
+
 defaults.eventOptions := {}
 defaults.eventOptions.storyTarget := "oneStar"
 defaults.eventOptions.banners := {}
@@ -60,6 +62,25 @@ defaults.eventOptions.banners.raid := "|<>**50$49.zzq0BzHzk0z06VdMM0DyzErgA73zz8
 
 patterns := InitPatterns()
 settings := InitSettings()
+
+metadata := {}
+metadata.itemWorldOptions := {}
+metadata.itemWorldOptions.loop := {}
+metadata.itemWorldOptions.loop.displayOrder := ["itemType", "farmLevels"]
+
+metadata.itemWorldOptions.loop.itemType := {}
+metadata.itemWorldOptions.loop.itemType.type := "Radio"
+metadata.itemWorldOptions.loop.itemType.options := ["armor", "weapon"]
+
+metadata.itemWorldOptions.loop.farmLevels := {}
+metadata.itemWorldOptions.loop.farmLevels.type := "Array"
+metadata.itemWorldOptions.loop.farmLevels.options := [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+metadata.itemWorldOptions.loop.farmLevels.itemsPerRow := 5
+metadata.itemWorldOptions.loop.farmLevels.presets := {}
+metadata.itemWorldOptions.loop.farmLevels.presets.default := [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+metadata.itemWorldOptions.loop.farmLevels.presets.none := []
+metadata.itemWorldOptions.loop.farmLevels.presets.higherDropRate := [30, 60, 100]
+
 
 InitPatterns() {
 	fileName := "patterns.json"

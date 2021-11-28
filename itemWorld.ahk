@@ -16,6 +16,13 @@ FarmItemWorldAnyLoop(type := "") {
     targetSort := "ascending"
     targetItem := patterns.itemWorld.item.name
     
+    if (settings.itemWorldOptions.loop.farmLevels) {
+        settings.itemWorldOptions.farmTrigger := []
+        for k, v in settings.itemWorldOptions.loop.farmLevels {
+            settings.itemWorldOptions.farmTrigger.push(patterns.itemWorld.level[v])
+        }
+    }
+
     if (type = "farmLegendary") {
         settings.itemWorldOptions.targetItem := "legendary"
         settings.itemWorldOptions.farmTrigger := patterns.itemWorld.level.100

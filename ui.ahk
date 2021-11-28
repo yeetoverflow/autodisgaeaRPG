@@ -83,9 +83,12 @@ ResetUI() {
 
     Gui, Add, Progress, vProgressBar_FarmItemWorldAnyLoop -Smooth w170 h18 c0x66FF66 border
     Gui Add, Text, cBlack xp wp hp center vProgressText_FarmItemWorldAnyLoop BackgroundTrans, Start FarmItemWorldAnyLoop
-    Gui Add, Radio, cWhite gRadioOptionChanged vItemWorldOptions_loop_itemType_armor x+5, Armor
-    Gui Add, Radio, cWhite gRadioOptionChanged vItemWorldOptions_loop_itemType_weapon x+5, Weapon
-    GuiControl,, % "itemWorldOptions_loop_itemType_" . settings.itemWorldOptions.loop.itemType, 1
+    ; Gui Add, Radio, cWhite gRadioOptionChanged vItemWorldOptions_loop_itemType_armor x+5, Armor
+    ; Gui Add, Radio, cWhite gRadioOptionChanged vItemWorldOptions_loop_itemType_weapon x+5, Weapon
+    ; GuiControl,, % "itemWorldOptions_loop_itemType_" . settings.itemWorldOptions.loop.itemType, 1
+    
+    Gui, Add, Progress, x+10 w250 h18 c0x66FF66 vSettings_itemWorldOptions_loop
+    Gui Add, Text, xp+5 wp hp r1 +0x4000 cBlack BackgroundTrans left vSettingsText_itemWorldOptions_loop, % GetSettingDisplay("Settings_itemWorldOptions_loop")
 
     Gui, Add, Progress, xs+10 vProgressBar_FarmItemWorldLegendaryLoop -Smooth w170 h18 c0x66FF66 border
     Gui Add, Text, cBlack xp wp hp center vProgressText_FarmItemWorldLegendaryLoop BackgroundTrans, Start FarmItemWorldLegendaryLoop
@@ -824,6 +827,9 @@ WM_LBUTTONDOWN() {
     control := segments.1
     mode := segments.2
 
+    If (A_Gui != "1")
+        Return
+
     If (control = "ProgressBar") {
         progressText := StrReplace(A_GuiControl, "ProgressBar", "ProgressText")
         GuiControlGet, currentText,, % progressText
@@ -838,7 +844,10 @@ WM_LBUTTONDOWN() {
             }
             PostMessage, % msg, 0, 0, , % "ahk_id " . guiHwnd
         }
-   }
+    }
+    Else If (control = "Settings") {
+        SettingsModal(A_GuiControl)
+    }
 }
 
 HandleAction(action, mode) {

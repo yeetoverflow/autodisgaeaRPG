@@ -319,81 +319,257 @@ Verify() {
 }
 
 Test() {
-    global patterns, settings, hwndMainGui, guiHwnd
+    global patterns, settings
     SetStatus(A_ThisFunc)
     
-    Loop
+}
+
+SettingsModal(targetSettings)
+{
+    global
+
+    local settingMetaData := GetSettingMetaData(targetSettings)
+
+    Gui, SettingsModal:Destroy
+    Gui, SettingsModal:New,, Settings
+    Gui, SettingsModal:Color, 404040
+    Gui, SettingsModal:Font, s3
+    Gui, SettingsModal:Add, Text, section
+    Gui, SettingsModal:Font
+    Gui, +AlwaysOnTop
+    Gui, -SysMenu
+
+    for k, v in settingMetaData
     {
-        result := FindPattern([patterns.raid.claim.prize, patterns.prompt.close], { variancePct : 20 })
-        if (result.IsSuccess)
+        settingUnderscore := targetSettings . "_" . k
+        local settingInfo := GetSettingInfo(settingUnderscore)
+
+        switch (settingInfo.metaData.type)
         {
-            ClickResult(result)
-        }
+            case "Radio":
+            {
+                Gui,  SettingsModal:Add, Text, xs y+5 cWhite, % settingInfo.path
 
-        sleep 250
+                for i, opt in settingInfo.metaData.options {
+                    newRow := false
+                    if (i = 1 || Mod(i - 1, settingInfo.metaData.itemsPerRow) = 0) {
+                        newRow := true
+                    }
+                    
+                    Gui SettingsModal:Add, Radio, % "cWhite gSettingChanged v" . settingUnderscore . "_" . opt
+                        . (newRow ? " xs y+5" : " x+10"), % opt
+                }
 
-        if (!result.IsSuccess)
-        {
-            ScrollDown()
-        }
+                GuiControl,, % settingUnderscore . "_" . settingInfo.setting[settingInfo.key], 1
 
-        if (FindPattern(patterns.scroll.down.max).IsSuccess) {
-            Break
+                Gui, SettingsModal:Add, Text, xs y+5 0x10 w400 cWhite
+            }
+            case "Array":
+            {
+                Gui, SettingsModal:Add, Text, xs y+5 cWhite, % settingInfo.path
+
+                index := 1
+                for key, preset in settingInfo.metaData.presets {
+                    newRow := false
+                    if (index = 1) {
+                        newRow := true
+                    }
+                    Gui SettingsModal:Add, Radio, % "cWhite gSettingPresetChanged v" . settingUnderscore . "_" . key
+                        . (newRow ? " xs y+5" : " x+10"), % key
+                    index++
+                }
+
+                for i, opt in settingInfo.metaData.options {
+                    newRow := false
+                    if (i = 1 || Mod(i - 1, settingInfo.metaData.itemsPerRow) = 0) {
+                        newRow := true
+                    }
+                    
+                    Gui SettingsModal:Add, Checkbox, % "cWhite gSettingChanged v" . settingUnderscore . "_" . opt
+                        . (newRow ? " xs y+5" : " x+10"), % opt
+                }
+
+                for i, v in settingInfo.setting[settingInfo.key] {
+                    GuiControl,, % settingUnderscore . "_" . v, 1
+                }
+
+                Gui, SettingsModal:Add, Text, xs y+5 0x10 w400 cWhite
+            }
+            
         }
     }
 
+    Gui, SettingsModal:Add, Button, gSettingsModalGuiClose, Done
+    Gui, SettingsModal:Show
+}
 
-    MsgBox, Done
+SettingPresetChanged() 
+{
+    global
 
+    local settingUnderscore := RegExReplace(A_GuiControl, "_[^_]+?$", "")
+    local targetValue := ""
+    RegExMatch(A_GuiControl, "[^_]+?$", targetValue)
+
+    local settingInfo := GetSettingInfo(settingUnderscore)
+
+    for i, v in settingInfo.metaData.options {
+        GuiControl,, % settingUnderscore . "_" . v, 0
+    }
+
+    for i, v in settingInfo.metaData.presets[targetValue] {
+        GuiControl,, % settingUnderscore . "_" . v, 1
+    }
+
+    local value := []
+    for i, opt in settingInfo.metaData.options {
+        GuiControlGet, optChecked,, % settingUnderscore . "_" . opt
+        if (optChecked)
+        {
+            value.Push(opt)
+        }
+    }
+    settingInfo.setting[settingInfo.key] := value
+    settings.Save(true)
+
+    local parentSettingInfo := GetSettingInfo(settingInfo.parentPathUnderscore)
+    GuiControl, %guiHwnd%:Text, % StrReplace(parentSettingInfo.pathUnderscore, "Settings", "SettingsText"), % GetSettingDisplay(parentSettingInfo)
+}
+
+SettingsModalGuiClose()
+{
+    Gui, SettingsModal:Destroy
+}
+
+GetSettingDisplay(settingInfo)
+{
+    if !IsObject(settingInfo) {
+        settingInfo := GetSettingInfo(settingInfo)
+    }
+
+    display := ""
+
+    for i, v in settingInfo.metaData.displayOrder
+    {
+        settingUnderscore := settingInfo.pathUnderscore . "_" . v
+        
+        childSettingInfo := GetSettingInfo(settingUnderscore)
+        strValue := ""
+
+        settingValue := childSettingInfo.setting[childSettingInfo.key]
+
+        if IsArray(settingValue)
+        {
+            for i, opt in settingValue {
+                strValue := strValue . "," . opt
+            }
+            strValue := childSettingInfo.key . ": " . SubStr(strValue, 2)
+        }
+        else {
+            strValue := childSettingInfo.key . ": " . settingValue
+        }
+        
+        display .= strValue . "; "
+    }
+
+    Return display
+}
+
+SettingChanged()
+{
+    global
+
+    local settingUnderscore := RegExReplace(A_GuiControl, "_[^_]+?$", "")
+    local targetValue := ""
+    RegExMatch(A_GuiControl, "[^_]+?$", targetValue)
+
+    local settingInfo := GetSettingInfo(settingUnderscore)
     
-    ; FindPattern(patterns.scroll.down.handle, { doClick : true, offSetY : 12 })
-    ; myPatterns := new JsonFile("patterns.json")
-    ; myPatterns.Fill(patterns)
-    ; myPatterns.save(true)
-    ;color := GetPixelColor()
+    switch (settingInfo.metaData.type)
+    {
+        case "Radio":
+        {
+            settingInfo.setting[settingInfo.key] := targetValue
+            settings.Save(true)
+        }
+        case "Array":
+        {
+            local value := []
+            strValue := ""
+            for i, opt in settingInfo.metaData.options {
+                GuiControlGet, optChecked,, % settingUnderscore . "_" . opt
+                if (optChecked)
+                {
+                    value.Push(opt)
+                    strValue := strValue . "," . opt
+                }
+            }
+            strValue := SubStr(strValue, 2)
+            settingInfo.setting[settingInfo.key] := value
+            settings.Save(true)
+        }
+    }
 
-    ;MsgBox, % color
+    local parentSettingInfo := GetSettingInfo(settingInfo.parentPathUnderscore)
+    GuiControl, %guiHwnd%:Text, % StrReplace(parentSettingInfo.pathUnderscore, "Settings", "SettingsText"), % GetSettingDisplay(parentSettingInfo)
+}
 
-    ;pattern := GetPatternColor2Two("0xDDF2FF", 95)
-    ; pattern := GetPatternGrayDiff50()
-    ; FindText(X, Y, 0, 0, 0, 0, 0, 0, pattern, 1, 0)
-    ; FindText().MouseTip(x, y)
-    ; MsgBox, % pattern
-    ; var := 1
+GetSettingMetaData(settingUnderscore)
+{
+    global metadata
 
-    ;Resize(true)
-    ;https://docs.microsoft.com/en-us/windows/win32/wmisdk/like-operator
-    ; query := "Select * from Win32_Process where CommandLine like '%" . StrReplace(A_ScriptFullPath, "\", "\\") . "%'" . " and not CommandLine like '%code%'"
-    ; queryEnum := ComObjGet("winmgmts:").ExecQuery(query)._NewEnum()
-    ; queryEnum[proc]
+    path := StrReplace(settingUnderscore, "_", ".")
+    segments := StrSplit(settingUnderscore, "_")
+    numSegments := segments.Length()
+    settingMetaData := metadata
+    targetKey := segments[numSegments]
 
-    ; ;https://www.autohotkey.com/board/topic/20850-retrieve-win-ids-of-all-associated-windows-and-child-windows/
-    ; WinGet, windowList, List, % "ahk_pid" . proc.ProcessId
-    ; ;WinGet, hwndWindow, ID, % "ahk_pid" . proc.ProcessId
+    Loop, % numSegments - 1
+    {
+        if (A_Index = 1) {  ;first segment is settings
+            Continue
+        }
 
-    ; Loop, % windowList
-    ; {
-    ;     WinGetClass, windowClass, % "ahk_id " windowList%A_Index%
-    ;     if (windowClass = "AutoHotkeyGUI") {
-    ;         ControlSetText, msctls_statusbar321, "whoa",  % "ahk_id " windowList%A_Index%
-    ;         Break
-    ;     }
-    ; }
+        key := segments[A_Index]
+        settingMetaData := settingMetaData[key]
+    }
 
+    settingMetaData := settingMetaData[targetKey]
 
-    ; for process in ComObjGet("winmgmts:").ExecQuery(query) {
-    ;     regex := "^.*""(?P<targetWindow>.*?)\"" (?P<mode>.*?)$"
-    ;     RegExMatch(process.CommandLine, regex, matches)
-    ;     MsgBox, % process.CommandLine . " | " . process.ProcessId
-    ; }
+    Return settingMetaData
+}
 
-    ;Just opens raid vault in a loop
-    ; Loop {
-    ;     FindPattern(patterns.events.vault.acquired, { variancePct : 15, doClick : true, predicatePattern : patterns.prompt.close })
-    ;     FindPattern(patterns.prompt.close, { variancePct : 15, doClick : true, predicatePattern : patterns.events.vault.acquired })
-    ; }
-    
-    ;result := FindDrop()
+GetSettingInfo(settingUnderscore) {
+    global settings, metadata
+
+    path := StrReplace(settingUnderscore, "_", ".")
+    parentPath := RegExReplace(path, "\.[^\.]+?$", "")
+    parentPathUnderScore := StrReplace(parentPath, ".", "_")
+    segments := StrSplit(settingUnderscore, "_")
+    numSegments := segments.Length()
+    targetSetting := settings
+    settingMetaData := metadata
+    targetKey := segments[numSegments]
+
+    Loop, % numSegments - 1
+    {
+        if (A_Index = 1) {  ;first segment is settings
+            Continue
+        }
+
+        key := segments[A_Index]
+        if (!targetSetting[key])
+        {
+            targetSetting[key] := {}
+        }
+        targetSetting := targetSetting[key]
+        settingMetaData := settingMetaData[key]
+    }
+
+    ;parentMetaData := settingMetaData
+    settingMetaData := settingMetaData[targetKey]
+
+    Return { setting : targetSetting, metaData : settingMetaData, key : targetKey, path : path, pathUnderScore : settingUnderscore, parentPath : parentPath, parentPathUnderScore : parentPathUnderScore }
 }
 
 Recover(mode) {
