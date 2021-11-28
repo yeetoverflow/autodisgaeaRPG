@@ -51,7 +51,7 @@ EventAutoClear() {
             sleep 500
             ; PollPattern([patterns.battle.start], { doClick : true, variancePct: 5, callback : Func("BattleMiddleClickCallback") })
             DoBattle(battleOptions)
-            PollPattern(loopTargets, { callback : Func("MiddleClickCallback") })
+            PollPattern(loopTargets, { callback : Func("MiddleClickCallback"), pollInterval : 250 })
         }
         else if InStr(result.comment, "raid.message") {
             HandleRaid()
@@ -96,7 +96,7 @@ EventStoryFarm() {
             battleCount--
             ControlSetText, edit2, % battleCount,  % "ahk_id " . guiHwnd
             SetStatus(battleCount, 2)
-            PollPattern(loopTargets, { callback : Func("MiddleClickCallback") })
+            PollPattern(loopTargets, { callback : Func("MiddleClickCallback"), pollInterval : 250 })
             sleep 2000
             if (battleCount <= 0) {
                 Break
@@ -163,7 +163,7 @@ EventStory500Pct() {
         }
         else if InStr(result.comment, "battle.start") {
             DoBattle(battleOptions)
-            PollPattern(loopTargets, { callback : Func("MiddleClickCallback") })
+            PollPattern(loopTargets, { callback : Func("MiddleClickCallback"), pollInterval : 250 })
             sleep 2000
         }
         else if InStr(result.comment, "battle.prompt.quitBattle") {
@@ -203,7 +203,7 @@ EventStory500Pct() {
             if (result.IsSuccess) {
                 PollPattern(patterns.events.stage.500Pct, { doClick : true, fgVariancePct : 20, bgVariancePct : 15, predicatePattern : patterns.companions.50Pct })
                 DoBattle(battleOptions)
-                PollPattern(loopTargets, { callback : Func("MiddleClickCallback") })
+                PollPattern(loopTargets, { callback : Func("MiddleClickCallback"), pollInterval : 250 })
                 sleep 2000
             }
             else {
@@ -261,7 +261,7 @@ EventRaidLoop() {
                 }
 
                 DoBattle(settings.battleOptions.raid)
-                PollPattern(patterns.raid.activeBoss, { callback : Func("RaidClickCallback") })
+                PollPattern(patterns.raid.activeBoss, { callback : Func("RaidClickCallback"), pollInterval : 250 })
             }
         }
 

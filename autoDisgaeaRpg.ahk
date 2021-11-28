@@ -576,13 +576,12 @@ Recover(mode) {
     global patterns
 
     Resize()
-    result := FindPattern([patterns.homeScreen.disgaea])
+    result := FindPattern(patterns.homeScreen.playStore)
     
     doRecover := false
     doClickDisgaeaIcon := false
 
     if (mode = "FarmItemWorldSingle") {
-        
         AddLog("Recover")
         HandleAction("Stop", mode)
         PollPattern([patterns.homeScreen.disgaea], { doClick : true, predicatePattern : patterns.criware, pollInterval : 1000 })
@@ -595,19 +594,27 @@ Recover(mode) {
     }
 
     if (result.IsSuccess) {
-        doRecover := true
-        doClickDisgaeaIcon := true
+        if(FindPattern([patterns.homeScreen.disgaea]).IsSuccess)
+        {
+            doRecover := true
+            doClickDisgaeaIcon := true
+        }
     }
 
-    result := FindPattern(patterns.prompt.dateHasChanged)
-    if (result.IsSuccess) {
-        FindPattern(patterns.prompt.ok, { doClick : true})
-        doRecover := true
-    }
+    result := FindPattern(patterns.prompt.corner)
 
-    result := FindPattern(patterns.prompt.communicationError)
-    if (result.IsSuccess) {
-        FindPattern(patterns.prompt.ok, { doClick : true})
+    if (result.IsSuccess)
+    {
+        result := FindPattern(patterns.prompt.dateHasChanged)
+        if (result.IsSuccess) {
+            FindPattern(patterns.prompt.ok, { doClick : true})
+            doRecover := true
+        }
+
+        result := FindPattern(patterns.prompt.communicationError)
+        if (result.IsSuccess) {
+            FindPattern(patterns.prompt.ok, { doClick : true})
+        }
     }
 
     if (doRecover) {
