@@ -228,7 +228,7 @@ DoItemDrop() {
             result := FindPattern(patterns.enemy.target)
 
             while (!result.IsSuccess) {
-                PollPattern(patterns.enemy.A, { variancePct : 1, doClick : true, offsetX : 40, offsetY : -30 })
+                PollPattern(patterns.enemy.A, { variancePct : 15, doClick : true, offsetX : 40, offsetY : -30 })
                 sleep 500
                 result := FindPattern(patterns.enemy.target)
             }
@@ -236,12 +236,12 @@ DoItemDrop() {
         
         ;check 4 times just in case
         loop 4 {
-            result := FindPattern(patterns.enemy.A, { variancePct : 1 })
+            result := FindPattern(patterns.enemy.A, { variancePct : 15 })
 
             while (result.IsSuccess) {
                 if (FindPattern(patterns.battle.skills.label.IsSuccess)) {
                     result := FindPattern(singleTargetActions)
-                    if (FindPattern(patterns.enemy.A, { variancePct : 1 }).IsSuccess) {
+                    if (FindPattern(patterns.enemy.A, { variancePct : 15 }).IsSuccess) {
                         ClickResult(result)
                     }
                 }
