@@ -77,10 +77,10 @@ FarmItemWorldAnyLoop(type := "") {
             DoItem()
             sleep 2000
         }
-        else if InStr(result.comment, "itemWorld.leave") {
-            ClickResult(result)
-            sleep 1000
-        }
+        ; else if InStr(result.comment, "itemWorld.leave") {
+        ;     ClickResult(result)
+        ;     sleep 1000
+        ; }
         else if InStr(result.comment, "battle.auto") {
             DoItem()
             sleep 2000
