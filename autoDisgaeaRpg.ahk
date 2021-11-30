@@ -140,10 +140,46 @@ BattleMiddleClickCallback() {
 }
 
 ScreenCap() {
+    global hwnd
     Resize()
     sleep 500
+
+    ; FindText().ScreenShot()
+    ; FindText().SavePic("cap_" . A_Now . ".png")
+
+    FindText().BindWindow(hwnd)>
     FindText().ScreenShot()
-    FindText().SavePic("cap_" . A_Now . ".png")
+    FindText().SavePic("cap_mode_0.png")
+
+    sleep 250
+
+    FindText().BindWindow(hwnd,1)>
+    FindText().ScreenShot()
+    FindText().SavePic("cap_mode_1.png")
+
+    sleep 250
+
+    FindText().BindWindow(hwnd,2)>
+    FindText().ScreenShot()
+    FindText().SavePic("cap_mode_2.png")
+
+    sleep 250
+
+    FindText().BindWindow(hwnd,3)>
+    FindText().ScreenShot()
+    FindText().SavePic("cap_mode_3.png")
+
+    sleep 250
+
+    FindText().BindWindow(hwnd,4)>
+    FindText().ScreenShot()
+    FindText().SavePic("cap_mode_4.png")
+
+    ; FindText().BindWindow(0)>
+    ; FindText().ScreenShot()
+    ; FindText().SavePic("cap_mode_none.png")
+
+    ; sleep 250
 }
 
 AutoClear() {
