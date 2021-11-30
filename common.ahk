@@ -414,10 +414,12 @@ InitPatterns() {
 InitBlueStacks()
 {
     global
-    test := settings.blueStacks.identifier
     WinGet, hwnd, ID, % settings.blueStacks.identifier . " ahk_exe HD-Player.exe"
+    ;SetTitleMatchMode, 2
+    ;WinGet, hwnd, ID,Photos
     WinActivate, % ahk_id hwnd
-    FindText().BindWindow(hwnd,3)>
+    ;FindText().BindWindow(hwnd,3)>
+    FindText().BindWindow(hwnd,4)>
     Resize()
 
     cmdLine := GetCommandLine(hwnd)
