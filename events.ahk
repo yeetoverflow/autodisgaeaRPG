@@ -105,12 +105,13 @@ EventStoryFarm() {
         else if InStr(result.comment, "events.title") {
             sleep 1000
             PollPattern(patterns.events.hard, { doClick : true, predicatePattern : patterns.events.hard.enabled })
+            sleep 500
             Click("x470 y443")
             sleep 50
             Click("x470 y443")
         }
         else if InStr(result.comment, "events.stage.title") {
-            PollPattern(patterns.events.stage[settings.eventOptions.storyTarget], { doClick : true })
+            FindPattern(patterns.events.stage[settings.eventOptions.storyTarget], { doClick : true })
         }
         else if InStr(result.comment, "raid.message") {
             HandleRaid()
