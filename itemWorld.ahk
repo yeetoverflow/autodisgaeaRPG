@@ -163,6 +163,8 @@ DoItem() {
             Break
         }
     }
+
+    FindPattern(patterns.blueStacks.trimMemory, { doClick : true})
 }
 
 DoItemDrop() {

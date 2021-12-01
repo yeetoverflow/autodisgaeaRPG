@@ -389,6 +389,9 @@ InitPatterns() {
         patterns.darkGates.stage.2 := "|<>*97$10.TW182y9sV288VYAVWDs1U7zs"  ;use 25 percent variance
         patterns.darkGates.stage.threeStars := "|<>0x2A2219@0.58$77.zyzzzzrzzzyzzzwzzzz7zzztzzzkzzzyDzzzlzzzVzzzsDzzz3zzy1zzzkTzzy3zzw3zzz0Tzzs3zzk3zzy0TzzU7zk00Ty003zk00Q0007U000w0004000DU003s000Q001zU00Dw001w003zU00zw007w00DzU03zs00Tw00zzU0Dzs01zs03zz00Tzs03zk07zy00zzk07zU0Dzw01zz00Dz00Tzs03zy00Ty00zzk07zw00zw7Uzz0wDzsDVzszlzyDyTzlznzrzzzwzzzzjzzs"
 
+        patterns.blueStacks := {}
+        patterns.blueStacks.trimMemory := "|<>**50$18.0C00+01vk10E3zs208y+DW+9ieheehjzxU01zzzJGeTzyU"
+
         patterns.scroll := {}
         patterns.scroll.up := {}
         patterns.scroll.up.handle := ["|<>0xB0A7C3@0.80$14.MEYCBDlryTzrvDwHxYq", "|<>0xADA4C0@0.78$15.AMFDWPzPzzTPvnDT/w", "|<>0xB7AECC@0.75$10.7lzjzvDYs"]

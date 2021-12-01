@@ -355,9 +355,8 @@ Verify() {
 }
 
 Test() {
-    global patterns, settings
+    global patterns, settings, hwnd
     SetStatus(A_ThisFunc)
-    
 }
 
 SettingsModal(targetSettings)
