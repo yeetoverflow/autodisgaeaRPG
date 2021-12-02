@@ -19,6 +19,7 @@ handlers.ScrollUp := { Func : Func("ScrollUp") }
 handlers.ScrollDown := { Func : Func("ScrollDown") }
 handlers.FarmItemWorldAnyLoop := { Func : Func("FarmItemWorldAnyLoop") }
 handlers.FarmItemWorldLegendaryLoop := { Func : Func("FarmItemWorldLegendaryLoop") }
+handlers.FarmItemWorldSingle := { Func : Func("FarmItemWorldSingle") }
 handlers.MiddleClickCallback := { Func : Func("MiddleClickCallback") }
 
 ;A_Args.1 is the executable
@@ -616,7 +617,7 @@ Recover(mode) {
     doRecover := false
     doClickDisgaeaIcon := false
 
-    if (mode = "FarmItemWorldSingle") {
+    if (result.IsSuccess && mode = "FarmItemWorldSingle") {
         AddLog("Recover")
         HandleAction("Stop", mode)
         PollPattern([patterns.homeScreen.disgaea], { doClick : true, predicatePattern : patterns.criware, pollInterval : 1000 })
