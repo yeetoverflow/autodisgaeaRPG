@@ -119,6 +119,8 @@ ResetUI() {
 
     Gui Add, Text, cWhite x+10, Count:
     Gui Add, Edit, cBlack w50 x+10 Number vDarkGateCount, 1
+    Gui Add, Text, cWhite x+10, Skip:
+    Gui Add, Edit, cBlack w50 x+10 Number vDarkGateSkipCount, 0
 
     Gui, Add, Progress, xs+10 vProgressBar_DoDarkGateHL -Smooth w100 h18 c0x66FF66 border
     Gui Add, Text, cBlack xp wp hp center vProgressText_DoDarkGateHL BackgroundTrans, Start DoDarkGateHL
@@ -521,7 +523,7 @@ BattleContextChanged() {
         case 7: settings.battleContext := "darkGateHL"
     }
 
-    settings.Save()
+    settings.Save(true)
     InitBattleOptionsUI(settings["battleOptions"][settings.battleContext])
 }
 

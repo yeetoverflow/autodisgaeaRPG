@@ -19,6 +19,7 @@ DoDarkGateMatsMonster() {
 DoDarkGate(type) {
     global mode, patterns, settings, guiHwnd
     ControlGetText, gateCount, edit3, % "ahk_id " . guiHwnd
+    ControlGetText, gateSkipCount, edit4, % "ahk_id " . guiHwnd
     SetStatus(gateCount, 2)
 
     gateCount++
@@ -36,6 +37,7 @@ DoDarkGate(type) {
         }
     }
 
+    battleOptions.skipTicketCount := gateSkipCount
     battleOptions.startPatterns := [patterns.battle.start, patterns.battle.prompt.battle]
 
     loopTargets := [patterns.stronghold.gemsIcon, patterns.dimensionGate.background, patterns.darkGates.title

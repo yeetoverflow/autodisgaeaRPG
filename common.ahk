@@ -187,7 +187,8 @@ InitPatterns() {
         patterns.prompt.unfinishedBattle := "|<>0x111111@0.51$170.00000C000003U0001k00000001k0C0M007i00C00s0000Q0Dw00000Q03U60033U03U0C0000703zk0000700s1U00ks00k03U0001k0sS0063Vk0C0M00Q000000k0000Q0C3U03UsQ03U600Dk00000Cs001b03Us00sC700s1Xz3wszksT3z0y1zk0sQ3sTbtkTC0MwsQCDSCAMssQksw0Cy1b3UsQCPU6C673XXXb0CCCCA703zk0kMC777s1XVlkskstk31XVb1k0sC0C63VlUy0MsQQCACCDUkMztkQ0C3kzVUsQTxU6C773X3XVyA6C0Q703UQssMC770Q33Vlkskss3XVXU71k0s7CC63VlU70ksQQCACC0MsMs8sw0C3X3VUsQQ0wwC773X3XaCC676CD03bktsMC73X7y3VkkskMsz31Uz1zk0zsDz7VtkTUQ00000000000030000000k0EA01W"
         patterns.prompt.insufficientAP := ["|<>0x111111@0.66$111.zw0000000000003U7zb1k0001U0000000Q0sCs60000Q00000007U70z0k0003U0000000y0s7sC0k1Uz0k6M6004k70z1kTUz7sTUz3w01b0s7zw66A8Q6670lk08s71ry0klU3VkskC6033Uzwtk67DUQC361kk0MQ7M771zsz3VkMkDy07zUs0sQC00wQC361k00kC7073kk03XVkskC00A1ks0sD728QQ6660kE1U77070wRlr1sNkk3i0M0ss0000s3U60s0070000004"
                                         , "|<>0x1E1E1E@0.65$145.0000000S7Y00M00000000000Q000000A6700C0000000C0TzC000000A33U07000030070C3r00000061U00000003U03k70vU000003Vk00000001k03s3UDkr0A31bxyQ1ks60r1y01i1k7szkTVVksQC7yQDkzsz00b0s7QQQMEksMC770CAAQAC00lkQ7iC6C0MQA73X07C6C6700EsDzb733kAC63VnU3b3733U0MS7w3XVVy6731ktk1nzXVVk0Dz3U1lkk7X3VUsQs0tk1kks0A3Vk0ssM1lVkkQCQ0Qs0sMQ060ss0QQAEsssMC770CA4QAC060QQ0CC6DsDwA73Vzb3yC63k30DC00001s3Y0000D00w000s000002"]
-        patterns.prompt.use := "|<>0xFDFCFC@0.66$35.s1U001k30003U600070A000C0M608Q0kr1ys1X26Dk360QDU6D0sT0ADVzq0E7X0C1U3b0S707C2Tw6QCQDU7k7Y"
+        patterns.prompt.use := ["|<>0xFDFCFC@0.66$35.s1U001k30003U600070A000C0M608Q0kr1ys1X26Dk360QDU6D0sT0ADVzq0E7X0C1U3b0S707C2Tw6QCQDU7k7Y"
+                              , "|<>**50$35.s10001k70003UC00070Q000C0s000Q1ky1ws3Xy7xk7CAQTUCQ0kz0QT3zy0kzbzw1UDC0w707A0wQAQQAzkTsTkT0D0C8"]
         patterns.prompt.resume := "|<>0x08111F@0.51$77.zk00000000001zs00000000003Us000000000070s0000000000C1k0000000000Q70y3wACDww1wsS3CCMsQSyQCRzkAAM1ksssQMPb0MQs1Vllktkr71zsy33XVVnzyC3U0y67733b0QC700CACC67C0sC600AMQQACA1kCC4EstssMQQ/0S7sTUzlkksTY"
         patterns.prompt.close := ["|<>0x471418@0.57$52.0060000007sQ000001vlk00000C37000001k0Q00000C01k00000s071w1s3nU0MCsQkti01VVlU33s06C370QDU0MsCT1ly01XUsz7zM06C3USQ1k0MMA0tk3UtVll3X17z63y7w7s3U0100068"
                                 , "|<>0x270B0E@0.54$52.0060000007kM000001vlU00000A36000001k0M00000C01U00000s061s3s3nU0MAsQkti01VVlV77s06C360MDU0MsAT1ly01XUsz7zs06C30QM1k0MsA0tk3UlVVl3337z63y7w7s300000048"
@@ -385,9 +386,19 @@ InitPatterns() {
                                         , "|<>*111$59.Dzzkz0TyzzU80X2105060E14640+0ATwC84MToTsSswUAVz8zEMFV4930E3UMX6MG6zU7UF68kIB30BUGAE0cO6DnUYN00kwATjV8mDVksszk2lwzXk1E1UDXl1ak6U3zzzznwztzy"
                                         , "|<>*111$59.Tzzkz0zyzzU80X2305060E14240+0ATwSM4MzoTsM8kUAVU8zEMFVA930E3UMX4MO6zU6UF680IB30BUGAE0sO6DnkYN00swQTc18mTVk0s0k2lsxVk1E1UDXtVak6U3zzwznyztzy"
                                         , "|<>*107$59.7tzUS07wTwkA0V61kB060E14460+0A0k28480o0MTswk8VzczkEFV0930FyUEX2MG6SU7UF68koBb0BUmAE0cO6DtUYMU1koATjV8m01lsszk2FYz3U1k1UBXl13U2U3zzzvXRzxzy"]
-        patterns.darkGates.stage.1 := "|<>*99$7.zkMC5WlMgK/5WlMbs"          ;use 10 percent variance
-        patterns.darkGates.stage.2 := "|<>*97$10.TW182y9sV288VYAVWDs1U7zs"  ;use 25 percent variance
+        patterns.darkGates.skip := {}
+        patterns.darkGates.skip.ticket := "|<>**50$43.Tzz0T00Q1kU8U0A0sE4E04Dw828023u41wTV0l3wyzyUAVrFM3s3Elcg0q1cEoKC9UQ0m/74MC0B5WWy306Wllk3U1lMsk1lssg0Q0sqAK0TzrnTv7s01ssVXk00000n000000NU00000DU000007k4"
+        patterns.darkGates.skip.add := "|<>**50$20.0zU0AA03300kk0AA0z3wTkzg00D003k00w00Dz3zTkzUQC03300kk0Dw03z00DU8"
+        patterns.darkGates.skip.remainingZero := "|<>0xFC5693@0.80$12.TwTyTyySySySyTyTyTyTyTySySTyTyTwU"
+        
+        patterns.darkGates.stage.1 := "|<>**50$39.00000z00000zz0000C0800037t0000lVc0006M7y001W00M00Ak03001aTyM008mxn0016E2M008nsH001a12M00AE8H000X12M006AMH000My2M001k1H0007zvs00000U"
+        patterns.darkGates.stage.2 := "|<>**50$41.00000zw000070A0000Mz80000XbE0003A3jk004E0ks00MU10E00n03sU016Ttl002AU12004Nw6A00Ak8MM00MUEVU00FUX6000lV4TU00ly81000k0k2000zzzw000Tl"
+        patterns.darkGates.stage.3 := "|<>**50$42.00000Tw00001kC000077W00006Tu0000AkC00008k6zk00MU0UM00NU0y800FbzS800FY1y800FblUA00NXlU400MUFz4008kF3400AMF24004Tl6A007214M003kT6s000Ts3k00000U"
+        patterns.darkGates.stage.4 := "|<>**50$42.00000zw00001k6000077W00006Ru0000AkC40008k4DU00MU08U00NU0MU00FbzEs00FY1E800Fbln800NXlX800MUFbA008kFU600AsFU6006TlyA00771TA003sz3s000zs1s00000U"
+        patterns.darkGates.stage.5 := "|<>**50$42.00000Ts00001sS000033200006Du0000AMS00008k6zs00MU0U800NU0U800FbzXs00FY1Xs00FbVU800NblUA00NUFz400MUF3400AkF2A00AQl6A0067V6M003UD4M000zw7k00000U"
         patterns.darkGates.stage.threeStars := "|<>0x2A2219@0.58$77.zyzzzzrzzzyzzzwzzzz7zzztzzzkzzzyDzzzlzzzVzzzsDzzz3zzy1zzzkTzzy3zzw3zzz0Tzzs3zzk3zzy0TzzU7zk00Ty003zk00Q0007U000w0004000DU003s000Q001zU00Dw001w003zU00zw007w00DzU03zs00Tw00zzU0Dzs01zs03zz00Tzs03zk07zy00zzk07zU0Dzw01zz00Dz00Tzs03zy00Ty00zzk07zw00zw7Uzz0wDzsDVzszlzyDyTzlznzrzzzwzzzzjzzs"
+
+        patterns.apAdd := "|<>*99$13.3s7z7rrlzszwTU1k0Q0TlzsywSTS7z0y4"
 
         patterns.blueStacks := {}
         patterns.blueStacks.trimMemory := "|<>**50$18.0C00+01vk10E3zs208y+DW+9ieheehjzxU01zzzJGeTzyU"
@@ -483,7 +494,15 @@ DoBattle(battleOptions) {
         }
 
         if (battleOptions.startPatterns) {
-            FindPattern(battleOptions.startPatterns, { doClick : true })
+            result := FindPattern(battleOptions.startPatterns)
+            if (battleOptions.skipTicketCount) {
+                UseSkipTickets()
+                battleOptions.skipTicketCount--
+            }
+            else {
+                ClickResult(result)
+            }
+
             sleep 1000
         }
 
@@ -571,6 +590,33 @@ DoBattle(battleOptions) {
             Resize(true)
         }
     }
+}
+
+UseSkipTickets() {
+    global patterns
+
+    PollPattern(patterns.darkGates.skip.ticket, { doClick : true, predicatePattern : patterns.darkGates.skip.add })
+    sleep 500
+    FindPattern(patterns.darkGates.skip.add, { doClick : true })
+    sleep 1000
+    FindPattern(patterns.darkGates.skip.add, { doClick : true })
+    sleep 500
+    if (!FindPattern(patterns.darkGates.skip.remainingZero).IsSuccess) {
+        PollPattern(patterns.prompt.close, { doClick : true, predicatePattern : patterns.battle.start })
+        PollPattern(patterns.apAdd, { doClick : true, predicatePatern : patterns.prompt.use })
+        PollPattern(patterns.prompt.use, { doClick : true, predicatePatern : patterns.prompt.yes })
+        PollPattern(patterns.prompt.yes, { doClick : true, predicatePatern : patterns.battle.close })
+        PollPattern(patterns.prompt.close, { doClick : true, predicatePatern : patterns.battle.start })
+
+        PollPattern(patterns.darkGates.skip.ticket, { doClick : true, predicatePattern : patterns.darkGates.skip.add })
+        sleep 500
+        FindPattern(patterns.darkGates.skip.add, { doClick : true })
+        sleep 1000
+        FindPattern(patterns.darkGates.skip.add, { doClick : true })
+        sleep 500
+    }
+
+    PollPattern(patterns.prompt.use, { doClick : true, predicatePattern : patterns.battle.done })
 }
 
 Resize(reset := "") {
