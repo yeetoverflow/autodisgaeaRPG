@@ -64,6 +64,30 @@ patterns := InitPatterns()
 settings := InitSettings()
 
 metadata := {}
+
+metadata.battleOptions := {}
+
+battleOptionsMetadata := {}
+battleOptionsMetadata.displayOrder := ["auto", "targetEnemyMiddle", "selectStandby", "autoRefillAP"]
+battleOptionsMetadata.auto := {}
+battleOptionsMetadata.auto.newLine := true
+battleOptionsMetadata.auto.type := "Checkbox"
+battleOptionsMetadata.targetEnemyMiddle := {}
+battleOptionsMetadata.targetEnemyMiddle.type := "Checkbox"
+battleOptionsMetadata.selectStandby := {}
+battleOptionsMetadata.selectStandby.type := "Checkbox"
+battleOptionsMetadata.autoRefillAP := {}
+battleOptionsMetadata.autoRefillAP.type := "Checkbox"
+
+metadata.battleOptions.default := battleOptionsMetadata
+metadata.battleOptions.event := battleOptionsMetadata
+metadata.battleOptions.itemWorld := battleOptionsMetadata
+metadata.battleOptions.sweep := battleOptionsMetadata
+metadata.battleOptions.raid := battleOptionsMetadata
+metadata.battleOptions.darkGateMats := battleOptionsMetadata
+metadata.battleOptions.darkGateHL := battleOptionsMetadata
+
+
 metadata.itemWorldOptions := {}
 metadata.itemWorldOptions.loop := {}
 metadata.itemWorldOptions.loop.displayOrder := ["itemType", "farmLevels"]

@@ -88,7 +88,7 @@ ResetUI() {
     ; GuiControl,, % "itemWorldOptions_loop_itemType_" . settings.itemWorldOptions.loop.itemType, 1
     
     Gui, Add, Progress, x+10 w250 h18 c0x66FF66 vSettings_itemWorldOptions_loop
-    Gui Add, Text, xp+5 wp hp r1 +0x4000 cBlack BackgroundTrans left vSettingsText_itemWorldOptions_loop, % GetSettingDisplay("Settings_itemWorldOptions_loop")
+    Gui Add, Text, xp+5 wp hp r1 +0x4000 cBlack BackgroundTrans left vsettingsText_itemWorldOptions_loop, % GetSettingDisplay("Settings_itemWorldOptions_loop")
 
     Gui, Add, Progress, xs+10 vProgressBar_FarmItemWorldLegendaryLoop -Smooth w170 h18 c0x66FF66 border
     Gui Add, Text, cBlack xp wp hp center vProgressText_FarmItemWorldLegendaryLoop BackgroundTrans, Start FarmItemWorldLegendaryLoop
@@ -562,6 +562,15 @@ CreateBattleOptionsUI(battleOptions) {
         . "selectStandby", SelectStandby
     Gui Add, Checkbox, % "cWhite x+5 gBattleOptionsCheckedChanged vBattleOptions_"
         . "autoRefillAP", AutoRefillAP
+
+    ; local targetSettings := "settings_battleOptions_" . settings.battleContext
+    ; local settingMetaData := GetSettingMetaData(targetSettings)
+    ; for k, v in settingMetaData.displayOrder
+    ; {
+    ;     local settingUnderscore := targetSettings . "_" . v
+    ;     local settingInfo := GetSettingInfo(settingUnderscore)
+    ;     AddSetting(settingInfo, "1")
+    ; }
 
     Gui Add, Text, cWhite xs+10 y+5, Companions:
 

@@ -358,6 +358,12 @@ Verify() {
 Test() {
     global patterns, settings, hwnd
     SetStatus(A_ThisFunc)
+
+    MsgBox, % CapitalizeFirstLetter("whatever")
+}
+
+CapitalizeFirstLetter(str) {
+    Return RegExReplace(str, "^(.)", "$u1")
 }
 
 SettingsModal(targetSettings)
@@ -379,60 +385,7 @@ SettingsModal(targetSettings)
     {
         settingUnderscore := targetSettings . "_" . k
         local settingInfo := GetSettingInfo(settingUnderscore)
-
-        switch (settingInfo.metaData.type)
-        {
-            case "Radio":
-            {
-                Gui,  SettingsModal:Add, Text, xs y+5 cWhite, % settingInfo.path
-
-                for i, opt in settingInfo.metaData.options {
-                    newRow := false
-                    if (i = 1 || Mod(i - 1, settingInfo.metaData.itemsPerRow) = 0) {
-                        newRow := true
-                    }
-                    
-                    Gui SettingsModal:Add, Radio, % "cWhite gSettingChanged v" . settingUnderscore . "_" . opt
-                        . (newRow ? " xs y+5" : " x+10"), % opt
-                }
-
-                GuiControl,, % settingUnderscore . "_" . settingInfo.setting[settingInfo.key], 1
-
-                Gui, SettingsModal:Add, Text, xs y+5 0x10 w400 cWhite
-            }
-            case "Array":
-            {
-                Gui, SettingsModal:Add, Text, xs y+5 cWhite, % settingInfo.path
-
-                index := 1
-                for key, preset in settingInfo.metaData.presets {
-                    newRow := false
-                    if (index = 1) {
-                        newRow := true
-                    }
-                    Gui SettingsModal:Add, Radio, % "cWhite gSettingPresetChanged v" . settingUnderscore . "_" . key
-                        . (newRow ? " xs y+5" : " x+10"), % key
-                    index++
-                }
-
-                for i, opt in settingInfo.metaData.options {
-                    newRow := false
-                    if (i = 1 || Mod(i - 1, settingInfo.metaData.itemsPerRow) = 0) {
-                        newRow := true
-                    }
-                    
-                    Gui SettingsModal:Add, Checkbox, % "cWhite gSettingChanged v" . settingUnderscore . "_" . opt
-                        . (newRow ? " xs y+5" : " x+10"), % opt
-                }
-
-                for i, v in settingInfo.setting[settingInfo.key] {
-                    GuiControl,, % settingUnderscore . "_" . v, 1
-                }
-
-                Gui, SettingsModal:Add, Text, xs y+5 0x10 w400 cWhite
-            }
-            
-        }
+        AddSetting(settingInfo, "SettingsModal")
     }
 
     Gui, SettingsModal:Add, Button, gSettingsModalGuiClose, Done
@@ -511,6 +464,74 @@ GetSettingDisplay(settingInfo)
     Return display
 }
 
+AddSetting(settingInfo, targetGui) {
+    global
+
+    local settingUnderscore := settingInfo.pathUnderScore
+    switch (settingInfo.metaData.type)
+    {
+        case "Checkbox":
+        {
+            local targetKey := ""
+            RegExMatch(settingUnderscore, "[^_]+?$", targetKey)
+            local newRow := settingInfo.metaData.newLine
+            Gui %targetGui%:Add, Checkbox, % "cWhite gSettingChanged v" . settingUnderscore
+                    . (newRow ? " xs+10 y+5" : " x+10"), % CapitalizeFirstLetter(targetKey)
+            GuiControl,, % settingUnderscore, % settingInfo.setting[settingInfo.key] ? 1 : 0
+        }
+        case "Radio":
+        {
+            Gui,  %targetGui%:Add, Text, xs y+5 cWhite, % settingInfo.path
+
+            for i, opt in settingInfo.metaData.options {
+                local newRow := false
+                if (i = 1 || Mod(i - 1, settingInfo.metaData.itemsPerRow) = 0) {
+                    newRow := true
+                }
+                
+                Gui %targetGui%:Add, Radio, % "cWhite gSettingChanged v" . settingUnderscore . "_" . opt
+                    . (newRow ? " xs+10 y+5" : " x+10"), % opt
+            }
+
+            GuiControl,, % settingUnderscore . "_" . settingInfo.setting[settingInfo.key], 1
+
+            Gui, %targetGui%:Add, Text, xs y+5 0x10 w400 cWhite
+        }
+        case "Array":
+        {
+            Gui, %targetGui%:Add, Text, xs y+5 cWhite, % settingInfo.path
+
+            local index := 1
+            for key, preset in settingInfo.metaData.presets {
+                local newRow := false
+                if (index = 1) {
+                    newRow := true
+                }
+                Gui %targetGui%:Add, Radio, % "cWhite gSettingPresetChanged v" . settingUnderscore . "_" . key
+                    . (newRow ? " xs y+5" : " x+10"), % key
+                index++
+            }
+
+            for i, opt in settingInfo.metaData.options {
+                local newRow := false
+                if (i = 1 || Mod(i - 1, settingInfo.metaData.itemsPerRow) = 0) {
+                    newRow := true
+                }
+                
+                Gui %targetGui%:Add, Checkbox, % "cWhite gSettingChanged v" . settingUnderscore . "_" . opt
+                    . (newRow ? " xs y+5" : " x+10"), % opt
+            }
+
+            for i, v in settingInfo.setting[settingInfo.key] {
+                GuiControl,, % settingUnderscore . "_" . v, 1
+            }
+
+            Gui, %targetGui%:Add, Text, xs y+5 0x10 w400 cWhite
+        }
+        
+    }
+}
+
 SettingChanged()
 {
     global
@@ -521,8 +542,18 @@ SettingChanged()
 
     local settingInfo := GetSettingInfo(settingUnderscore)
     
+    if (!settingInfo.metaData.type) {
+        local settingInfo := GetSettingInfo(A_GuiControl)
+    }
+
     switch (settingInfo.metaData.type)
     {
+        case "Checkbox":
+        {
+            GuiControlGet, boolVal, , % A_GuiControl
+            settingInfo.setting[settingInfo.key] := boolVal
+            settings.Save(true)
+        }
         case "Radio":
         {
             settingInfo.setting[settingInfo.key] := targetValue
@@ -643,7 +674,7 @@ Recover(mode) {
     {
         result := FindPattern(patterns.prompt.dateHasChanged)
         if (result.IsSuccess) {
-            FindPattern(patterns.prompt.ok, { doClick : true})
+            FindPattern(patterns.prompt.ok, { doClick : true, predicatePattern : patterns.criware })
             doRecover := true
         }
 
