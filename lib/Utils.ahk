@@ -64,7 +64,7 @@ Click(target) {
 }
 
 PollPattern(pattern, opts := "") {
-	opts := InitOps(opts, { doClick : false, clickDelay : 0, bounds : "", pollInterval : 500, doubleCheck: false, doubleCheckDelay: 500, predicatePattern : "", maxCount : ""})
+	opts := InitOps(opts, { doClick : false, clickDelay : 0, bounds : "", pollInterval : 500, doubleCheck: false, doubleCheckDelay: 500, predicatePattern : "", maxCount : "", clickPattern : ""})
 
     opts.callback()
     count := 0
@@ -94,6 +94,11 @@ PollPattern(pattern, opts := "") {
                 sleep, opts.clickDelay
                 ClickResult(result)
             }
+
+            if (opts.clickPattern) {
+                FindPattern(opts.clickPattern, { doClick : true })
+            }
+
             targetResult := FindPattern(opts.predicatePattern, opts)
         }
 
@@ -113,6 +118,11 @@ PollPattern(pattern, opts := "") {
         SetStatus("Try " . count, 2)
         sleep, opts.pollInterval
         opts.callback()
+
+        if (opts.clickPattern) {
+            FindPattern(opts.clickPattern, { doClick : true })
+        }
+
         result := FindPattern(pattern, opts)
         count++
     }

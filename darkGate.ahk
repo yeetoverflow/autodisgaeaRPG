@@ -73,7 +73,7 @@ DoDarkGate(type) {
         }
         else if InStr(result.comment, "companions.title") || InStr(result.comment, "battle.auto") || InStr(result.comment, "battle.title") || InStr(result.comment, "battle.prompt.battleAgain") {
             DoBattle(battleOptions)
-            PollPattern(loopTargets, { callback : Func("MiddleClickCallback"), pollInterval : 250 })
+            PollPattern(loopTargets, { clickPattern : patterns.battle.done, pollInterval : 250 })
         }
     }
 

@@ -157,7 +157,7 @@ DoItem() {
             Break
         }
 
-        result := PollPattern([patterns.itemWorld.nextLevel, patterns.itemWorld.leave], { predicatePattern: [patterns.itemWorld.title, patterns.battle.auto], doClick : true, doubleCheck : true, doubleCheckDelay : 250, pollInterval : 250, callback : Func("MiddleClickCallback") })
+        result := PollPattern([patterns.itemWorld.nextLevel, patterns.itemWorld.leave], { predicatePattern: [patterns.itemWorld.title, patterns.battle.auto], doClick : true, doubleCheck : true, doubleCheckDelay : 250, pollInterval : 250, clickPattern : patterns.battle.done })
         if (InStr(result.comment, "itemWorld.leave")) {
             Sleep, 1000
             Break
