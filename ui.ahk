@@ -67,6 +67,13 @@ ResetUI() {
     Gui, Add, Progress, x+10 vProgressBar_EventAutoClear -Smooth w100 h18 c0x66FF66 border
     Gui Add, Text, cBlack xp wp hp center vProgressText_EventAutoClear BackgroundTrans, Start EventAutoClear
 
+    Gui, Font, Bold
+    Gui Add, Text, cWhite xs+10, Raid
+    Gui, Font, Normal
+
+    Gui, Add, Progress, x+10 w250 h18 c0x66FF66 vsettings_eventOptions_raid
+    Gui Add, Text, xp+5 wp hp r1 +0x4000 cBlack BackgroundTrans left vsettingsText_eventOptions_raid, % GetSettingDisplay("settings_eventOptions_raid")
+
     Gui, Add, Progress, xs+10 vProgressBar_EventRaidLoop -Smooth w100 h18 c0x66FF66 border
     Gui Add, Text, cBlack xp wp hp center vProgressText_EventRaidLoop BackgroundTrans, Start EventRaidLoop
 
@@ -87,8 +94,8 @@ ResetUI() {
     ; Gui Add, Radio, cWhite gRadioOptionChanged vItemWorldOptions_loop_itemType_weapon x+5, Weapon
     ; GuiControl,, % "itemWorldOptions_loop_itemType_" . settings.itemWorldOptions.loop.itemType, 1
     
-    Gui, Add, Progress, x+10 w250 h18 c0x66FF66 vSettings_itemWorldOptions_loop
-    Gui Add, Text, xp+5 wp hp r1 +0x4000 cBlack BackgroundTrans left vsettingsText_itemWorldOptions_loop, % GetSettingDisplay("Settings_itemWorldOptions_loop")
+    Gui, Add, Progress, x+10 w250 h18 c0x66FF66 vsettings_itemWorldOptions_loop
+    Gui Add, Text, xp+5 wp hp r1 +0x4000 cBlack BackgroundTrans left vsettingsText_itemWorldOptions_loop, % GetSettingDisplay("settings_itemWorldOptions_loop")
 
     Gui, Add, Progress, xs+10 vProgressBar_FarmItemWorldLegendaryLoop -Smooth w170 h18 c0x66FF66 border
     Gui Add, Text, cBlack xp wp hp center vProgressText_FarmItemWorldLegendaryLoop BackgroundTrans, Start FarmItemWorldLegendaryLoop

@@ -373,7 +373,7 @@ SettingsModal(targetSettings)
     local settingMetaData := GetSettingMetaData(targetSettings)
 
     Gui, SettingsModal:Destroy
-    Gui, SettingsModal:New,, Settings
+    Gui, SettingsModal:New,, % StrReplace(targetSettings, "_", ".")
     Gui, SettingsModal:Color, 404040
     Gui, SettingsModal:Font, s3
     Gui, SettingsModal:Add, Text, section

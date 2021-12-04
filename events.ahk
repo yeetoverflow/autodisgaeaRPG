@@ -121,15 +121,55 @@ EventStoryFarm() {
 }
 
 HandleRaid() {
-    global patterns
+    global settings, patterns
 
-    PollPattern(patterns.raid.appear.fightRaidBoss, { doClick : true, predicatePattern : patterns.raid.helpRequests })
-    PollPattern(patterns.raid.helpRequests, { doClick : true, predicatePattern : patterns.prompt.ok })
-    PollPattern(patterns.prompt.ok, { doClick : true, predicatePattern : patterns.stage.back })
-    PollPattern(patterns.stage.back, { doClick : true, predicatePattern : patterns.tabs.stronghold })
-    sleep 1000
-    PollPattern(patterns.tabs.stronghold, { doClick : true })
-    sleep 1000
+
+    switch (settings.eventOptions.raid.appearAction)
+    {
+        case "fight":
+        {
+            PollPattern(patterns.raid.appear.fightRaidBoss, { doClick : true, predicatePattern : patterns.raid.helpRequests })
+
+            Loop {
+                result := PollPattern([patterns.battle.start, patterns.stage.back])
+                if InStr(result.comment, "stage.back") {
+                    sleep 1000
+                    Break
+                }
+                else {
+                    ClickResult(result)
+                }
+
+                PollPattern([patterns.battle.auto])
+                DoBattle(settings.battleOptions.raid)
+                PollPattern(patterns.raid.activeBoss, { clickPattern : patterns.battle.done, callback : Func("RaidClickCallback"), pollInterval : 250 })
+            }
+
+            result := PollPattern(patterns.stage.back, { doClick : true, predicatePattern : [patterns.tabs.stronghold, patterns.prompt.close] })
+            if InStr(result.comment, "prompt.close") {
+                PollPattern(patterns.prompt.close, { doClick : true, predicatePattern : patterns.tabs.stronghold })
+            }
+            sleep 1000
+            PollPattern(patterns.tabs.stronghold, { doClick : true })
+            sleep 1000
+        }
+        case "advanceInStory":
+        {
+            PollPattern(patterns.raid.appear.advanceInStory, { doClick : true })
+            sleep 1000
+        }
+        default:    ;askForHelp
+        {
+            PollPattern(patterns.raid.appear.fightRaidBoss, { doClick : true, predicatePattern : patterns.raid.helpRequests })
+            PollPattern(patterns.raid.helpRequests, { doClick : true, predicatePattern : patterns.prompt.ok })
+            PollPattern(patterns.prompt.ok, { doClick : true, predicatePattern : patterns.stage.back })
+            PollPattern(patterns.stage.back, { doClick : true, predicatePattern : patterns.tabs.stronghold })
+            sleep 1000
+            PollPattern(patterns.tabs.stronghold, { doClick : true })
+            sleep 1000
+        }
+    }
+    
 }
 
 EventStory500Pct() {
@@ -259,7 +299,7 @@ EventRaidLoop() {
                 }
 
                 DoBattle(settings.battleOptions.raid)
-                PollPattern(patterns.raid.activeBoss, { callback : Func("RaidClickCallback"), pollInterval : 250 })
+                PollPattern(patterns.raid.activeBoss, { clickPattern : patterns.battle.done, callback : Func("RaidClickCallback"), pollInterval : 250 })
             }
         }
 
@@ -270,15 +310,7 @@ EventRaidLoop() {
 RaidClickCallback() {
     global patterns, hwnd
 
-    WinGetPos,X,Y,W,H, % "ahk_id " . hwnd
-
-    if (W = 600 && H = 1040) {
-        Click("x300 y150")
-
-        FindPattern(patterns.prompt.close, { doClick : true })
-    }
-    
-    ;Resize()
+    FindPattern(patterns.prompt.close, { doClick : true })
 }
 
 EventRaidAutoClaim() {

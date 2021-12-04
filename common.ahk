@@ -45,6 +45,7 @@ defaults.battleOptions.companions := { "50Pct" : ["|<>0x56E168@0.71$29.z3kwFyDlt
 defaults.battleOptions.allyTargets := { "None" : ""
                                      , "OverlordAsagi" : ["|<>**50$39.b00U50XM020d0A000780k000103000080DU00042zU00H0IT102k2XC8040IMl0102W200u0KQO09F2HW02e8GQU0pH2F404ekHAU1ZF2BUUMe0Ez467k2E0fU20I07M0s2U0n050M06E1B200m018E04009200U030E0400M2000060E0000k30000A080003010000k0800EA81U0031EC000kG1A00Q2U9M070Y0hk1U005XUM00muLq004"
                                                         , "|<>#633@0.84$41.00Ty00k007w0100j1M0401S1E0002s100005lW00E0/X002U0QaE0A00tAU0u01kt03Y03lq07MU7wQ0Sl0Dzs1y00Tzk7z00jzWTy01TzAzv01zyPzg07zxrzs0Dzvzzk0TzrzzU0zzjzw01zzzzwE3zzzzk07zzzz007zzzs00DzzzU40Tzzz0E0zzzw0U1Tzzk103Dzz0402jzw0M04rzk0W09ly02301UM003830000182000008000000807k0008U8000030E0000A0600E"] }
+
 defaults.itemWorldOptions := {}
 defaults.itemWorldOptions.bribe := "none" ;none, goldenCandy, goldBar, or crabMiso
 defaults.itemWorldOptions.targetItem := "legendary" ;any, rare, legendary
@@ -59,6 +60,8 @@ defaults.eventOptions.storyTarget := "oneStar"
 defaults.eventOptions.banners := {}
 defaults.eventOptions.banners.story := "|<>**50$49.U100E00CE3U0C00683003k0303400Q01U62U03U0U62E0EQ0E4180U7U0A0Y0G0s0A0E09170400U4kVk200E29MC100814Y1kw2W0VG0TXlN0Edkzl1408B838U1045W0YE0k23VDHw7B11UkU05m0VVw002wUFbe001/k8b4U00YD4C3k00T6nS3M00BWBXVg006P3EtY005bVs7a002M0Q0Z001a0200U00k01U0k0080000E0060000M0030000A001U000A000M0004000A0002U0030000k000k001k000C001k0003U03k0001w03U02007U7k05010sDc06U00Dz402E004zW038002010140000SE0W00000001"
 defaults.eventOptions.banners.raid := "|<>**50$49.zzq0BzHzk0z06VdMM0DyzErgA73zz8Pq67Uk0Dw333kTzvwzVVsDzxzzUkwD06Vk0M0703Ek0A073VcMQ623Xko8D33XVsO05VVkkoD06kksAS7U1sMS2700UwA/1000M06AkE00A036Qs00701znzzzzzzk"
+defaults.eventOptions.raid := {}
+defaults.eventOptions.raid.appearAction := "askForHelp"
 
 patterns := InitPatterns()
 settings := InitSettings()
@@ -67,26 +70,32 @@ metadata := {}
 
 metadata.battleOptions := {}
 
-battleOptionsMetadata := {}
-battleOptionsMetadata.displayOrder := ["auto", "targetEnemyMiddle", "selectStandby", "autoRefillAP"]
-battleOptionsMetadata.auto := {}
-battleOptionsMetadata.auto.newLine := true
-battleOptionsMetadata.auto.type := "Checkbox"
-battleOptionsMetadata.targetEnemyMiddle := {}
-battleOptionsMetadata.targetEnemyMiddle.type := "Checkbox"
-battleOptionsMetadata.selectStandby := {}
-battleOptionsMetadata.selectStandby.type := "Checkbox"
-battleOptionsMetadata.autoRefillAP := {}
-battleOptionsMetadata.autoRefillAP.type := "Checkbox"
+; battleOptionsMetadata := {}
+; battleOptionsMetadata.displayOrder := ["auto", "targetEnemyMiddle", "selectStandby", "autoRefillAP"]
+; battleOptionsMetadata.auto := {}
+; battleOptionsMetadata.auto.newLine := true
+; battleOptionsMetadata.auto.type := "Checkbox"
+; battleOptionsMetadata.targetEnemyMiddle := {}
+; battleOptionsMetadata.targetEnemyMiddle.type := "Checkbox"
+; battleOptionsMetadata.selectStandby := {}
+; battleOptionsMetadata.selectStandby.type := "Checkbox"
+; battleOptionsMetadata.autoRefillAP := {}
+; battleOptionsMetadata.autoRefillAP.type := "Checkbox"
 
-metadata.battleOptions.default := battleOptionsMetadata
-metadata.battleOptions.event := battleOptionsMetadata
-metadata.battleOptions.itemWorld := battleOptionsMetadata
-metadata.battleOptions.sweep := battleOptionsMetadata
-metadata.battleOptions.raid := battleOptionsMetadata
-metadata.battleOptions.darkGateMats := battleOptionsMetadata
-metadata.battleOptions.darkGateHL := battleOptionsMetadata
+; metadata.battleOptions.default := battleOptionsMetadata
+; metadata.battleOptions.event := battleOptionsMetadata
+; metadata.battleOptions.itemWorld := battleOptionsMetadata
+; metadata.battleOptions.sweep := battleOptionsMetadata
+; metadata.battleOptions.raid := battleOptionsMetadata
+; metadata.battleOptions.darkGateMats := battleOptionsMetadata
+; metadata.battleOptions.darkGateHL := battleOptionsMetadata
 
+metadata.eventOptions := {}
+metadata.eventOptions.raid := {}
+metadata.eventOptions.raid.displayOrder := ["appearAction"]
+metadata.eventOptions.raid.appearAction := {}
+metadata.eventOptions.raid.appearAction.type := "Radio"
+metadata.eventOptions.raid.appearAction.options := ["askForHelp", "fight", "advanceInStory"]
 
 metadata.itemWorldOptions := {}
 metadata.itemWorldOptions.loop := {}
