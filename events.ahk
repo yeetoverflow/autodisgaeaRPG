@@ -130,9 +130,15 @@ HandleRaid() {
         {
             PollPattern(patterns.raid.appear.fightRaidBoss, { doClick : true, predicatePattern : patterns.raid.helpRequests })
 
+            battleCount := 0
             Loop {
-                result := PollPattern([patterns.battle.start, patterns.stage.back])
-                if InStr(result.comment, "stage.back") {
+                result := PollPattern([patterns.battle.start, patterns.raid.finder, patterns.stage.back])
+                if InStr(result.comment, "raid.finder") {
+                    ClickResult(result)
+                    sleep 1000
+                    Continue
+                }
+                else if InStr(result.comment, "stage.back") {
                     sleep 1000
                     Break
                 }
@@ -142,16 +148,24 @@ HandleRaid() {
 
                 PollPattern([patterns.battle.auto])
                 DoBattle(settings.battleOptions.raid)
+                battleCount++
                 PollPattern(patterns.raid.activeBoss, { clickPattern : patterns.battle.done, callback : Func("RaidClickCallback"), pollInterval : 250 })
+            } Until (settings.eventOptions.raid.fightAttempts && battleCount >= settings.eventOptions.raid.fightAttempts)
+
+            result := PollPattern([patterns.raid.finder, patterns.stage.back])
+
+            if (InStr(result.comment, "raid.finder") && settings.eventOptions.raid.fightAttempts && battleCount >= settings.eventOptions.raid.fightAttempts) {
+                PollPattern(patterns.raid.finder, { doClick : true, predicatePattern : patterns.raid.helpRequests })
+                PollPattern(patterns.raid.helpRequests, { doClick : true, predicatePattern : patterns.prompt.ok })
+                PollPattern(patterns.prompt.ok, { doClick : true, predicatePattern : patterns.stage.back })
+                sleep 1000
             }
 
-            result := PollPattern(patterns.stage.back, { doClick : true, predicatePattern : [patterns.tabs.stronghold, patterns.prompt.close] })
+            result := PollPattern([patterns.stronghold.gemsIcon, patterns.prompt.close], { clickPattern : patterns.stage.back })
             if InStr(result.comment, "prompt.close") {
                 PollPattern(patterns.prompt.close, { doClick : true, predicatePattern : patterns.tabs.stronghold })
+                PollPattern(patterns.tabs.stronghold, { doClick : true, predicatePattern : patterns.stronghold.gemsIcon })
             }
-            sleep 1000
-            PollPattern(patterns.tabs.stronghold, { doClick : true })
-            sleep 1000
         }
         case "advanceInStory":
         {
@@ -164,9 +178,6 @@ HandleRaid() {
             PollPattern(patterns.raid.helpRequests, { doClick : true, predicatePattern : patterns.prompt.ok })
             PollPattern(patterns.prompt.ok, { doClick : true, predicatePattern : patterns.stage.back })
             PollPattern(patterns.stage.back, { doClick : true, predicatePattern : patterns.tabs.stronghold })
-            sleep 1000
-            PollPattern(patterns.tabs.stronghold, { doClick : true })
-            sleep 1000
         }
     }
     

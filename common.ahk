@@ -62,6 +62,7 @@ defaults.eventOptions.banners.story := "|<>**50$49.U100E00CE3U0C00683003k0303400
 defaults.eventOptions.banners.raid := "|<>**50$49.zzq0BzHzk0z06VdMM0DyzErgA73zz8Pq67Uk0Dw333kTzvwzVVsDzxzzUkwD06Vk0M0703Ek0A073VcMQ623Xko8D33XVsO05VVkkoD06kksAS7U1sMS2700UwA/1000M06AkE00A036Qs00701znzzzzzzk"
 defaults.eventOptions.raid := {}
 defaults.eventOptions.raid.appearAction := "askForHelp"
+defaults.eventOptions.raid.fightAttempts := "3"
 
 patterns := InitPatterns()
 settings := InitSettings()
@@ -92,10 +93,13 @@ metadata.battleOptions := {}
 
 metadata.eventOptions := {}
 metadata.eventOptions.raid := {}
-metadata.eventOptions.raid.displayOrder := ["appearAction"]
+metadata.eventOptions.raid.displayOrder := ["appearAction", "fightAttempts"]
 metadata.eventOptions.raid.appearAction := {}
 metadata.eventOptions.raid.appearAction.type := "Radio"
 metadata.eventOptions.raid.appearAction.options := ["askForHelp", "fight", "advanceInStory"]
+metadata.eventOptions.raid.fightAttempts := {}
+metadata.eventOptions.raid.fightAttempts.type := "Radio"
+metadata.eventOptions.raid.fightAttempts.options := ["1", "2", "3"]
 
 metadata.itemWorldOptions := {}
 metadata.itemWorldOptions.loop := {}
@@ -302,6 +306,7 @@ InitPatterns() {
 
         patterns.raid := {}
         patterns.raid.message := "|<>0xF95656@0.80$109.zk00s0k0zk00000000MC00M0M0MQ00000000A30000A0A70000000061k0006063U000000030kC3Vz031UC0w3UC0xUsNVlXU1XUMkl6AAknzk0MlUk0zsMAE30A8kNk0AMkM0MCA6A1k66QAQ1yAMA0A3637kS7z7a71X6A6061n1Uw3nU0z1lVX63030lUk70Nk07UsklnXU1UskM1UAM13kCAwsvk0zsAMFXC68ns3bY06M0001k7Uw1s78"
+        patterns.raid.finder := "|<>*65$59.037zzyDzzy06DzzwTzzwDwTzzszzzsTzzzzlzzzkzlk7s1sD603XU7U3UC006706060A07wCAAQAMMQDsQMMsE0lsTksklkkzVkzVlVU1U73Vz3X3030673y76D070AD"
         patterns.raid.helper := "|<>0x3BBFE4@0.63$60.s700C00000s700C00000s700C00000s700C00000s700C00000zz3yCDs7szzz7yCDyDwzzz77CDSQQzs77zCCCTwws77zCCCTwws770CCCQ0ws77zCDyTwws73zCDwDwws71yCDs7wQ00000C000000000C0000U"
         patterns.raid.activeBoss := "|<>0xEBEEEE@0.80$130.0s00001k000003Vs0000003k000M2000000C1k000000T0001U0000000s70000001i000600000003UQ0000004s001z7400000C1k000000lk1zbwQs63y00sC0TkDsD270A261nkMQQ03zk33VkVUMS1k0M7711Uk0DzUQ76061UsC01kQQAC3U0s7XUQQ0Q63Us071ksksS03UCC1ky1wzz3U0M73a3zk0C0ws71y1n0QC01UQ7MC000s3nUQ1w1M1sw061kT0s003UCC1k1k1U3Vk0Q70w3UE0C1sQ7030A0D7UVkQ3U7300sD1ksMQEk0w7y7lk60Dw03zk1z1zVy"
         patterns.raid.reload := "|<>0xFFFFFF@0.60$66.0000A000003zk00C000007sw00C000007kC00C000007k600C000007k600C00001rkC3wC3s3s7zsw7CC6C4ACDzs66CA60AA7tkC7CA70CQ7lsDzCQ73yQ7ksC0CQ76CQ7kQC0CA7CCA7kC62CC7ACC7kD76C6CCSDDk7XwA3w7r3rU"

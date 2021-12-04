@@ -110,6 +110,15 @@ PollPattern(pattern, opts := "") {
             result.IsSuccess := false
         }
 
+        if (!successResult) {
+            successResult := result
+        }
+
+        if (originalDoClick) {
+            sleep, opts.clickDelay
+            ClickResult(result)
+        }
+
         Return successResult
     }
 
