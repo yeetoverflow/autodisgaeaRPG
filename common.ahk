@@ -47,13 +47,22 @@ defaults.battleOptions.allyTargets := { "None" : ""
                                                         , "|<>#633@0.84$41.00Ty00k007w0100j1M0401S1E0002s100005lW00E0/X002U0QaE0A00tAU0u01kt03Y03lq07MU7wQ0Sl0Dzs1y00Tzk7z00jzWTy01TzAzv01zyPzg07zxrzs0Dzvzzk0TzrzzU0zzjzw01zzzzwE3zzzzk07zzzz007zzzs00DzzzU40Tzzz0E0zzzw0U1Tzzk103Dzz0402jzw0M04rzk0W09ly02301UM003830000182000008000000807k0008U8000030E0000A0600E"] }
 
 defaults.itemWorldOptions := {}
-defaults.itemWorldOptions.bribe := "none" ;none, goldenCandy, goldBar, or crabMiso
-defaults.itemWorldOptions.targetItem := "legendary" ;any, rare, legendary
-defaults.itemWorldOptions.loop := {}
-defaults.itemWorldOptions.loop.farmLevels := [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
-defaults.itemWorldOptions.loop.itemType := "armor" ;armor, weapon
-defaults.itemWorldOptions.farmLoop := {}
-defaults.itemWorldOptions.farmLoop.itemType := "armor" ;armor, weapon
+defaults.itemWorldOptions.1 := {}
+defaults.itemWorldOptions.1.farmLevels := [30, 60, 100]
+defaults.itemWorldOptions.1.bribe := "none"
+defaults.itemWorldOptions.1.targetItemType := "armor" ;armor, weapon
+defaults.itemWorldOptions.1.targetItemSort := "gained"
+defaults.itemWorldOptions.1.targetItemSortOrder := "ascending"
+defaults.itemWorldOptions.1.targetItemRarity := "any" ;any, rare, legendary
+defaults.itemWorldOptions.1.lootTarget := "any" ;any, rare, legendary
+defaults.itemWorldOptions.2 := {}
+defaults.itemWorldOptions.2.farmLevels := [30, 60, 100]
+defaults.itemWorldOptions.2.bribe := "none"
+defaults.itemWorldOptions.2.targetItemType := "armor" ;armor, weapon
+defaults.itemWorldOptions.2.targetItemSort := "rarity"
+defaults.itemWorldOptions.2.targetItemSortOrder := "descending"
+defaults.itemWorldOptions.2.targetItemRarity := "legendary" ;any, rare, legendary
+defaults.itemWorldOptions.2.lootTarget := "legendary" ;any, rare, legendary
 
 defaults.eventOptions := {}
 defaults.eventOptions.storyTarget := "oneStar"
@@ -101,23 +110,38 @@ metadata.eventOptions.raid.fightAttempts := {}
 metadata.eventOptions.raid.fightAttempts.type := "Radio"
 metadata.eventOptions.raid.fightAttempts.options := ["1", "2", "3"]
 
+itemWorldOptionsMetaData := {}
+itemWorldOptionsMetaData.displayOrder := ["targetItemType", "targetItemSort", "targetItemSortOrder", "targetItemRarity", "lootTarget", "bribe", "farmLevels"]
+itemWorldOptionsMetaData.targetItemType := {}
+itemWorldOptionsMetaData.targetItemType.type := "Radio"
+itemWorldOptionsMetaData.targetItemType.options := ["armor", "weapon"]
+itemWorldOptionsMetaData.targetItemSort := {}
+itemWorldOptionsMetaData.targetItemSort.type := "Radio"
+itemWorldOptionsMetaData.targetItemSort.options := ["gained", "rarity"]
+itemWorldOptionsMetaData.targetItemRarity := {}
+itemWorldOptionsMetaData.targetItemRarity.type := "Radio"
+itemWorldOptionsMetaData.targetItemRarity.options := ["any", "legendary", "rareOrLegendary", "rare"]
+itemWorldOptionsMetaData.targetItemSortOrder := {}
+itemWorldOptionsMetaData.targetItemSortOrder.type := "Radio"
+itemWorldOptionsMetaData.targetItemSortOrder.options := ["ascending", "descending"]
+itemWorldOptionsMetaData.lootTarget := {}
+itemWorldOptionsMetaData.lootTarget.type := "Radio"
+itemWorldOptionsMetaData.lootTarget.options := ["any", "legendary", "rareOrLegendary", "rare"]
+itemWorldOptionsMetaData.bribe := {}
+itemWorldOptionsMetaData.bribe.type := "Radio"
+itemWorldOptionsMetaData.bribe.options := ["none", "goldenCandy", "goldBar", "crabMiso"]
+itemWorldOptionsMetaData.farmLevels := {}
+itemWorldOptionsMetaData.farmLevels.type := "Array"
+itemWorldOptionsMetaData.farmLevels.options := [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+itemWorldOptionsMetaData.farmLevels.itemsPerRow := 5
+itemWorldOptionsMetaData.farmLevels.presets := {}
+itemWorldOptionsMetaData.farmLevels.presets.default := [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+itemWorldOptionsMetaData.farmLevels.presets.none := []
+itemWorldOptionsMetaData.farmLevels.presets.higherDropRate := [30, 60, 100]
+
 metadata.itemWorldOptions := {}
-metadata.itemWorldOptions.loop := {}
-metadata.itemWorldOptions.loop.displayOrder := ["itemType", "farmLevels"]
-
-metadata.itemWorldOptions.loop.itemType := {}
-metadata.itemWorldOptions.loop.itemType.type := "Radio"
-metadata.itemWorldOptions.loop.itemType.options := ["armor", "weapon"]
-
-metadata.itemWorldOptions.loop.farmLevels := {}
-metadata.itemWorldOptions.loop.farmLevels.type := "Array"
-metadata.itemWorldOptions.loop.farmLevels.options := [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
-metadata.itemWorldOptions.loop.farmLevels.itemsPerRow := 5
-metadata.itemWorldOptions.loop.farmLevels.presets := {}
-metadata.itemWorldOptions.loop.farmLevels.presets.default := [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
-metadata.itemWorldOptions.loop.farmLevels.presets.none := []
-metadata.itemWorldOptions.loop.farmLevels.presets.higherDropRate := [30, 60, 100]
-
+metadata.itemWorldOptions.1 := itemWorldOptionsMetaData
+metadata.itemWorldOptions.2 := itemWorldOptionsMetaData
 
 InitPatterns() {
 	fileName := "patterns.json"
@@ -208,7 +232,6 @@ InitPatterns() {
         patterns.menu := {}
         patterns.menu.button := "|<>0xCCC6CE@0.85$43.k6CTzk0Q323080C3Y00007Vk00003kwDXy6BwqANnX6qP4Akl3Ndby8MVgwn04AEoAMU26AO6AMF36R027kVVvU"
         patterns.menu.giveUp := "|<>0xFDFCFB@0.74$77.7z30000060800M2600000C0E01k0000000Q0U0700000000s100C00E00001k200M01b1Vy03U4Bwk0363660708QBVz6C4AA0C0EsT0CAAMsM0Q0VUS0QMQVzk0s130y0skP3U01k661w1lUw7001UAA7Q3X0s6203UkQAQD61UCA03zUwsDsA007k03w1zU000000000030000000000006000000000000A000000000000M1"
-
 
         patterns.prompt := {}
         patterns.prompt.yes := ["|<>0x1D2F4C@0.66$34.s1U003UC00070k000S60000sM0001n0D0y7A3a6ADUQQMEQ1UlU1k777k70TwDUQ1U071k700A70AAEkQ0TVyU"
@@ -322,20 +345,25 @@ InitPatterns() {
         patterns.sort.title := "|<>0x111111@0.75$54.3y0000000DbU000000S1k000008Q0k00000sw0000000sw0000000sy0000001wT003y0znzTs0D70zks7z0S3Uw0s1zUQ3Us0s0TkQ1ks0s03sw1ks0s01sw1ks0s00sw1ks0s00sQ1ks0sk0sQ3ks0ss1kQ3Us0sS7UC70s0xDz03y0s0TU"
         patterns.sort.rarity := {}
         patterns.sort.rarity.enabled := "|<>0xFFFFFF@0.77$58.zy0001k003UQ0002700C1k0000Q00s700001k03UQ7kPbDr0y3UXVmMQA6zs0661VksPb00MM671VCC0TVUMQ7AsQ3661VkAXUsMMM670yC3VVVUMQ1ks76C61kk73UCTwM73k88"
-        patterns.sort.rarity.disabled := "|<>**50$57.000000s0020s0008U00U0U0014w04TW0009cU0W4E000t400EW7kzZMzU2AG1436148S474UMswm01XYYx14WEMkTYY88aI2W30YV14FUG8XYY88XBWMYoYV148AF2YYY80VWW4AMIV474IElU2Y8Y8qS3vzrVsz4Y"
+        patterns.sort.rarity.disabled := "|<>0x1C1515@0.70$58.11zzzyDzzwTXzzzxszzlyDzzzzXzzbszzzzyDzyTXsDYMk8z9wTQSBbXntU7zttySD7aMzzbbtsyStlzUSTbXsnbXwttySDnQT7bbbtsz1lwSSSTbXyD7stltyDDswTlU3bswDrs"
+        patterns.sort.gained := {}
+        patterns.sort.gained.enabled := "|<>0xFFFFFF@0.75$67.00000000001VzU01U00000lks00s00000NU400M00000Bk0000000006k000000000ns00y33y0y1zw00VVVlUlVVy7s0kkkkklkT0Q0MMMMMQsDU61wAACDyM7k33666760A3M1X3333X071i0lVVVVlU3VnUssskksMEssTwDyMsQ7sDi"
+        patterns.sort.gained.disabled := "|<>0x2E2222@0.75$67.zzzzzzzzzzyT0TzyTzzzzzCD7zzDzzzzzaTzzzrzzzzzmDzzzzzzzzztDzzzzzzzzzA7zz1wwVz1y03zzSSSCTCSS1s7zDDDDDCDUzXzbbbbbb7kTty3nnnk1bsDwwtttttznwbyQwwwwwzsyFzCSSSSCTySAT777DD7bj77U3kHbbXs7kG"
         patterns.sort.ascending := {}
         patterns.sort.ascending.label := ["|<>0x121212@0.80$100.1U0000000006C000070000000000Ms0000Q0000000001U00003s000000000600000/U00000000CM00001a0T0z1w7y1zXXz0z4Q3464AMQMACCCA6AEkM0k1UlUlUsskMkn3Vk70636361VX1X3Dy3sQ0TwMAM66A6ABzw3lk1U1UlUMMkMNo1k3b0606363XX1Uwk3U6C0Q0MAQCCA6430CMsMMklUktsskMTc0MS0z1w631tV31VzU"
                                         , "|<>*80$102.0000000000000000000000000000000000000000000006000000U0000000006A00001k0000000006C00001k0000000006400003k0000000006000002s0000000006000006M1s1s3UNk7yCBs1y6Q3476CMSsASCDQ6Q4Q60C0QQQQQCCACAAAC70Q0MAMAMCCA6AAAC3kQ0QQMAM6CA6AATz1wQ0TsMAM6CA66AM70CQ0M0MAMCCA67sk706A0M0MAQCCA660k3Y6C2AAMAASCA67UU3Xw7w7sMA7yCA67y0000000000000004C000000000000000A7000000000000000A6000000000000000A60000000000000007sU"]
         patterns.sort.ascending.checked := ["|<>0x111111@0.77$134.0000000000000000001zzw0000000000000000001zzyE000000000000000000Tzz6000000000000000000DzzUk00000000001U000007zzk460000000000Ms00001zzs01k0000000006C00000Tzw00Q0000000001U000007zz04DU000000000M000001zzU72s000000003a000020Szk3la0T0z1w7y3zXXz0zU77s1wFkAEMElVlUkssskMk1Uy0z4A60A0MAMAMCCA6AA0ED0Tn3Vk70636361XX1X3041UDwzsDVk1zlUlUMskMkk1UM7zTz0wQ0M0MAM6CA66Q0Q03zo1k3b0606363XX1Uw07U1zz0C0Ms1k1UlksskME01w0Tzk3aC66AAMACSCA67s0T0Dzs0My0z1w631tV31VzU7s7zw000000000000000Es0z3zz000000000000000A70Dszzk0000000000000031U1yTzs000000000000000kk0Dzzw0000000000000000000zzw8"
                                         , "|<>*80$134.0000000000000000003zzz0000000000000000001zzyM000000000000000000zzz7000000000006000000DzzUk80000000001X000007zzk470000000000Ms00001zzs01k0000000006400000Tzw0Ew0000000001U000007zz0Q/U000000000M000001zzUD6M1s1s3UNk7yCBs1y0Szk7lb0l1lXa7i37XXr1b077s3wFkM0s1llllksskskk1Vy1zAC70Q0MAMAMCCA6AA0ED0zn3Uw70776361XX1X3061UTxzw7lk1zVUlUMskMMk1k8DzM70CQ0M0MAMCCA67s0S07zw1k1X0606373XX1VU07k3zz0CEMs8klUklsskMS01y0zzU3Xw7w7sMA7yCA67y0TUTzk0000000000000013U7wDzw000000000000000kQ0zXzz000000000000000A607tzzU0000000000000031U1zzzk000000000000000TU07zzsU"]
         patterns.sort.descending := {}
-        patterns.sort.descending.label := "|<>0x272728@0.77$111.zU00000000000QQ0006DU00000000003XU000kC00000000000Q800061k00000000001U0000k700000000007Q800060sDUz0z1w7y3zXXz0zk73668Q8MksksQQQMAS0sklU30676763XX3X3k767D0s0kMkMkQQMQMS0szsy707z6361XX3X3kC601ws0k0kMkQQMQAy1kk03b0606363XX3VwkQ608AQ0s0kMsQQMQ87z0MlXXlXX633bXX3Xyy01w7s7sDkkMDAMMADw"
+        patterns.sort.descending.label := ["|<>0x272728@0.77$111.zU00000000000QQ0006DU00000000003XU000kC00000000000Q800061k00000000001U0000k700000000007Q800060sDUz0z1w7y3zXXz0zk73668Q8MksksQQQMAS0sklU30676763XX3X3k767D0s0kMkMkQQMQMS0szsy707z6361XX3X3kC601ws0k0kMkQQMQAy1kk03b0606363XX3VwkQ608AQ0s0kMsQQMQ87z0MlXXlXX633bXX3Xyy01w7s7sDkkMDAMMADw"
+                                         , "|<>0x111111@0.80$117.0000000000000AM00007z000000000001XU0000kQ00000000000A8000061k00000000001U00000k600000000000A0000060s70C0S0s6Q1zXXC0TUk73668C8MkskMQMQsAs60sklU3U766763X33330k762C0s0kMkMkAMMAMM60sksw70776361X31X30k67y3ss0zkkMkAMMAAM61kk03b0606363X31Vy0kQ600AM0k0kMkQMMA80670MF1XU326337X31VU0zU1y7sDsDkkMDgQMADs4"]
         patterns.sort.descending.checked := ["|<>0x111111@0.77$140.00000000000000000000Dzzk00000000000000000003zzs00000000000000000001zzw0000000000000A000000zzyDs000000000003700000Dzz33U00000000000lk00003zzUkA00000000000A000000zzkA3U00000000003000000Dzw30Q0000000000Qk0000E3ry0k71w3s7sDUzkTwQTs7s0sz0A1klVW326ACA67776360ADk70QMMk1U31X1X1lVVlVU21s3k767C0s0kMkMkAMMAMM0UA1w1lzlwC0DyA6A3663660A30z0MM07XU3031X0lVUknU3U0TkC600Qs0k0kMkQMMADU0w0Dw71U0360C0A6C7763200DU3z7UA8lkklV31VnllUkz03s1zw01w7k7sDUkMDA8MADw0z0zk00000000000000002707sTw00000000000000001Us1y7z00000000000000000MA0Dnzk00000000000000006601zzw000000000000000000007zzU"
                                            , "|<>*80$146.000000000000000000007zztU00000000000000000003zzwQ0000000000000M000000zzy30000000000000CA00000Tzz0Tz000000000001XU00007zzU7Us00000000000Mk00001zzk1s7000000000006000000Tzs1y0k00000000001U000007zy0zUC1k7U7UC1j0TssrU7s1vz0Ts3Vb3474CMSsASCDQ6Q0QTUDy0sklU3U766773XX3X3067k7zUCACQ1k1UlUlUsskMkk10w3zs3X3XkQ0QQMAM6AA6AA0M61zy0szkT707y6361X31XX070UzzUQA00tk1U1UlUsskMTU1s0TzsC3006A0M0MAMCCA6600T0Dzy70sF3XU326337XX1Vs07s3zzz03wDkTkTVUkTssksTk1y1zz000000000000000004C0Tkzzk000000000000000031k3yTzw00000000000000000kM0Tbzy00000000000000000A607zzz000000000000000001y00TzzW"]
         patterns.sort.prioritizeEquippedItems := {}
         patterns.sort.prioritizeEquippedItems.label := "|<>0x111111@0.80$150.0000000000000060000000000000000M000000060200000000000000Q000000060600000000000000M0000000606300000000000000000000060630000000000000000000006063000000070CMMAMNk8k1U7y06DkA1i70QMktsMQMSsSQ6MAC0670n1nvVXkkksMQMMAQCAAAC0631VVVVV0kNUMMQMMAQ6AAQ60631VVVVlUstUMMQMMCM6AAM60631VVVVlszlUMMQMMCM6DwM60633zVVVkyk1UMMQMMAM6A0M60633U1VVk7k1UsMQMMAQ6A0QC0631U1VVk3MEksMQMMQQAC4AC0631kVVVk3DkNsDwMSsSM7w7q063kz1VVly000M000N0QU00000000000000000M000M0M000000000000000000M000M0M000000000000000000M000M0M000000000000000000M000M0M000000000000000U"
         patterns.sort.prioritizeEquippedItems.checked := "|<>0x111111@0.80$84.00000000007zzU0000000000Tzzc0000000000zzz40000000000zzy60000000001zzw2E000000001zzs1k000000001zzk1kM00000001zzU3kM00000001zz07kM00000001zz0Dly1UBks3U1ny0Tks6MCTQAM1Vw0zkMAAAAA8011s1zkMAAAACA000s3zkMAAAACD010E7zkMTwAAC7k1U0DzkMQ0AAC0s1k0TzkMA0AAC0M1s0zzkMC4AAC0M1s1zzkS7sAACDk1w1zz0000000001y3zz0000000001z7zy0000000000z7zw0000000000Tjzs00000000007zzk000000000000000000000000000000000000000000U"
         patterns.sort.prioritizeEquippedItems.unchecked := "|<>0x111111@0.80$84.00000000007zzU0000000000Tzzs0000000000zzzw0000000000zzzy0000000001zzzyE000000001zzzzk000000001zzzzkM00000001zzzzkM00000001zzzzkM00000001zzzzly1UBks3U1zzzzks6MCTQAM1zzzzkMAAAAA801zzzzkMAAAACA01zzzzkMAAAACD01zzzzkMTwAAC7k1zzzzkMQ0AAC0s1zzzzkMA0AAC0M1zzzzkMC4AAC0M1zzzzkS7sAACDk1zzzz0000000001zzzz0000000001zzzy0000000000zzzw0000000000Tzzs00000000007zzkU"
+
         patterns.itemWorld := {}
         patterns.itemWorld.block := "|<>0xAAA4AA@0.88$89.y000000031k00CCw000000wC3U0Pwts000000sS71kzvXk000001kwCTttr7U000003lwMtvVyD0000003XsnVz3wS0000007ava1y7syM0007U7ArA3gDlws03jzUCNiM7MRltk77zbUCnssCkNnnszjD70TXlkRklbjnbQCC0S7XlnVUDTC7sQQ0wD3z700SCMTkss0sC1w000wQzzlkk1kQ00001sti3XVU1U000001tn0733000000003nb0i66000000007X77AA000000000D77wE0000000000SD7U00000000000w60000000000001k0000000000000E"
         patterns.itemWorld.title := "|<>0xFFFFFF@0.78$142.s0000000000s1k700000S00TU0000000003UD0Q00001s01y1k00000000D0w1k00007U07sD000000000w3s600000S00TUQ000000001kDUM00001s01y1k0000000071i3U00007U07sTs3U3b1s00S6wA0C0CQS1zzXzUzkDzDs01sNkk3z0zlsDjy3k73UwTXU03V730wC3z7VsDs70sC3kwD00DASM3UQD0S70zUQ3UQC3kQ00wltUS1ks1sQ1y1kC1ksD1k01n3a1k7XU7Xk7s71zz3Uw7007MCM70SC0SD0TUQ7zsC3kQ00TUz0Q1ss1sw1y1kS00sD1k01y1w1k7XU7Xk7s70s03Uw7003k7k70QC0S70zUQ3U0C3kQ00D0S0S1ks1sQ3y1kD1UsD1k00w0s0sD3U7VsTs7sTC3Uw7001k3U1tsC0S3zzUDUTkC3UQ0060A03y0s1k3ts"
@@ -371,9 +399,13 @@ InitPatterns() {
         patterns.itemWorld.weapon.disabled := "|<>0xA4A4A4@0.80$85.s70k0000000000Q3UM000000000071kA00000000003VwA00000000001ky600000000000sL30Q0A0nU1U6QC9V0zUzUzs7w7z7AtUssEsSC733lnaQkMA0QC3X1lkMu7MA60C71nUMsAT3cDzVz3UtkCQ6DVw7U1nVkQs7C37ky3U1lksCQ771VkD0s8ssQ763XUks70QAQQD73XlkMQ3U7yDz7z0zksA0000w1l3j07U0000000001k0000000000000s0000000000000Q0000000000000C000004"
         patterns.itemWorld.weapon.enabled := "|<>0xFFFFFF@0.80$85.M20k0000000000Q3UM000000000061kA00000000003VsA00000000001ky600000000000MH3080A0X0106MC9V0zUzUzs7w7z7AtUMsEsSC733lnaQkMA0AC3X1lkMm6EA60C71nUMsAR3c7z1z3UtkAQ6DVw701VVkQs6C33US1U1UksCQ371VkC0k0kMQ663XUks70A4QQC73VVkM81U3w7z7r0zUsA0000M1U3i0300000000001k0000000000000s0000000000000Q0000000000000C000004"
 
-        patterns.itemWorld.item := {}
-        patterns.itemWorld.item.name := "|<>0xFEDA8C@0.75$35.kU0001n00003a00007gD3y3DMy7yDzlgBgnrXMPRzb7wqnv67thXw"
-        patterns.itemWorld.item.legendary := ["|<>0x261718@0.60$41.zzzzzzzb8karsDC11070CQkuSC6Qttww9Atk3xh6NrUYTzBnbDCzyPbCSRjgnC4APTRYw0467v3TzzDzzzTzzzzzz"
+        patterns.itemWorld.itemTarget := {}
+        patterns.itemWorld.itemTarget.rarity := {}
+        patterns.itemWorld.itemTarget.rarity.common := ["|<>0xB9A98E@0.80$45.D7ABV763RAlgRglEFaRn8rC26viT6xkEzRzspy37jfj6bkMxhBsoy34hdj6XMRYh9gYNls1cBwV36000204"
+                                                      , "|<>0xD6BFA3@0.80$44.TDATXDA44HW8YMW16taR2QUkiNrEZ8A+uLQBS32aZZ3HkkddNMYw6OG2K85VoUU4q16C081708"]
+        patterns.itemWorld.itemTarget.rarity.rare := ["|<>*113$25.9tqnUMk83AMUVaAEQmH9B7NXU3aknok/Nn3Zotnsu2"
+                                                    , "|<>*114$25.3nUn0Nk038NUtYAkQa6H97NXV3UZrYUGPnLVYtrku2"]
+        patterns.itemWorld.itemTarget.rarity.legendary := ["|<>0x261718@0.60$41.zzzzzzzb8karsDC11070CQkuSC6Qttww9Atk3xh6NrUYTzBnbDCzyPbCSRjgnC4APTRYw0467v3TzzDzzzTzzzzzz"
                                             , "|<>0x1C1213@0.60$41.TzzzzTtbClzzzTC11070SQ0G+C4QttwwAAtm3ts2NnU6ASBnjB8zyPbCSRjgnCQwvTRYQ04K6v1NlwBzyDzzzzzzz"
                                             , "|<>0x3B2C1D@0.60$41.zzzzzzzD9VibmSS211CUQwoqSBANttwwOQnk7vvItbUATzRnDCRzynaSQNzwqQAQmTx8c8A4Du3zzzTzzzU"
                                             , "|<>0x271A1A@0.60$41.zzzzzztjBnzzzyS311DUQQ4mGB4tttwwOMnm7tuItbUCQy9nD+MzynaSQtzQaAwsmStAs08Y7u3Nlw9voDzzzzzzz"]

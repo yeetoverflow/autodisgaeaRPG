@@ -21,6 +21,10 @@ handlers.FarmItemWorldAnyLoop := { Func : Func("FarmItemWorldAnyLoop") }
 handlers.FarmItemWorldLegendaryLoop := { Func : Func("FarmItemWorldLegendaryLoop") }
 handlers.FarmItemWorldSingle := { Func : Func("FarmItemWorldSingle") }
 handlers.MiddleClickCallback := { Func : Func("MiddleClickCallback") }
+handlers.GrindItemWorldLoop1 := { Func : Func("GrindItemWorldLoop1") }
+handlers.GrindItemWorldSingle1 := { Func : Func("GrindItemWorldSingle1") }
+handlers.GrindItemWorldLoop2 := { Func : Func("GrindItemWorldLoop2") }
+handlers.GrindItemWorldSingle2 := { Func : Func("GrindItemWorldSingle2") }
 
 ;A_Args.1 is the executable
 ;A_Args.2 is the mode (function to be called)
@@ -28,9 +32,6 @@ handlers.MiddleClickCallback := { Func : Func("MiddleClickCallback") }
 TreeAdd(patterns.Object(), 0, { leafCallback : Func("InitPatternsCallback")})
 
 mode := StrReplace(A_Args.2, "mode=")
-; mode := StrReplace(mode, "`n")
-; mode := StrReplace(mode, "`r")
-
 msgToMode := { 0x1001 : "EventStoryFarm"static
              , 0x1002 : "EventStory500Pct"
              , 0x1003 : "EventRaidLoop"
@@ -43,7 +44,11 @@ msgToMode := { 0x1001 : "EventStoryFarm"static
              , 0x1010 : "FarmItemWorldSingle"
              , 0x1011 : "EventAutoClear"
              , 0x1012 : "EventRaidAutoClaim"
-             , 0x1013 : "EventRaidAutoVault" }
+             , 0x1013 : "EventRaidAutoVault"
+             , 0x1014 : "GrindItemWorldLoop1"
+             , 0x1015 : "GrindItemWorldSingle1"
+             , 0x1016 : "GrindItemWorldLoop2"
+             , 0x1017 : "GrindItemWorldSingle2" }
 modeToMsg := {}
 
 for k, v in msgToMode {
@@ -381,12 +386,23 @@ SettingsModal(targetSettings)
     Gui, +AlwaysOnTop
     Gui, -SysMenu
 
-    for k, v in settingMetaData
-    {
-        settingUnderscore := targetSettings . "_" . k
-        local settingInfo := GetSettingInfo(settingUnderscore)
-        AddSetting(settingInfo, "SettingsModal")
+    if (settingMetaData.displayOrder) {
+        for i, v in settingMetaData.displayOrder
+        {
+            settingUnderscore := targetSettings . "_" . v
+            local settingInfo := GetSettingInfo(settingUnderscore)
+            AddSetting(settingInfo, "SettingsModal")
+        }
+    }    
+    else {
+        for k, v in settingMetaData
+        {
+            settingUnderscore := targetSettings . "_" . k
+            local settingInfo := GetSettingInfo(settingUnderscore)
+            AddSetting(settingInfo, "SettingsModal")
+        }
     }
+    
 
     Gui, SettingsModal:Add, Button, gSettingsModalGuiClose, Done
     Gui, SettingsModal:Show

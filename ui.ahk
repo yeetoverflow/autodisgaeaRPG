@@ -88,36 +88,51 @@ ResetUI() {
     Gui Add, Text, cWhite xs+10, ItemWorld
     Gui Font, Normal
 
-    Gui, Add, Progress, vProgressBar_FarmItemWorldAnyLoop -Smooth w170 h18 c0x66FF66 border
-    Gui Add, Text, cBlack xp wp hp center vProgressText_FarmItemWorldAnyLoop BackgroundTrans, Start FarmItemWorldAnyLoop
+    ; Gui, Add, Progress, vProgressBar_FarmItemWorldAnyLoop -Smooth w170 h18 c0x66FF66 border
+    ; Gui Add, Text, cBlack xp wp hp center vProgressText_FarmItemWorldAnyLoop BackgroundTrans, Start FarmItemWorldAnyLoop
     ; Gui Add, Radio, cWhite gRadioOptionChanged vItemWorldOptions_loop_itemType_armor x+5, Armor
     ; Gui Add, Radio, cWhite gRadioOptionChanged vItemWorldOptions_loop_itemType_weapon x+5, Weapon
     ; GuiControl,, % "itemWorldOptions_loop_itemType_" . settings.itemWorldOptions.loop.itemType, 1
     
-    Gui, Add, Progress, x+10 w250 h18 c0x66FF66 vsettings_itemWorldOptions_loop
-    Gui Add, Text, xp+5 wp hp r1 +0x4000 cBlack BackgroundTrans left vsettingsText_itemWorldOptions_loop, % GetSettingDisplay("settings_itemWorldOptions_loop")
+    Gui, Add, Progress, xs+10 vProgressBar_GrindItemWorldLoop1 -Smooth w150 h18 c0x66FF66 border
+    Gui Add, Text, cBlack xp wp hp center vProgressText_GrindItemWorldLoop1 BackgroundTrans, Start GrindItemWorldLoop1
 
-    Gui, Add, Progress, xs+10 vProgressBar_FarmItemWorldLegendaryLoop -Smooth w170 h18 c0x66FF66 border
-    Gui Add, Text, cBlack xp wp hp center vProgressText_FarmItemWorldLegendaryLoop BackgroundTrans, Start FarmItemWorldLegendaryLoop
-    Gui Add, Radio, cWhite gRadioOptionChanged vItemWorldOptions_farmLoop_itemType_armor x+5, Armor
-    Gui Add, Radio, cWhite gRadioOptionChanged vItemWorldOptions_farmLoop_itemType_weapon x+5, Weapon
-    GuiControl,, % "itemWorldOptions_farmLoop_itemType_" . settings.itemWorldOptions.farmLoop.itemType, 1
+    Gui, Add, Progress, x+10 vProgressBar_GrindItemWorldSingle1 -Smooth w150 h18 c0x66FF66 border
+    Gui Add, Text, cBlack xp wp hp center vProgressText_GrindItemWorldSingle1 BackgroundTrans, Start GrindItemWorldSingle1
 
-    Gui, Add, Progress, xs+10 vProgressBar_FarmItemWorldSingle -Smooth w140 h18 c0x66FF66 border
-    Gui Add, Text, cBlack xp wp hp center vProgressText_FarmItemWorldSingle BackgroundTrans, Start FarmItemWorldSingle
-    ;Gui Add, Button, xs+10 gFarmItemWorldSingle, FarmSingle
-    Gui Add, Text, cWhite x+10, Item Rarity: 
-    Gui Add, Radio, cWhite gRadioOptionChanged vItemWorldOptions_targetItem_legendary x+5, Legendary
-    Gui Add, Radio, cWhite gRadioOptionChanged vItemWorldOptions_targetItem_rareOrLegendary x+5, Rare/Legendary
-    Gui Add, Radio, cWhite gRadioOptionChanged vItemWorldOptions_targetItem_any x+5, Any
-    GuiControl,, % "itemWorldOptions_targetItem_" . settings.itemWorldOptions.targetItem, 1
-    Gui Add, Button, xs+10 y+10 gDoItem, ClearSingle
-    Gui Add, Text, cWhite x+10, Bribe: 
-    Gui Add, Radio, cWhite gRadioOptionChanged vItemWorldOptions_bribe_none x+5, None
-    Gui Add, Radio, cWhite gRadioOptionChanged vItemWorldOptions_bribe_goldenCandy x+5, GoldenCandy
-    Gui Add, Radio, cWhite gRadioOptionChanged vItemWorldOptions_bribe_goldBar x+5, GoldBar
-    Gui Add, Radio, cWhite gRadioOptionChanged vItemWorldOptions_bribe_crabMiso x+5, CrabMiso
-    GuiControl,, % "itemWorldOptions_bribe_" . settings.itemWorldOptions.bribe, 1
+    Gui, Add, Progress, x+10 w50 h18 c0x66FF66 vsettings_itemWorldOptions_1
+    Gui Add, Text, xp+5 wp hp r1 +0x4000 cBlack BackgroundTrans left, Settings
+
+    Gui, Add, Progress, xs+10 vProgressBar_GrindItemWorldLoop2 -Smooth w150 h18 c0x66FF66 border
+    Gui Add, Text, cBlack xp wp hp center vProgressText_GrindItemWorldLoop2 BackgroundTrans, Start GrindItemWorldLoop2
+
+    Gui, Add, Progress, x+10 vProgressBar_GrindItemWorldSingle2 -Smooth w150 h18 c0x66FF66 border
+    Gui Add, Text, cBlack xp wp hp center vProgressText_GrindItemWorldSingle2 BackgroundTrans, Start GrindItemWorldSingle2
+
+    Gui, Add, Progress, x+10 w50 h18 c0x66FF66 vsettings_itemWorldOptions_2
+    Gui Add, Text, xp+5 wp hp r1 +0x4000 cBlack BackgroundTrans left, Settings
+    
+    ; Gui, Add, Progress, xs+10 vProgressBar_FarmItemWorldLegendaryLoop -Smooth w170 h18 c0x66FF66 border
+    ; Gui Add, Text, cBlack xp wp hp center vProgressText_FarmItemWorldLegendaryLoop BackgroundTrans, Start FarmItemWorldLegendaryLoop
+    ; Gui Add, Radio, cWhite gRadioOptionChanged vItemWorldOptions_farmLoop_itemType_armor x+5, Armor
+    ; Gui Add, Radio, cWhite gRadioOptionChanged vItemWorldOptions_farmLoop_itemType_weapon x+5, Weapon
+    ; GuiControl,, % "itemWorldOptions_farmLoop_itemType_" . settings.itemWorldOptions.farmLoop.itemType, 1
+
+    ; Gui, Add, Progress, xs+10 vProgressBar_FarmItemWorldSingle -Smooth w140 h18 c0x66FF66 border
+    ; Gui Add, Text, cBlack xp wp hp center vProgressText_FarmItemWorldSingle BackgroundTrans, Start FarmItemWorldSingle
+    ; ;Gui Add, Button, xs+10 gFarmItemWorldSingle, FarmSingle
+    ; Gui Add, Text, cWhite x+10, Item Rarity: 
+    ; Gui Add, Radio, cWhite gRadioOptionChanged vItemWorldOptions_targetItem_legendary x+5, Legendary
+    ; Gui Add, Radio, cWhite gRadioOptionChanged vItemWorldOptions_targetItem_rareOrLegendary x+5, Rare/Legendary
+    ; Gui Add, Radio, cWhite gRadioOptionChanged vItemWorldOptions_targetItem_any x+5, Any
+    ; GuiControl,, % "itemWorldOptions_targetItem_" . settings.itemWorldOptions.targetItem, 1
+    ; Gui Add, Button, xs+10 y+10 gDoItem, ClearSingle
+    ; Gui Add, Text, cWhite x+10, Bribe: 
+    ; Gui Add, Radio, cWhite gRadioOptionChanged vItemWorldOptions_bribe_none x+5, None
+    ; Gui Add, Radio, cWhite gRadioOptionChanged vItemWorldOptions_bribe_goldenCandy x+5, GoldenCandy
+    ; Gui Add, Radio, cWhite gRadioOptionChanged vItemWorldOptions_bribe_goldBar x+5, GoldBar
+    ; Gui Add, Radio, cWhite gRadioOptionChanged vItemWorldOptions_bribe_crabMiso x+5, CrabMiso
+    ; GuiControl,, % "itemWorldOptions_bribe_" . settings.itemWorldOptions.bribe, 1
 
     Gui Add, Text, 0x10 xs w400 h10
     Gui, Font, Bold

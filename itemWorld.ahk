@@ -1,37 +1,51 @@
 #Include common.ahk
 
-FarmItemWorldAnyLoop(type := "") {
-    global patterns, settings
+
+GrindItemWorldLoop1() {
+    global settings
+    GrindItemWorld(settings.itemWorldOptions.1)
+}
+
+GrindItemWorldSingle1() {
+    global settings
+    GrindItemWorld(settings.itemWorldOptions.1, true)
+}
+
+GrindItemWorld(itemWorldOptions, oneTime := false) {
+    global mode, patterns, settings
     SetStatus(A_ThisFunc)
-    
+   
     sortDone := false
-    doWeapon := settings.itemWorldOptions.loop.itemType = "weapon" ? true : false
-    settings.itemWorldOptions.bribe := ""        ;shouldn't want to spend game resources while in loop mode
-    settings.itemWorldOptions.targetItem := "any"
-    settings.itemWorldOptions.farmTrigger := patterns.itemWorld.level
-    battleOptions := settings.battleOptions.itemWorld
-    battleOptions.preBattle := Func("ItemWorldPreBattle")
-    battleOptions.onBattleAction := Func("ItemWorldOnBattleAction")
-    battleOptions.donePatterns := [patterns.itemWorld.title, patterns.itemWorld.leave, patterns.itemWorld.armor]
-    targetSort := "ascending"
-    targetItem := patterns.itemWorld.item.name
+    doWeapon := itemWorldOptions.targetItemType = "weapon" ? true : false
     
-    if (settings.itemWorldOptions.loop.farmLevels) {
-        settings.itemWorldOptions.farmTrigger := []
-        for k, v in settings.itemWorldOptions.loop.farmLevels {
-            settings.itemWorldOptions.farmTrigger.push(patterns.itemWorld.level[v])
+    targetItemSort := itemWorldOptions.targetItemSort
+    targetItemSortOrder := itemWorldOptions.targetItemSortOrder
+    targetItemSortOrderInverse := targetItemSortOrder = "ascending" ? "descending" : "ascending"
+    lootTarget := itemWorldOptions.lootTarget
+    bribe := itemWorldOptions.bribe
+
+    switch (itemWorldOptions.targetItemRarity) {
+        case "any":
+            targetItem := patterns.itemWorld.itemTarget.rarity
+        case "legendary":
+            targetItem := patterns.itemWorld.itemTarget.rarity.legendary
+        case "rareOrLegendary":
+            targetItem := [patterns.itemWorld.itemTarget.rarity.rare, patterns.itemWorld.itemTarget.rarity.legendary]
+        case "rare":
+            targetItem := patterns.itemWorld.itemTarget.rarity.rare
+    }
+    
+    if (itemWorldOptions.farmLevels) {
+        farmTrigger := []
+        for k, v in itemWorldOptions.farmLevels {
+            farmTrigger.push(patterns.itemWorld.level[v])
         }
     }
 
-    if (type = "farmLegendary") {
-        settings.itemWorldOptions.targetItem := "legendary"
-        settings.itemWorldOptions.farmTrigger := patterns.itemWorld.level.100
-        targetSort := "descending"
-        targetItem := patterns.itemWorld.item.legendary
-        doWeapon := settings.itemWorldOptions.farmLoop.itemType = "weapon" ? true : false
-    }
-
-    targeSortInverse := targetSort = "ascending" ? "descending" : "ascending"
+    battleOptions := settings.battleOptions.itemWorld
+    battleOptions.donePatterns := [patterns.itemWorld.title, patterns.itemWorld.leave, patterns.itemWorld.armor]
+    battleOptions.preBattle := Func("ItemWorldPreBattle").Bind(farmTrigger, lootTarget)
+    battleOptions.onBattleAction := Func("ItemWorldOnBattleAction").Bind(bribe)
 
     loopTargets := [patterns.stronghold.gemsIcon, patterns.dimensionGate.background, patterns.itemWorld.title, patterns.itemWorld.leave, patterns.battle.auto]
     Loop {
@@ -53,12 +67,12 @@ FarmItemWorldAnyLoop(type := "") {
             
             if (!sortDone) {
                 PollPattern(patterns.sort.button, { doClick : true, predicatePattern : patterns.sort.title })
-                if (FindPattern(patterns.sort.rarity.disabled).IsSuccess) {
-                    PollPattern(patterns.sort.rarity.disabled, { doClick : true, predicatePattern : patterns.sort.rarity.enabled })
+                if (FindPattern(patterns["sort"][targetItemSort]["disabled"], { variancePct : 20 }).IsSuccess) {
+                    PollPattern(patterns["sort"][targetItemSort]["disabled"], { variancePct : 20, doClick : true, predicatePattern : patterns["sort"][targetItemSort]["enabled"] })
                     sleep 100
                 }
-                if (FindPattern(patterns["sort"][targeSortInverse]["checked"], { variancePct: 5 }).IsSuccess) {
-                    PollPattern(patterns["sort"][targetSort]["label"], { variancePct: 5, doClick : true, offsetX : 40, predicatePattern : patterns["sort"][targetSort]["checked"] })
+                if (FindPattern(patterns["sort"][targetItemSortOrderInverse]["checked"], { variancePct: 5 }).IsSuccess) {
+                    PollPattern(patterns["sort"][targetItemSortOrder]["label"], { variancePct: 5, doClick : true, offsetX : 40, predicatePattern : patterns["sort"][targetItemSortOrder]["checked"] })
                     sleep 100
                 }
                 if (FindPattern(patterns["sort"]["prioritizeEquippedItems"]["checked"], { variancePct: 5 }).IsSuccess) {
@@ -76,60 +90,50 @@ FarmItemWorldAnyLoop(type := "") {
             PollPattern(patterns.battle.start, { doClick : true })
             DoItem()
             sleep 2000
+            if (oneTime) {
+                Break
+            }
         }
-        ; else if InStr(result.comment, "itemWorld.leave") {
-        ;     ClickResult(result)
-        ;     sleep 1000
-        ; }
         else if InStr(result.comment, "battle.auto") {
             DoItem()
             sleep 2000
+            if (oneTime) {
+                Break
+            }
         }
     }
-}
 
-FarmItemWorldLegendaryLoop() {
-    FarmItemWorldAnyLoop("farmLegendary")
-}
-
-FarmItemWorldSingle() {
-    global patterns, settings
-
-    settings.itemWorldOptions.farmTrigger := patterns.itemWorld.level
-    battleOptions := settings.battleOptions.itemWorld
-    battleOptions.preBattle := Func("ItemWorldPreBattle")
-    battleOptions.onBattleAction := Func("ItemWorldOnBattleAction")
-    battleOptions.donePatterns := [patterns.itemWorld.title, patterns.itemWorld.leave]
-
-    PollPattern(patterns.battle.skills.label, { doClick : true })
-
-    result := FindDrop()
-    if (result.IsSuccess && (settings.itemWorldOptions.targetItem = "any" || InStr(settings.itemWorldOptions.targetItem, result.type))) {
-        Return
+    if (mode) {
+        ExitApp
     }
-
-    if (FindPattern(patterns.battle.wave.3over3).IsSuccess && !FindPattern(patterns.enemy.A).IsSuccess)
-    {
-        GiveUpAndTryAgain(battleOptions)
-    }
-    DoItem()
 }
 
-ItemWorldPreBattle() {
+GrindItemWorldLoop2() {
+    global settings
+    GrindItemWorld(settings.itemWorldOptions.2)
+}
+
+GrindItemWorldSingle2() {
+    global settings
+    GrindItemWorld(settings.itemWorldOptions.2, true)
+}
+
+ItemWorldPreBattle(farmTrigger, lootTarget) {
     SetStatus("DoItem")
     global patterns, settings
 
-    result := FindPattern(settings.itemWorldOptions.farmTrigger, { variancePct : 1 })
+    result := FindPattern(farmTrigger, { variancePct : 1 })
 
     if (result.IsSuccess) {
         if (!FindPattern([patterns.battle.done, patterns.itemWorld.drop], { variancePct : 15 }).IsSuccess)
         {
-            DoItemDrop()
+            DoItemDrop(lootTarget)
         }
     }
 }
 
-ItemWorldOnBattleAction(result) {
+;https://lexikos.github.io/v2/docs/objects/Functor.htm
+ItemWorldOnBattleAction(bribe, result) {
     global patterns
 
     IF FindPattern(patterns.prompt.innocentIsAppearing).IsSuccess {
@@ -138,7 +142,7 @@ ItemWorldOnBattleAction(result) {
     }
 
     IF FindPattern(patterns.itemWorld.subdue).IsSuccess
-        DoSubdue()
+        DoSubdue(bribe)
     Else If (result)
         ClickResult(result)
 }
@@ -167,7 +171,7 @@ DoItem() {
     FindPattern(patterns.blueStacks.trimMemory, { doClick : true})
 }
 
-DoItemDrop() {
+DoItemDrop(lootTarget) {
     SetStatus(A_ThisFunc, 2)
     global patterns, settings
 
@@ -260,7 +264,7 @@ DoItemDrop() {
         sleep 1500
         result := FindDrop()
 
-        if (result.IsSuccess && (settings.itemWorldOptions.targetItem = "any" || InStr(settings.itemWorldOptions.targetItem, result.type))) {
+        if (result.IsSuccess && (lootTarget = "any" || InStr(lootTarget, result.type))) {
             Break
         }
         Else {
@@ -313,17 +317,15 @@ FindDrop() {
     Return { IsSuccess : false }
 }
 
-DoSubdue() {
-    global patterns, settings
+DoSubdue(bribe) {
+    global patterns
     
-    if (settings.itemWorldOptions.bribe && settings.itemWorldOptions.bribe != "None") {
-        PollPattern(patterns.itemWorld.bribe, { doClick : true, predicatePattern : patterns.itemWorld.bribe[settings.itemWorldOptions.bribe] })
-        PollPattern(patterns.itemWorld.bribe[settings.itemWorldOptions.bribe], { doClick : true })
+    if (bribe && bribe != "None") {
+        PollPattern(patterns.itemWorld.bribe.block, { doClick : true, predicatePattern : patterns.itemWorld.bribe[bribe] })
+        PollPattern(patterns.itemWorld.bribe[bribe], { doClick : true })
         PollPattern(patterns.itemWorld.bribe.confirm, { doClick : true, predicatePattern : patterns.itemWorld.subdue })
     }
 
     PollPattern([patterns.itemWorld.subdue], { doClick : true })
 }
-
-
 
