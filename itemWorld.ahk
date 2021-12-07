@@ -60,9 +60,9 @@ GrindItemWorld(itemWorldOptions, oneTime := false) {
             sleep 1000
         }
         else if InStr(result.comment, "itemWorld.title") {
-            PollPattern(patterns.itemWorld.armor.disabled, { doClick : true, predicatePattern : patterns.itemWorld.armor.enabled })
+            PollPattern(patterns.itemWorld.armor.disabled, { doClick : true, predicatePattern : patterns.itemWorld.armor.enabled, pollInterval : 2000 })
             if (doWeapon) {
-                PollPattern(patterns.itemWorld.weapon.disabled, { doClick : true, predicatePattern : patterns.itemWorld.weapon.enabled })
+                PollPattern(patterns.itemWorld.weapon.disabled, { doClick : true, predicatePattern : patterns.itemWorld.weapon.enabled, pollInterval : 2000 })
             }
             
             if (!sortDone) {
@@ -85,7 +85,7 @@ GrindItemWorld(itemWorldOptions, oneTime := false) {
             }
             
             sleep 500
-            PollPattern(targetItem, { doClick : true, predicatePattern : patterns.itemWorld.go, pollInterval : 1500 })
+            PollPattern(targetItem, { doClick : true, predicatePattern : patterns.itemWorld.go, pollInterval : 2000 })
             PollPattern(patterns.itemWorld.go, { doClick : true, predicatePattern : patterns.battle.start })
             PollPattern(patterns.battle.start, { doClick : true })
             DoItem()

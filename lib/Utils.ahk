@@ -78,30 +78,41 @@ PollPattern(pattern, opts := "") {
         result := FindPattern(pattern, opts)
         targetResult := FindPattern(opts.predicatePattern, opts)
 
-        while (!targetResult.IsSuccess) {
-            SetStatus("Try " . count, 2)
-            sleep, opts.pollInterval
-            opts.callback()
-            result := FindPattern(pattern, opts)
-
-            if (originalDoubleCheck) {
-                sleep, opts.doubleCheckDelay
-                result := FindPattern(pattern, opts)
-            }
-
-            if (result.IsSuccess && originalDoClick) {
-                successResult := result
+        if (targetResult.IsSuccess)
+        {
+            if (originalDoClick) {
                 sleep, opts.clickDelay
                 ClickResult(result)
             }
-
-            if (opts.clickPattern) {
-                FindPattern(opts.clickPattern, { doClick : true })
-            }
-
-            targetResult := FindPattern(opts.predicatePattern, opts)
         }
+        else {
+            while (!targetResult.IsSuccess) {
+                SetStatus("Try " . count, 2)
+                
+                opts.callback()
+                sleep, opts.pollInterval
+                result := FindPattern(pattern, opts)
 
+                if (originalDoubleCheck) {
+                    sleep, opts.doubleCheckDelay
+                    result := FindPattern(pattern, opts)
+                }
+
+                if (result.IsSuccess && originalDoClick) {
+                    successResult := result
+                    sleep, opts.clickDelay
+                    ClickResult(result)
+                    sleep, opts.pollInterval
+                }
+
+                if (opts.clickPattern) {
+                    FindPattern(opts.clickPattern, { doClick : true })
+                }
+
+                targetResult := FindPattern(opts.predicatePattern, opts)
+            }
+        }
+        
         if (!result.comment) {
             result := initialResult
         }
@@ -112,11 +123,6 @@ PollPattern(pattern, opts := "") {
 
         if (!successResult) {
             successResult := result
-        }
-
-        if (originalDoClick) {
-            sleep, opts.clickDelay
-            ClickResult(result)
         }
 
         Return successResult
