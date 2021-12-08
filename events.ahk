@@ -101,7 +101,7 @@ EventStoryFarm() {
         }
         else if InStr(result.comment, "events.title") {
             sleep 1000
-            PollPattern(patterns.events.hard, { doClick : true, predicatePattern : patterns.events.hard.enabled })
+            PollPattern(patterns.events.hard, { doClick : true, predicatePattern : patterns.events.hard.enabled, pollInterval : 2000 })
             sleep 500
             Click("x470 y443")
             sleep 50
