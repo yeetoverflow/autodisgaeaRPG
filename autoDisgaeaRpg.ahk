@@ -364,7 +364,12 @@ Test() {
     global patterns, settings, hwnd
     SetStatus(A_ThisFunc)
 
-    MsgBox, % CapitalizeFirstLetter("whatever")
+    ; MsgBox, % CapitalizeFirstLetter("whatever")
+    ; PollPattern(patterns.battle.start, { doClick : true, predicatePattern : patterns.menu.button })
+    ; PollPattern(patterns.menu.button, { doClick : true, predicatePattern : patterns.menu.giveUp })
+    ; PollPattern(patterns.menu.giveUp, { doClick : true, predicatePattern : patterns.prompt.yes })
+    ; PollPattern(patterns.prompt.yes, { doClick : true, predicatePattern : patterns.battle.done })
+    ; PollPattern(patterns.raid.activeBoss, { clickPattern : patterns.battle.done, callback : Func("RaidClickCallback"), pollInterval : 250 })
 }
 
 CapitalizeFirstLetter(str) {

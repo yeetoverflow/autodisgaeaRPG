@@ -167,6 +167,25 @@ HandleRaid() {
                 PollPattern(patterns.tabs.stronghold, { doClick : true, predicatePattern : patterns.stronghold.gemsIcon })
             }
         }
+        case "fightThenPullOut":
+        {
+            PollPattern(patterns.raid.appear.fightRaidBoss, { doClick : true, predicatePattern : patterns.raid.helpRequests })
+            PollPattern(patterns.battle.start, { doClick : true, predicatePattern : patterns.menu.button })
+            PollPattern(patterns.menu.button, { doClick : true, predicatePattern : patterns.menu.giveUp })
+            PollPattern(patterns.menu.giveUp, { doClick : true, predicatePattern : patterns.prompt.yes })
+            PollPattern(patterns.prompt.yes, { doClick : true, predicatePattern : patterns.battle.done })
+            PollPattern(patterns.raid.activeBoss, { clickPattern : patterns.battle.done, callback : Func("RaidClickCallback"), pollInterval : 250 })
+            PollPattern(patterns.raid.finder, { doClick : true, predicatePattern : patterns.raid.helpRequests })
+            PollPattern(patterns.raid.helpRequests, { doClick : true, predicatePattern : patterns.prompt.ok })
+            PollPattern(patterns.prompt.ok, { doClick : true, predicatePattern : patterns.stage.back })
+            sleep 1000
+
+            result := PollPattern([patterns.stronghold.gemsIcon, patterns.prompt.close], { clickPattern : patterns.stage.back })
+            if InStr(result.comment, "prompt.close") {
+                PollPattern(patterns.prompt.close, { doClick : true, predicatePattern : patterns.tabs.stronghold })
+                PollPattern(patterns.tabs.stronghold, { doClick : true, predicatePattern : patterns.stronghold.gemsIcon })
+            }
+        }
         case "advanceInStory":
         {
             PollPattern(patterns.raid.appear.advanceInStory, { doClick : true })
