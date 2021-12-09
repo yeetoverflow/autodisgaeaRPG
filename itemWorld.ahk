@@ -248,12 +248,12 @@ DoItemDrop(lootTarget) {
         
         ;check 4 times just in case
         loop 4 {
-            result := FindPattern(patterns.enemy.A, { variancePct : 15 })
+            result := FindPattern([patterns.enemy.A, patterns.enemy.target], { variancePct : 15 })
 
             while (result.IsSuccess) {
                 if (FindPattern(patterns.battle.skills.label.IsSuccess)) {
                     result := FindPattern(singleTargetActions)
-                    if (FindPattern(patterns.enemy.A, { variancePct : 15 }).IsSuccess) {
+                    if (FindPattern([patterns.enemy.A, patterns.enemy.target], { variancePct : 15 }).IsSuccess) {
                         ClickResult(result)
                     }
                 }
