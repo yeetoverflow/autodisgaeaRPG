@@ -174,6 +174,12 @@ ResetUI() {
     Gui Add, Button, x+10 gScreenCap, ScreenCap
     Gui Add, Button, x+10 gVerify, Verify
     Gui Add, Button, x+10 gTest, Test
+    Gui Add, Text, cWhite xs+10 y+15, Scan Mode:
+    Gui Add, Radio, cWhite gScanModeChanged vScanMode_1 , 1
+    Gui Add, Radio, cWhite gScanModeChanged vScanMode_2 x+10, 2
+    Gui Add, Radio, cWhite gScanModeChanged vScanMode_3 x+10, 3
+    Gui Add, Radio, cWhite gScanModeChanged vScanMode_4 x+10, 4
+    GuiControl,, % "ScanMode_" . (settings.scanMode ? settings.scanMode : 4) , 1
 
     Gui Add, Link, x+150,<a href="https://github.com/yeetoverflow/autodisgaeaRPG">documentation</a>
 
@@ -214,6 +220,25 @@ ResetUI() {
 
     guiHwnd := GetGuiHwnd()
     InitBlueStacks()
+}
+
+ScanModeChanged() {
+    global hwnd, settings, scanMode_1, scanMode_2, scanMode_3, scanMode_4
+    Gui Submit, NoHide
+
+    if (scanMode_1) {
+        settings.scanMode := 1
+    } else if (scanMode_2) {
+        settings.scanMode := 2
+    } else if (scanMode_3) {
+        settings.scanMode := 3
+    } else if (scanMode_4) {
+        settings.scanMode := 4
+    }
+
+    settings.Save(true)
+
+    FindText().BindWindow(hwnd, (settings.scanMode ? settings.scanMode : 4))>
 }
 
 CopyPatternToClipboard() {

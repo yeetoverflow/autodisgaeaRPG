@@ -503,7 +503,9 @@ InitBlueStacks()
     ;WinGet, hwnd, ID,Photos
     WinActivate, % ahk_id hwnd
     ;FindText().BindWindow(hwnd,3)>
-    FindText().BindWindow(hwnd,4)>
+    ;FindText().BindWindow(hwnd,4)>
+    FindText().BindWindow(hwnd, (settings.scanMode ? settings.scanMode : 4))>
+    
     Resize()
 
     cmdLine := GetCommandLine(hwnd)
