@@ -159,7 +159,7 @@ InitPatterns() {
 		patterns := new JsonFile(filePath) ;- Create instance.
         patterns.tabs := {}
         patterns.tabs.stronghold := "|<>0xD5CDD5@0.80$87.7U0000000k0040NzU0000006001k3QQs000000k00C0T1b0000006001k3M4y000000k00C0PUTzrwzszzyDtnzT0zznrzCStvnixtz7CA7sTVq7sDq71wlVUz3sCkT1zkM3aAQ7sT1q3sDy30ClXUz3sCkT1zkS1qAA7sTVq3sDy3sAlVkr3QQkPVikvrbA7CMNza3CxrzDsDUT330AkMy4DA"
-        patterns.tabs.dimensionGate := "|<>0xD0D0D0@0.80$82.ksk0000000M0031U00000000000A7ATb0sTkS63UrkAlzyDlzXwMzXz0n7SsnbaQFX6CQ3AMla6QNk6MAkkAlX6MNVXkNUn30n6ANza67la3AA6AMla0MM7aMAkkMlX6M1VU6NUn33X6ANk668NX2ADwAMlXi88zaCskz0lW67kUVwMT300000000000000000000000000000000000000000000007k60000008"
+        patterns.tabs.dimensionGate := "|<>0xFFFFFF@1.00$25.00C00DzU0Dzzl7zzwzyDkTw60DU307k0U3s009w000y000000Q000C000zg00Mk20SwzkA6Twy13bz001zU01zk01wS0zyA00040U"
         patterns.tabs.shop := {}
         patterns.tabs.shop.tab := "|<>0xD7D0D7@0.75$50.sAC00000C33U00003UEzk7s7yy0Dz3z1zrw3lkssQQzUsQQ7731wC771lUE7XVlkQM40ssQQ761kCC771lUy3VUlssQBzkMADy7zDs631y1zU000000M000000060U"
         patterns.tabs.shop.items := {}
