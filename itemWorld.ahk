@@ -56,7 +56,7 @@ GrindItemWorld(itemWorldOptions, oneTime := false) {
             sleep 1000
         }
         else if InStr(result.comment, "dimensionGate.background") {
-            FindPattern(patterns.dimensionGate.itemWorld, { doClick : true })
+            FindPattern(patterns.dimensionGate.itemWorld, { doClick : true, variancePct : 30 })
             sleep 1000
         }
         else if InStr(result.comment, "itemWorld.title") {
