@@ -288,7 +288,8 @@ InitPatterns() {
         patterns.stage.back := "|<>0xFFFFFF@0.90$36.00400000A00000Q00000w00003w00007w0000Dy0000Tzzzz1zzzzz3zzzzz7zzzzzDzzzzzTzzzzzzzzzzzTzzzzzDzzzzz3zzzzz1zzzzz0zzzzz0Tzzzy0Dw00003w00001w00000w00000Q000004000U"
 
         patterns.stronghold := {}
-        patterns.stronghold.gemsIcon := "|<>*155$35.Tzw7zzzzlbzzzz77zzzyP7zzztX7zzza76zzyM6BzzVU63zs2063r08043c0k0A00300A03A00A0Qk00NVn000Nb4003twE03Cvl007zna00DzmM00Dzkk00TjYk01zz9U07zyNU0Rzst00zznl00zjDn00wQzn000nzW003Dza00Azz600Fzk603Uz7S0TsszzjzsM"
+        patterns.stronghold.gemsIcon := ["|<>*155$35.Tzw7zzzzlbzzzz77zzzyP7zzztX7zzza76zzyM6BzzVU63zs2063r08043c0k0A00300A03A00A0Qk00NVn000Nb4003twE03Cvl007zna00DzmM00Dzkk00TjYk01zz9U07zyNU0Rzst00zznl00zjDn00wQzn000nzW003Dza00Azz600Fzk603Uz7S0TsszzjzsM"
+                                       , "|<>0x7E4F20@0.71$45.TzzwzzDzzzzbkDzzzzy01zzzzzw0TzTzzzs3jtzzzzkMy7zzzy73YTzzztsMFzzyDza/Dzzlzxn8zzyTzwEbzznzzY0TDzzns4"]
         patterns.stronghold.friends := {}
         patterns.stronghold.friends.icon := "|<>0xEFF0F0@0.84$66.zs0C00000Q0zs0C00000Q0s00C00000Q0s00000000Q0s00000000w0zszC7wTsDwzzszCDwTwTwzs0sCCCQQwQws0sCDyQQwQSs0sCC0QQwQDs0sCC0QQQQ7s0sC7wQQTwzs0sC3wQMDwzU"
         patterns.stronghold.friends.title := "|<>0xFFFFFF@0.80$94.zzU03k0000000s03zz00D00000003U0D0000Q0000000C00s000000000000s03U000000000003U0C000000000000C00s00nVk3U37U3zs3nU07y70zkTz0STUzzzkTsQ731wS3kS71zzVs1ksC7UsC1sQ3k07U73UsS3Vs7VkC00Q0QS3lkD7UC7ks01k1lzz70wQ0sDvU07077zsQ3lk3UTy00Q0QS01kD7US0Ds01k1ls070wS1s0DU07073U0Q3ks7U0y00Q0QD1VkD3ky43s01k1kSC7Uw7zsQzU03060TUQ1U7nUzc"
