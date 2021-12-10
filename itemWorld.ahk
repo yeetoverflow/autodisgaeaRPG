@@ -258,6 +258,7 @@ DoItemDrop(lootTarget) {
                     }
                 }
                 sleep 200
+                result := FindPattern([patterns.enemy.A, patterns.enemy.target], { variancePct : 15 })
             }
         }
         
