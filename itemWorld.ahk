@@ -194,6 +194,16 @@ DoItemDrop(lootTarget) {
     actions.Push(patterns.battle.attack)
     singleTargetActions.Push(patterns.battle.attack)
 
+    if (battleOptions.allyTarget && battleOptions.allyTarget != "None") {
+        sleep 500
+        allyTarget := patterns.battle.target[battleOptions.allyTarget]
+        Loop {
+            FindPattern(allyTarget, { doClick : true })
+            sleep 500
+            result := FindPattern(patterns.battle.target.on, { variancePct : 20 })
+        } until (result.IsSuccess)
+    }
+
     Loop {
         count := 0
         Loop {
@@ -245,22 +255,19 @@ DoItemDrop(lootTarget) {
                 result := FindPattern(patterns.enemy.target)
             }
         }
-        
-        ;check 4 times just in case
-        loop 4 {
-            result := FindPattern([patterns.enemy.A, patterns.enemy.target], { variancePct : 15 })
 
-            while (result.IsSuccess) {
-                if (FindPattern(patterns.battle.skills.label.IsSuccess)) {
-                    result := FindPattern(singleTargetActions)
-                    if (FindPattern([patterns.enemy.A, patterns.enemy.target], { variancePct : 15 }).IsSuccess) {
-                        ClickResult(result)
-                    }
+        count := 0
+        loop {
+            if (FindPattern(patterns.battle.skills.label.IsSuccess)) {
+                result := FindPattern(singleTargetActions)
+                if (FindPattern(patterns.enemy.A, { variancePct : 15 }).IsSuccess) {
+                    ClickResult(result)
                 }
-                sleep 200
-                result := FindPattern([patterns.enemy.A, patterns.enemy.target], { variancePct : 15 })
             }
-        }
+            
+            result := FindPattern(patterns.enemy.A, { variancePct : 15, bounds : { x1 : 270, x2 : 330, y1 : 420, y2 : 470 } })
+            count++
+        } until (count > 8 && !result.IsSuccess && !FindPattern(patterns.enemy.target).IsSuccess)
         
         sleep 1500
         result := FindDrop()
@@ -288,7 +295,7 @@ GiveUpAndTryAgain(battleOptions) {
         allyTarget := patterns.battle.target[battleOptions.allyTarget]
         Loop {
             FindPattern(allyTarget, { doClick : true })
-            sleep 250
+            sleep 500
             result := FindPattern(patterns.battle.target.on, { variancePct : 20 })
         } until (result.IsSuccess)
     }

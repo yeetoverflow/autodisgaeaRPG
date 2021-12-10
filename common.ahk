@@ -589,7 +589,7 @@ DoBattle(battleOptions) {
     if (battleOptions.targetEnemyMiddle) {
         Loop {
             ClickResult({ X : 342, Y : 388 })
-            sleep 250
+            sleep 500
             result := FindPattern(patterns.enemy.target, { variancePct : 20 })
         } until (result.IsSuccess)
     }

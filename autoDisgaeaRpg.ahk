@@ -364,6 +364,7 @@ Test() {
     global patterns, settings, hwnd
     SetStatus(A_ThisFunc)
 
+    something := LetUserSelectRect()
     ; MsgBox, % CapitalizeFirstLetter("whatever")
     ; PollPattern(patterns.battle.start, { doClick : true, predicatePattern : patterns.menu.button })
     ; PollPattern(patterns.menu.button, { doClick : true, predicatePattern : patterns.menu.giveUp })
