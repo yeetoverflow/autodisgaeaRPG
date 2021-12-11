@@ -360,6 +360,10 @@ Verify() {
             . "(Window Size) " . W . "x" . H . " => " . (W = 600 && H = 1040 ? "GOOD" : "BAD (Target 600x1400)")
 }
 
+TestDrop() {
+    MsgBox, % FindDrop().Type
+}
+
 Test() {
     global patterns, settings, hwnd
     SetStatus(A_ThisFunc)

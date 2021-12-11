@@ -173,6 +173,7 @@ ResetUI() {
     Gui Add, Button, xs+10 y+15 gResize, Resize
     Gui Add, Button, x+10 gScreenCap, ScreenCap
     Gui Add, Button, x+10 gVerify, Verify
+    Gui Add, Button, x+10 gTestDrop, TestDrop
     Gui Add, Button, x+10 gTest, Test
     Gui Add, Text, cWhite xs+10 y+15, Scan Mode:
     Gui Add, Radio, cWhite gScanModeChanged vScanMode_1 , 1
