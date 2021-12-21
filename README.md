@@ -20,7 +20,7 @@ AutoHotkey project that automates the grindy parts of DisgaeaRPG. The program do
     * Right click desktop
     * Select display settings
     * In scale and layout, set the value to 100%
-* Download [autoDisgaeaRPG](https://raw.githubusercontent.com/yeetoverflow/autodisgaeaRPG/main/exe/autoDisgaeaRpg.exe) executable. (Recommended) Place this in a folder.
+* Download [autoDisgaeaRPG](https://raw.githubusercontent.com/yeetoverflow/autodisgaeaRPG/main/exe/autoDisgaeaRpg.exe) ([experimental version](https://raw.githubusercontent.com/yeetoverflow/autodisgaeaRPG/main/experimental/autoDisgaeaRpg.exe)) executable. (Recommended) Place this in a folder.
 * Verify test
     * Open BlueStacks DisgaeaRPG instance and autoDisgaeaRPG.exe. Go to Settings tab in autoDisgaeaRPG program
     * If (Window) DETACHED => BAD
