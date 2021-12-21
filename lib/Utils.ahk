@@ -282,35 +282,75 @@ IsArray(oArray)
     return 1
 }
 
-TreeAdd(node, parent := 0, opts := "", path := "") {
+Traverse(node, data, opts) {
+    opts := InitOps(opts, { dataCallback : "", callBack : "", skipFields : "" })
+    ; if (!data.path) {
+    ;     data.path := ""
+    ; }
 
-    opts := InitOps(opts, { parentCallback: "", leafCallback: "", doChildrenPredicate: ""})
-    parentCallback := opts.parentCallback
-    %parentCallback%(node)
-    
-    if (opts.doChildrenPredicate) {
-        doChildrenPredicate := opts.doChildrenPredicate
-        doChildren := %doChildrenPredicate%(node)
-        if (!doChildren) 
-            Return
+    ;use data callback to pass data from parent to child (path is automatic)
+    if (opts.dataCallback) {
+        dataCallback := opts.dataCallback
+        data := %dataCallback%(node, data, opts)
+    }
+
+    if (opts.callBack) {
+        callBack := opts.callBack
+        %callBack%(node, data, opts)
+    }
+
+    if (opts.doDebug) {
+        OutputDebug, % data.path
     }
 
     for k, v in node {
-        if (k = "Func" || RegExMatch(k, "Arg.*")) {
-            continue
+        if hasValue(opts.skipFields, k) {
+            Continue
         }
 
-        child := TV_Add(k, parent, "expand")
-
-        if (IsObject(v)) {
-            TreeAdd(v, child, opts, path . "." . k)
-        }
-        else {
-            leafCallBack := opts.leafCallBack
-            %leafCallBack%(k, v, node, LTrim(path, ".") . "." . k)
-        }
+        childData := ObjFullyClone(data)
+        childData.key := k
+        childData.value := v
+        childData.path := childData.path . (childData.path ? "." : "") . k
+        childData.parent := node
+        childData.parentPath := data.path
+        Traverse(v, childData, opts)
     }
 }
+
+; TreeAdd(node, parent := 0, opts := "", path := "") {
+
+;     opts := InitOps(opts, { parentCallback: "", leafCallback: "", doChildrenPredicate: "", isArrayItem: ""})
+;     parentCallback := opts.parentCallback
+;     %parentCallback%(node)
+    
+;     if (opts.doChildrenPredicate) {
+;         doChildrenPredicate := opts.doChildrenPredicate
+;         doChildren := %doChildrenPredicate%(node)
+;         if (!doChildren) 
+;             Return
+;     }
+
+;     for k, v in node {
+;         if (k = "Func" || RegExMatch(k, "Arg.*") || k = "isLeaf" || k = "disableAdd") {
+;             continue
+;         }
+
+;         if (opts.hideUserPatternAndDefault && (k = "userPattern" || k = "default")) {
+;             Continue
+;         }
+
+;         child := TV_Add(k, parent, "expand")
+
+;         if (IsObject(v)) {
+;             TreeAdd(v, child, opts, path . "." . k)
+;         }
+;         else {
+;             leafCallBack := opts.leafCallBack
+;             %leafCallBack%(k, v, node, LTrim(path, ".") . "." . k)
+;         }
+;     }
+; }
 
 LetUserSelectRect()
 {
@@ -534,10 +574,10 @@ GetPatternGrayDiff(grayDiff := 50) {
         return
     }
 
-    px := result.x1
-    py := result.y1
-    ww := result.x2 - result.x1
-    hh := result.y2 - result.y1
+    px := result.x1 + 2
+    py := result.y1 + 3
+    ww := result.x2 - result.x1 - 2
+    hh := result.y2 - result.y1 - 8
 
     ;----------getCors
     nW:=ww, nH:=hh
@@ -592,10 +632,10 @@ GetPatternColor2Two(color, similarity) {
         return
     }
 
-    px := result.x1
-    py := result.y1
-    ww := result.x2 - result.x1
-    hh := result.y2 - result.y1
+    px := result.x1 + 2
+    py := result.y1 + 3
+    ww := result.x2 - result.x1 - 2
+    hh := result.y2 - result.y1 - 8
 
     ;----------getCors
     nW:=ww, nH:=hh
@@ -656,4 +696,26 @@ GetPixelColor() {
     color := FindText().GetColor(point.x, point.y)
 
     Return color
+}
+
+;https://www.autohotkey.com/boards/viewtopic.php?t=55032
+;https://www.autohotkey.com/boards/viewtopic.php?f=5&t=55014
+ObjFullyClone(obj) {
+	nobj := obj.Clone()
+	for k,v in nobj
+		if IsObject(v)
+			nobj[k] := A_ThisFunc.(v)
+	return nobj
+}
+
+;https://stackoverflow.com/questions/33591667/how-to-check-if-string-is-contained-in-an-array-in-autohotkey
+hasValue(haystack, needle) {
+    if(!isObject(haystack))
+        return false
+    if(haystack.Length()==0)
+        return false
+    for k,v in haystack
+        if(v==needle)
+            return true
+    return false
 }

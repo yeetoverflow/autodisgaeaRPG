@@ -14,22 +14,10 @@ ResetUI() {
     GuiControl, choose, TopTabs, 1
 
     Gui Tab, Main
-    Gui, Font, Bold
-    Gui Add, Text, cWhite x+10 xs+10 ys+25, Battle
-    Gui Add, Text, x+250 vAttached cRed, DETACHED
-    Gui, Font, Normal
-    Gui Add, Text, cWhite xs+10 y+5, BattleContext
-    Gui Add, Button, x+10 gResetCurrentBattleContext, Reset Selected Context
-    Gui Add, Radio, cWhite gBattleContextChanged vBattleContext xs+10 y+5 checked, Default
-    Gui Add, Radio, cWhite gBattleContextChanged x+10, Event
-    Gui Add, Radio, cWhite gBattleContextChanged x+10, ItemWorld
-    Gui Add, Radio, cWhite gBattleContextChanged x+10, Sweep
-    Gui Add, Radio, cWhite gBattleContextChanged x+10, Raid
-    Gui Add, Radio, cWhite gBattleContextChanged xs+10 y+5, DarkGateMats
-    Gui Add, Radio, cWhite gBattleContextChanged x+10, DarkGateHL
 
-    CreateBattleOptionsUI(settings.battleOptions.default)
-    Gui Add, Button, xs+10 y+5 gBattle, Battle
+    InitBattleOptionsUI()
+
+    Gui Add, Button, xs+120 y+10 gBattle, Battle
     Gui Add, Text, cWhite x+10, Count: 
     Gui Add, Edit, cBlack w50 x+10 Number vBattleCount, 1
 
@@ -37,7 +25,6 @@ ResetUI() {
     Gui, Font, Bold
     Gui Add, Text, cWhite xs+10, General
     Gui, Font, Normal
-    ;Gui Add, Button, xs+10 gAutoClear, AutoClear
     Gui, Add, Progress, xs+10 vProgressBar_AutoClear -Smooth w120 h18 c0x66FF66 border
     Gui Add, Text, cBlack xp wp hp center vProgressText_AutoClear BackgroundTrans, Start AutoClear
     Gui Add, Button, x+10 gAutoShop, AutoShop
@@ -48,8 +35,7 @@ ResetUI() {
     Gui, Font, Bold
     Gui Add, Text, cWhite xs+10, Event
     Gui, Font, Normal
-    Gui Add, Button, x+10 gSelectStoryBanner, Select Story Banner
-    Gui Add, Button, x+10 gSelectRaidBanner, Select Raid Banner
+    Gui Add, Button, x+10 gSelectBanners, Select Banners
 
     Gui, Add, Progress, xs+10 vProgressBar_EventStoryFarm -Smooth w120 h18 c0x66FF66 border
     Gui Add, Text, cBlack xp wp hp center vProgressText_EventStoryFarm BackgroundTrans, Start EventStoryFarm
@@ -71,7 +57,7 @@ ResetUI() {
     Gui Add, Text, cWhite xs+10, Raid
     Gui, Font, Normal
 
-    Gui, Add, Progress, x+10 w250 h18 c0x66FF66 vsettings_eventOptions_raid
+    Gui, Add, Progress, x+10 w250 h18 c0x66FF66 vsettingsmodal_eventOptions_raid
     Gui Add, Text, xp+5 wp hp r1 +0x4000 cBlack BackgroundTrans left vsettingsText_eventOptions_raid, % GetSettingDisplay("settings_eventOptions_raid")
 
     Gui, Add, Progress, xs+10 vProgressBar_EventRaidLoop -Smooth w100 h18 c0x66FF66 border
@@ -87,12 +73,6 @@ ResetUI() {
     Gui Font, Bold
     Gui Add, Text, cWhite xs+10, ItemWorld
     Gui Font, Normal
-
-    ; Gui, Add, Progress, vProgressBar_FarmItemWorldAnyLoop -Smooth w170 h18 c0x66FF66 border
-    ; Gui Add, Text, cBlack xp wp hp center vProgressText_FarmItemWorldAnyLoop BackgroundTrans, Start FarmItemWorldAnyLoop
-    ; Gui Add, Radio, cWhite gRadioOptionChanged vItemWorldOptions_loop_itemType_armor x+5, Armor
-    ; Gui Add, Radio, cWhite gRadioOptionChanged vItemWorldOptions_loop_itemType_weapon x+5, Weapon
-    ; GuiControl,, % "itemWorldOptions_loop_itemType_" . settings.itemWorldOptions.loop.itemType, 1
     
     Gui, Add, Progress, xs+10 vProgressBar_GrindItemWorldLoop1 -Smooth w150 h18 c0x66FF66 border
     Gui Add, Text, cBlack xp wp hp center vProgressText_GrindItemWorldLoop1 BackgroundTrans, Start GrindItemWorldLoop1
@@ -100,7 +80,7 @@ ResetUI() {
     Gui, Add, Progress, x+10 vProgressBar_GrindItemWorldSingle1 -Smooth w150 h18 c0x66FF66 border
     Gui Add, Text, cBlack xp wp hp center vProgressText_GrindItemWorldSingle1 BackgroundTrans, Start GrindItemWorldSingle1
 
-    Gui, Add, Progress, x+10 w50 h18 c0x66FF66 vsettings_itemWorldOptions_1
+    Gui, Add, Progress, x+10 w50 h18 c0x66FF66 vsettingsmodal_itemWorldOptions_1
     Gui Add, Text, xp+5 wp hp r1 +0x4000 cBlack BackgroundTrans left, Settings
 
     Gui, Add, Progress, xs+10 vProgressBar_GrindItemWorldLoop2 -Smooth w150 h18 c0x66FF66 border
@@ -109,30 +89,8 @@ ResetUI() {
     Gui, Add, Progress, x+10 vProgressBar_GrindItemWorldSingle2 -Smooth w150 h18 c0x66FF66 border
     Gui Add, Text, cBlack xp wp hp center vProgressText_GrindItemWorldSingle2 BackgroundTrans, Start GrindItemWorldSingle2
 
-    Gui, Add, Progress, x+10 w50 h18 c0x66FF66 vsettings_itemWorldOptions_2
+    Gui, Add, Progress, x+10 w50 h18 c0x66FF66 vsettingsmodal_itemWorldOptions_2
     Gui Add, Text, xp+5 wp hp r1 +0x4000 cBlack BackgroundTrans left, Settings
-    
-    ; Gui, Add, Progress, xs+10 vProgressBar_FarmItemWorldLegendaryLoop -Smooth w170 h18 c0x66FF66 border
-    ; Gui Add, Text, cBlack xp wp hp center vProgressText_FarmItemWorldLegendaryLoop BackgroundTrans, Start FarmItemWorldLegendaryLoop
-    ; Gui Add, Radio, cWhite gRadioOptionChanged vItemWorldOptions_farmLoop_itemType_armor x+5, Armor
-    ; Gui Add, Radio, cWhite gRadioOptionChanged vItemWorldOptions_farmLoop_itemType_weapon x+5, Weapon
-    ; GuiControl,, % "itemWorldOptions_farmLoop_itemType_" . settings.itemWorldOptions.farmLoop.itemType, 1
-
-    ; Gui, Add, Progress, xs+10 vProgressBar_FarmItemWorldSingle -Smooth w140 h18 c0x66FF66 border
-    ; Gui Add, Text, cBlack xp wp hp center vProgressText_FarmItemWorldSingle BackgroundTrans, Start FarmItemWorldSingle
-    ; ;Gui Add, Button, xs+10 gFarmItemWorldSingle, FarmSingle
-    ; Gui Add, Text, cWhite x+10, Item Rarity: 
-    ; Gui Add, Radio, cWhite gRadioOptionChanged vItemWorldOptions_targetItem_legendary x+5, Legendary
-    ; Gui Add, Radio, cWhite gRadioOptionChanged vItemWorldOptions_targetItem_rareOrLegendary x+5, Rare/Legendary
-    ; Gui Add, Radio, cWhite gRadioOptionChanged vItemWorldOptions_targetItem_any x+5, Any
-    ; GuiControl,, % "itemWorldOptions_targetItem_" . settings.itemWorldOptions.targetItem, 1
-    ; Gui Add, Button, xs+10 y+10 gDoItem, ClearSingle
-    ; Gui Add, Text, cWhite x+10, Bribe: 
-    ; Gui Add, Radio, cWhite gRadioOptionChanged vItemWorldOptions_bribe_none x+5, None
-    ; Gui Add, Radio, cWhite gRadioOptionChanged vItemWorldOptions_bribe_goldenCandy x+5, GoldenCandy
-    ; Gui Add, Radio, cWhite gRadioOptionChanged vItemWorldOptions_bribe_goldBar x+5, GoldBar
-    ; Gui Add, Radio, cWhite gRadioOptionChanged vItemWorldOptions_bribe_crabMiso x+5, CrabMiso
-    ; GuiControl,, % "itemWorldOptions_bribe_" . settings.itemWorldOptions.bribe, 1
 
     Gui Add, Text, 0x10 xs w400 h10
     Gui, Font, Bold
@@ -188,7 +146,7 @@ ResetUI() {
     
     Gui Add, TreeView, h300 cBlack vHandlersTree
     Gui Add, Button, gTestHandler, Test
-    TreeAdd(handlers, 0, { doChildrenPredicate : Func("PatternChildrenPredicate") })
+    InitHandlersTree()
 
     Gui, Tab, Patterns
     Gui, Add, Text, cWhite, Filter:
@@ -198,29 +156,261 @@ ResetUI() {
     Gui, Font, s3
     Gui Add, Edit, cBlack w400 r20 vPatternsPreview
     Gui, Font
-    Gui, Add, Button, gPickPatternColor, Pick Color
-    Gui, Add, Edit, cBlack x+5 w100 vPatternColorPick,
-    Gui, Add, Text, cWhite x+5, Variance: 
-    Gui Add, Edit, cBlack x+5 w30 cBlack vPatternColorVariance, 10
-    Gui, Add, Button, x+5 gApplyColorPattern, Apply
-    Gui, Add, Text, cWhite xs+10 y+5, Gray Diff: 
-    Gui Add, Edit, cBlack x+5 w30 cBlack vPatternGrayDiff, 50
-    Gui, Add, Button, x+5 gApplyGrayPattern, Apply
 
     Gui Add, Button, xs+10 y+5 gTestPattern, Test
     Gui Add, Checkbox, cWhite x+10 vTestPatternMulti, Multi
     Gui Add, Button, x+10 gCopyPatternToClipboard, Copy To Clipboard
-    Gui Add, Button, x+150 gSavePatterns, Save Changes
+    Gui Add, Button, x+10 gOpenUserPattern, UserPattern
     Gui Add, Text, cWhite xs+10 y+10, FG Variance:
     Gui Add, Slider, w200 tickinterval5 tooltip vTestPatternFG
     Gui Add, Text, cWhite xs+10 y+10, BG Variance: 
     Gui Add, Slider, w200 tickinterval5 tooltip vTestPatternBG
-    TreeAdd(patterns.Object(), 0, { leafCallback : Func("InitPatternsCallback")})
+    InitPatternsTree()
 
     Gui Show, w450
 
     guiHwnd := GetGuiHwnd()
+    LV_Modify(1, "Select")
     InitBlueStacks()
+}
+
+SelectBattleOption() {
+    if (A_GuiEvent = "I") {
+        currentRow := LV_GetNext(0)
+        LV_GetText(currentBattleOption, currentRow)
+        ResetBattleOption(currentBattleOption)
+    }
+}
+
+ResetBattleOption(currentBattleOption) {
+    global guiHwnd, settings
+    battleOptions := ["Default", "Event", "ItemWorld", "Sweep", "Raid", "DarkGateMats", "DarkGateHL"]
+
+    defaultSettings := "settings_battleOptions_default"
+    settingMetaData := GetSettingMetaData(defaultSettings)
+
+    ;hide all the controls
+    for k, v in settingMetaData.displayOrder
+    {
+        for i, battleOption in battleOptions {
+            GuiControl, %guiHwnd%:Hide, % "settings_battleOptions_" . battleOption . "_" . v 
+        }
+    }
+
+    for i, battleOption in battleOptions {
+        GuiControl, %guiHwnd%:Hide, % "battleOptions_" . battleOption . "_companions"
+        GuiControl, %guiHwnd%:Hide, % "battleOptionsText_" . battleOption . "_companions" 
+        GuiControl, %guiHwnd%:Hide, % "battleOptions_" . battleOption . "_allyTarget"
+        GuiControl, %guiHwnd%:Hide, % "battleOptionsText_" . battleOption . "_allyTarget" 
+        GuiControl, %guiHwnd%:Hide, % "battleOptions_" . battleOption . "_skills"
+        GuiControl, %guiHwnd%:Hide, % "battleOptionsText_" . battleOption . "_skills" 
+    }
+
+    for k, v in settingMetaData.displayOrder
+    {
+        GuiControl, %guiHwnd%:Show, % "settings_battleOptions_" . currentBattleOption . "_" . v 
+    }
+
+    GuiControl, %guiHwnd%:Show, % "battleOptions_" . currentBattleOption . "_companions" 
+    GuiControl, %guiHwnd%:Show, % "battleOptionsText_" . currentBattleOption . "_companions" 
+    GuiControl, %guiHwnd%:Show, % "battleOptions_" . currentBattleOption . "_allyTarget" 
+    GuiControl, %guiHwnd%:Show, % "battleOptionsText_" . currentBattleOption . "_allyTarget" 
+    GuiControl, %guiHwnd%:Show, % "battleOptions_" . currentBattleOption . "_skills" 
+    GuiControl, %guiHwnd%:Show, % "battleOptionsText_" . currentBattleOption . "_skills" 
+
+    settings.battleContext := currentBattleOption
+}
+
+InitBattleOptionsUI() {
+    global
+
+    Gui, Font, Bold
+    Gui Add, Text, xs+250 ys+25 vAttached cRed, DETACHED
+    Gui Add, Text, cWhite xs+10 ys+25, BattleContext
+    Gui, Font, Normal
+    Gui Add, ListView, w100 h170 gSelectBattleOption vBattleOptionsTree NoSort AltSubmit, Name
+    Gui Add, Text, x+10,
+
+    battleOptions := ["Default", "Event", "ItemWorld", "Sweep", "Raid", "DarkGateMats", "DarkGateHL"]
+
+    local defaultSettings := "settings_battleOptions_default"
+    local settingMetaData := GetSettingMetaData(defaultSettings)
+
+    for i, battleOption in battleOptions {
+        LV_Add("", battleOption)
+    }
+
+    for k, v in settingMetaData.displayOrder
+    {
+        for i, battleOption in battleOptions {
+            local targetSettings := "settings_battleOptions_" . battleOption
+            local settingUnderscore := targetSettings . "_" . v
+            local settingInfo := GetSettingInfo(settingUnderscore)
+            local opts := { offsetX : 120 }
+
+            if (i != 1) {
+                opts.optsOverride := "xp yp"
+            }
+
+            AddSetting(settingInfo, "1", opts)
+        }
+    }
+
+    metadata.userPatterns.companions.targets.checked := true
+    metadata.userPatterns.battle.target.ally.checked := true
+    metadata.userPatterns.battle.skills.checked := true
+    metadata.userPatterns.battle.skills.props := {}
+    metadata.userPatterns.battle.skills.props.singleTarget := {}
+    metadata.userPatterns.battle.skills.props.singleTarget.type := "Checkbox"
+    metadata.userPatterns.battle.skills.props.priority := {}
+    metadata.userPatterns.battle.skills.props.priority.type := "DropDown"
+    metadata.userPatterns.battle.skills.props.priority.options := "High|Normal||Low"
+
+    for i, battleOption in battleOptions {
+        local targetSettings := "settings_battleOptions_" . battleOption
+        local targetSetting := "companions"
+        local settingUnderscore := targetSettings . "_" . targetSetting
+        local settingInfo := GetSettingInfo(settingUnderscore)
+        local opts := { offsetX : 120 }
+
+        if (i == 1) {
+            Gui, Add, Progress, % "xs+120 y+10 w300 h18 c0x66FF66 vbattleOptions_" . battleOption . "_" . targetSetting
+            Gui Add, Text, % "xp+5 wp hp r1 +0x4000 cBlack BackgroundTrans left vbattleOptionsText_" . battleOption . "_" . targetSetting, % GetSettingDisplay("settings_battleOptions_" . battleOption . "_" . targetSetting)
+        }
+        else {
+            Gui, Add, Progress, % "xp-5 yp w300 h18 c0x66FF66 vbattleOptions_" . battleOption . "_" . targetSetting
+            Gui Add, Text, % "xp+5 wp hp r1 +0x4000 cBlack BackgroundTrans left vbattleOptionsText_" . battleOption . "_" . targetSetting, % GetSettingDisplay("settings_battleOptions_" . battleOption . "_" . targetSetting)
+        }
+    }
+
+    for i, battleOption in battleOptions {
+        local targetSettings := "settings_battleOptions_" . battleOption
+        local targetSetting := "allyTarget"
+        local settingUnderscore := targetSettings . "_" . targetSetting
+        local settingInfo := GetSettingInfo(settingUnderscore)
+        local opts := { offsetX : 120 }
+
+        if (i == 1) {
+            Gui, Add, Progress, % "xs+120 y+10 w300 h18 c0x66FF66 vbattleOptions_" . battleOption . "_" . targetSetting
+            Gui Add, Text, % "xp+5 wp hp r1 +0x4000 cBlack BackgroundTrans left vbattleOptionsText_" . battleOption . "_" . targetSetting, % GetSettingDisplay("settings_battleOptions_" . battleOption . "_" . targetSetting)
+        }
+        else {
+            Gui, Add, Progress, % "xp-5 yp w300 h18 c0x66FF66 vbattleOptions_" . battleOption . "_" . targetSetting
+            Gui Add, Text, % "xp+5 wp hp r1 +0x4000 cBlack BackgroundTrans left vbattleOptionsText_" . battleOption . "_" . targetSetting, % GetSettingDisplay("settings_battleOptions_" . battleOption . "_" . targetSetting)
+        }
+    }
+
+    for i, battleOption in battleOptions {
+        local targetSettings := "settings_battleOptions_" . battleOption
+        local targetSetting := "skills"
+        local settingUnderscore := targetSettings . "_" . targetSetting
+        local settingInfo := GetSettingInfo(settingUnderscore)
+        local opts := { offsetX : 120 }
+
+        if (i == 1) {
+            Gui, Add, Progress, % "xs+120 y+10 w300 h18 c0x66FF66 vbattleOptions_" . battleOption . "_" . targetSetting
+            Gui Add, Text, % "xp+5 wp hp r1 +0x4000 cBlack BackgroundTrans left vbattleOptionsText_" . battleOption . "_" . targetSetting, % GetSettingDisplay("settings_battleOptions_" . battleOption . "_" . targetSetting)
+        }
+        else {
+            Gui, Add, Progress, % "xp-5 yp w300 h18 c0x66FF66 vbattleOptions_" . battleOption . "_" . targetSetting
+            Gui Add, Text, % "xp+5 wp hp r1 +0x4000 cBlack BackgroundTrans left vbattleOptionsText_" . battleOption . "_" . targetSetting, % GetSettingDisplay("settings_battleOptions_" . battleOption . "_" . targetSetting)
+        }
+    }
+}
+
+InitHandlersTree() {
+    global handlers
+    Traverse(handlers, { parentId : 0 }, { dataCallBack : Func("TreeAddDataCallback"), skipFields : ["Func"] } )
+}
+
+InitPatternsTree(root := "", opts := "") {
+    global patterns
+    root := (root ? root : patterns)
+    opts := InitOps(opts, { startPath : "" })
+    
+    Traverse(root, { parentId : 0, path : opts.startPath }, { doDebug : opts.doDebug, dataCallBack : Func("TreeAddDataCallback")
+        , callback : Func("TreeAddPatternsCallback"), skipFields : opts.skipFields } )
+}
+
+TreeAddPatternsCallback(node, data, opts) {
+    global metadata
+
+    if (data.value && !IsObject(data.value)) {
+        newPattern := RegExReplace(data.value, "<.*?>", "<" . data.path . ">")
+        data.parent[data.key] := newPattern
+    }
+
+    ;initialize metadata
+    segments := StrSplit(data.path, ".")
+    target := metadata.userPatterns
+
+    for k, v in segments {
+        if (!v) {
+            Continue
+        }
+
+        if (!target[v]) {
+            target[v] := {}
+            target[v].type := "Pattern"
+        }
+        target := target[v]
+        if (IsArray(data.parent)) {
+            target.isArrayItem := true
+        }
+    }
+}
+
+TreeAddDataCallback(node, data, opts) {
+    if (!data.rootSkipped) {
+        data.rootSkipped := true
+        return data
+    }
+
+    id := TV_Add(data.key, data.parentId, "expand")
+    data.parentId := id
+    return data
+}
+
+OpenUserPattern() {
+    global patterns, settings
+
+    nodePath := GetNodePath()
+    patternPath := StrReplace(nodePath, ".", "_")
+    userPatternExists := false
+
+    segments := StrSplit(nodePath, ".")
+    target := patterns
+
+    for k, v in segments {
+        lastParent := target
+        lastKey := v
+        target := target[v]
+    }
+    
+    if (target.userPattern) {
+        userPatternExists := true
+    }
+
+    if (IsArray(lastParent)) {  ;child of an array
+        patternPath := RegExReplace(patternPath, "_[^_]+?$", "")
+    }
+    
+    if InStr(patternPath, "userPattern") {
+        patternPath := RegExReplace(patternPath, "_userPattern.*?$", "")
+        userPatternExists := true
+    }
+
+    if InStr(patternPath, "default") {
+        patternPath := RegExReplace(patternPath, "_default.*?$", "")
+        userPatternExists := true
+    }
+
+    if (userPatternExists || !IsObject(target) || IsArray(target)) {
+        SettingsModal("settings_userPatterns_" . patternPath)
+    }
+    else {
+        MsgBox, User Patterns are only supported for terminal nodes
+    }
 }
 
 ScanModeChanged() {
@@ -259,82 +449,22 @@ CopyPatternToClipboard() {
     Clipboard := target
 }
 
-SavePatterns() {
-    global patterns
-    patterns.Save(true)
-}
-
-ApplyGrayPattern() {
-    Gui Submit, NoHide
-    global patterns, patternsTree, patternGrayDiff
-    pattern := GetPatternGrayDiff(patternGrayDiff)
-    ;MsgBox, % pattern
-
-    ascii := FindText().ASCII(pattern)
-    GuiControl,, patternsPreview, % Trim(ascii,"`n")
-
-    Gui Submit, NoHide
-    Gui TreeView, patternsTree
-    nodePath := GetNodePath()
-    segments := StrSplit(nodePath, ".")
-    target := patterns
-    
-    for k, v in segments {
-        lastParent := target
-        lastKey := v
-        target := target[v]
-    }
-
-    lastParent[lastKey] := pattern
-}
-
-ApplyColorPattern() {
-    Gui Submit, NoHide
-    global patterns, patternsTree, patternColorPick, patternColorVariance
-    pattern := GetPatternColor2Two(patternColorPick, 100-patternColorVariance)
-    ;MsgBox, % pattern
-
-    ascii := FindText().ASCII(pattern)
-    GuiControl,, patternsPreview, % Trim(ascii,"`n")
-
-    Gui Submit, NoHide
-    Gui TreeView, patternsTree
-    nodePath := GetNodePath()
-    segments := StrSplit(nodePath, ".")
-    target := patterns
-    
-    for k, v in segments {
-        lastParent := target
-        lastKey := v
-        target := target[v]
-    }
-
-    lastParent[lastKey] := pattern
-}
-
-PickPatternColor() {
-    color := GetPixelColor()
-    GuiControl,, patternColorPick, % color
-}
-
 FilterPatterns() {
     global hwnd, patterns, patternsTree, patternFilter
 
     Gui Submit, NoHide
     Gui TreeView, patternsTree
 
-    ;root := TV_Add(patterns, 0, "expand")
-
     tempRoot := {}
     
     TV_Delete()
-    for k, v in patterns.Object() {
+    for k, v in patterns {
         if InStr(k, patternFilter) {
             tempRoot[k] := v
         }
     }
 
-    TreeAdd(tempRoot)
+    InitPatternsTree(tempRoot)
 }
 
 ApplyTargetWindow() {
@@ -366,169 +496,10 @@ ApplyPortOverride() {
     settings.save(true)
 }
 
-AddAllyTarget() {
-    global settings, patterns
-    pattern := GetPatternGrayDiff50()
-
-    if (pattern) {
-        sleep 100
-        FindText(X, Y, 0, 0, 0, 0, 0, 0, pattern, 1, 0)
-        FindText().MouseTip(x, y)
-        
-        InputBox, allyTarget, Add Ally Target, Enter Ally Target Name (no spaces)
-
-        If allyTarget && !ErrorLevel {
-            doResetUI := false
-            if (!settings.battleOptions.allyTargets[allyTarget]) {
-                settings.battleOptions.allyTargets[allyTarget] := []
-                patterns.battle.target[allyTarget] := []
-                doResetUI := true
-            }
-
-            patterns.battle.target[allyTarget].Push(pattern)
-            settings.battleOptions.allyTargets[allyTarget].Push(pattern)
-            settings.save(true)
-
-            if (doResetUI) {
-                ResetUI()
-            }
-        }
-    }
-}
-
-AddBattleCompanion() {
-    global settings, patterns
-    pattern := GetPatternGrayDiff50()
-
-    if (pattern) {
-        sleep 100
-        FindText(X, Y, 0, 0, 0, 0, 0, 0, pattern, 1, 0)
-        FindText().MouseTip(x, y)
-        
-        InputBox, companionName, Add Companion, Enter companion name (no spaces)
-
-        If companionName && !ErrorLevel {
-            doResetUI := true
-            if (!settings.battleOptions.companions[companionName]) {
-                settings.battleOptions.companions[companionName] := []
-                patterns.companions[companionName] := []
-                doResetUI := false
-            }
-
-            patterns.companions[companionName].Push(pattern)
-            settings.battleOptions.companions[companionName].Push(pattern)
-            settings.save(true)
-            
-            if (doResetUI) {
-                ResetUI()
-            }
-        }
-    }
-}
-
-AddBattleSkill() {
-    global settings, patterns
-    pattern := GetPatternGrayDiff50()
-
-    if (pattern) {
-        sleep 100
-        FindText(X, Y, 0, 0, 0, 0, 0, 0, pattern, 1, 0)
-        FindText().MouseTip(x, y)
-        
-        InputBox, skillName, Add Skill, Enter skill name (no spaces)
-
-        If skillName && !ErrorLevel {
-            if (!patterns.battle.skills[skillName]) {
-                settings.battleOptions.skillOrder.push(skillName)
-            }
-            patterns.battle.skills[skillName] := pattern
-            settings.battleOptions.skills[skillName] := pattern
-            settings.save(true)
-            ResetUI()
-        }
-    }
-}
-
-AddBattleSingleTargetSkill() {
-    global settings
-    
-    Gui DropDownInput:New,,
-    Gui DropDownInput:Add, Text,, Select Skill
-
-    skills := ""
-    for k, v in settings.battleOptions.skills {
-        skip := false
-        for k2, v2 in settings.battleOptions.singleTargetSkills {
-            if (k = v2) {
-                skip := true
-                Break
-            }
-        }
-
-        if (!skip) {
-            skills .= k . "|" 
-        }
-    }
-
-    Gui DropDownInput:Add, DropDownList, vAddBattleSingleTargetSkill w200, % skills
-    Gui DropDownInput:Add, Button, gAddBattleSingleTargetSkillOk w100, Ok
-    Gui DropDownInput:Add, Button, x+5 w100 gAddBattleSingleTargetSkillCancel, Cancel
-    
-    Gui DropDownInput:Show, w250 h100
-}
-
-AddBattleSingleTargetSkillOk() {
-    global settings, addBattleSingleTargetSkill
-    Gui DropDownInput:Submit
-
-    if (addBattleSingleTargetSkill) {
-        settings.battleOptions.singleTargetSkills.Push(addBattleSingleTargetSkill)
-        settings.save(true)
-        ResetUI()
-    }
-}
-
-AddBattleSingleTargetSkillCancel() {
-    Gui DropDownInput:Submit
-}
-
-SelectStoryBanner() {
-    global settings, patterns
-    pattern := GetPatternGrayDiff50()
-
-    if (pattern) {
-        sleep 100
-        FindText(X, Y, 0, 0, 0, 0, 0, 0, pattern, 1, 0)
-        FindText().MouseTip(x, y)
-        settings.eventOptions.banners.story := pattern
-        settings.save(true)
-        InitSettings()
-        ResetUI()
-    }
-}
-
-SelectRaidBanner() {
-    global settings, patterns
-    pattern := GetPatternGrayDiff50()
-
-    if (pattern) {
-        sleep 100
-        FindText(X, Y, 0, 0, 0, 0, 0, 0, pattern, 1, 0)
-        FindText().MouseTip(x, y)
-        settings.eventOptions.banners.raid := pattern
-        settings.save(true)
-        InitSettings()
-        ResetUI()
-    }
-}
-
-ResetCurrentBattleContext() {
-    global settings, defaults
-
-    settings["battleOptions"][settings.battleContext] := defaults["battleOptions"][settings.battleContext]
-    InitBattleOptionsUI(settings["battleOptions"][settings.battleContext])
-
-    settings.save(true)
+SelectBanners() {
+    global metadata
+    metadata.userPatterns.dimensionGate.events.banners.disableAdd := true
+    SettingsModal("settings_userPatterns_dimensionGate_events_banners")
 }
 
 RadioOptionChanged() {
@@ -556,25 +527,6 @@ RadioOptionChanged() {
     settings.save(true)
 }
 
-BattleContextChanged() {
-    global settings, battleContext
-    Gui Submit, NoHide
-
-    switch battleContext
-    {
-        case 1: settings.battleContext := "default"
-        case 2: settings.battleContext := "event"
-        case 3: settings.battleContext := "itemWorld"
-        case 4: settings.battleContext := "sweep"
-        case 5: settings.battleContext := "raid"
-        case 6: settings.battleContext := "darkGateMats"
-        case 7: settings.battleContext := "darkGateHL"
-    }
-
-    settings.Save(true)
-    InitBattleOptionsUI(settings["battleOptions"][settings.battleContext])
-}
-
 GuiClose() {
     ExitApp
 }
@@ -597,191 +549,6 @@ IsWithIn(pos, x1, x2, y1, y2) {
         Return True
     }
     Return False
-}
-
-CreateBattleOptionsUI(battleOptions) {
-    global
-
-    Gui Add, Checkbox, % "cWhite xs+10 y+10 gBattleOptionsCheckedChanged vBattleOptions_"
-        . "auto", Auto
-    Gui Add, Checkbox, % "cWhite x+5 gBattleOptionsCheckedChanged vBattleOptions_"
-        . "targetEnemyMiddle", TargetEnemyMiddle
-    Gui Add, Checkbox, % "cWhite x+5 gBattleOptionsCheckedChanged vBattleOptions_"
-        . "selectStandby", SelectStandby
-    Gui Add, Checkbox, % "cWhite x+5 gBattleOptionsCheckedChanged vBattleOptions_"
-        . "autoRefillAP", AutoRefillAP
-
-    ; local targetSettings := "settings_battleOptions_" . settings.battleContext
-    ; local settingMetaData := GetSettingMetaData(targetSettings)
-    ; for k, v in settingMetaData.displayOrder
-    ; {
-    ;     local settingUnderscore := targetSettings . "_" . v
-    ;     local settingInfo := GetSettingInfo(settingUnderscore)
-    ;     AddSetting(settingInfo, "1")
-    ; }
-
-    Gui Add, Text, cWhite xs+10 y+5, Companions:
-
-    count := 1
-    for k, v in settings.battleOptions.companions {
-        if (count = 1) {
-            Gui Add, Checkbox, % "cWhite gBattleOptionsMultiCheckedChanged vBattleOptions_"
-                . "companions_" . k, % k
-        } else if (mod(count, 4) = 0) {
-            Gui Add, Checkbox, % "cWhite xs+10 y+5 gBattleOptionsMultiCheckedChanged vBattleOptions_"
-                . "companions_" . k, % k
-        } else {
-            Gui Add, Checkbox, % "cWhite x+5 gBattleOptionsMultiCheckedChanged vBattleOptions_"
-                . "companions_" . k, % k
-        }
-        count++
-    }
-
-    Gui Add, Button, x+5 gAddBattleCompanion, Add
-
-    count := 2
-    Gui Add, Text, cWhite xs+10 y+5, AllyTarget:
-    Gui Add, Radio, % "cWhite gBattleOptionsRadioCheckedChanged vBattleOptions_allyTarget_None", None
-    for k, v in settings.battleOptions.allyTargets  {
-        if (k = "None") {
-            continue
-        }
-
-        if (mod(count, 4) = 0) {
-            Gui Add, Radio, % "cWhite xs+10 y+5 gBattleOptionsRadioCheckedChanged vBattleOptions_"
-                . "allyTarget_" . k, % k
-        } else {
-            Gui Add, Radio, % "cWhite x+5 gBattleOptionsRadioCheckedChanged vBattleOptions_"
-                . "allyTarget_" . k, % k
-        }
-        count++
-    }
-    
-    Gui Add, Button, x+5 gAddAllyTarget, Add
-
-    Gui Add, Text, cWhite xs+10 y+5, Skills:
-    for k, v in settings.battleOptions.skillOrder {
-        if (k = 1) {
-            Gui Add, Checkbox, % "cWhite gBattleOptionsMultiCheckedChanged vBattleOptions_"
-                . "skills_" . v, % v
-        } else if mod(k, 4) = 0 {
-            Gui Add, Checkbox, % "cWhite xs+10 y+5 gBattleOptionsMultiCheckedChanged vBattleOptions_"
-                . "skills_" . v, % v
-        } else {
-            Gui Add, Checkbox, % "cWhite x+5 gBattleOptionsMultiCheckedChanged vBattleOptions_"
-                . "skills_" . v, % v
-        }
-    }
-
-    Gui Add, Button, x+5 gAddBattleSkill, Add
-
-    Gui Add, Text, cWhite xs+10 y+5, SingleTargetSkills (Used in ItemWorld):
-    for k, v in settings.battleOptions.singleTargetSkills {
-        if (k = 1) {
-            Gui Add, Checkbox, % "cWhite gBattleOptionsMultiCheckedChanged vBattleOptions_"
-                . "singleTargetSkills_" . v, % v
-        } else if mod(k, 4) = 0 {
-            Gui Add, Checkbox, % "cWhite xs+10 y+5 gBattleOptionsMultiCheckedChanged vBattleOptions_"
-                . "singleTargetSkills_" . v, % v
-        } else {
-            Gui Add, Checkbox, % "cWhite x+5 gBattleOptionsMultiCheckedChanged vBattleOptions_"
-                . "singleTargetSkills_" . v, % v
-        }
-    }
-
-    Gui Add, Button, x+5 gAddBattleSingleTargetSkill, Add
-
-    InitBattleOptionsUI(battleOptions)
-}
-
-InitBattleOptionsUI(battleOptions) {
-    global
-
-    GuiControl,, % "battleOptions_auto", % battleOptions.auto ? 1 : 0
-    GuiControl,, % "battleOptions_targetEnemyMiddle", % battleOptions.targetEnemyMiddle ? 1 : 0
-    GuiControl,, % "battleOptions_selectStandby", % battleOptions.selectStandby ? 1 : 0
-    GuiControl,, % "battleOptions_autoRefillAP", % battleOptions.autoRefillAP ? 1 : 0
-
-    for k, v in settings.battleOptions.companions {
-        GuiControl,, % "battleOptions_companions_" . k, 0
-    }
-    for k, v in battleOptions.companions {
-        GuiControl,, % "battleOptions_companions_" . v, 1
-    }
-    
-    GuiControl,, % "battleOptions_allyTarget_" . battleOptions.allyTarget, 1
-    
-    for k, v in settings.battleOptions.skillOrder {
-        GuiControl,, % "battleOptions_skills_" . v, 0
-    }
-    for k, v in battleOptions.skills {
-        GuiControl,, % "battleOptions_skills_" . v, 1
-    }
-
-    for k, v in settings.battleOptions.singleTargetSkills {
-        GuiControl,, % "battleOptions_singleTargetSkills_" . v, 0
-    }
-    for k, v in battleOptions.singleTargetSkills {
-        GuiControl,, % "battleOptions_singleTargetSkills_" . v, 1
-    }
-}
-
-BattleOptionsCheckedChanged() {
-    global
-    Gui Submit, NoHide
-
-    segments := StrSplit(A_GuiControl, "_")
-    property := segments[2]
-    battleOptions := settings["battleOptions"][settings.battleContext]
-
-    GuiControlGet, currentVal, , % A_GuiControl
-    battleOptions[property] := currentVal
-
-    settings.save(true)
-}
-
-BattleOptionsMultiCheckedChanged() {
-    global
-    Gui Submit, NoHide
-
-    segments := StrSplit(A_GuiControl, "_")
-    property := segments[2]
-    battleOptions := settings["battleOptions"][settings.battleContext]
-    
-    values := []
-    for k, v in settings["battleOptions"][property] {
-        GuiControlGet, valueChecked, , % "battleOptions_" . property . "_" . k
-        if (valueChecked) {
-            values.Push(k)
-        }
-
-        GuiControlGet, valueChecked, , % "battleOptions_" . property . "_" . v
-        if (valueChecked) {
-            values.Push(v)
-        }
-    }
-
-    battleOptions[property] := values
-    settings.save(true)
-}
-
-BattleOptionsRadioCheckedChanged() {
-    global
-    Gui Submit, NoHide
-
-    segments := StrSplit(A_GuiControl, "_")
-    optionType := segments[1]
-    property := segments[2]
-    battleOptions := settings[optionType][settings.battleContext]
-    
-    for k, v in settings[optionType][property . "s"] {
-        GuiControlGet, valueChecked, , % optionType . "_" . property . "_" . k
-        if (valueChecked) {
-            battleOptions[property] := k
-            settings.save(true)
-            Return
-        }
-    }
 }
 
 GetProgressBarArgs(mode) {
@@ -904,8 +671,24 @@ WM_LBUTTONDOWN() {
             PostMessage, % msg, 0, 0, , % "ahk_id " . guiHwnd
         }
     }
-    Else If (control = "Settings") {
-        SettingsModal(A_GuiControl)
+    Else If (control = "SettingsModal") {
+        SettingsModal(StrReplace(A_GuiControl, "SettingsModal", "Settings"))
+    }
+    Else If (control = "BattleOptions") {
+        context := segments.2
+        setting := segments.3
+        
+        switch setting
+        {
+            Case "companions":
+                targetSettings := "settings_userPatterns_companions_targets"
+            Case "allyTarget":
+                targetSettings := "settings_userPatterns_battle_target_ally"
+            Case "skills":
+                targetSettings := "settings_userPatterns_battle_skills"
+        }
+
+        SettingsModal(targetSettings, { setting : setting, battleContext : context })
     }
 }
 

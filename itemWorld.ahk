@@ -177,31 +177,48 @@ DoItemDrop(lootTarget) {
 
     battleOptions := settings.battleOptions.itemWorld
 
+    targetAllies := []
+    for k, v in battleOptions.allyTarget
+        targetAllies.push(patterns["battle"]["target"]["ally"][v])
+
+    userPatternSkills := settings.userPatterns.battle.skills
     actions := []
     singleTargetActions := []
+    highPrioritySkills := []
+    mediumPrioritySkills := []
+    lowPrioritySkills := []
 
     ;loop through skill list
     for k, v in battleOptions.skills
     {
-        actions.Push(patterns.battle.skills[v])
+        switch (userPatternSkills[v].priority) {
+            case "High":
+                highPrioritySkills.Push(patterns.battle.skills[v])
+            case "Low":
+                lowPrioritySkills.Push(patterns.battle.skills[v])
+            default:
+                mediumPrioritySkills.Push(patterns.battle.skills[v])
+        }
+
+        if (userPatternSkills[v].singleTarget) {
+            singleTargetActions.Push(patterns.battle.skills[v])
+        }
     }
 
-    for k, v in battleOptions.singleTargetSkills
-    {
-        singleTargetActions.Push(patterns.battle.skills[v])
-    }
-
+    actions.Push(highPrioritySkills)
+    actions.Push(mediumPrioritySkills)
+    actions.Push(lowPrioritySkills)
     actions.Push(patterns.battle.attack)
     singleTargetActions.Push(patterns.battle.attack)
 
-    if (battleOptions.allyTarget && battleOptions.allyTarget != "None") {
+    if (battleOptions.allyTarget && targetAllies.Length() > 0 && !allyTargeted) {
         sleep 500
-        allyTarget := patterns.battle.target[battleOptions.allyTarget]
         Loop {
-            FindPattern(allyTarget, { doClick : true })
+            FindPattern(targetAllies, { doClick : true })
             sleep 500
             result := FindPattern(patterns.battle.target.on, { variancePct : 20 })
         } until (result.IsSuccess)
+        allyTargeted := true
     }
 
     Loop {
@@ -290,14 +307,18 @@ GiveUpAndTryAgain(battleOptions) {
     PollPattern(patterns.prompt.retry, { doClick : true })
     PollPattern(patterns.battle.auto)
 
-    if (battleOptions.allyTarget && battleOptions.allyTarget != "None") {
+    targetAllies := []
+    for k, v in battleOptions.allyTarget
+        targetAllies.push(patterns["battle"]["target"]["ally"][v])
+
+    if (battleOptions.allyTarget && targetAllies.Length() > 0 && !allyTargeted) {
         sleep 500
-        allyTarget := patterns.battle.target[battleOptions.allyTarget]
         Loop {
-            FindPattern(allyTarget, { doClick : true })
+            FindPattern(targetAllies, { doClick : true })
             sleep 500
             result := FindPattern(patterns.battle.target.on, { variancePct : 20 })
         } until (result.IsSuccess)
+        allyTargeted := true
     }
 }
 
