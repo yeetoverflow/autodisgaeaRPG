@@ -22,6 +22,9 @@ handlers.GrindItemWorldLoop1 := { Func : Func("GrindItemWorldLoop1") }
 handlers.GrindItemWorldSingle1 := { Func : Func("GrindItemWorldSingle1") }
 handlers.GrindItemWorldLoop2 := { Func : Func("GrindItemWorldLoop2") }
 handlers.GrindItemWorldSingle2 := { Func : Func("GrindItemWorldSingle2") }
+handlers.AutoClear := { Func : Func("AutoClear") }
+handlers.AutoShop := { Func : Func("AutoShop") }
+handlers.AutoDarkAssembly := { Func : Func("AutoDarkAssembly") }
 
 ;A_Args.1 is the executable
 ;A_Args.2 is the mode (function to be called)
@@ -37,8 +40,8 @@ mode := StrReplace(A_Args.2, "mode=")
 msgToMode := { 0x1001 : "EventStoryFarm"static
              , 0x1002 : "EventStory500Pct"
              , 0x1003 : "EventRaidLoop"
-            ;  , 0x1004 : "FarmItemWorldAnyLoop"
-            ;  , 0x1005 : "FarmItemWorldLegendaryLoop"
+             , 0x1004 : "AutoShop"
+             , 0x1005 : "AutoDarkAssembly"
              , 0x1006 : "DoDarkGateHL"
              , 0x1007 : "DoDarkGateMatsHuman"
              , 0x1008 : "DoDarkGateMatsMonster"
@@ -196,14 +199,14 @@ AutoClear() {
 
     battleOptions := settings["battleOptions"][settings.battleContext]
     autoRefillAP.autoRefillAP := false
-    battleOptions.Callback := func("BattleMiddleClickCallback")
     battleOptions.donePatterns := [patterns.raid.appear.advanceInStory]
+    battleOptions.startPatterns := [patterns.battle.start]
 
     targetCompanion := []
     for k, v in battleOptions.companions
         targetCompanion.push(patterns["companions"][v])
 
-    loopTargets := [patterns.general.autoClear.new, patterns.companions.title, patterns.general.autoClear.skip, patterns.general.autoClear.areaClear]
+    loopTargets := [patterns.general.autoClear.new, patterns.companions.title, patterns.general.autoClear.skip, patterns.general.autoClear.areaClear, patterns.raid.appear.advanceInStory]
     Loop {
         result := PollPattern(loopTargets)
 
@@ -213,22 +216,22 @@ AutoClear() {
             ClickResult(result)
 
             if InStr(result.comment, "general.autoClear.skip") {
-                PollPattern(loopTargets, { callback : Func("MiddleClickCallback") })
+                PollPattern(loopTargets)
             }
         }
         else if InStr(result.comment, "companions.title") {
-            ; FindAndClickListTarget(targetCompanion, { predicatePattern : patterns.battle.start })
-            ScrollUntilDetect(targetCompanion, { predicatePattern : patterns.battle.start })
-            sleep 500
-            PollPattern([patterns.battle.start], { doClick : true, variancePct: 5, callback : Func("BattleMiddleClickCallback") })
             DoBattle(battleOptions)
-            PollPattern(loopTargets, { callback : Func("MiddleClickCallback") })
+            PollPattern(loopTargets, { clickPattern : patterns.battle.done, pollInterval : 250 })
+        }
+        else if InStr(result.comment, "raid.appear.advanceInStory") {
+            ClickResult(result)
+            sleep, 1000
         }
     }
 }
 
 AutoShop() {
-    global patterns
+    global patterns, mode
     
     done := false
     Loop {
@@ -257,7 +260,9 @@ AutoShop() {
         sleep, 250
     } until (done)
 
-    MsgBox, Done
+    if (mode) {
+        ExitApp
+    }
 }
 
 AutoFriends() {
@@ -287,7 +292,7 @@ AutoFriends() {
 }
 
 AutoDarkAssembly() {
-    global patterns, settings
+    global patterns, settings, mode
     SetStatus(A_ThisFunc)
 
     crabMisoLimit := 2
@@ -349,8 +354,9 @@ AutoDarkAssembly() {
         sleep, 250
     }
 
-    MsgBox, Done
-    
+    if (mode) {
+        ExitApp
+    }
 }
 
 Verify() {
