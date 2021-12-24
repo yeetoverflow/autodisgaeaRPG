@@ -6,13 +6,8 @@ EventAutoClear() {
 
     battleOptions := settings.battleOptions.event
     autoRefillAP.autoRefillAP := false
-    battleOptions.Callback := func("BattleMiddleClickCallback")
     battleOptions.startPatterns := [patterns.battle.start]
     battleOptions.donePatterns := [patterns.raid.message]
-
-    targetCompanion := []
-    for k, v in battleOptions.companions
-        targetCompanion.push(patterns["companions"][v])
 
     loopTargets := [patterns.stronghold.gemsIcon, patterns.dimensionGate.background, patterns.dimensionGate.events.select
                   , patterns.battle.start, patterns.general.autoClear.new, patterns.companions.title, patterns.general.autoClear.skip, patterns.general.autoClear.areaClear, patterns.raid.message]

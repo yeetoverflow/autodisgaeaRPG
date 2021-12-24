@@ -295,12 +295,18 @@ AutoDarkAssembly() {
     global patterns, settings, mode
     SetStatus(A_ThisFunc)
 
-    crabMisoLimit := 2
+    maxCrabMiso := settings.general.darkAssembly.maxCrabMiso
+    maxGoldBar := settings.general.darkAssembly.maxGoldBar
+    maxGoldenCandy := settings.general.darkAssembly.maxGoldenCandy
 
     senators := ["x315 y210", "x215 y265", "x115 y296", "x428 y293", "x227 y387", "x74 y451", "x427 y405", "x176 y521"]
 
     ;crabMiso loop
     for k, v in senators {
+        if (maxCrabMiso <= 0) {
+            Break
+        }
+
         result := FindPattern(patterns.darkAssembly.viability)
         viability := StrReplace(result.comment, "darkAssembly.viability.")
         
@@ -317,20 +323,50 @@ AutoDarkAssembly() {
         affinity := StrReplace(result.comment, "darkAssembly.affinity.")
 
         ;MsgBox, % viability . "`n" . affinity
-        if (affinity = "negative" && crabMisoLimit > 0) {
+        if (maxCrabMiso > 0 && affinity = "negative") {
             FindPattern(patterns.darkAssembly.bribe.crabMiso, { doClick : true })
-            crabMisoLimit--
-        } 
+            maxCrabMiso--
+        }
 
-        if (crabMisoLimit == 0) {
+        sleep, 250
+    }
+
+    ;goldenBar loop
+    for k, v in senators {
+        if (maxGoldBar <= 0) {
+            Break
+        }
+
+        result := FindPattern(patterns.darkAssembly.viability)
+        viability := StrReplace(result.comment, "darkAssembly.viability.")
+        
+        if (viability = "almostCertain") {
             Break
         }
         
+        Click(v)
+        sleep, 250
+        Click(v)
+        sleep, 250
+
+        result := FindPattern(patterns.darkAssembly.affinity)
+        affinity := StrReplace(result.comment, "darkAssembly.affinity.")
+
+        ;MsgBox, % viability . "`n" . affinity
+        if (maxGoldBar > 0 && affinity != "feelingTheLove" && affinity != "prettyFavorable" && affinity != "favorable") {
+            FindPattern(patterns.darkAssembly.bribe.goldBar, { doClick : true })
+            maxGoldBar--
+        } 
+
         sleep, 250
     }
 
     ;goldenCandy loop
     for k, v in senators {
+        if (maxGoldenCandy <= 0) {
+            Break
+        }
+
         result := FindPattern(patterns.darkAssembly.viability)
         viability := StrReplace(result.comment, "darkAssembly.viability.")
         
@@ -347,8 +383,9 @@ AutoDarkAssembly() {
         affinity := StrReplace(result.comment, "darkAssembly.affinity.")
 
         ;MsgBox, % viability . "`n" . affinity
-        if (affinity != "feelingTheLove" && affinity != "prettyFavorable" && affinity != "favorable") {
+        if (maxGoldenCandy > 0 && affinity != "feelingTheLove" && affinity != "prettyFavorable" && affinity != "favorable") {
             FindPattern(patterns.darkAssembly.bribe.goldenCandy, { doClick : true })
+            maxGoldenCandy--
         } 
 
         sleep, 250

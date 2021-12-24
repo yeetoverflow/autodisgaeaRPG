@@ -84,6 +84,12 @@ defaults.userPatterns.battle.target.ally := {}
 defaults.userPatterns.battle.target.ally.overlordAsagi := ["|<battle.target.ally.overlordAsagi.1>**50$39.b00U50XM020d0A000780k000103000080DU00042zU00H0IT102k2XC8040IMl0102W200u0KQO09F2HW02e8GQU0pH2F404ekHAU1ZF2BUUMe0Ez467k2E0fU20I07M0s2U0n050M06E1B200m018E04009200U030E0400M2000060E0000k30000A080003010000k0800EA81U0031EC000kG1A00Q2U9M070Y0hk1U005XUM00muLq004"
                                                         , "|<battle.target.ally.overlordAsagi.2>#633@0.84$41.00Ty00k007w0100j1M0401S1E0002s100005lW00E0/X002U0QaE0A00tAU0u01kt03Y03lq07MU7wQ0Sl0Dzs1y00Tzk7z00jzWTy01TzAzv01zyPzg07zxrzs0Dzvzzk0TzrzzU0zzjzw01zzzzwE3zzzzk07zzzz007zzzs00DzzzU40Tzzz0E0zzzw0U1Tzzk103Dzz0402jzw0M04rzk0W09ly02301UM003830000182000008000000807k0008U8000030E0000A0600E"]
 
+defaults.general := {}
+defaults.general.darkAssembly := {}
+defaults.general.darkAssembly.maxGoldenCandy := 5
+defaults.general.darkAssembly.maxGoldBar := 2
+defaults.general.darkAssembly.maxCrabMiso := 2
+
 patterns := InitPatterns()
 settings := InitSettings()
 
@@ -123,13 +129,21 @@ metadata.eventOptions.raid.fightAttempts := {}
 metadata.eventOptions.raid.fightAttempts.type := "Radio"
 metadata.eventOptions.raid.fightAttempts.options := ["1", "2", "3"]
 
+metadata.general := {}
+metadata.general.darkAssembly := {}
+metadata.general.darkAssembly.maxGoldenCandy := {}
+metadata.general.darkAssembly.maxGoldenCandy.type := "Radio"
+metadata.general.darkAssembly.maxGoldenCandy.options := [0, 1, 2, 3, 4, 5]
+metadata.general.darkAssembly.maxGoldBar := {}
+metadata.general.darkAssembly.maxGoldBar.type := "Radio"
+metadata.general.darkAssembly.maxGoldBar.options := [0, 1, 2, 3, 4, 5]
+metadata.general.darkAssembly.maxCrabMiso := {}
+metadata.general.darkAssembly.maxCrabMiso.type := "Radio"
+metadata.general.darkAssembly.maxCrabMiso.options := [0, 1, 2, 3, 4, 5]
+
 InitMetaDataItemWorldOptions(metadata)
 
 metadata.userPatterns := {}
-; metadata.userPatterns.battle.skills := {}
-; metadata.userPatterns.battle.skills.props := {}
-; metadata.userPatterns.battle.skills.props.singleTarget := {}
-; metadata.userPatterns.battle.skills.props.singleTarget.type := "Checkbox"
 
 InitPatterns() {
     patterns := {}
@@ -823,14 +837,10 @@ InitSettings()
         settings.battleOptions.raid := defaults.battleOptions.raid
         settings.battleOptions.darkGateMats := defaults.battleOptions.darkGateMats
         settings.battleOptions.darkGateHL := defaults.battleOptions.darkGateHL
-        settings.battleOptions.skills := defaults.battleOptions.skills
-        settings.battleOptions.skillOrder := defaults.battleOptions.skillOrder
-        settings.battleOptions.singleTargetSkills := defaults.battleOptions.singleTargetSkills
-        settings.battleOptions.companions := defaults.battleOptions.companions
-        settings.battleOptions.allyTargets := defaults.battleOptions.allyTargets
         settings.itemWorldOptions := defaults.itemWorldOptions
         settings.eventOptions := defaults.eventOptions
         settings.userPatterns := defaults.userPatterns
+        settings.general := defaults.general
 		settings.save(true)
 	}
 	Else
@@ -838,25 +848,7 @@ InitSettings()
 		settings := new JsonFile(filePath) ;- Create instance.
 	}
 	
-    ; for k, v in settings.battleOptions.skills {
-    ;     patterns["battle"]["skills"][k] := v
-    ; }
-
-    ; for k, v in settings.battleOptions.companions {
-    ;     patterns["companions"]["targets"][k] := v
-    ; }
-
-    ; for k, v in settings.battleOptions.allyTargets {
-    ;     patterns["battle"]["target"][k] := v
-    ; }
-
     InitUserPatterns(settings.userPatterns)
-    
-    ; for k, v in settings.eventOptions.banners {
-    ;     patterns["dimensionGate"]["events"][k] := v
-    ; }
-
-    ; settings.battleContext := "default"
 
 	Return settings
 }
