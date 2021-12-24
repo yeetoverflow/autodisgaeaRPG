@@ -1,3 +1,5 @@
+#include settings.ahk
+
 OnExit("Cleanup")
 
 ResetUI() {
@@ -17,7 +19,10 @@ ResetUI() {
 
     InitBattleOptionsUI()
 
-    Gui Add, Button, xs+120 y+10 gBattle, Battle
+    ;Gui Add, Button, xs+120 y+10 gBattle, Battle
+
+    Gui, Add, Progress, xs+120 y+10 vProgressBar_Battle -Smooth w80 h18 c0x66FF66 border
+    Gui Add, Text, cBlack xp wp hp center vProgressText_Battle BackgroundTrans, Start Battle
     Gui Add, Text, cWhite x+10, Count: 
     Gui Add, Edit, cBlack w50 x+10 Number vBattleCount, 1
 
