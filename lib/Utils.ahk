@@ -318,40 +318,6 @@ Traverse(node, data, opts) {
     }
 }
 
-; TreeAdd(node, parent := 0, opts := "", path := "") {
-
-;     opts := InitOps(opts, { parentCallback: "", leafCallback: "", doChildrenPredicate: "", isArrayItem: ""})
-;     parentCallback := opts.parentCallback
-;     %parentCallback%(node)
-    
-;     if (opts.doChildrenPredicate) {
-;         doChildrenPredicate := opts.doChildrenPredicate
-;         doChildren := %doChildrenPredicate%(node)
-;         if (!doChildren) 
-;             Return
-;     }
-
-;     for k, v in node {
-;         if (k = "Func" || RegExMatch(k, "Arg.*") || k = "isLeaf" || k = "disableAdd") {
-;             continue
-;         }
-
-;         if (opts.hideUserPatternAndDefault && (k = "userPattern" || k = "default")) {
-;             Continue
-;         }
-
-;         child := TV_Add(k, parent, "expand")
-
-;         if (IsObject(v)) {
-;             TreeAdd(v, child, opts, path . "." . k)
-;         }
-;         else {
-;             leafCallBack := opts.leafCallBack
-;             %leafCallBack%(k, v, node, LTrim(path, ".") . "." . k)
-;         }
-;     }
-; }
-
 LetUserSelectRect()
 {
     ;global windowX, windowY

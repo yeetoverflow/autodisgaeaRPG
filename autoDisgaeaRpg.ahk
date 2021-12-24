@@ -374,8 +374,12 @@ TestDrop() {
 
 Test() {
     ;global patterns, settings, hwnd, guiHwnd
-    global
+    global hwnd
     SetStatus(A_ThisFunc)
+
+    ; result := LetUserSelectRect()
+    ; FindText().ScreenToWindow(x1, y1, result.x1, result.y1, hwnd)
+    ; FindText().ScreenToWindow(x2, y2, result.x2, result.y2, hwnd)
 
     ; battleOptions := settings.battleOptions.default
 
@@ -389,8 +393,8 @@ Test() {
     ; display := GetSettingDisplay("settings_battleOptions_" . targetBattleContext . "_companions")
     ; GuiControl, %guiHwnd%:Text, battleOptionsText_default_companions, % display
 
-    battleOption := "Default"
-    MsgBox, % GetSettingDisplay("settings_battleOptions_" . battleOption . "_allyTarget")
+    ; battleOption := "Default"
+    ; MsgBox, % GetSettingDisplay("settings_battleOptions_" . battleOption . "_allyTarget")
 }
 
 CapitalizeFirstLetter(str) {

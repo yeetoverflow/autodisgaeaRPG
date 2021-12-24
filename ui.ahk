@@ -77,6 +77,8 @@ ResetUI() {
     Gui Font, Bold
     Gui Add, Text, cWhite xs+10, ItemWorld
     Gui Font, Normal
+    Gui, Add, Progress, x+10 w50 h18 c0x66FF66 vsettingsmodal_itemWorldOptions
+    Gui Add, Text, xp+5 wp hp r1 +0x4000 cBlack BackgroundTrans left, Settings
     
     Gui, Add, Progress, xs+10 vProgressBar_GrindItemWorldLoop1 -Smooth w150 h18 c0x66FF66 border
     Gui Add, Text, cBlack xp wp hp center vProgressText_GrindItemWorldLoop1 BackgroundTrans, Start GrindItemWorldLoop1
