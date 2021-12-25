@@ -1,10 +1,10 @@
 #SingleInstance, off
+#include settings.ahk
 #Include common.ahk
 #Include itemWorld.ahk
 #Include events.ahk
 #Include darkGate.ahk
 #include ui.ahk
-#include settings.ahk
 
 handlers := {}
 handlers.Battle := { Func : Func("Battle") }
@@ -31,11 +31,8 @@ handlers.AutoDarkAssembly := { Func : Func("AutoDarkAssembly") }
 ;A_Args.1 is the executable
 ;A_Args.2 is the mode (function to be called)
 
-;This needs to be here for non UI mode
-InitPatternsTree()
-
 mode := StrReplace(A_Args.2, "mode=")
-msgToMode := { 0x1001 : "EventStoryFarm"static
+msgToMode := { 0x1001 : "EventStoryFarm"
              , 0x1002 : "EventStory500Pct"
              , 0x1003 : "EventRaidLoop"
              , 0x1004 : "AutoShop"
@@ -63,7 +60,7 @@ for k, v in msgToMode {
 if (mode) {
     windowTarget := StrReplace(A_Args.1, "id=")
     guiHwnd := GetGuiHwnd()
-    InitBlueStacks()
+    InitWindow()
     
     msg := modeToMsg[mode]
     if (!msg) {
@@ -72,7 +69,7 @@ if (mode) {
     }
     ;Send a start message
     PostMessage, % msg, 1, 0, , % "ahk_id " . guiHwnd
-    
+
     ;https://www.autohotkey.com/board/topic/21727-change-tooltip-on-trayicon-hover/
     Menu, Tray, Tip, % windowTarget . " - " . mode
     %mode%()
@@ -82,9 +79,9 @@ else {
 
     ResetUI()
 
-    WinSetTitle, % "ahk_id " . guiHwnd,, % settings.blueStacks.identifier
+    WinSetTitle, % "ahk_id " . guiHwnd,, % settings.window.name
     ;WinSetTitle, % "ahk_id " . guiHwnd,, % guiHwnd
-    Menu, Tray, Tip, % settings.blueStacks.identifier
+    Menu, Tray, Tip, % settings.window.name
 }
 
 Return
@@ -384,12 +381,15 @@ AutoDarkAssembly() {
 }
 
 Verify() {
-    global hwnd
+    global hwnd, metadata, settings
 
     WinGetPos,X,Y,W,H, % "ahk_id " . hwnd
 
+    ; size := metadata.window.emulator[settings["window"]["emulator"]]
+    size := metadata.window.emulator[settings.window.emulator]
+
     MsgBox, % "(Window) " . (hwnd ? "ATTACHED" : "DETACHED") . " => "  . (hwnd ? "GOOD" : "BAD") . "`n"
-            . "(Window Size) " . W . "x" . H . " => " . (W = 600 && H = 1040 ? "GOOD" : "BAD (Target 600x1400)")
+            . "(Window Size) " . W . "x" . H . " => " . (W = size.targetWidth && H = size.targetHeight ? "GOOD" : "BAD (Target " . size.targetWidth . "x" . size.targetHeight . ")")
 }
 
 TestDrop() {
@@ -398,9 +398,25 @@ TestDrop() {
 
 Test() {
     ;global patterns, settings, hwnd, guiHwnd
-    global hwnd
+    global patterns, hwnd
     SetStatus(A_ThisFunc)
 
+    w := 450
+    h := 800
+    
+    loop {
+        w := w + 1
+        h := h + 1
+    
+        ResizeWin("ahk_id " hwnd, w, h)
+        sleep 1000
+
+        result := FindPattern(battle.attack)
+    } until (result.IsSucces)
+
+    MsgBox, % w . "x" . h
+
+    ; ClickResult({ x: 400, y: 400 })
     ; result := LetUserSelectRect()
     ; FindText().ScreenToWindow(x1, y1, result.x1, result.y1, hwnd)
     ; FindText().ScreenToWindow(x2, y2, result.x2, result.y2, hwnd)
@@ -419,6 +435,8 @@ Test() {
 
     ; battleOption := "Default"
     ; MsgBox, % GetSettingDisplay("settings_battleOptions_" . battleOption . "_allyTarget")
+
+
 }
 
 Recover(mode) {
@@ -430,17 +448,17 @@ Recover(mode) {
     doRecover := false
     doClickDisgaeaIcon := false
 
-    if (result.IsSuccess && mode = "FarmItemWorldSingle") {
-        AddLog("Recover")
-        HandleAction("Stop", mode)
-        PollPattern([patterns.homeScreen.disgaea], { doClick : true, predicatePattern : patterns.criware, pollInterval : 1000 })
-        PollPattern([patterns.criware], { doClick : true, predicatePattern : patterns.prompt.unfinishedBattle, pollInterval : 1000 })
-        PollPattern(patterns.prompt.unfinishedBattle, { doClick : true, predicatePattern : patterns.prompt.resume})
-        PollPattern(patterns.prompt.resume, { doClick : true, predicatePattern : patterns.battle.auto})
-        Resize()
-        HandleAction("Start", mode)
-        Return
-    }
+    ; if (result.IsSuccess && mode = "FarmItemWorldSingle") {
+    ;     AddLog("Recover")
+    ;     HandleAction("Stop", mode)
+    ;     PollPattern([patterns.homeScreen.disgaea], { doClick : true, predicatePattern : patterns.criware, pollInterval : 1000 })
+    ;     PollPattern([patterns.criware], { doClick : true, predicatePattern : patterns.prompt.unfinishedBattle, pollInterval : 1000 })
+    ;     PollPattern(patterns.prompt.unfinishedBattle, { doClick : true, predicatePattern : patterns.prompt.resume})
+    ;     PollPattern(patterns.prompt.resume, { doClick : true, predicatePattern : patterns.battle.auto})
+    ;     Resize()
+    ;     HandleAction("Start", mode)
+    ;     Return
+    ; }
 
     if (result.IsSuccess) {
         if(FindPattern([patterns.homeScreen.disgaea]).IsSuccess)

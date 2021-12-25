@@ -127,31 +127,34 @@ ResetUI() {
     ;Gui Add, Button, xs+10 y+5 gDoDarkGate, HL/Mats
     Gui Tab, Settings
 
+    AddSetting("settings_window_emulator", "1")
+    AddSetting("settings_window_name", "1")
+    AddSetting("settings_window_scanMode", "1")
     ;Gui Add, Text, 0x10  w400 h10
-    Gui Add, Text, cWhite xs+10 ys+25, Target Window:
-    Gui Add, Edit, cBlack x+10 vTargetWindow w150, % settings.blueStacks.identifier
-    Gui Add, Button, x+10 gApplyTargetWindow, Apply
+    ; Gui Add, Text, cWhite xs+10 ys+25, Target Window:
+    ; Gui Add, Edit, cBlack x+10 vTargetWindow w150, % settings.blueStacks.identifier
+    ; Gui Add, Button, x+10 gApplyTargetWindow, Apply
     Gui, Font, Bold
-    Gui Add, Text, cRed x+10 vAttached2, DETACHED
+    Gui Add, Text, cRed xs+10 y+10 vAttached2, DETACHED
     Gui, Font, Normal
-    Gui Add, Text, cWhite xs+10 y+15, Bluestacks Installation path:
-    Gui Add, Edit, x+5 cBlack vInstallationPath w200, % settings.blueStacks.installationPath
-    Gui Add, Button, x+10 gApplyInstallationPath, Apply
-    Gui Add, Text, cWhite xs+10 y+5, Override ADB port:
-    Gui Add, Edit, x+5 cBlack vPortOverride w100, % settings.blueStacks.portOverride
-    Gui Add, Button, x+10 gApplyPortOverride, Apply
+    ; Gui Add, Text, cWhite xs+10 y+15, Bluestacks Installation path:
+    ; Gui Add, Edit, x+5 cBlack vInstallationPath w200, % settings.blueStacks.installationPath
+    ; Gui Add, Button, x+10 gApplyInstallationPath, Apply
+    ; Gui Add, Text, cWhite xs+10 y+5, Override ADB port:
+    ; Gui Add, Edit, x+5 cBlack vPortOverride w100, % settings.blueStacks.portOverride
+    ; Gui Add, Button, x+10 gApplyPortOverride, Apply
 
     Gui Add, Button, xs+10 y+15 gResize, Resize
     Gui Add, Button, x+10 gScreenCap, ScreenCap
     Gui Add, Button, x+10 gVerify, Verify
     Gui Add, Button, x+10 gTestDrop, TestDrop
     Gui Add, Button, x+10 gTest, Test
-    Gui Add, Text, cWhite xs+10 y+15, Scan Mode:
-    Gui Add, Radio, cWhite gScanModeChanged vScanMode_1 , 1
-    Gui Add, Radio, cWhite gScanModeChanged vScanMode_2 x+10, 2
-    Gui Add, Radio, cWhite gScanModeChanged vScanMode_3 x+10, 3
-    Gui Add, Radio, cWhite gScanModeChanged vScanMode_4 x+10, 4
-    GuiControl,, % "ScanMode_" . (settings.scanMode ? settings.scanMode : 4) , 1
+    ; Gui Add, Text, cWhite xs+10 y+15, Scan Mode:
+    ; Gui Add, Radio, cWhite gScanModeChanged vScanMode_1 , 1
+    ; Gui Add, Radio, cWhite gScanModeChanged vScanMode_2 x+10, 2
+    ; Gui Add, Radio, cWhite gScanModeChanged vScanMode_3 x+10, 3
+    ; Gui Add, Radio, cWhite gScanModeChanged vScanMode_4 x+10, 4
+    ; GuiControl,, % "ScanMode_" . (settings.scanMode ? settings.scanMode : 4) , 1
 
     Gui Add, Link, x+150,<a href="https://github.com/yeetoverflow/autodisgaeaRPG">documentation</a>
 
@@ -184,7 +187,7 @@ ResetUI() {
 
     guiHwnd := GetGuiHwnd()
     LV_Modify(1, "Select")
-    InitBlueStacks()
+    InitWindow()
 }
 
 SelectBattleOption() {
@@ -268,16 +271,6 @@ InitBattleOptionsUI() {
             AddSetting(settingInfo, "1", opts)
         }
     }
-
-    metadata.userPatterns.companions.targets.checked := true
-    metadata.userPatterns.battle.target.ally.checked := true
-    metadata.userPatterns.battle.skills.checked := true
-    metadata.userPatterns.battle.skills.props := {}
-    metadata.userPatterns.battle.skills.props.singleTarget := {}
-    metadata.userPatterns.battle.skills.props.singleTarget.type := "Checkbox"
-    metadata.userPatterns.battle.skills.props.priority := {}
-    metadata.userPatterns.battle.skills.props.priority.type := "DropDown"
-    metadata.userPatterns.battle.skills.props.priority.options := "High|Normal||Low"
 
     for i, battleOption in battleOptions {
         local targetSettings := "settings_battleOptions_" . battleOption
@@ -478,35 +471,6 @@ FilterPatterns() {
     }
 
     InitPatternsTree(tempRoot)
-}
-
-ApplyTargetWindow() {
-    global
-    Gui, Submit, NoHide
-
-    settings.blueStacks.identifier := targetWindow
-    WinSetTitle, % "ahk_id " . guiHwnd,, % settings.blueStacks.identifier
-    Menu, Tray, Tip, % settings.blueStacks.identifier
-    settings.save(true)
-    InitBlueStacks()
-}
-
-ApplyInstallationPath() {
-    global settings, installationPath
-    Gui, Submit, NoHide
-
-    settings.blueStacks.installationPath := installationPath
-    settings.save(true)
-}
-
-ApplyPortOverride() {
-    global settings, portOverride
-    Gui, Submit, NoHide
-
-    settings.blueStacks.portOverride := portOverride
-    run, hd-adb.exe connect 127.0.0.1:%portOverride% , % settings.blueStacks.installationPath, Hide
-
-    settings.save(true)
 }
 
 SelectBanners() {
@@ -714,14 +678,14 @@ HandleAction(action, mode) {
 
     if (action = "Start") {
         if (A_IsCompiled) {
-            Run, % "autoDisgaeaRpg.exe id=""" . settings.blueStacks.identifier . """ mode=" . mode
+            Run, % "autoDisgaeaRpg.exe id=""" . settings.window.name . """ mode=" . mode
         }
         else {
-            Run, % "autoDisgaeaRpg.ahk id=""" . settings.blueStacks.identifier . """ mode=" . mode
+            Run, % "autoDisgaeaRpg.ahk id=""" . settings.window.name . """ mode=" . mode
         }
     }
     else if (action = "Stop") {
-        hwnd := GetHwnd(settings.blueStacks.identifier, mode)
+        hwnd := GetHwnd(settings.window.name, mode)
         WinClose, % "ahk_id " . hwnd
         WinWaitClose, % "ahk_id " . hwnd,,5
     }

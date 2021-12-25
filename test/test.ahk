@@ -1,7 +1,8 @@
 #SingleInstance, Force
 #Persistent
 
-guiHwnd := 0x2718fe
+WinGet, guiHwnd, ID, % "ahk_exe Nox.exe"
+; guiHwnd := 0x2718fe
 
 ;GuiControlGet, out, Hwnd, % guiHwnd
 
@@ -21,20 +22,21 @@ Loop, Parse, controlHwnds, `n
 {
     ;WinGetClass, this_class, ahk_id %A_LoopField%
     ControlGetText, this_text,, ahk_id %A_LoopField%
-    text := "EventStage"
+    MsgBox, % this_text
+   ;  text := "EventStage"
 
-    if strreplace(this_text, "`n") = "Stop " . text
-    {
-        ;https://www.autohotkey.com/docs/commands/WinSet.htm#Redraw
-        ;SendMessage, 0x000C,0,"qqq",, % "ahk_id " . A_LoopField
-        Control, Style, -0x8,,% "ahk_id " . prevHwnd
-        ControlSetText,, "Start " . text,  % "ahk_id " . A_LoopField
-        WinHide, % "ahk_id " . A_LoopField
-        WinShow, % "ahk_id " . A_LoopField
-        break
-    }
+   ;  if strreplace(this_text, "`n") = "Stop " . text
+   ;  {
+   ;      ;https://www.autohotkey.com/docs/commands/WinSet.htm#Redraw
+   ;      ;SendMessage, 0x000C,0,"qqq",, % "ahk_id " . A_LoopField
+   ;      Control, Style, -0x8,,% "ahk_id " . prevHwnd
+   ;      ControlSetText,, "Start " . text,  % "ahk_id " . A_LoopField
+   ;      WinHide, % "ahk_id " . A_LoopField
+   ;      WinShow, % "ahk_id " . A_LoopField
+   ;      break
+   ;  }
     
-    prevHwnd := A_LoopField
+   ;  prevHwnd := A_LoopField
 }
 
 ;https://www.autohotkey.com/boards/viewtopic.php?t=82118

@@ -228,8 +228,8 @@ DoItemDrop(lootTarget) {
 
             result := FindPattern([patterns.battle.wave.1over3, patterns.battle.wave.2over3, patterns.battle.wave.3over3])
             if (result.IsSuccess) {
-            RegExMatch(result.comment, "(?P<wave>\d)over(?P<numWaves>\d)", matches)
-            SetStatus(A_ThisFunc . ": " . matchesWave . "/" .  matchesNumWaves . "(" . count . ")", 2)
+                RegExMatch(result.comment, "(?P<wave>\d)over(?P<numWaves>\d)", matches)
+                SetStatus(A_ThisFunc . ": " . matchesWave . "/" .  matchesNumWaves . "(" . count . ")", 2)
                 if (InStr(result.comment, "3over3"))
                     Break
             }
@@ -330,14 +330,18 @@ FindDrop() {
     if (findDropMode = "menu") {
         PollPattern(patterns.menu.button, { doClick : true, predicatePattern : patterns.menu.giveUp })
         sleep 1000
-        legendResult := FindPattern(patterns.itemWorld.drop, { variancePct : 15, bounds : { x1 : 462, y1 : 0, x2 : 491, y2 : 1000 } })
-        rareResult := FindPattern(patterns.itemWorld.drop, { variancePct : 15, bounds : { x1 : 374, y1 : 0, x2 : 404, y2 : 1000 } })
+        ; legendResult := FindPattern(patterns.itemWorld.drop, { variancePct : 15, bounds : { x1 : 462, y1 : 0, x2 : 491, y2 : 1000 } })
+        ; rareResult := FindPattern(patterns.itemWorld.drop, { variancePct : 15, bounds : { x1 : 374, y1 : 0, x2 : 404, y2 : 1000 } })
+        legendResult := FindPattern(patterns.itemWorld.drop, { variancePct : 15, bounds : { x1 : 452, y1 : 0, x2 : 501, y2 : 1000 } })
+        rareResult := FindPattern(patterns.itemWorld.drop, { variancePct : 15, bounds : { x1 : 364, y1 : 0, x2 : 414, y2 : 1000 } })
         anyResult := FindPattern(patterns.itemWorld.drop, { variancePct : 15 })
         PollPattern(patterns.prompt.close, { doClick : true, predicatePattern : patterns.menu.button })
     }
     else {
-        legendResult := FindPattern(patterns.itemWorld.drop, { variancePct : 15, bounds : { x1 : 359, y1 : 51, x2 : 378, y2 : 89 } })
-        rareResult := FindPattern(patterns.itemWorld.drop, { variancePct : 15, bounds : { x1 : 291, y1 : 51, x2 : 312, y2 : 89 } })
+        ; legendResult := FindPattern(patterns.itemWorld.drop, { variancePct : 15, bounds : { x1 : 359, y1 : 51, x2 : 378, y2 : 89 } })
+        ; rareResult := FindPattern(patterns.itemWorld.drop, { variancePct : 15, bounds : { x1 : 291, y1 : 51, x2 : 312, y2 : 89 } })
+        legendResult := FindPattern(patterns.itemWorld.drop, { variancePct : 15, bounds : { x1 : 349, y1 : 0, x2 : 388, y2 : 1000 } })
+        rareResult := FindPattern(patterns.itemWorld.drop, { variancePct : 15, bounds : { x1 : 251, y1 : 0, x2 : 322, y2 : 1000 } })
         anyResult := FindPattern(patterns.itemWorld.drop, { variancePct : 15 })
     }
 
@@ -357,7 +361,6 @@ FindDrop() {
 
     Return { IsSuccess : false }
 }
-
 
 DoSubdue(bribe) {
     global patterns
