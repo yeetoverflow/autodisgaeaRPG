@@ -43,8 +43,8 @@ GenerateSettingMetadata() {
     metadata.window.emulator.blueStacks.targetWidth := 600
     metadata.window.emulator.blueStacks.targetHeight := 1040
     metadata.window.emulator.nox := {}
-    metadata.window.emulator.nox.targetWidth := 629
-    metadata.window.emulator.nox.targetHeight := 1058
+    metadata.window.emulator.nox.targetWidth := 608
+    metadata.window.emulator.nox.targetHeight := 1040
 
     metadata.window.name := {}
     metadata.window.name.type := "Text"
