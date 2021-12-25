@@ -15,7 +15,8 @@ InitWindow()
 
     switch (settings.window.emulator) {
         case "nox":
-            hwnd := DllCall("user32\FindWindow", "Str","Qt5QWindowIcon", "Str", settings.window.name, "Ptr")
+            ;hwnd := DllCall("user32\FindWindow", "Str","Qt5QWindowIcon", "Str", settings.window.name, "Ptr")
+            WinGet, hwnd, ID, % settings.window.name . " ahk_exe Nox.exe"
         default:
             WinGet, hwnd, ID, % settings.window.name . " ahk_exe HD-Player.exe"
     }
