@@ -209,10 +209,10 @@ EventStory500Pct() {
     battleOptions.startPatterns := [patterns.battle.start, patterns.battle.prompt.battle]
     battleOptions.donePatterns := [patterns.raid.appear.advanceInStory, patterns.battle.prompt.quitBattle, patterns.events.title]
 
-    loopTargets := [patterns.stronghold.gemsIcon, patterns.dimensionGate.background, patterns.dimensionGate.events.select
+    loopTargets := [patterns.stronghold.gemsIcon, patterns.dimensionGate.background, patterns.dimensionGate.events.select, patterns.events.overview.500Pct
         , patterns.battle.start, patterns.events.title, patterns.events.stage.title, patterns.battle.prompt.quitBattle, patterns.raid.message]
     Loop {
-        result := PollPattern(loopTargets)
+        result := PollPattern(loopTargets, { variancePct : 20 })
 
         if InStr(result.comment, "stronghold.gemsIcon") {
             FindPattern(patterns.tabs.dimensionGate, { doClick : true })
@@ -236,12 +236,12 @@ EventStory500Pct() {
             sleep 1000
         }
         else if InStr(result.comment, "events.overview.500Pct") {
-            PollPattern(patterns.events.overview.500Pct, { fgVariancePct : 20, bgVariancePct : 15, offsetY : 30 })
+            PollPattern(patterns.events.overview.500Pct, { variancePct : 20, doClick : true, offsetY : 30 })
             sleep 1000
         }
         else if InStr(result.comment, "events.title") {
             sleep 1000
-            result := FindPattern([patterns.events.overview.500Pct], { fgVariancePct : 20, bgVariancePct : 15 })
+            result := FindPattern([patterns.events.overview.500Pct], { variancePct : 20 })
             if InStr(result.comment, "overview.500Pct") {
                 result.Y := result.Y + 30
                 ClickResult(result)
