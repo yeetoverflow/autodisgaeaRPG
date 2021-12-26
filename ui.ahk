@@ -235,6 +235,7 @@ ResetBattleOption(currentBattleOption) {
     GuiControl, %guiHwnd%:Show, % "battleOptionsText_" . currentBattleOption . "_skills" 
 
     settings.battleContext := currentBattleOption
+    settings.save(true)
 }
 
 InitBattleOptionsUI() {
