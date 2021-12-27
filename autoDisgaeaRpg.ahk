@@ -27,6 +27,7 @@ handlers.GrindItemWorldSingle2 := { Func : Func("GrindItemWorldSingle2") }
 handlers.AutoClear := { Func : Func("AutoClear") }
 handlers.AutoShop := { Func : Func("AutoShop") }
 handlers.AutoDarkAssembly := { Func : Func("AutoDarkAssembly") }
+handlers.AutoFriends := { Func : Func("AutoFriends") }
 
 ;A_Args.1 is the executable
 ;A_Args.2 is the mode (function to be called)
@@ -49,7 +50,8 @@ msgToMode := { 0x1001 : "EventStoryFarm"
              , 0x1015 : "GrindItemWorldSingle1"
              , 0x1016 : "GrindItemWorldLoop2"
              , 0x1017 : "GrindItemWorldSingle2"
-             , 0x1018 : "Battle" }
+             , 0x1018 : "Battle"
+             , 0x1019 : "AutoFriends" }
 modeToMsg := {}
 
 for k, v in msgToMode {
@@ -259,20 +261,34 @@ AutoFriends() {
         if InStr(result.comment, "stronghold.gemsIcon") {
             PollPattern(patterns.stronghold.friends.icon, { doClick : true })
         } else if InStr(result.comment, "stronghold.friends.title") {
-            FindPattern(patterns.stronghold.friends.give, { doClick : true })
-            sleep 500
-            FindPattern(patterns.prompt.ok, { doClick : true })
-            sleep 500
-            FindPattern(patterns.stronghold.friends.claim, { doClick : true })
-            sleep 500
-            FindPattern(patterns.prompt.ok, { doClick : true })
+
+            result := FindPattern(patterns.stronghold.friends.giveAll)
+
+            if (result.IsSuccess) {
+                ClickResult(result)
+                sleep 500
+                PollPattern([patterns.prompt.close, patterns.prompt.ok], { doClick : true })
+                sleep 1000
+            }
+
+            result := FindPattern(patterns.stronghold.friends.claimAll)
+
+            if (result.IsSuccess) {
+                ClickResult(result)
+                sleep 500
+                PollPattern([patterns.prompt.close, patterns.prompt.ok], { doClick : true })
+                sleep 1000
+            }
+
             done := true
         }
 
         sleep, 250
     } until (done)
 
-    MsgBox, Done
+    if (mode) {
+        ExitApp
+    }
 }
 
 AutoDarkAssembly() {
