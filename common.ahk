@@ -17,6 +17,14 @@ InitWindow()
         case "nox":
             ;hwnd := DllCall("user32\FindWindow", "Str","Qt5QWindowIcon", "Str", settings.window.name, "Ptr")
             WinGet, hwnd, ID, % settings.window.name . " ahk_exe Nox.exe"
+        case "testPaintBs":
+            SetTitleMatchMode, 2
+            WinGet, hwnd, ID, Paint
+            SetTitleMatchMode, 3
+        case "testPaintNox":
+            SetTitleMatchMode, 2
+            WinGet, hwnd, ID, Paint
+            SetTitleMatchMode, 3
         default:
             WinGet, hwnd, ID, % settings.window.name . " ahk_exe HD-Player.exe"
     }

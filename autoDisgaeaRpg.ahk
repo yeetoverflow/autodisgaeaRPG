@@ -28,6 +28,7 @@ handlers.AutoClear := { Func : Func("AutoClear") }
 handlers.AutoShop := { Func : Func("AutoShop") }
 handlers.AutoDarkAssembly := { Func : Func("AutoDarkAssembly") }
 handlers.AutoFriends := { Func : Func("AutoFriends") }
+handlers.AutoFish := { Func : Func("AutoFish") }
 
 ;A_Args.1 is the executable
 ;A_Args.2 is the mode (function to be called)
@@ -252,7 +253,7 @@ AutoShop() {
 }
 
 AutoFriends() {
-    global patterns
+    global patterns, mode
     
     done := false
     Loop {
@@ -396,6 +397,109 @@ AutoDarkAssembly() {
     }
 }
 
+AutoFish() {
+    SetStatus(A_ThisFunc)
+    global patterns, settings, mode
+
+
+    done := false
+    Loop {
+        result := FindPattern([patterns.stronghold.gemsIcon, patterns.tabs.facilities.fishingFleet])
+        
+        if InStr(result.comment, "stronghold.gemsIcon") {
+            PollPattern(patterns.tabs.facilities.tab, { doClick : true })
+        } else if InStr(result.comment, "tabs.facilities.fishingFleet") {
+            ClickResult(result)
+        } else if InStr(result.comment, "tabs.shop.items.hl.enabled") {
+            fleets := ["x73 y348", "x231 y506", "x405 y364"]
+            ;fleets := ["x405 y364"]
+            maxCrabMiso := settings.fishingFleet.bribe.maxCrabMiso
+            maxGoldBar := settings.fishingFleet.bribe.maxGoldBar
+            maxGoldenCandy := settings.fishingFleet.bribe.maxGoldenCandy
+
+            for k, v in fleets {
+                Click(v)
+                sleep 1000
+
+                result := FindPattern(patterns.fishingFleet.complete)
+
+                if (result.IsSuccess) {
+                ;if (!result.IsSuccess) {
+                    PollPattern(patterns.fishingFleet.return, { doClick : true, predicatePattern : patterns.fishingFleet.setSail, clickPattern : patterns.touchScreen })
+                    PollPattern(patterns.fishingFleet.setSail, { doClick : true, predicatePattern : patterns.fishingFleet.bribery.button })
+                    PollPattern(patterns.fishingFleet.bribery.button, { doClick : true, predicatePattern : patterns.fishingFleet.bribery.goldenCandy })
+                    sleep 1000
+
+                    if (maxCrabMiso) {
+                        FindPattern(patterns.fishingFleet.bribery.crabMiso, { doClick : true })
+
+                        Loop, % maxCrabMiso {
+                            if (A_Index = "1") {
+                                Continue
+                            }
+
+                            sleep 500
+                            FindPattern(patterns.fishingFleet.bribery.add, { doClick : true })
+                        }
+                        sleep 500
+                        PollPattern(patterns.fishingFleet.bribery.use, { doClick : true, predicatePattern : patterns.prompt.close })
+                        sleep 500
+                        PollPattern(patterns.prompt.close, { doClick : true, predicatePattern : patterns.fishingFleet.setSail })
+                        sleep 1000
+                    }
+
+                    if (maxGoldBar) {
+                        FindPattern(patterns.fishingFleet.bribery.goldBar, { doClick : true })
+
+                        Loop, % maxGoldBar {
+                            if (A_Index = "1") {
+                                Continue
+                            }
+
+                            sleep 500
+                            FindPattern(patterns.fishingFleet.bribery.add, { doClick : true })
+                        }
+                        sleep 500
+                        PollPattern(patterns.fishingFleet.bribery.use, { doClick : true, predicatePattern : patterns.prompt.close })
+                        sleep 500
+                        PollPattern(patterns.prompt.close, { doClick : true, predicatePattern : patterns.fishingFleet.setSail })
+                        sleep 1000
+                    }
+
+                    if (maxGoldenCandy) {
+                        FindPattern(patterns.fishingFleet.bribery.goldenCandy, { doClick : true })
+
+                        Loop, % maxGoldenCandy {
+                            if (A_Index = "1") {
+                                Continue
+                            }
+
+                            sleep 500
+                            FindPattern(patterns.fishingFleet.bribery.add, { doClick : true })
+                        }
+                        sleep 500
+                        PollPattern(patterns.fishingFleet.bribery.use, { doClick : true, predicatePattern : patterns.prompt.close })
+                        sleep 500
+                        PollPattern(patterns.prompt.close, { doClick : true, predicatePattern : patterns.fishingFleet.setSail })
+                        sleep 1000
+                    }
+
+                    PollPattern(patterns.fishingFleet.setSail, { doClick : true })
+                    sleep 200
+                }
+            }
+
+            done := true
+        }
+
+        sleep, 250
+    } until (done)
+
+    if (mode) {
+        ExitApp
+    }
+}
+
 Verify() {
     global hwnd, metadata, settings
 
@@ -414,23 +518,23 @@ TestDrop() {
 
 Test() {
     ;global patterns, settings, hwnd, guiHwnd
-    global patterns, hwnd
+    global patterns, hwnd, settings
     SetStatus(A_ThisFunc)
 
-    w := 450
-    h := 800
+    ; w := 450
+    ; h := 800
     
-    loop {
-        w := w + 1
-        h := h + 1
+    ; loop {
+    ;     w := w + 1
+    ;     h := h + 1
     
-        ResizeWin("ahk_id " hwnd, w, h)
-        sleep 1000
+    ;     ResizeWin("ahk_id " hwnd, w, h)
+    ;     sleep 1000
 
-        result := FindPattern(battle.attack)
-    } until (result.IsSucces)
+    ;     result := FindPattern(battle.attack)
+    ; } until (result.IsSucces)
 
-    MsgBox, % w . "x" . h
+    ; MsgBox, % w . "x" . h
 
     ; ClickResult({ x: 400, y: 400 })
     ; result := LetUserSelectRect()
@@ -451,8 +555,6 @@ Test() {
 
     ; battleOption := "Default"
     ; MsgBox, % GetSettingDisplay("settings_battleOptions_" . battleOption . "_allyTarget")
-
-
 }
 
 Recover(mode) {

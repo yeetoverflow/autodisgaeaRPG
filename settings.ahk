@@ -12,6 +12,8 @@ InitPatterns() {
     switch (settings.window.emulator) {
         case "nox":
             patterns := GenerateNoxPatterns()
+        case "testPaintNox":
+            patterns := GenerateNoxPatterns()
         default:
             patterns := GenerateBluestacksPatterns()
     }
@@ -37,7 +39,7 @@ GenerateSettingMetadata() {
     metadata.window := {}
     metadata.window.emulator := {}
     metadata.window.emulator.type := "Radio"
-    metadata.window.emulator.options := ["blueStacks", "nox"]
+    metadata.window.emulator.options := ["blueStacks", "nox", "testPaintBs", "testPaintNox"]
     metadata.window.emulator.callback := Func("InitWindow")
     metadata.window.emulator.blueStacks := {}
     metadata.window.emulator.blueStacks.targetWidth := 600
@@ -45,6 +47,12 @@ GenerateSettingMetadata() {
     metadata.window.emulator.nox := {}
     metadata.window.emulator.nox.targetWidth := 608
     metadata.window.emulator.nox.targetHeight := 1040
+    metadata.window.emulator.testPaintBs := {}
+    metadata.window.emulator.testPaintBs.targetWidth := 800
+    metadata.window.emulator.testPaintBs.targetHeight := 1200
+    metadata.window.emulator.testPaintNox := {}
+    metadata.window.emulator.testPaintNox.targetWidth := 800
+    metadata.window.emulator.testPaintNox.targetHeight := 1200
 
     metadata.window.name := {}
     metadata.window.name.type := "Text"
@@ -99,6 +107,18 @@ GenerateSettingMetadata() {
     metadata.general.darkAssembly.maxCrabMiso := {}
     metadata.general.darkAssembly.maxCrabMiso.type := "Radio"
     metadata.general.darkAssembly.maxCrabMiso.options := [0, 1, 2, 3, 4, 5]
+
+    metadata.fishingFleet := {}
+    metadata.fishingFleet.bribe := {}
+    metadata.fishingFleet.bribe.maxGoldenCandy := {}
+    metadata.fishingFleet.bribe.maxGoldenCandy.type := "Radio"
+    metadata.fishingFleet.bribe.maxGoldenCandy.options := [0, 1, 2, 3, 4]
+    metadata.fishingFleet.bribe.maxGoldBar := {}
+    metadata.fishingFleet.bribe.maxGoldBar.type := "Radio"
+    metadata.fishingFleet.bribe.maxGoldBar.options := [0, 1, 2]
+    metadata.fishingFleet.bribe.maxCrabMiso := {}
+    metadata.fishingFleet.bribe.maxCrabMiso.type := "Radio"
+    metadata.fishingFleet.bribe.maxCrabMiso.options := [0, 1]
 
     InitMetaDataItemWorldOptions(metadata)
 
