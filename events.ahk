@@ -102,7 +102,7 @@ EventStoryFarm() {
             Click("x470 y443")
         }
         else if InStr(result.comment, "events.stage.title") {
-            FindPattern(patterns.events.stage[settings.eventOptions.storyTarget], { doClick : true })
+            FindPattern(patterns.events.stage[settings.eventOptions.story.farmTarget], { doClick : true })
         }
         else if InStr(result.comment, "raid.message") {
             HandleRaid()

@@ -19,8 +19,6 @@ ResetUI() {
 
     InitBattleOptionsUI()
 
-    ;Gui Add, Button, xs+120 y+10 gBattle, Battle
-
     Gui, Add, Progress, xs+120 y+10 vProgressBar_Battle -Smooth w80 h18 c0x66FF66 border
     Gui Add, Text, cBlack xp wp hp center vProgressText_Battle BackgroundTrans, Start Battle
     Gui Add, Text, cWhite x+10, Count: 
@@ -56,10 +54,8 @@ ResetUI() {
     Gui Add, Text, cBlack xp wp hp center vProgressText_EventStoryFarm BackgroundTrans, Start EventStoryFarm
     Gui Add, Text, cWhite x+10, Count
     Gui Add, Edit, cBlack w50 x+10 Number, 1
-    Gui Add, Text, cWhite x+10, Stage: 
-    Gui Add, Radio, cWhite gRadioOptionChanged vEventOptions_storyTarget_oneStar x+5, OneStar
-    Gui Add, Radio, cWhite gRadioOptionChanged vEventOptions_storyTarget_exp x+5, Exp
-    Gui Add, Radio, cWhite gRadioOptionChanged vEventOptions_storyTarget_hl x+5, HL
+    Gui, Add, Progress, x+10 w100 h18 c0x66FF66 vsettingsmodal_eventOptions_story
+    Gui Add, Text, xp+5 wp hp r1 +0x4000 cBlack BackgroundTrans left vsettingsText_eventOptions_story, % GetSettingDisplay("settings_eventOptions_story")
     GuiControl,, % "eventOptions_storyTarget_" . settings.eventOptions.storyTarget, 1
 
     Gui, Add, Progress, xs+10 vProgressBar_EventStory500Pct -Smooth w120 h18 c0x66FF66 border
@@ -128,37 +124,19 @@ ResetUI() {
     Gui, Add, Progress, x+5 vProgressBar_DoDarkGateMatsMonster -Smooth w150 h18 c0x66FF66 border
     Gui Add, Text, cBlack xp wp hp center vProgressText_DoDarkGateMatsMonster BackgroundTrans, Start DoDarkGateMatsMonster
 
-    ;Gui Add, Button, xs+10 y+5 gDoDarkGate, HL/Mats
     Gui Tab, Settings
 
     AddSetting("settings_window_emulator", "1")
     AddSetting("settings_window_name", "1")
     AddSetting("settings_window_scanMode", "1")
-    ;Gui Add, Text, 0x10  w400 h10
-    ; Gui Add, Text, cWhite xs+10 ys+25, Target Window:
-    ; Gui Add, Edit, cBlack x+10 vTargetWindow w150, % settings.blueStacks.identifier
-    ; Gui Add, Button, x+10 gApplyTargetWindow, Apply
     Gui, Font, Bold
     Gui Add, Text, cRed xs+10 y+10 vAttached2, DETACHED
     Gui, Font, Normal
-    ; Gui Add, Text, cWhite xs+10 y+15, Bluestacks Installation path:
-    ; Gui Add, Edit, x+5 cBlack vInstallationPath w200, % settings.blueStacks.installationPath
-    ; Gui Add, Button, x+10 gApplyInstallationPath, Apply
-    ; Gui Add, Text, cWhite xs+10 y+5, Override ADB port:
-    ; Gui Add, Edit, x+5 cBlack vPortOverride w100, % settings.blueStacks.portOverride
-    ; Gui Add, Button, x+10 gApplyPortOverride, Apply
-
     Gui Add, Button, xs+10 y+15 gResize, Resize
     Gui Add, Button, x+10 gScreenCap, ScreenCap
     Gui Add, Button, x+10 gVerify, Verify
     Gui Add, Button, x+10 gTestDrop, TestDrop
     Gui Add, Button, x+10 gTest, Test
-    ; Gui Add, Text, cWhite xs+10 y+15, Scan Mode:
-    ; Gui Add, Radio, cWhite gScanModeChanged vScanMode_1 , 1
-    ; Gui Add, Radio, cWhite gScanModeChanged vScanMode_2 x+10, 2
-    ; Gui Add, Radio, cWhite gScanModeChanged vScanMode_3 x+10, 3
-    ; Gui Add, Radio, cWhite gScanModeChanged vScanMode_4 x+10, 4
-    ; GuiControl,, % "ScanMode_" . (settings.scanMode ? settings.scanMode : 4) , 1
 
     Gui Add, Link, x+150,<a href="https://github.com/yeetoverflow/autodisgaeaRPG">documentation</a>
 
@@ -482,31 +460,6 @@ SelectBanners() {
     global metadata
     metadata.userPatterns.dimensionGate.events.banners.disableAdd := true
     SettingsModal("settings_userPatterns_dimensionGate_events_banners")
-}
-
-RadioOptionChanged() {
-    global settings
-    Gui Submit, NoHide
-
-    segments := StrSplit(A_GuiControl, "_")
-    target := settings
-    length := segments.MaxIndex()
-    
-    for k, v in segments {
-        ;last segment is the target value
-        if (k > length - 1) {
-            targetValue := v
-            target := lastParent
-            Break
-        }
-
-        lastParent := target
-        lastKey := v
-        target := target[v]
-    }
-
-    target[lastKey] := targetValue
-    settings.save(true)
 }
 
 GuiClose() {

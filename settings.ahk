@@ -87,6 +87,11 @@ GenerateSettingMetadata() {
     metadata.battleOptions.darkGateHL := battleOptionsMetadata
 
     metadata.eventOptions := {}
+    metadata.eventOptions.story := {}
+    metadata.eventOptions.story.displayOrder := ["farmTarget"]
+    metadata.eventOptions.story.farmTarget := {}
+    metadata.eventOptions.story.farmTarget.type := "Radio"
+    metadata.eventOptions.story.farmTarget.options := ["oneStar", "exp", "hl"]
     metadata.eventOptions.raid := {}
     metadata.eventOptions.raid.displayOrder := ["appearAction", "fightAttempts"]
     metadata.eventOptions.raid.appearAction := {}
@@ -187,7 +192,8 @@ GenerateSettingDefaults() {
     defaults.itemWorldOptions.2.lootTarget := "legendary" ;any, rare, legendary
 
     defaults.eventOptions := {}
-    defaults.eventOptions.storyTarget := "oneStar"
+    defaults.eventOptions.story := {}
+    defaults.eventOptions.story.farmTarget := "oneStar"
     defaults.eventOptions.banners := {}
     defaults.eventOptions.banners.story := "|<>**50$49.U100E00CE3U0C00683003k0303400Q01U62U03U0U62E0EQ0E4180U7U0A0Y0G0s0A0E09170400U4kVk200E29MC100814Y1kw2W0VG0TXlN0Edkzl1408B838U1045W0YE0k23VDHw7B11UkU05m0VVw002wUFbe001/k8b4U00YD4C3k00T6nS3M00BWBXVg006P3EtY005bVs7a002M0Q0Z001a0200U00k01U0k0080000E0060000M0030000A001U000A000M0004000A0002U0030000k000k001k000C001k0003U03k0001w03U02007U7k05010sDc06U00Dz402E004zW038002010140000SE0W00000001"
     defaults.eventOptions.banners.raid := "|<>**50$49.zzq0BzHzk0z06VdMM0DyzErgA73zz8Pq67Uk0Dw333kTzvwzVVsDzxzzUkwD06Vk0M0703Ek0A073VcMQ623Xko8D33XVsO05VVkkoD06kksAS7U1sMS2700UwA/1000M06AkE00A036Qs00701znzzzzzzk"
