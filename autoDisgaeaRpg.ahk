@@ -411,10 +411,9 @@ AutoFish() {
             PollPattern(patterns.tabs.facilities.tab, { doClick : true })
             sleep 500
             PollPattern(patterns.tabs.facilities.fishingFleet, { doClick : true })
-            sleep 1000
+            sleep 2000
         } else if InStr(result.comment, "fishingFleet.title") {
             fleets := ["x73 y348", "x231 y506", "x405 y364"]
-            ;fleets := ["x405 y364"]
             maxCrabMiso := settings.fishingFleet.bribe.maxCrabMiso
             maxGoldBar := settings.fishingFleet.bribe.maxGoldBar
             maxGoldenCandy := settings.fishingFleet.bribe.maxGoldenCandy
@@ -426,13 +425,12 @@ AutoFish() {
                 result := FindPattern(patterns.fishingFleet.complete)
 
                 if (result.IsSuccess) {
-                ;if (!result.IsSuccess) {
                     PollPattern(patterns.fishingFleet.return, { doClick : true, predicatePattern : patterns.fishingFleet.setSail, clickPattern : patterns.touchScreen })
                     PollPattern(patterns.fishingFleet.setSail, { doClick : true, predicatePattern : patterns.fishingFleet.bribery.button })
-                    PollPattern(patterns.fishingFleet.bribery.button, { doClick : true, predicatePattern : patterns.fishingFleet.bribery.goldenCandy })
                     sleep 1000
 
                     if (maxCrabMiso) {
+                        PollPattern(patterns.fishingFleet.bribery.button, { doClick : true, predicatePattern : patterns.fishingFleet.bribery.goldenCandy })
                         FindPattern(patterns.fishingFleet.bribery.crabMiso, { doClick : true })
 
                         Loop, % maxCrabMiso {
@@ -451,6 +449,7 @@ AutoFish() {
                     }
 
                     if (maxGoldBar) {
+                        PollPattern(patterns.fishingFleet.bribery.button, { doClick : true, predicatePattern : patterns.fishingFleet.bribery.goldenCandy })
                         FindPattern(patterns.fishingFleet.bribery.goldBar, { doClick : true })
 
                         Loop, % maxGoldBar {
@@ -469,6 +468,7 @@ AutoFish() {
                     }
 
                     if (maxGoldenCandy) {
+                        PollPattern(patterns.fishingFleet.bribery.button, { doClick : true, predicatePattern : patterns.fishingFleet.bribery.goldenCandy })
                         FindPattern(patterns.fishingFleet.bribery.goldenCandy, { doClick : true })
 
                         Loop, % maxGoldenCandy {

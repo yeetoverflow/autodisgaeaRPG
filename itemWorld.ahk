@@ -335,6 +335,10 @@ FindDrop() {
         legendResult := FindPattern(patterns.itemWorld.drop, { variancePct : 15, bounds : { x1 : 452, y1 : 0, x2 : 501, y2 : 1000 } })
         rareResult := FindPattern(patterns.itemWorld.drop, { variancePct : 15, bounds : { x1 : 364, y1 : 0, x2 : 414, y2 : 1000 } })
         anyResult := FindPattern(patterns.itemWorld.drop, { variancePct : 15 })
+
+        if (settings.debug.drop) {
+            FindText().ScreenShot()
+        }
         PollPattern(patterns.prompt.close, { doClick : true, predicatePattern : patterns.menu.button })
     }
     else {
@@ -343,23 +347,35 @@ FindDrop() {
         legendResult := FindPattern(patterns.itemWorld.drop, { variancePct : 15, bounds : { x1 : 349, y1 : 0, x2 : 388, y2 : 1000 } })
         rareResult := FindPattern(patterns.itemWorld.drop, { variancePct : 15, bounds : { x1 : 251, y1 : 0, x2 : 322, y2 : 1000 } })
         anyResult := FindPattern(patterns.itemWorld.drop, { variancePct : 15 })
+        if (settings.debug.drop) {
+            FindText().ScreenShot()
+        }
     }
 
-    result := {}
+    result := { IsSuccess : false }
 
     if (legendResult.IsSuccess) {
-        Return { type : "legendary", IsSuccess : true }
+        result := { type : "legendary", IsSuccess : true }
     }
 
     if (rareResult.IsSuccess) {
-        Return { type : "rare", IsSuccess : true }
+        result := { type : "rare", IsSuccess : true }
     }
     
     if (anyResult.IsSuccess) {
-        Return { type : "any", IsSuccess : true }
+        result := { type : "any", IsSuccess : true }
     }
 
-    Return { IsSuccess : false }
+    if (settings.debug.drop) {
+        IF !FileExist("screenCaps")
+        {
+            FileCreateDir, screenCaps
+        }
+
+        FindText().SavePic("screenCaps/" . A_Now . "_" . (result.type ? result.type : "none") . ".png")
+    }
+
+    Return result
 }
 
 DoSubdue(bribe) {

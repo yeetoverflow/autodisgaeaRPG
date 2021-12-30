@@ -36,6 +36,11 @@ InitPatterns() {
 GenerateSettingMetadata() {
     metadata := {}
 
+    metadata.debug := {}
+    metadata.debug.drop := {}
+    metadata.debug.drop.newLine := true
+    metadata.debug.drop.type := "Checkbox"
+    
     metadata.window := {}
     metadata.window.emulator := {}
     metadata.window.emulator.type := "Radio"

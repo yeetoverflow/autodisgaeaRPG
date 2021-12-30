@@ -129,8 +129,15 @@ ResetUI() {
     AddSetting("settings_window_emulator", "1")
     AddSetting("settings_window_name", "1")
     AddSetting("settings_window_scanMode", "1")
+    
     Gui, Font, Bold
-    Gui Add, Text, cRed xs+10 y+10 vAttached2, DETACHED
+    Gui Add, Text, cWhite xs+10 y+20, Debug 
+    Gui, Font, Normal
+    
+    AddSetting("settings_debug_drop", "1")
+
+    Gui, Font, Bold
+    Gui Add, Text, cRed x+100 y+10 vAttached2, DETACHED
     Gui, Font, Normal
     Gui Add, Button, xs+10 y+15 gResize, Resize
     Gui Add, Button, x+10 gScreenCap, ScreenCap
@@ -138,7 +145,7 @@ ResetUI() {
     Gui Add, Button, x+10 gTestDrop, TestDrop
     Gui Add, Button, x+10 gTest, Test
 
-    Gui Add, Link, x+150,<a href="https://github.com/yeetoverflow/autodisgaeaRPG">documentation</a>
+    Gui Add, Link, x+50,<a href="https://github.com/yeetoverflow/autodisgaeaRPG">documentation</a>
 
     Gui Tab, Handlers
     
