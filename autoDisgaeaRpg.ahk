@@ -52,7 +52,8 @@ msgToMode := { 0x1001 : "EventStoryFarm"
              , 0x1016 : "GrindItemWorldLoop2"
              , 0x1017 : "GrindItemWorldSingle2"
              , 0x1018 : "Battle"
-             , 0x1019 : "AutoFriends" }
+             , 0x1019 : "AutoFriends"
+             , 0x1020 : "AutoFish" }
 modeToMsg := {}
 
 for k, v in msgToMode {
@@ -404,13 +405,14 @@ AutoFish() {
 
     done := false
     Loop {
-        result := FindPattern([patterns.stronghold.gemsIcon, patterns.tabs.facilities.fishingFleet])
+        result := FindPattern([patterns.stronghold.gemsIcon, patterns.fishingFleet.title])
         
         if InStr(result.comment, "stronghold.gemsIcon") {
             PollPattern(patterns.tabs.facilities.tab, { doClick : true })
-        } else if InStr(result.comment, "tabs.facilities.fishingFleet") {
-            ClickResult(result)
-        } else if InStr(result.comment, "tabs.shop.items.hl.enabled") {
+            sleep 500
+            PollPattern(patterns.tabs.facilities.fishingFleet, { doClick : true })
+            sleep 1000
+        } else if InStr(result.comment, "fishingFleet.title") {
             fleets := ["x73 y348", "x231 y506", "x405 y364"]
             ;fleets := ["x405 y364"]
             maxCrabMiso := settings.fishingFleet.bribe.maxCrabMiso
@@ -487,6 +489,8 @@ AutoFish() {
                     PollPattern(patterns.fishingFleet.setSail, { doClick : true })
                     sleep 200
                 }
+
+                sleep 1000
             }
 
             done := true
