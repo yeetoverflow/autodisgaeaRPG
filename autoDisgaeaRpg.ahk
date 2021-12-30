@@ -517,7 +517,8 @@ Verify() {
 }
 
 TestDrop() {
-    MsgBox, % FindDrop().Type
+    result := FindDrop()
+    MsgBox, % result.Type . " : " . result.X . "x" . result.Y . "y"
 }
 
 Test() {

@@ -345,7 +345,7 @@ FindDrop() {
         ; legendResult := FindPattern(patterns.itemWorld.drop, { variancePct : 15, bounds : { x1 : 359, y1 : 51, x2 : 378, y2 : 89 } })
         ; rareResult := FindPattern(patterns.itemWorld.drop, { variancePct : 15, bounds : { x1 : 291, y1 : 51, x2 : 312, y2 : 89 } })
         legendResult := FindPattern(patterns.itemWorld.drop, { variancePct : 15, bounds : { x1 : 349, y1 : 0, x2 : 388, y2 : 1000 } })
-        rareResult := FindPattern(patterns.itemWorld.drop, { variancePct : 15, bounds : { x1 : 251, y1 : 0, x2 : 322, y2 : 1000 } })
+        rareResult := FindPattern(patterns.itemWorld.drop, { variancePct : 15, bounds : { x1 : 281, y1 : 0, x2 : 322, y2 : 1000 } })
         anyResult := FindPattern(patterns.itemWorld.drop, { variancePct : 15 })
         if (settings.debug.drop) {
             FindText().ScreenShot()
@@ -355,15 +355,15 @@ FindDrop() {
     result := { IsSuccess : false }
 
     if (legendResult.IsSuccess) {
-        result := { type : "legendary", IsSuccess : true }
+        result := { type : "legendary", IsSuccess : true, X : legendResult.X, Y : legendResult.Y }
     }
 
     if (rareResult.IsSuccess) {
-        result := { type : "rare", IsSuccess : true }
+        result := { type : "rare", IsSuccess : true, X : rareResult.X, Y : rareResult.Y }
     }
     
     if (anyResult.IsSuccess) {
-        result := { type : "any", IsSuccess : true }
+        result := { type : "any", IsSuccess : true, X : anyResult.X, Y : anyResult.Y }
     }
 
     if (settings.debug.drop) {
