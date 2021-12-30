@@ -357,12 +357,10 @@ FindDrop() {
     if (legendResult.IsSuccess) {
         result := { type : "legendary", IsSuccess : true, X : legendResult.X, Y : legendResult.Y }
     }
-
-    if (rareResult.IsSuccess) {
+    else if (rareResult.IsSuccess) {
         result := { type : "rare", IsSuccess : true, X : rareResult.X, Y : rareResult.Y }
     }
-    
-    if (anyResult.IsSuccess) {
+    else if (anyResult.IsSuccess) {
         result := { type : "any", IsSuccess : true, X : anyResult.X, Y : anyResult.Y }
     }
 
