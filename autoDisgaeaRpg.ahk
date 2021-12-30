@@ -570,18 +570,6 @@ Recover(mode) {
     doRecover := false
     doClickDisgaeaIcon := false
 
-    ; if (result.IsSuccess && mode = "FarmItemWorldSingle") {
-    ;     AddLog("Recover")
-    ;     HandleAction("Stop", mode)
-    ;     PollPattern([patterns.homeScreen.disgaea], { doClick : true, predicatePattern : patterns.criware, pollInterval : 1000 })
-    ;     PollPattern([patterns.criware], { doClick : true, predicatePattern : patterns.prompt.unfinishedBattle, pollInterval : 1000 })
-    ;     PollPattern(patterns.prompt.unfinishedBattle, { doClick : true, predicatePattern : patterns.prompt.resume})
-    ;     PollPattern(patterns.prompt.resume, { doClick : true, predicatePattern : patterns.battle.auto})
-    ;     Resize()
-    ;     HandleAction("Start", mode)
-    ;     Return
-    ; }
-
     if (result.IsSuccess) {
         if(FindPattern([patterns.homeScreen.disgaea]).IsSuccess)
         {
