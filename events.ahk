@@ -1,5 +1,107 @@
 #Include common.ahk
 
+EventReview1() {
+    global patterns, settings, mode
+    SetStatus(A_ThisFunc)
+
+    battleOptions := settings.battleOptions.event
+    battleOptions.startPatterns := [patterns.battle.start, patterns.battle.prompt.battle]
+    battleOptions.donePatterns := [patterns.raid.appear.advanceInStory, patterns.battle.prompt.quitBattle]
+   
+    battleCount := 0
+
+    loopTargets := [patterns.stronghold.gemsIcon, patterns.dimensionGate.background,
+        , patterns.battle.start, patterns.battle.auto, patterns.companions.title, patterns.events.review.title
+        , patterns.events.title, patterns.darkGates.stage.threeStars
+        , patterns.battle.prompt.battleAgain, patterns.touchScreen, patterns.events.characterGate.noMore]
+    Loop {
+        result := PollPattern(loopTargets)
+
+        if InStr(result.comment, "stronghold.gemsIcon") {
+            FindPattern(patterns.tabs.dimensionGate, { doClick : true })
+            sleep 1000
+        }
+        else if InStr(result.comment, "dimensionGate.background") {
+            FindPattern(patterns.dimensionGate.eventReview, { doClick : true })
+            sleep 1000
+        }
+        else if InStr(result.comment, "events.review.title") {
+            FindPattern(patterns.dimensionGate.events.banners.eventReview1, { doClick : true })
+            sleep 1000
+        }
+        else if InStr(result.comment, "battle.start") || InStr(result.comment, "stage.threeStars") {
+            ClickResult(result)
+            sleep 1000
+        }
+        else if InStr(result.comment, "events.title") {
+            sleep 1000
+            PollPattern(patterns.events.easy, { doClick : true, predicatePattern : patterns.events.easy.enabled, pollInterval : 2000 })
+            sleep 500
+            Click("x470 y443")
+            sleep 50
+            Click("x470 y443")
+        }
+        else if InStr(result.comment, "companions.title") || InStr(result.comment, "battle.auto") || InStr(result.comment, "battle.prompt.battleAgain") || InStr(result.comment, "touchScreen") {
+            sleep 500
+            DoBattle(battleOptions)
+            PollPattern(loopTargets, { clickPattern : patterns.battle.done, pollInterval : 250 })
+            battleCount++
+            if (battleCount > 4) {
+                Break
+            }
+        }
+    }
+
+    if (mode) {
+        ExitApp
+    }
+}
+
+CharacterGate1() {
+    global patterns, settings, mode
+    SetStatus(A_ThisFunc)
+
+    battleOptions := settings.battleOptions.event
+    battleOptions.startPatterns := [patterns.battle.start, patterns.battle.prompt.battle]
+    battleOptions.donePatterns := [patterns.raid.appear.advanceInStory, patterns.battle.prompt.quitBattle]
+   
+    loopTargets := [patterns.stronghold.gemsIcon, patterns.dimensionGate.background, patterns.dimensionGate.events.select
+        , patterns.battle.start, patterns.battle.auto, patterns.companions.title, patterns.events.characterGate.enter
+        , patterns.darkGates.stage.threeStars, patterns.battle.prompt.battleAgain, patterns.touchScreen, patterns.events.characterGate.noMore]
+    Loop {
+        result := PollPattern(loopTargets)
+
+        if InStr(result.comment, "stronghold.gemsIcon") {
+            FindPattern(patterns.tabs.dimensionGate, { doClick : true })
+            sleep 1000
+        }
+        else if InStr(result.comment, "dimensionGate.background") {
+            FindPattern(patterns.dimensionGate.events.block, { doClick : true })
+            sleep 1000
+        }
+        else if InStr(result.comment, "dimensionGate.events.select") {
+            ScrollUntilDetect(patterns.dimensionGate.events.banners.characterGate1)
+            sleep 3000
+        }
+        else if InStr(result.comment, "events.characterGate.enter") || InStr(result.comment, "stage.threeStars") || InStr(result.comment, "battle.start") {
+            ClickResult(result)
+            sleep 1000
+        }
+        else if InStr(result.comment, "companions.title") || InStr(result.comment, "battle.auto") || InStr(result.comment, "battle.prompt.battleAgain") || InStr(result.comment, "touchScreen") {
+            sleep 500
+            DoBattle(battleOptions)
+            PollPattern(loopTargets, { clickPattern : patterns.battle.done, pollInterval : 250 })
+        }
+        else if InStr(result.comment, "events.characterGate.noMore") {
+            Break
+        }
+    }
+
+    if (mode) {
+        ExitApp
+    }
+}
+
 EventAutoClear() {
     global patterns, settings
     SetStatus(A_ThisFunc)

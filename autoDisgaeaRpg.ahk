@@ -29,6 +29,8 @@ handlers.AutoShop := { Func : Func("AutoShop") }
 handlers.AutoDarkAssembly := { Func : Func("AutoDarkAssembly") }
 handlers.AutoFriends := { Func : Func("AutoFriends") }
 handlers.AutoFish := { Func : Func("AutoFish") }
+handlers.CharacterGate1 := { Func : Func("CharacterGate1") }
+handlers.EventReview1 := { Func : Func("EventReview1") }
 
 ;A_Args.1 is the executable
 ;A_Args.2 is the mode (function to be called)
@@ -53,7 +55,9 @@ msgToMode := { 0x1001 : "EventStoryFarm"
              , 0x1017 : "GrindItemWorldSingle2"
              , 0x1018 : "Battle"
              , 0x1019 : "AutoFriends"
-             , 0x1020 : "AutoFish" }
+             , 0x1020 : "AutoFish"
+             , 0x1021 : "CharacterGate1"
+             , 0x1022 : "EventReview1"  }
 modeToMsg := {}
 
 for k, v in msgToMode {

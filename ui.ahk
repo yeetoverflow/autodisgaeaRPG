@@ -64,6 +64,12 @@ ResetUI() {
     Gui, Add, Progress, x+10 vProgressBar_EventAutoClear -Smooth w100 h18 c0x66FF66 border
     Gui Add, Text, cBlack xp wp hp center vProgressText_EventAutoClear BackgroundTrans, Start EventAutoClear
 
+    Gui, Add, Progress, xs+10 vProgressBar_CharacterGate1 -Smooth w100 h18 c0x66FF66 border
+    Gui Add, Text, cBlack xp wp hp center vProgressText_CharacterGate1 BackgroundTrans, Start CharacterGate1
+
+    Gui, Add, Progress, xs+10 vProgressBar_EventReview1 -Smooth w100 h18 c0x66FF66 border
+    Gui Add, Text, cBlack xp wp hp center vProgressText_EventReview1 BackgroundTrans, Start EventReview1
+
     Gui, Font, Bold
     Gui Add, Text, cWhite xs+10, Raid
     Gui, Font, Normal
