@@ -152,8 +152,10 @@ DoBattle(battleOptions) {
     if (battleOptions.targetEnemyMiddle) {
         Loop {
             ClickResult({ X : 342, Y : 388 })
-            sleep 500
-            result := FindPattern(patterns.enemy.target, { variancePct : 20 })
+
+            Loop, 5 {
+                result := FindPattern(patterns.enemy.target, { variancePct : 20 })
+            } until (result.IsSuccess)
         } until (result.IsSuccess)
     }
 
@@ -214,8 +216,9 @@ DoBattle(battleOptions) {
                 if (battleOptions.allyTarget && targetAllies.Length() > 0 && !allyTargeted) {
                     Loop {
                         FindPattern(targetAllies, { doClick : true })
-                        sleep 250
-                        result := FindPattern(patterns.battle.target.on, { variancePct : 20 })
+                        Loop, 7 {
+                            result := FindPattern(patterns.battle.target.on, { variancePct : 20 })
+                        } until (result.IsSuccess)
                     } until (result.IsSuccess)
                     allyTargeted := true
                 }

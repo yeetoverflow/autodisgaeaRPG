@@ -415,7 +415,7 @@ AutoFish() {
             PollPattern(patterns.tabs.facilities.tab, { doClick : true })
             sleep 500
             PollPattern(patterns.tabs.facilities.fishingFleet, { doClick : true })
-            sleep 2000
+            sleep 3000
         } else if InStr(result.comment, "fishingFleet.title") {
             fleets := ["x73 y348", "x231 y506", "x405 y364"]
             maxCrabMiso := settings.fishingFleet.bribe.maxCrabMiso
@@ -494,7 +494,7 @@ AutoFish() {
                     sleep 200
                 }
 
-                sleep 1000
+                sleep 2000
             }
 
             done := true
