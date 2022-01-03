@@ -51,6 +51,7 @@ AutoHotkey project that automates the grindy parts of DisgaeaRPG. The program do
        * If clicking resize does not work, your resolution is not the target resolution. Follow the instruction above (Set desktop resolution settings). Additionally, you can attempt to set a higher resolution for your desktop if available.
     * If verify says good on both metrics, you passed
     * Note: If you are using multiple monitors, only the main monitor resolution counts so depending on your setup you might need to change your main monitor
+    * Noet: If you are using a 4k monitor and nox emulator, the top and side bars are larger. You will need to open nox instance while you are at a lower resolution. After starting you can change your resolution back.
 * Patterns test
     * Go to stronghold in emulator instance 
     * Go to Patterns tab in autoDisgaeaRPG
@@ -70,6 +71,7 @@ AutoHotkey project that automates the grindy parts of DisgaeaRPG. The program do
     * AutoRefillAP => Will automatically refill AP with AP pot when you run out.
     * AllyTarget => Specify 1 or more ally (only the first one found will be selected) that gets targeted upon the start of the battle.
     * Skills => If Auto Checkbox is not checked, the selected skills will be used. If multiple skills are present, it will select the first skill it finds in order the skills are presented.
+    * Note: When creating patterns for companions/allies/skills, make sure to avoid animations. For example, skill have a pulsing animation so make a box to catch a portion of the text to avoid the animating edges.
 
 ## General [(video)](https://youtu.be/rIw1qLvlyK8)
 * AutoShop
@@ -84,7 +86,7 @@ AutoHotkey project that automates the grindy parts of DisgaeaRPG. The program do
     * Will keep using bribes until viability is almost certain
         *  Crab miso is only used if affinity is negative
         *  Gold bar is only used if NOT feelingTheLove, prettyFavorable or favorable
-        *  Golden andi is only used if NOT feelingTheLove, prettyFavorable or favorable
+        *  Golden candy is only used if NOT feelingTheLove, prettyFavorable or favorable
     * Specify max bribe per bribe item in settings
  * AutoDarkAssembly
     * Main starting point is stronghold
