@@ -129,7 +129,7 @@ AutoHotkey project that automates the grindy parts of DisgaeaRPG. The program do
     * Keeps clearing raids when available
     * Uses Raid battle context
 
-## ItemWorld [(video)](https://youtu.be/P6Qh4f33LTk) [(fix)](https://youtu.be/uHv4sVQZIA4)
+## ItemWorld [(video)](https://youtu.be/P6Qh4f33LTk)
 
 * Start GrindItemWorldLoop
     * Main starting point is stronghold 
