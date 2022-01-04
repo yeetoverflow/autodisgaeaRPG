@@ -143,7 +143,10 @@ AutoHotkey project that automates the grindy parts of DisgaeaRPG. The program do
         * farmLevels: specify which levels to loot reset for
     
 ## DarkGate [(video)](https://youtu.be/ARX7VNLxIj4)
-
+* Count
+    * The number of gates to clear
+* Skip
+    * The number of gates to skip (a skip will still consume a count)
 * Start DoDarkGateHL
     * Main starting point is stronghold 
     * Clears dark gate stages as many times as count
