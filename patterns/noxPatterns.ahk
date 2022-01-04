@@ -3,7 +3,7 @@ GenerateNoxPatterns() {
 
     patterns.tabs := {}
     patterns.tabs.stronghold := "|<>0xD5CDD5@0.80$87.7U0000000k0040NzU0000006001k3QQs000000k00C0T1b0000006001k3M4y000000k00C0PUTzrwzszzyDtnzT0zznrzCStvnixtz7CA7sTVq7sDq71wlVUz3sCkT1zkM3aAQ7sT1q3sDy30ClXUz3sCkT1zkS1qAA7sTVq3sDy3sAlVkr3QQkPVikvrbA7CMNza3CxrzDsDUT330AkMy4DA"
-    patterns.tabs.dimensionGate := "|<>0xFFFFFF@1.00$25.00C00DzU0Dzzl7zzwzyDkTw60DU307k0U3s009w000y000000Q000C000zg00Mk20SwzkA6Twy13bz001zU01zk01wS0zyA00040U"
+    patterns.tabs.dimensionGate := "|<>#346@1.00$25.0A3U067U03zk03zzsFzzyDzXw7y103k0U1s000w000S000D00000070007U00Dy006Q007CDw317yDU0lzk00Ts00Tw00z70TzXU0000E"
     patterns.tabs.shop := {}
     patterns.tabs.shop.tab := "|<>0xD7D0D7@0.75$50.sAC00000C33U00003UEzk7s7yy0Dz3z1zrw3lkssQQzUsQQ7731wC771lUE7XVlkQM40ssQQ761kCC771lUy3VUlssQBzkMADy7zDs631y1zU000000M000000060U"
     patterns.tabs.shop.items := {}
