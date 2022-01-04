@@ -1,7 +1,7 @@
 # autodisgaeaRPG
 AutoHotkey project that automates the grindy parts of DisgaeaRPG. The program does not modify DisgaeaRPG app. It simply scans emulator instance for patterns and clicks accordingly.
 
-## Setup [(video)](https://youtu.be/P-tkhNZyf8o)
+## Setup [(video)](https://youtu.be/dEKeCsrjMLg)
 
 ### Desktop display
 * Set desktop resolution settings
@@ -61,7 +61,7 @@ AutoHotkey project that automates the grindy parts of DisgaeaRPG. The program do
        * If you see Found as a tooltip and see a box on the dimension gate button you pass
        * If not, go cry then complain in the [autoDisgaeaRPG reddit thread](https://www.reddit.com/r/DisgaeaRPGMobile/comments/qo36ua/autodisgaearpg)
 
-## Battle [(video)](https://youtu.be/lxVgjwpZ8co)
+## Battle [(video)](https://youtu.be/GFgXBXYOiww)
 
 * This section dictates the behavior during a battle for a given context.
     * Auto Checkbox => Specifies if built in Auto should be used or not.
