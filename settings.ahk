@@ -747,7 +747,7 @@ InitPatternSettingTreeView(settingUnderScore, opts := "") {
     if (!settingInfo.setting[settingInfo.key]) {
         settingInfo.setting[settingInfo.key] := {}
     }
-    InitPatternsTree(settingInfo.setting[settingInfo.key], { startPath : StrReplace(settingUnderScore, "_", "."), skipFields : ["disableAdd", "isLeaf", "checked", "props", "singleTarget", "priority"]})
+    InitPatternsTree(settingInfo.setting[settingInfo.key], { startPath : StrReplace(settingUnderScore, "_", "."), skipFields : ["disableAdd", "isLeaf", "checked", "props", "singleTarget", "priority", "label"]})
 
     if (opts.battleContext) {
         battleContext := opts.battleContext
