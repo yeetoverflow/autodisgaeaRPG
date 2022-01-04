@@ -1,7 +1,7 @@
 # autodisgaeaRPG
 AutoHotkey project that automates the grindy parts of DisgaeaRPG. The program does not modify DisgaeaRPG app. It simply scans emulator instance for patterns and clicks accordingly.
 
-## Setup [(video)](https://youtu.be/P-tkhNZyf8o)
+## Setup [(video)](https://youtu.be/dEKeCsrjMLg)
 
 ### Desktop display
 * Set desktop resolution settings
@@ -51,7 +51,7 @@ AutoHotkey project that automates the grindy parts of DisgaeaRPG. The program do
        * If clicking resize does not work, your resolution is not the target resolution. Follow the instruction above (Set desktop resolution settings). Additionally, you can attempt to set a higher resolution for your desktop if available.
     * If verify says good on both metrics, you passed
     * Note: If you are using multiple monitors, only the main monitor resolution counts so depending on your setup you might need to change your main monitor
-    * Noet: If you are using a 4k monitor and nox emulator, the top and side bars are larger. You will need to open nox instance while you are at a lower resolution. After starting you can change your resolution back.
+    * Note: If you are using a 4k monitor and nox emulator, the top and side bars are larger. You will need to open nox instance while you are at a lower resolution. After starting you can change your resolution back.
 * Patterns test
     * Go to stronghold in emulator instance 
     * Go to Patterns tab in autoDisgaeaRPG
@@ -61,7 +61,7 @@ AutoHotkey project that automates the grindy parts of DisgaeaRPG. The program do
        * If you see Found as a tooltip and see a box on the dimension gate button you pass
        * If not, go cry then complain in the [autoDisgaeaRPG reddit thread](https://www.reddit.com/r/DisgaeaRPGMobile/comments/qo36ua/autodisgaearpg)
 
-## Battle [(video)](https://youtu.be/lxVgjwpZ8co)
+## Battle [(video)](https://youtu.be/GFgXBXYOiww)
 
 * This section dictates the behavior during a battle for a given context.
     * Auto Checkbox => Specifies if built in Auto should be used or not.
@@ -71,7 +71,7 @@ AutoHotkey project that automates the grindy parts of DisgaeaRPG. The program do
     * AutoRefillAP => Will automatically refill AP with AP pot when you run out.
     * AllyTarget => Specify 1 or more ally (only the first one found will be selected) that gets targeted upon the start of the battle.
     * Skills => If Auto Checkbox is not checked, the selected skills will be used. If multiple skills are present, it will select the first skill it finds in order the skills are presented.
-    * Note: When creating patterns for companions/allies/skills, make sure to avoid animations. For example, skill have a pulsing animation so make a box to catch a portion of the text to avoid the animating edges.
+    * Note: When creating patterns for companions/allies/skills, make sure to avoid animations. For example, skills have a pulsing animation so make a box to catch a portion of the text to avoid the animating edges.
 
 ## General [(video)](https://youtu.be/rIw1qLvlyK8)
 * AutoShop
