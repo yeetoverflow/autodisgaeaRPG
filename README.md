@@ -71,7 +71,7 @@ AutoHotkey project that automates the grindy parts of DisgaeaRPG. The program do
     * AutoRefillAP => Will automatically refill AP with AP pot when you run out.
     * AllyTarget => Specify 1 or more ally (only the first one found will be selected) that gets targeted upon the start of the battle.
     * Skills => If Auto Checkbox is not checked, the selected skills will be used. If multiple skills are present, it will select the first skill it finds in order the skills are presented.
-    * Note: When creating patterns for companions/allies/skills, make sure to avoid animations. For example, skill have a pulsing animation so make a box to catch a portion of the text to avoid the animating edges.
+    * Note: When creating patterns for companions/allies/skills, make sure to avoid animations. For example, skills have a pulsing animation so make a box to catch a portion of the text to avoid the animating edges.
 
 ## General [(video)](https://youtu.be/rIw1qLvlyK8)
 * AutoShop
