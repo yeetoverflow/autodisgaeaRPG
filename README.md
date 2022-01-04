@@ -1,5 +1,5 @@
 # autodisgaeaRPG
-AutoHotkey project that automates the grindy parts of DisgaeaRPG. The program does not modify DisgaeaRPG app. It simply scans BlueStacks instance for patterns and clicks or swipes accordingly.
+AutoHotkey project that automates the grindy parts of DisgaeaRPG. The program does not modify DisgaeaRPG app. It simply scans emulator instance for patterns and clicks accordingly.
 
 ## Setup [(video)](https://youtu.be/P-tkhNZyf8o)
 
