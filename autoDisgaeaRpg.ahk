@@ -646,7 +646,7 @@ TestHandler() {
 }
 
 TestPattern() { 
-    global hwnd, patterns, PatternsTree, testPatternMulti, testPatternFG, testPatternBG
+    global hwnd, patterns, PatternsTree, testPatternMulti, testPatternVariance
 
     Gui Submit, NoHide
     Gui TreeView, PatternsTree
@@ -657,7 +657,7 @@ TestPattern() {
     for k, v in segments
         target := target[v]
 
-    opts := { multi : testPatternMulti, fgVariancePct : testPatternFG, bgVariancePct : testPatternBG }
+    opts := { multi : testPatternMulti, variancePct : testPatternVariance }
     result := FindPattern(target, opts)
 
     if (result.IsSuccess) {

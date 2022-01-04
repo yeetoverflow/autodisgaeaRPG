@@ -28,9 +28,8 @@ ResetUI() {
     Gui, Font, Bold
     Gui Add, Text, cWhite xs+10, General
     Gui, Font, Normal
-    Gui, Add, Progress, xs+10 vProgressBar_AutoClear -Smooth w120 h18 c0x66FF66 border
-    Gui Add, Text, cBlack xp wp hp center vProgressText_AutoClear BackgroundTrans, Start AutoClear
-    Gui, Add, Progress, x+10 vProgressBar_AutoShop -Smooth w120 h18 c0x66FF66 border
+    Gui Add, Link, x+5,<a href="https://github.com/yeetoverflow/autodisgaeaRPG/blob/main/README.md#general-video">?</a>
+    Gui, Add, Progress, xs+10 vProgressBar_AutoShop -Smooth w120 h18 c0x66FF66 border
     Gui Add, Text, cBlack xp wp hp center vProgressText_AutoShop BackgroundTrans, Start AutoShop
     Gui, Add, Progress, x+10 vProgressBar_AutoFriends -Smooth w120 h18 c0x66FF66 border
     Gui Add, Text, cBlack xp wp hp center vProgressText_AutoFriends BackgroundTrans, Start AutoFriends
@@ -43,11 +42,19 @@ ResetUI() {
     Gui, Add, Progress, x+10 w50 h18 c0x66FF66 vsettingsmodal_fishingFleet_bribe
     Gui Add, Text, xp+5 wp hp r1 +0x4000 cBlack BackgroundTrans left, Settings
 
+    Gui Add, Text, 0x10 xs w400 h10
+    Gui, Font, Bold
+    Gui Add, Text, cWhite xs+10, Story
+    Gui Add, Link, x+5,<a href="https://github.com/yeetoverflow/autodisgaeaRPG/blob/main/README.md#story">?</a>
+    Gui, Font, Normal
+    Gui, Add, Progress, xs+10 vProgressBar_AutoClear -Smooth w120 h18 c0x66FF66 border
+    Gui Add, Text, cBlack xp wp hp center vProgressText_AutoClear BackgroundTrans, Start AutoClear
 
     Gui Add, Text, 0x10 xs w400 h10
     Gui, Font, Bold
     Gui Add, Text, cWhite xs+10, Event
     Gui, Font, Normal
+    Gui Add, Link, x+5,<a href="https://github.com/yeetoverflow/autodisgaeaRPG/blob/main/README.md#event-video">?</a>
     Gui Add, Button, x+10 gSelectBanners, Select Banners
 
     Gui, Add, Progress, xs+10 vProgressBar_EventStoryFarm -Smooth w120 h18 c0x66FF66 border
@@ -90,6 +97,7 @@ ResetUI() {
     Gui Font, Bold
     Gui Add, Text, cWhite xs+10, ItemWorld
     Gui Font, Normal
+    Gui Add, Link, x+5,<a href="https://github.com/yeetoverflow/autodisgaeaRPG/blob/main/README.md#itemworld-video">?</a>
     Gui, Add, Progress, x+10 w50 h18 c0x66FF66 vsettingsmodal_itemWorldOptions
     Gui Add, Text, xp+5 wp hp r1 +0x4000 cBlack BackgroundTrans left, Settings
     
@@ -115,6 +123,7 @@ ResetUI() {
     Gui, Font, Bold
     Gui Add, Text, cWhite xs+10, DarkGate
     Gui, Font, Normal
+    Gui Add, Link, x+5,<a href="https://github.com/yeetoverflow/autodisgaeaRPG/blob/main/README.md#darkgate-video">?</a>
 
     Gui Add, Text, cWhite x+10, Count:
     Gui Add, Edit, cBlack w50 x+10 Number vDarkGateCount, 1
@@ -131,6 +140,12 @@ ResetUI() {
     Gui Add, Text, cBlack xp wp hp center vProgressText_DoDarkGateMatsMonster BackgroundTrans, Start DoDarkGateMatsMonster
 
     Gui Tab, Settings
+
+    Gui, Font, Bold
+    Gui Add, Text, cWhite xs+10 y+20, Settings
+    Gui, Font, Normal
+    Gui Add, Link, x+5,<a href="https://github.com/yeetoverflow/autodisgaeaRPG/blob/main/README.md#setup-video">?</a>
+    Gui Add, Text, 0x10 xs+10 y+5 w400 h10
 
     AddSetting("settings_window_emulator", "1")
     AddSetting("settings_window_name", "1")
@@ -172,10 +187,8 @@ ResetUI() {
     Gui Add, Checkbox, cWhite x+10 vTestPatternMulti, Multi
     Gui Add, Button, x+10 gCopyPatternToClipboard, Copy To Clipboard
     Gui Add, Button, x+10 gOpenUserPattern, UserPattern
-    Gui Add, Text, cWhite xs+10 y+10, FG Variance:
-    Gui Add, Slider, w200 tickinterval5 tooltip vTestPatternFG
-    Gui Add, Text, cWhite xs+10 y+10, BG Variance: 
-    Gui Add, Slider, w200 tickinterval5 tooltip vTestPatternBG
+    Gui Add, Text, cWhite xs+10 y+10, Variance:
+    Gui Add, Slider, w200 tickinterval5 tooltip vTestPatternVariance
     InitPatternsTree()
 
     Gui Show, w450
@@ -240,7 +253,8 @@ InitBattleOptionsUI() {
     Gui Add, Text, xs+250 ys+25 vAttached cRed, DETACHED
     Gui Add, Text, cWhite xs+10 ys+25, BattleContext
     Gui, Font, Normal
-    Gui Add, ListView, w100 h170 gSelectBattleOption vBattleOptionsTree NoSort AltSubmit, Name
+    Gui Add, Link, x+5,<a href="https://github.com/yeetoverflow/autodisgaeaRPG/blob/main/README.md#battle-video">?</a>
+    Gui Add, ListView, xs+10 y+5 w100 h170 gSelectBattleOption vBattleOptionsTree NoSort AltSubmit, Name
     Gui Add, Text, x+10,
 
     battleOptions := ["Default", "Event", "ItemWorld", "Sweep", "Raid", "DarkGateMats", "DarkGateHL"]

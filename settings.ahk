@@ -472,53 +472,73 @@ AddSetting(settingInfo, targetGui, opts := "") {
             }
 
             Gui, %targetGui%:Add, Text, xs y+5 cWhite, % settingInfo.path
-            Gui, %targetGui%:Add, TreeView, % (settingInfo.metaData.checked ? "checked " : "" ) . "xs+10 y+5 h300 cBlack AltSubmit gSelectPatternSetting vPatternSettingSelect_" 
+            Gui, %targetGui%:Add, TreeView, % (settingInfo.metaData.checked ? "checked " : "" ) . "xs+10 y+5 w170 h290 cBlack AltSubmit gSelectPatternSetting vPatternSettingSelect_" 
                 . settingUnderscore . (opts.battleContext ? "_battleContext_" . opts.battleContext . "_" . opts.setting : "")
 
+            Gui, %targetGui%:Add, Groupbox, x+10 w250 h150 section cWhite, Preview
+            Gui, %targetGui%:Add, Edit, % "xp+5 yp+15 cBlack w190 vPatternSettingValue_" . settingUnderscore
+            Gui, %targetGui%:Font, cBlack
+            Gui, %targetGui%:Font, s3
+            Gui, %targetGui%:Add, Edit, % "y+5 cBlack w190 r20 vPatternSettingPreview_" . settingUnderscore
+            Gui, %targetGui%:Font
+
             if (!settingInfo.metaData.disableAdd) {
-                Gui, %targetGui%:Add, Text, x+10 ys+30 cWhite, Key: 
+                Gui, %targetGui%:Add, Groupbox, xp y+5 w200 h40 cWhite, Add
+                Gui, %targetGui%:Add, Text, xp+5 yp+15 cWhite, Key: 
                 Gui, %targetGui%:Add, Edit, % "x+10 w100 vPatternSettingKey_" . settingUnderscore, Key
-                Gui, %targetGui%:Add, Button, % "gAddPatternSetting vPatternSettingAdd_" . settingUnderscore, Add
-                Gui, %targetGui%:Add, Button, % "gDeletePatternSetting vPatternSettingDelete_" . settingUnderscore, Delete
+                Gui, %targetGui%:Add, Button, % "x+10 gAddPatternSetting vPatternSettingAdd_" . settingUnderscore, Add
+
+                Gui, %targetGui%:Add, Groupbox, xp-146 y+5 w200 h40 cWhite, Delete
+                Gui, %targetGui%:Add, Button, % "xp+5 yp+15 gDeletePatternSetting vPatternSettingDelete_" . settingUnderscore, Delete
             }
 
             if (settingInfo.metaData.props) {
+                h := settingInfo.metaData.props.Count() * 15
+                Gui, %targetGui%:Add, Groupbox, xp-5 y+5 w200 h%h% section cWhite, Props
+
+                firstProp := true
                 for k, v in settingInfo.metaData.props {
+                    
+                    position := "xs+5 y+5"
+
+                    if (k != "default" && firstProp) {
+                        position := "xs+5 ys+15"
+                        firstProp := false
+                    }
+
                     if (v.type = "Checkbox") {
-                        Gui, %targetGui%:Add, Checkbox, % "cWhite gCheckedChangedPatternSettingProp vPatternSettingCheckBoxProp_"
+                        Gui, %targetGui%:Add, Checkbox, % position . " cWhite gCheckedChangedPatternSettingProp vPatternSettingCheckBoxProp_"
                             . settingUnderscore . "_" . k, % k
                     }
                     else if (v.type = "Dropdown") {
-                        Gui, %targetGui%:Add, Text, cWhite, % k . ": "
-                        Gui, %targetGui%:Add, DropDownList, % "cWhite gDropDownChangedPatternSettingProp vPatternSettingDropDownProp_"
+                        Gui, %targetGui%:Add, Text, % position . " cWhite", % k . ": "
+                        Gui, %targetGui%:Add, DropDownList, % "x+10 cWhite gDropDownChangedPatternSettingProp vPatternSettingDropDownProp_"
                             . settingUnderscore . "_" . k, % v.options
                     }
                 }
             }
-           
-            Gui, %targetGui%:Add, Edit, % "xs+10 ys+330 cBlack w400 vPatternSettingValue_" . settingUnderscore
+            
+            Gui, %targetGui%:Add, Groupbox, x10 y330 w400 h70 section cWhite, Edit
 
-            Gui, %targetGui%:Font, cBlack
-            Gui, %targetGui%:Font, s3
-            Gui, %targetGui%:Add, Edit, % "xs+10 y+5 cBlack w400 r20 vPatternSettingPreview_" . settingUnderscore
-            Gui, %targetGui%:Font
-            Gui, %targetGui%:Add, Button, % "gPickPatternSettingColor vPatternSettingColorPick_" . settingUnderscore, Pick Color
+            Gui, %targetGui%:Add, Button, % "x15 yp+15 gPickPatternSettingColor vPatternSettingColorPick_" . settingUnderscore, Pick Color
             Gui, %targetGui%:Add, Edit, % "cBlack x+5 w100 vPatternSettingColor_" . settingUnderscore,
             Gui, %targetGui%:Add, Text, cWhite x+5, Variance: 
             Gui, %targetGui%:Add, Edit, % "cBlack x+5 w30 cBlack vPatternSettingColorVariance_" . settingUnderscore, 10
             Gui, %targetGui%:Add, Button, % "x+5 gApplyPatternSettingColor vPatternSettingColorApply_" . settingUnderscore, DoColorPattern
-            Gui, %targetGui%:Add, Text, cWhite xs+10 y+5, Gray Diff: 
+            Gui, %targetGui%:Add, Text, cWhite x15 y+5, Gray Diff: 
             Gui, %targetGui%:Add, Edit, % "cBlack x+5 w100 cBlack vPatternSettingGrayDiff_" . settingUnderscore, 50
-            Gui, %targetGui%:Add, Button, % "x+5 gApplyPatternSettingGrayDiff vPatternSettingGrayDiffApply_" . settingUnderscore, DoGrayPattern
-            Gui Add, Text, cWhite xs+10 y+10, FG Variance:
-            Gui Add, Slider, % "w200 tickinterval5 tooltip vPatternSettingTestVariance_" . settingUnderscore
-            Gui Add, Checkbox, % "cWhite xs+10 y+5 vPatternSettingTestMulti_" . settingUnderscore, Multi
-            Gui Add, Button, % "xs+10 y+5 gTestPatternSetting vPatternSettingTest_" . settingUnderscore, Test
+            Gui, %targetGui%:Add, Button, % "x+106 gApplyPatternSettingGrayDiff vPatternSettingGrayDiffApply_" . settingUnderscore, DoGrayPattern
+
+            Gui, %targetGui%:Add, Groupbox, x10 y+15 w400 h80 section cWhite, Test
+
+            Gui Add, Checkbox, % "x15 yp+15 cWhite vPatternSettingTestMulti_" . settingUnderscore, Multi
+            Gui Add, Text, cWhite x+5, FG Variance:
+            Gui Add, Slider, % "x+5 w200 tickinterval5 tooltip vPatternSettingTestVariance_" . settingUnderscore
+            Gui Add, Button, % "x15 y+5 gTestPatternSetting vPatternSettingTest_" . settingUnderscore, Test
+
+            Gui Add, Text, x15 y+5,
 
             InitPatternSettingTreeView(settingUnderscore, opts)
-            ; if (!settingInfo.metaData.isArrayItem || settingInfo.setting[settingInfo.key].isLeaf) {
-            ;     InitPatternSettingTreeView(settingUnderscore)
-            ; }
         }
     }
 }
@@ -635,7 +655,7 @@ ApplyPatternSettingColor() {
     GuiControlGet, patternColorVariance,, % "PatternSettingColorVariance_" . settingUnderscore
 
     nodePath := GetNodePath()
-    pattern := RegExReplace(pattern, "<.*?>", "<" . StrReplace(settingUnderscore, "_", ".") . "." . nodePath . ">")
+    pattern := GetPatternColor2Two(patternColorPick, 100-patternColorVariance)
 
     if (!pattern) {
         Return
@@ -833,6 +853,13 @@ SelectPatternSetting() {
     else {
         GuiControl, Enable, % "PatternSettingColorApply_" . settingUnderscore
         GuiControl, Enable, % "PatternSettingGrayDiffApply_" . settingUnderscore
+    }
+
+    if (!parentId) {
+        GuiControl, Enable, % "PatternSettingDelete_" . settingUnderscore
+    }
+    else {
+        GuiControl, Disable, % "PatternSettingDelete_" . settingUnderscore
     }
 
 }
