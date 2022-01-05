@@ -33,6 +33,8 @@ GrindItemWorld(itemWorldOptions, oneTime := false) {
             targetItem := [patterns.itemWorld.itemTarget.rarity.rare, patterns.itemWorld.itemTarget.rarity.legendary]
         case "rare":
             targetItem := patterns.itemWorld.itemTarget.rarity.rare
+        case "common":
+            targetItem := patterns.itemWorld.itemTarget.rarity.common
     }
     
     if (itemWorldOptions.farmLevels) {

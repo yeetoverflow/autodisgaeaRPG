@@ -1047,7 +1047,7 @@ InitMetaDataItemWorldOptions(metadata) {
     itemWorldOptionsMetaData.targetItemSort.options := ["gained", "rarity"]
     itemWorldOptionsMetaData.targetItemRarity := {}
     itemWorldOptionsMetaData.targetItemRarity.type := "Radio"
-    itemWorldOptionsMetaData.targetItemRarity.options := ["any", "legendary", "rareOrLegendary", "rare"]
+    itemWorldOptionsMetaData.targetItemRarity.options := ["any", "legendary", "rareOrLegendary", "rare", "common"]
     itemWorldOptionsMetaData.targetItemSortOrder := {}
     itemWorldOptionsMetaData.targetItemSortOrder.type := "Radio"
     itemWorldOptionsMetaData.targetItemSortOrder.options := ["ascending", "descending"]
