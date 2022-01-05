@@ -192,6 +192,8 @@ DoBattle(battleOptions) {
             SetStatus(A_ThisFunc . ": " . matchesWave . "/" .  matchesNumWaves . "(" . count . ")", 2)
         }
 
+        battleOptions.preBattle()
+
         if (battleOptions.auto) {
             FindPattern(patterns.battle.auto.disabled, { doClick : true })
             if (battleOptions.onBattleAction)
@@ -200,8 +202,6 @@ DoBattle(battleOptions) {
             }
         }
         else {
-            battleOptions.preBattle()
-
             FindPattern(patterns.battle.auto.enabled, { doClick : true })
             result := FindPattern(patterns.battle.skills.label)
             if (result.IsSuccess) {
