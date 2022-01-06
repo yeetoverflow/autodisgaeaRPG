@@ -29,10 +29,12 @@ ResetUI() {
     Gui Add, Text, cWhite xs+10, General
     Gui, Font, Normal
     Gui Add, Link, x+5,<a href="https://github.com/yeetoverflow/autodisgaeaRPG/blob/main/README.md#general-video">?</a>
-    Gui, Add, Progress, xs+10 vProgressBar_AutoShop -Smooth w120 h18 c0x66FF66 border
+    Gui, Add, Progress, xs+10 vProgressBar_AutoShop -Smooth w80 h18 c0x66FF66 border
     Gui Add, Text, cBlack xp wp hp center vProgressText_AutoShop BackgroundTrans, Start AutoShop
-    Gui, Add, Progress, x+10 vProgressBar_AutoFriends -Smooth w120 h18 c0x66FF66 border
+    Gui, Add, Progress, x+10 vProgressBar_AutoFriends -Smooth w100 h18 c0x66FF66 border
     Gui Add, Text, cBlack xp wp hp center vProgressText_AutoFriends BackgroundTrans, Start AutoFriends
+    Gui, Add, Progress, x+10 vProgressBar_AutoDailySummon -Smooth w120 h18 c0x66FF66 border
+    Gui Add, Text, cBlack xp wp hp center vProgressText_AutoDailySummon BackgroundTrans, Start AutoDailySummon
     Gui, Add, Progress, xs+10 vProgressBar_AutoDarkAssembly -Smooth w120 h18 c0x66FF66 border
     Gui Add, Text, cBlack xp wp hp center vProgressText_AutoDarkAssembly BackgroundTrans, Start AutoDarkAssembly
     Gui, Add, Progress, x+10 w50 h18 c0x66FF66 vsettingsmodal_general_darkAssembly
@@ -335,12 +337,16 @@ InitBattleOptionsUI() {
 }
 
 InitHandlersTree() {
-    global handlers
+    global handlers, handlersTree
+    
+    Gui TreeView, handlersTree
     Traverse(handlers, { parentId : 0 }, { dataCallBack : Func("TreeAddDataCallback"), skipFields : ["Func"] } )
 }
 
 InitPatternsTree(root := "", opts := "") {
-    global patterns
+    global patterns, mode, patternsTree
+
+    Gui TreeView, patternsTree
     root := (root ? root : patterns)
     opts := InitOps(opts, { startPath : "" })
     

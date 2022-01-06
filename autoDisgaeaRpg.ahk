@@ -6,32 +6,6 @@
 #Include darkGate.ahk
 #include ui.ahk
 
-handlers := {}
-handlers.Battle := { Func : Func("Battle") }
-handlers.EventStoryFarm := { Func : Func("EventStoryFarm") }
-handlers.EventRaidLoop := { Func : Func("EventRaidLoop") }
-handlers.EventStory500Pct := { Func : Func("EventStory500Pct") }
-handlers.EventAutoClear := { Func : Func("EventAutoClear") }
-handlers.DoDarkGateHL := { Func : Func("DoDarkGateHL") }
-handlers.DoDarkGateMatsHuman := { Func : Func("DoDarkGateMatsHuman") }
-handlers.DoDarkGateMatsMonster := { Func : Func("DoDarkGateMatsMonster") }
-handlers.SwipeUp := { Func : Func("SwipeUp") }
-handlers.SwipeDown := { Func : Func("SwipeDown") }
-handlers.ScrollUp := { Func : Func("ScrollUp") }
-handlers.ScrollDown := { Func : Func("ScrollDown") }
-handlers.MiddleClickCallback := { Func : Func("MiddleClickCallback") }
-handlers.GrindItemWorldLoop1 := { Func : Func("GrindItemWorldLoop1") }
-handlers.GrindItemWorldSingle1 := { Func : Func("GrindItemWorldSingle1") }
-handlers.GrindItemWorldLoop2 := { Func : Func("GrindItemWorldLoop2") }
-handlers.GrindItemWorldSingle2 := { Func : Func("GrindItemWorldSingle2") }
-handlers.AutoClear := { Func : Func("AutoClear") }
-handlers.AutoShop := { Func : Func("AutoShop") }
-handlers.AutoDarkAssembly := { Func : Func("AutoDarkAssembly") }
-handlers.AutoFriends := { Func : Func("AutoFriends") }
-handlers.AutoFish := { Func : Func("AutoFish") }
-handlers.CharacterGate1 := { Func : Func("CharacterGate1") }
-handlers.EventReview1 := { Func : Func("EventReview1") }
-
 ;A_Args.1 is the executable
 ;A_Args.2 is the mode (function to be called)
 
@@ -57,11 +31,14 @@ msgToMode := { 0x1001 : "EventStoryFarm"
              , 0x1019 : "AutoFriends"
              , 0x1020 : "AutoFish"
              , 0x1021 : "CharacterGate1"
-             , 0x1022 : "EventReview1"  }
+             , 0x1022 : "EventReview1"
+             , 0x1023 : "AutoDailySummon"  }
 modeToMsg := {}
+handlers := {}
 
 for k, v in msgToMode {
     modeToMsg[v] := k
+    handlers[v] := { Func : Func(v) }
     OnMessage(k, "OnCustomMessage")
 }
 
@@ -283,6 +260,36 @@ AutoFriends() {
             }
 
             done := true
+        }
+
+        sleep, 250
+    } until (done)
+
+    if (mode) {
+        ExitApp
+    }
+}
+
+AutoDailySummon() {
+    global patterns, mode
+    
+    done := false
+    Loop {
+        result := FindPattern([patterns.stronghold.gemsIcon, patterns.summon.premium, patterns.general.autoClear.skip, patterns.touchScreen, patterns.prompt.ok, patterns.summon.result])
+        
+        if InStr(result.comment, "stronghold.gemsIcon") {
+            FindPattern(patterns.tabs.summon, { doClick : true })
+        } else if InStr(result.comment, "summon.premium") {
+            result := FindPattern(patterns.summon.exclamation, { doClick : true })
+            if (!result.IsSuccess) {
+                done := true
+            }
+        }
+        else if InStr(result.comment, "general.autoClear.skip") || InStr(result.comment, "touchScreen") || InStr(result.comment, "prompt.ok"){
+            ClickResult(result)
+        }
+        else if InStr(result.comment, "summon.result") {
+            FindPattern(patterns.stage.back, { doClick : true })
         }
 
         sleep, 250
