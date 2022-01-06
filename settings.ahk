@@ -185,6 +185,7 @@ GenerateSettingDefaults() {
     defaults.itemWorldOptions.1.targetItemType := "armor" ;armor, weapon
     defaults.itemWorldOptions.1.targetItemSort := "gained"
     defaults.itemWorldOptions.1.targetItemSortOrder := "ascending"
+    defaults.itemWorldOptions.1.prioritizeEquippedItems := "no"
     defaults.itemWorldOptions.1.targetItemRarity := "any" ;any, rare, legendary
     defaults.itemWorldOptions.1.lootTarget := "any" ;any, rare, legendary
     defaults.itemWorldOptions.2 := {}
@@ -193,6 +194,7 @@ GenerateSettingDefaults() {
     defaults.itemWorldOptions.2.targetItemType := "armor" ;armor, weapon
     defaults.itemWorldOptions.2.targetItemSort := "rarity"
     defaults.itemWorldOptions.2.targetItemSortOrder := "descending"
+    defaults.itemWorldOptions.2.prioritizeEquippedItems := "no"
     defaults.itemWorldOptions.2.targetItemRarity := "legendary" ;any, rare, legendary
     defaults.itemWorldOptions.2.lootTarget := "legendary" ;any, rare, legendary
 
@@ -472,14 +474,14 @@ AddSetting(settingInfo, targetGui, opts := "") {
             }
 
             Gui, %targetGui%:Add, Text, xs y+5 cWhite, % settingInfo.path
-            Gui, %targetGui%:Add, TreeView, % (settingInfo.metaData.checked ? "checked " : "" ) . "xs+10 y+5 w170 h290 cBlack AltSubmit gSelectPatternSetting vPatternSettingSelect_" 
+            Gui, %targetGui%:Add, TreeView, % (settingInfo.metaData.checked ? "checked " : "" ) . "xs+10 y+5 w170 h340 cBlack AltSubmit gSelectPatternSetting vPatternSettingSelect_" 
                 . settingUnderscore . (opts.battleContext ? "_battleContext_" . opts.battleContext . "_" . opts.setting : "")
 
-            Gui, %targetGui%:Add, Groupbox, x+10 w250 h150 section cWhite, Preview
-            Gui, %targetGui%:Add, Edit, % "xp+5 yp+15 cBlack w190 vPatternSettingValue_" . settingUnderscore
+            Gui, %targetGui%:Add, Groupbox, x+10 w300 h200 section cWhite, Preview
+            Gui, %targetGui%:Add, Edit, % "xp+5 yp+15 cBlack w280 vPatternSettingValue_" . settingUnderscore
             Gui, %targetGui%:Font, cBlack
             Gui, %targetGui%:Font, s3
-            Gui, %targetGui%:Add, Edit, % "y+5 cBlack w190 r20 vPatternSettingPreview_" . settingUnderscore
+            Gui, %targetGui%:Add, Edit, % "y+5 cBlack w280 r30 vPatternSettingPreview_" . settingUnderscore
             Gui, %targetGui%:Font
 
             if (!settingInfo.metaData.disableAdd) {
@@ -518,7 +520,7 @@ AddSetting(settingInfo, targetGui, opts := "") {
                 }
             }
             
-            Gui, %targetGui%:Add, Groupbox, x10 y330 w400 h70 section cWhite, Edit
+            Gui, %targetGui%:Add, Groupbox, x10 y380 w400 h70 section cWhite, Edit
 
             Gui, %targetGui%:Add, Button, % "x15 yp+15 gPickPatternSettingColor vPatternSettingColorPick_" . settingUnderscore, Pick Color
             Gui, %targetGui%:Add, Edit, % "cBlack x+5 w100 vPatternSettingColor_" . settingUnderscore,
@@ -1038,19 +1040,22 @@ GetSettingInfo(settingUnderscore) {
 
 InitMetaDataItemWorldOptions(metadata) {
     itemWorldOptionsMetaData := {}
-    itemWorldOptionsMetaData.displayOrder := ["targetItemType", "targetItemSort", "targetItemSortOrder", "targetItemRarity", "lootTarget", "bribe", "farmLevels"]
+    itemWorldOptionsMetaData.displayOrder := ["targetItemType", "targetItemSort", "targetItemSortOrder", "prioritizeEquippedItems", "targetItemRarity", "lootTarget", "bribe", "farmLevels"]
     itemWorldOptionsMetaData.targetItemType := {}
     itemWorldOptionsMetaData.targetItemType.type := "Radio"
     itemWorldOptionsMetaData.targetItemType.options := ["armor", "weapon"]
     itemWorldOptionsMetaData.targetItemSort := {}
     itemWorldOptionsMetaData.targetItemSort.type := "Radio"
-    itemWorldOptionsMetaData.targetItemSort.options := ["gained", "rarity"]
+    itemWorldOptionsMetaData.targetItemSort.options := ["gained", "rarity", "retain"]
     itemWorldOptionsMetaData.targetItemRarity := {}
     itemWorldOptionsMetaData.targetItemRarity.type := "Radio"
     itemWorldOptionsMetaData.targetItemRarity.options := ["any", "legendary", "rareOrLegendary", "rare", "common"]
     itemWorldOptionsMetaData.targetItemSortOrder := {}
     itemWorldOptionsMetaData.targetItemSortOrder.type := "Radio"
-    itemWorldOptionsMetaData.targetItemSortOrder.options := ["ascending", "descending"]
+    itemWorldOptionsMetaData.targetItemSortOrder.options := ["ascending", "descending", "retain"]
+    itemWorldOptionsMetaData.prioritizeEquippedItems := {}
+    itemWorldOptionsMetaData.prioritizeEquippedItems.type := "Radio"
+    itemWorldOptionsMetaData.prioritizeEquippedItems.options := ["yes", "no", "retain"]
     itemWorldOptionsMetaData.lootTarget := {}
     itemWorldOptionsMetaData.lootTarget.type := "Radio"
     itemWorldOptionsMetaData.lootTarget.options := ["any", "legendary", "rareOrLegendary", "rare"]

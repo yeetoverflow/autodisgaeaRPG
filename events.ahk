@@ -83,11 +83,11 @@ CharacterGate1() {
             ScrollUntilDetect(patterns.dimensionGate.events.banners.characterGate1)
             sleep 3000
         }
-        else if InStr(result.comment, "events.characterGate.enter") || InStr(result.comment, "stage.threeStars") || InStr(result.comment, "battle.start") {
+        else if InStr(result.comment, "events.characterGate.enter") || InStr(result.comment, "stage.threeStars") {
             ClickResult(result)
             sleep 1000
         }
-        else if InStr(result.comment, "companions.title") || InStr(result.comment, "battle.auto") || InStr(result.comment, "battle.prompt.battleAgain") || InStr(result.comment, "touchScreen") {
+        else if InStr(result.comment, "companions.title") || InStr(result.comment, "battle.auto") || InStr(result.comment, "battle.prompt.battleAgain") || InStr(result.comment, "touchScreen") || InStr(result.comment, "battle.start") {
             sleep 500
             DoBattle(battleOptions)
             PollPattern(loopTargets, { clickPattern : patterns.battle.done, pollInterval : 250 })
@@ -128,9 +128,10 @@ EventAutoClear() {
             ScrollUntilDetect(patterns.dimensionGate.events.banners.story)
             sleep 3000
         }
-        else if InStr(result.comment, "battle.start") {
-            ClickResult(result)
-            sleep 1000
+        else if InStr(result.comment, "battle.start") || InStr(result.comment, "companions.title") {
+            sleep 500
+            DoBattle(battleOptions)
+            PollPattern(loopTargets, { clickPattern : patterns.battle.done, pollInterval : 250 })
         }
         else if InStr(result.comment, "general.autoClear.new") || InStr(result.comment, "general.autoClear.skip") || InStr(result.comment, "general.autoClear.areaClear") {
             ClickResult(result)
@@ -140,11 +141,6 @@ EventAutoClear() {
             if InStr(result.comment, "general.autoClear.skip") {
                 PollPattern(loopTargets, { clickPattern : patterns.battle.done })
             }
-        }
-        else if InStr(result.comment, "companions.title") {
-            sleep 500
-            DoBattle(battleOptions)
-            PollPattern(loopTargets, { clickPattern : patterns.battle.done, pollInterval : 250 })
         }
         else if InStr(result.comment, "raid.message") {
             HandleRaid()

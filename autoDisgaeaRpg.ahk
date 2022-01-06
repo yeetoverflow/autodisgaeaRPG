@@ -194,10 +194,6 @@ AutoClear() {
     battleOptions.donePatterns := [patterns.raid.appear.advanceInStory]
     battleOptions.startPatterns := [patterns.battle.start]
 
-    targetCompanion := []
-    for k, v in battleOptions.companions
-        targetCompanion.push(patterns["companions"][v])
-
     loopTargets := [patterns.general.autoClear.new, patterns.companions.title, patterns.general.autoClear.skip, patterns.general.autoClear.areaClear, patterns.raid.appear.advanceInStory]
     Loop {
         result := PollPattern(loopTargets)

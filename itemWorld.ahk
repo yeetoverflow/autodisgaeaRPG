@@ -20,6 +20,7 @@ GrindItemWorld(itemWorldOptions, oneTime := false) {
     
     targetItemSort := itemWorldOptions.targetItemSort
     targetItemSortOrder := itemWorldOptions.targetItemSortOrder
+    prioritizeEquippedItems := itemWorldOptions.prioritizeEquippedItems
     targetItemSortOrderInverse := targetItemSortOrder = "ascending" ? "descending" : "ascending"
     lootTarget := itemWorldOptions.lootTarget
     bribe := itemWorldOptions.bribe
@@ -69,17 +70,27 @@ GrindItemWorld(itemWorldOptions, oneTime := false) {
             
             if (!sortDone) {
                 PollPattern(patterns.sort.button, { doClick : true, predicatePattern : patterns.sort.title })
-                if (FindPattern(patterns["sort"][targetItemSort]["disabled"], { variancePct : 20 }).IsSuccess) {
+                if (targetItemSort != "retain" && FindPattern(patterns["sort"][targetItemSort]["disabled"], { variancePct : 20 }).IsSuccess) {
                     PollPattern(patterns["sort"][targetItemSort]["disabled"], { variancePct : 20, doClick : true, predicatePattern : patterns["sort"][targetItemSort]["enabled"], pollInterval : 2000 })
                     sleep 100
                 }
-                if (FindPattern(patterns["sort"][targetItemSortOrderInverse]["checked"], { variancePct: 5 }).IsSuccess) {
+
+                if (targetItemSortOrder != "retain" && FindPattern(patterns["sort"][targetItemSortOrderInverse]["checked"], { variancePct: 5 }).IsSuccess) {
                     PollPattern(patterns["sort"][targetItemSortOrder]["label"], { variancePct: 5, doClick : true, offsetX : 40, predicatePattern : patterns["sort"][targetItemSortOrder]["checked"], pollInterval : 2000 })
                     sleep 100
                 }
-                if (FindPattern(patterns["sort"]["prioritizeEquippedItems"]["checked"], { variancePct: 5 }).IsSuccess) {
-                    PollPattern(patterns["sort"]["prioritizeEquippedItems"]["checked"], { variancePct: 5, doClick : true, offsetX : 40, predicatePattern : patterns["sort"]["prioritizeEquippedItems"]["unchecked"], pollInterval : 2000 })
-                    sleep 100
+
+                switch (prioritizeEquippedItems) {
+                    case "yes":
+                        if (FindPattern(patterns["sort"]["prioritizeEquippedItems"]["unchecked"], { variancePct: 5 }).IsSuccess) {
+                            PollPattern(patterns["sort"]["prioritizeEquippedItems"]["unchecked"], { variancePct: 5, doClick : true, offsetX : 40, predicatePattern : patterns["sort"]["prioritizeEquippedItems"]["checked"], pollInterval : 2000 })
+                            sleep 100
+                        }
+                    case "no":
+                        if (FindPattern(patterns["sort"]["prioritizeEquippedItems"]["checked"], { variancePct: 5 }).IsSuccess) {
+                            PollPattern(patterns["sort"]["prioritizeEquippedItems"]["checked"], { variancePct: 5, doClick : true, offsetX : 40, predicatePattern : patterns["sort"]["prioritizeEquippedItems"]["unchecked"], pollInterval : 2000 })
+                            sleep 100
+                        }
                 }
 
                 PollPattern(patterns.prompt.ok, { doClick : true, predicatePattern : itemWorld.title })

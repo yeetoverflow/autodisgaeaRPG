@@ -20,7 +20,8 @@ GenerateBluestacksPatterns() {
     patterns.tabs.facilities := {}
     patterns.tabs.facilities.tab := "|<>0x621620@0.80$31.Tzzzzbzzzslzzzs8Tzzs47zzs20zzk10DzU1U7zk0k3zw0s1zy0S1zzUTlzzszzzzzzTzzzzDzzzzjzzzzhzzzzhTzzzwzzzzw7zzzw0zzzs07zzU00Dy0003s000DzU07zzzs3zzzw1jzzw2"
     patterns.tabs.facilities.fishingFleet := "|<>0x8EADC2@0.80$31.87xU240RyaUS1atsD0DSR7U7bSg03zzK0lzzdVBDzps3Uzuq903oPaU0MTlw03Dwy003zz000zyU000CE0003c0040w002060000000800007U0003w0001zk000zy00020000040E0050I002U+001E000sjVbsE"
-    
+    patterns.tabs.summon := "|<>0x81B1FF@0.80$14.200s0Dy3z1zkjwTzDzszy3zkS0701U8"
+
     patterns.touchScreen := ["|<>0xF6E8C2@0.80$47.0000k00000sDkQ000Dnzty000zzzzy003zzzzy00Dzzzzz00zzzzzz03zz77zz0Dzy47zz0zy804Ty3zk000DyDz0000DysM00004700000006"
                             , "|<>0xECDDAD@0.80$48.zz0000zz7zs007zw7zy00Tzs3zz00zzk1zzU1zzU0zzU1zzU0zzU1zz00zzU1zz00zzUFzz00Tzzzzy00Tzzzzy000zzzz0000Tzzy0000Dzzw00007zzs000063sM000003k0000000U000U"]
 
