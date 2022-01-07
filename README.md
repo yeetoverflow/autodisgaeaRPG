@@ -35,6 +35,7 @@ AutoHotkey project that automates the grindy parts of DisgaeaRPG. The program do
   * Device
       * (Required) Device profile => Choose predefined profile => Samsung Galaxy S20 Ultra
 * Install DisgaeaRPG
+* Note: If you are using a 4k monitor and nox emulator, the top and side bars are larger. You will need to open nox instance while you are at a lower resolution. After that you can change your resolution back.
 
 ### Macro app
 * Download [autoDisgaeaRPG](https://raw.githubusercontent.com/yeetoverflow/autodisgaeaRPG/main/exe/autoDisgaeaRpg.exe) (Recommended) Place this in a folder.
@@ -51,7 +52,6 @@ AutoHotkey project that automates the grindy parts of DisgaeaRPG. The program do
        * If clicking resize does not work, your resolution is not the target resolution. Follow the instruction above (Set desktop resolution settings). Additionally, you can attempt to set a higher resolution for your desktop if available.
     * If verify says good on both metrics, you passed
     * Note: If you are using multiple monitors, only the main monitor resolution counts so depending on your setup you might need to change your main monitor
-    * Note: If you are using a 4k monitor and nox emulator, the top and side bars are larger. You will need to open nox instance while you are at a lower resolution. After starting you can change your resolution back.
 * Patterns test
     * Go to stronghold in emulator instance 
     * Go to Patterns tab in autoDisgaeaRPG
