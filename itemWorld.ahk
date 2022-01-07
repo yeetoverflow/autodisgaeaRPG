@@ -274,30 +274,50 @@ DoItemDrop(lootTarget) {
             SetStatus(A_ThisFunc . ": Done", 2)
             Break
         }
-        
+
         ;check 4 times just in case
-        loop 4 {
-            result := FindPattern(patterns.enemy.target)
+        ; loop 4 {
+        ;     result := FindPattern(patterns.enemy.target)
 
-            while (!result.IsSuccess) {
-                PollPattern(patterns.enemy.A, { variancePct : 15, doClick : true, bounds : { x1 : 270, x2 : 330, y1 : 420, y2 : 470 }, offsetX : 40, offsetY : -30 })
-                sleep 500
+        ;     while (!result.IsSuccess) {
+        ;         PollPattern(patterns.enemy.A, { variancePct : 15, doClick : true, bounds : { x1 : 270, x2 : 330, y1 : 420, y2 : 470 }, offsetX : 40, offsetY : -30 })
+        ;         sleep 500
+        ;         result := FindPattern(patterns.enemy.target)
+        ;     }
+        ; }
+
+        ; count := 0
+        ; loop {
+        ;     if (FindPattern(patterns.battle.skills.label.IsSuccess)) {
+        ;         result := FindPattern(singleTargetActions)
+        ;         if (FindPattern(patterns.enemy.A, { bounds : { x1 : 270, x2 : 330, y1 : 420, y2 : 470 } }).IsSuccess) {
+        ;             ClickResult(result)
+        ;         }
+        ;     }
+            
+        ;     result := FindPattern(patterns.enemy.A, { bounds : { x1 : 270, x2 : 330, y1 : 420, y2 : 470 } })
+        ;     count++
+        ; } until (count > 8 && !result.IsSuccess && !FindPattern(patterns.enemy.target).IsSuccess)
+
+        Loop {
+            FindPattern(patterns.enemy.A, { doClick : true, bounds : { x1 : 270, x2 : 330, y1 : 420, y2 : 470 }, offsetX : 40, offsetY : -30 })
+
+            Loop, 8 {
                 result := FindPattern(patterns.enemy.target)
-            }
-        }
+            } until (result.IsSuccess)
+        } until (result.IsSuccess)
 
-        count := 0
         loop {
             if (FindPattern(patterns.battle.skills.label.IsSuccess)) {
-                result := FindPattern(singleTargetActions)
-                if (FindPattern(patterns.enemy.A, { variancePct : 15, bounds : { x1 : 270, x2 : 330, y1 : 420, y2 : 470 } }).IsSuccess) {
-                    ClickResult(result)
+                Loop, 8 {
+                    result := FindPattern(patterns.enemy.A, { bounds : { x1 : 270, x2 : 330, y1 : 420, y2 : 470 } })
+                } until (result.IsSuccess)
+
+                if (result.IsSuccess) {
+                    FindPattern(singleTargetActions, { doClick : true })
                 }
             }
-            
-            result := FindPattern(patterns.enemy.A, { variancePct : 15, bounds : { x1 : 270, x2 : 330, y1 : 420, y2 : 470 } })
-            count++
-        } until (count > 8 && !result.IsSuccess && !FindPattern(patterns.enemy.target).IsSuccess)
+        } until (!result.IsSuccess)
         
         sleep 1500
         result := FindDrop()
