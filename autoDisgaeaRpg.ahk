@@ -32,7 +32,8 @@ msgToMode := { 0x1001 : "EventStoryFarm"
              , 0x1020 : "AutoFish"
              , 0x1021 : "CharacterGate1"
              , 0x1022 : "EventReview1"
-             , 0x1023 : "AutoDailySummon"  }
+             , 0x1023 : "AutoDailySummon"
+             , 0x1024 : "AutoDope"  }
 modeToMsg := {}
 handlers := {}
 
@@ -290,6 +291,39 @@ AutoDailySummon() {
         }
         else if InStr(result.comment, "summon.result") {
             FindPattern(patterns.stage.back, { doClick : true })
+        }
+
+        sleep, 250
+    } until (done)
+
+    if (mode) {
+        ExitApp
+    }
+}
+
+AutoDope() {
+    SetStatus(A_ThisFunc)
+    global patterns, settings, mode
+
+
+    done := false
+    Loop {
+        result := FindPattern([patterns.stronghold.gemsIcon, patterns.netherHospital.title])
+        
+        if InStr(result.comment, "stronghold.gemsIcon") {
+            PollPattern(patterns.tabs.facilities.tab, { doClick : true })
+            sleep 500
+            PollPattern(patterns.tabs.facilities.netherHospital, { doClick : true })
+            sleep 3000
+        } else if InStr(result.comment, "netherHospital.title") {
+            result := FindPattern(patterns.netherHospital.available)
+
+            if (result.IsSuccess) {
+                PollPattern(patterns.netherHospital.available, { doClick : true, predicatePattern : patterns.prompt.close, clickPattern : patterns.touchScreen })
+                PollPattern(patterns.prompt.close, { doClick : true, predicatePattern :  patterns.netherHospital.title})
+            }
+
+            done := true
         }
 
         sleep, 250
@@ -590,7 +624,7 @@ Recover(mode) {
 
     if (result.IsSuccess)
     {
-        result := FindPattern(patterns.prompt.dateHasChanged)
+        result := FindPattern([patterns.prompt.dateHasChanged, patterns.prompt.invalidRequest])
         if (result.IsSuccess) {
             FindPattern(patterns.prompt.ok, { doClick : true, predicatePattern : patterns.criware })
             doRecover := true

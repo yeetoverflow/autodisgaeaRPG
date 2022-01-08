@@ -35,6 +35,8 @@ ResetUI() {
     Gui Add, Text, cBlack xp wp hp center vProgressText_AutoFriends BackgroundTrans, Start AutoFriends
     Gui, Add, Progress, x+10 vProgressBar_AutoDailySummon -Smooth w120 h18 c0x66FF66 border
     Gui Add, Text, cBlack xp wp hp center vProgressText_AutoDailySummon BackgroundTrans, Start AutoDailySummon
+    Gui, Add, Progress, x+10 vProgressBar_AutoDope -Smooth w80 h18 c0x66FF66 border
+    Gui Add, Text, cBlack xp wp hp center vProgressText_AutoDope BackgroundTrans, Start AutoDope
     Gui, Add, Progress, xs+10 vProgressBar_AutoDarkAssembly -Smooth w120 h18 c0x66FF66 border
     Gui Add, Text, cBlack xp wp hp center vProgressText_AutoDarkAssembly BackgroundTrans, Start AutoDarkAssembly
     Gui, Add, Progress, x+10 w50 h18 c0x66FF66 vsettingsmodal_general_darkAssembly
