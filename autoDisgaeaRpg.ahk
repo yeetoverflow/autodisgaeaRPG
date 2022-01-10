@@ -471,7 +471,7 @@ AutoDarkAssembly(targetBill := "") {
             PollPattern(patterns.tabs.facilities.darkAssembly, { doClick : true })
             sleep 3000
         } else if InStr(result.comment, "darkAssembly.title") {
-            ScrollUntilDetect(patterns.darkAssembly.bills[targetBill], { variancePct : 10 })
+            ScrollUntilDetect(patterns.darkAssembly.bills[targetBill], { variancePct : 5 })
         } else if InStr(result.comment, "prompt.corner") {
             FindPattern(patterns.prompt.yes, { doClick : true })
             sleep 2000
@@ -664,13 +664,15 @@ GoToStronghold() {
     
     done := false
     Loop {
-        result := FindPattern([patterns.stronghold.gemsIcon, patterns.tabs.stronghold])
+        result := FindPattern([patterns.stronghold.gemsIcon, patterns.tabs.stronghold, patterns.raid.message])
         
         if InStr(result.comment, "stronghold.gemsIcon") {
             done := true
         } else if InStr(result.comment, "tabs.stronghold") {
             ClickResult(result)
             Sleep, 2000
+        } else if InStr(result.comment, "raid.message") {
+            HandleRaid()
         }
 
         sleep, 250

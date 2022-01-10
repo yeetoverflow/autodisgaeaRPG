@@ -390,6 +390,8 @@ EventRaidLoop() {
     global patterns, settings
     SetStatus(A_ThisFunc)
 
+    loopNumChecksBeforeRefresh := settings.eventOptions.raid.loopNumChecksBeforeRefresh ? settings.eventOptions.raid.loopNumChecksBeforeRefresh : 50
+
     loopTargets := [patterns.stronghold.gemsIcon, patterns.dimensionGate.background, patterns.dimensionGate.events.select, patterns.raid.activeBoss]
     Loop {
         result := PollPattern(loopTargets)
@@ -408,7 +410,7 @@ EventRaidLoop() {
         }
         else if InStr(result.comment, "raid.activeBoss") {
             Loop {
-                result := PollPattern(patterns.raid.helper, { maxCount : 100 })
+                result := PollPattern(patterns.raid.helper, { maxCount : loopNumChecksBeforeRefresh })
                 if (result.IsSuccess) {
                     PollPattern(patterns.raid.helper, { doClick : true, predicatePattern : patterns.battle.start })
                 } else {

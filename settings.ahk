@@ -97,13 +97,15 @@ GenerateSettingMetadata() {
     metadata.eventOptions.story.farmTarget.type := "Radio"
     metadata.eventOptions.story.farmTarget.options := ["oneStar", "exp", "hl"]
     metadata.eventOptions.raid := {}
-    metadata.eventOptions.raid.displayOrder := ["appearAction", "fightAttempts"]
+    metadata.eventOptions.raid.displayOrder := ["appearAction", "fightAttempts", "loopNumChecksBeforeRefresh"]
     metadata.eventOptions.raid.appearAction := {}
     metadata.eventOptions.raid.appearAction.type := "Radio"
     metadata.eventOptions.raid.appearAction.options := ["askForHelp", "fight", "advanceInStory", "fightThenPullOut"]
     metadata.eventOptions.raid.fightAttempts := {}
     metadata.eventOptions.raid.fightAttempts.type := "Radio"
     metadata.eventOptions.raid.fightAttempts.options := ["1", "2", "3"]
+    metadata.eventOptions.raid.loopNumChecksBeforeRefresh := {}
+    metadata.eventOptions.raid.loopNumChecksBeforeRefresh.type := "Number"
 
     metadata.general := {}
     metadata.general.darkAssembly := {}
@@ -154,15 +156,11 @@ GenerateSettingMetadata() {
 
     InitMetaDataItemWorldOptions(metadata)
 
-
-    ; metadata.dailies := ["AutoShop", "AutoFriends", "AutoDailySummon", "AutoDope", "AutoFish", "AutoDarkAssemblyHL", "AutoDailyDarkGateHL"
-    ;                     , "AutoDarkAssemblyMatsHuman", "AutoDailyDarkGateMatsHuman", "AutoDarkAssemblyMatsMonster", "AutoDailyDarkGateMatsMonster"]
-
     metadata.dailies := {}
     metadata.dailies.displayOrder := ["AutoShop", "AutoFriends", "AutoDailySummon", "AutoDope", "AutoFish", "AutoDarkAssemblyHL", "AutoDailyDarkGateHL"
                                     , "AutoDarkAssemblyDrops", "AutoDailyDarkGateMatsHuman", "AutoDarkAssemblyDrops2", "AutoDailyDarkGateMatsMonster"
                                     , "AutoDarkAssemblyEvent60", "EventStory500Pct", "DailyEventStoryFarm", "CharacterGate1", "EventReview1"
-                                    , "GrindItemWorldLoop1", "GrindItemWorldLoop2"]
+                                    , "GrindItemWorldLoop1", "GrindItemWorldLoop2", "EventRaidLoop"]
     dailiesOptions := ""
     for k, v in metadata.dailies.displayOrder {
         metadata.dailies[v] := {}
