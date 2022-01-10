@@ -15,9 +15,9 @@ msgToMode := { 0x1001 : "EventStoryFarm"
              , 0x1003 : "EventRaidLoop"
              , 0x1004 : "AutoShop"
              , 0x1005 : "AutoDarkAssembly"
-            ;  , 0x1006 : "DoDarkGateHL"
-            ;  , 0x1007 : "DoDarkGateMatsHuman"
-            ;  , 0x1008 : "DoDarkGateMatsMonster"
+             , 0x1006 : "AutoDailyDarkGateHL"
+             , 0x1007 : "AutoDailyDarkGateMatsHuman"
+             , 0x1008 : "AutoDailyDarkGateMatsMonster"
              , 0x1009 : "AutoClear"
              , 0x1010 : "FarmItemWorldSingle"
              , 0x1011 : "EventAutoClear"
@@ -34,7 +34,12 @@ msgToMode := { 0x1001 : "EventStoryFarm"
              , 0x1022 : "EventReview1"
              , 0x1023 : "AutoDailySummon"
              , 0x1024 : "AutoDope"
-             , 0x1025 : "AutoDarkGate"  }
+             , 0x1025 : "AutoDarkGate"
+             , 0x1026 : "AutoDarkAssemblyHL"
+             , 0x1027 : "AutoDarkAssemblyDrops"
+             , 0x1028 : "AutoDarkAssemblyEvent60"
+             , 0x1029 : "AutoDailies"
+             , 0x1030 : "GoToStronghold" }
 modeToMsg := {}
 handlers := {}
 
@@ -103,7 +108,7 @@ Battle() {
         GuiControl,,battleCount, % battleCount
     }
 
-    if (mode) {
+    if (mode && mode != "AutoDailies") {
         ExitApp
     }
 }
@@ -227,7 +232,7 @@ AutoShop() {
         sleep, 250
     } until (done)
 
-    if (mode) {
+    if (mode && mode != "AutoDailies") {
         ExitApp
     }
 }
@@ -267,7 +272,7 @@ AutoFriends() {
         sleep, 250
     } until (done)
 
-    if (mode) {
+    if (mode && mode != "AutoDailies") {
         ExitApp
     }
 }
@@ -297,7 +302,7 @@ AutoDailySummon() {
         sleep, 250
     } until (done)
 
-    if (mode) {
+    if (mode && mode != "AutoDailies") {
         ExitApp
     }
 }
@@ -330,21 +335,131 @@ AutoDope() {
         sleep, 250
     } until (done)
 
-    if (mode) {
+    if (mode && mode != "AutoDailies") {
         ExitApp
     }
 }
 
-AutoDarkAssembly() {
+AutoFish() {
+    SetStatus(A_ThisFunc)
+    global patterns, settings, mode
+
+
+    done := false
+    Loop {
+        result := FindPattern([patterns.stronghold.gemsIcon, patterns.fishingFleet.title])
+        
+        if InStr(result.comment, "stronghold.gemsIcon") {
+            PollPattern(patterns.tabs.facilities.tab, { doClick : true })
+            sleep 500
+            PollPattern(patterns.tabs.facilities.fishingFleet, { doClick : true })
+            sleep 3000
+        } else if InStr(result.comment, "fishingFleet.title") {
+            fleets := ["x73 y348", "x231 y506", "x405 y364"]
+            maxCrabMiso := settings.fishingFleet.bribe.maxCrabMiso
+            maxGoldBar := settings.fishingFleet.bribe.maxGoldBar
+            maxGoldenCandy := settings.fishingFleet.bribe.maxGoldenCandy
+
+            for k, v in fleets {
+                Click(v)
+                sleep 1000
+
+                result := FindPattern(patterns.fishingFleet.complete)
+
+                if (result.IsSuccess) {
+                    PollPattern(patterns.fishingFleet.return, { doClick : true, predicatePattern : patterns.fishingFleet.setSail, clickPattern : patterns.touchScreen })
+                    PollPattern(patterns.fishingFleet.setSail, { doClick : true, predicatePattern : patterns.fishingFleet.bribery.button })
+                    sleep 1000
+
+                    if (maxCrabMiso) {
+                        PollPattern(patterns.fishingFleet.bribery.button, { doClick : true, predicatePattern : patterns.fishingFleet.bribery.goldenCandy })
+                        FindPattern(patterns.fishingFleet.bribery.crabMiso, { doClick : true })
+
+                        Loop, % maxCrabMiso {
+                            if (A_Index = "1") {
+                                Continue
+                            }
+
+                            sleep 500
+                            FindPattern(patterns.fishingFleet.bribery.add, { doClick : true })
+                        }
+                        sleep 500
+                        PollPattern(patterns.fishingFleet.bribery.use, { doClick : true, predicatePattern : patterns.prompt.close })
+                        sleep 500
+                        PollPattern(patterns.prompt.close, { doClick : true, predicatePattern : patterns.fishingFleet.setSail })
+                        sleep 1000
+                    }
+
+                    if (maxGoldBar) {
+                        PollPattern(patterns.fishingFleet.bribery.button, { doClick : true, predicatePattern : patterns.fishingFleet.bribery.goldenCandy })
+                        FindPattern(patterns.fishingFleet.bribery.goldBar, { doClick : true })
+
+                        Loop, % maxGoldBar {
+                            if (A_Index = "1") {
+                                Continue
+                            }
+
+                            sleep 500
+                            FindPattern(patterns.fishingFleet.bribery.add, { doClick : true })
+                        }
+                        sleep 500
+                        PollPattern(patterns.fishingFleet.bribery.use, { doClick : true, predicatePattern : patterns.prompt.close })
+                        sleep 500
+                        PollPattern(patterns.prompt.close, { doClick : true, predicatePattern : patterns.fishingFleet.setSail })
+                        sleep 1000
+                    }
+
+                    if (maxGoldenCandy) {
+                        PollPattern(patterns.fishingFleet.bribery.button, { doClick : true, predicatePattern : patterns.fishingFleet.bribery.goldenCandy })
+                        FindPattern(patterns.fishingFleet.bribery.goldenCandy, { doClick : true })
+
+                        Loop, % maxGoldenCandy {
+                            if (A_Index = "1") {
+                                Continue
+                            }
+
+                            sleep 500
+                            FindPattern(patterns.fishingFleet.bribery.add, { doClick : true })
+                        }
+                        sleep 500
+                        PollPattern(patterns.fishingFleet.bribery.use, { doClick : true, predicatePattern : patterns.prompt.close })
+                        sleep 500
+                        PollPattern(patterns.prompt.close, { doClick : true, predicatePattern : patterns.fishingFleet.setSail })
+                        sleep 1000
+                    }
+
+                    PollPattern(patterns.fishingFleet.setSail, { doClick : true })
+                    sleep 200
+                }
+
+                sleep 2000
+            }
+
+            done := true
+        }
+
+        sleep, 250
+    } until (done)
+
+    if (mode && mode != "AutoDailies") {
+        ExitApp
+    }
+}
+
+AutoDarkAssembly(targetBill := "") {
     global patterns, settings, mode
     SetStatus(A_ThisFunc)
 
-    targetBill := settings.general.darkAssembly.targetBill
+    
     maxCrabMiso := settings.general.darkAssembly.maxCrabMiso
     maxGoldBar := settings.general.darkAssembly.maxGoldBar
     maxGoldenCandy := settings.general.darkAssembly.maxGoldenCandy
 
     senators := ["x315 y210", "x215 y265", "x115 y296", "x428 y293", "x227 y387", "x74 y451", "x427 y405", "x176 y521"]
+
+    if (!targetBill) {
+        targetBill := settings.general.darkAssembly.targetBill
+    }
 
     done := false
     Loop {
@@ -467,115 +582,99 @@ AutoDarkAssembly() {
         sleep, 250
     } until (done)
 
+    if (mode && mode != "AutoDailies") {
+        ExitApp
+    }
+}
+
+AutoDarkAssemblyHL() {
+    AutoDarkAssembly("hl")
+}
+
+AutoDarkAssemblyDrops() {
+    AutoDarkAssembly("drops")
+}
+
+AutoDarkAssemblyDrops2() {
+    AutoDarkAssembly("drops")
+}
+
+AutoDarkAssemblyEvent60() {
+    AutoDarkAssembly("event60mins")
+}
+
+AutoDailyDarkGateHL() {
+    global settings
+    AutoDarkGate("hl", { count : settings.darkGateOptions.hl.count, skip : settings.darkGateOptions.hl.skip })
+}
+
+AutoDailyDarkGateMatsHuman() {
+    global settings
+    AutoDarkGate("matsHuman", { count : settings.darkGateOptions.matsHuman.count, skip : settings.darkGateOptions.matsHuman.skip })
+}
+
+AutoDailyDarkGateMatsMonster() {
+    global settings
+    AutoDarkGate("matsMonster", { count : settings.darkGateOptions.matsMonster.count, skip : settings.darkGateOptions.matsMonster.skip })
+}
+
+AutoDailies() {
+    global settings, metadata, guiHwnd, mode
+
+    currentDaily := settings.dailies.current
+    dailies := metadata.dailies.displayOrder
+
+    if (!currentDaily) {
+        currentDaily := dailies.1
+        settings.dailies.current := dailies.1
+        settings.save(true)
+        Control, ChooseString, % currentDaily, ComboBox1,  % "ahk_id " . guiHwnd
+        foundCurrent := true
+    }
+
+    for k, v in dailies {
+        if (!foundCurrent && v != currentDaily) {
+            Continue
+        } else if (!foundCurrent && v == currentDaily) {
+            foundCurrent := true
+        }
+        else {
+            currentDaily := v
+            settings.dailies.current := v
+            settings.save(true)
+            Control, ChooseString, % currentDaily, ComboBox1,  % "ahk_id " . guiHwnd
+        }
+
+        val := settings["dailies"][v]
+
+        if (settings["dailies"][v]) {
+            func := Func(v)
+            %func%()
+            GoToStronghold()
+        }
+    }
+
     if (mode) {
         ExitApp
     }
 }
 
-AutoFish() {
-    SetStatus(A_ThisFunc)
-    global patterns, settings, mode
-
-
+GoToStronghold() {
+    global patterns, mode
+    
     done := false
     Loop {
-        result := FindPattern([patterns.stronghold.gemsIcon, patterns.fishingFleet.title])
+        result := FindPattern([patterns.stronghold.gemsIcon, patterns.tabs.stronghold])
         
         if InStr(result.comment, "stronghold.gemsIcon") {
-            PollPattern(patterns.tabs.facilities.tab, { doClick : true })
-            sleep 500
-            PollPattern(patterns.tabs.facilities.fishingFleet, { doClick : true })
-            sleep 3000
-        } else if InStr(result.comment, "fishingFleet.title") {
-            fleets := ["x73 y348", "x231 y506", "x405 y364"]
-            maxCrabMiso := settings.fishingFleet.bribe.maxCrabMiso
-            maxGoldBar := settings.fishingFleet.bribe.maxGoldBar
-            maxGoldenCandy := settings.fishingFleet.bribe.maxGoldenCandy
-
-            for k, v in fleets {
-                Click(v)
-                sleep 1000
-
-                result := FindPattern(patterns.fishingFleet.complete)
-
-                if (result.IsSuccess) {
-                    PollPattern(patterns.fishingFleet.return, { doClick : true, predicatePattern : patterns.fishingFleet.setSail, clickPattern : patterns.touchScreen })
-                    PollPattern(patterns.fishingFleet.setSail, { doClick : true, predicatePattern : patterns.fishingFleet.bribery.button })
-                    sleep 1000
-
-                    if (maxCrabMiso) {
-                        PollPattern(patterns.fishingFleet.bribery.button, { doClick : true, predicatePattern : patterns.fishingFleet.bribery.goldenCandy })
-                        FindPattern(patterns.fishingFleet.bribery.crabMiso, { doClick : true })
-
-                        Loop, % maxCrabMiso {
-                            if (A_Index = "1") {
-                                Continue
-                            }
-
-                            sleep 500
-                            FindPattern(patterns.fishingFleet.bribery.add, { doClick : true })
-                        }
-                        sleep 500
-                        PollPattern(patterns.fishingFleet.bribery.use, { doClick : true, predicatePattern : patterns.prompt.close })
-                        sleep 500
-                        PollPattern(patterns.prompt.close, { doClick : true, predicatePattern : patterns.fishingFleet.setSail })
-                        sleep 1000
-                    }
-
-                    if (maxGoldBar) {
-                        PollPattern(patterns.fishingFleet.bribery.button, { doClick : true, predicatePattern : patterns.fishingFleet.bribery.goldenCandy })
-                        FindPattern(patterns.fishingFleet.bribery.goldBar, { doClick : true })
-
-                        Loop, % maxGoldBar {
-                            if (A_Index = "1") {
-                                Continue
-                            }
-
-                            sleep 500
-                            FindPattern(patterns.fishingFleet.bribery.add, { doClick : true })
-                        }
-                        sleep 500
-                        PollPattern(patterns.fishingFleet.bribery.use, { doClick : true, predicatePattern : patterns.prompt.close })
-                        sleep 500
-                        PollPattern(patterns.prompt.close, { doClick : true, predicatePattern : patterns.fishingFleet.setSail })
-                        sleep 1000
-                    }
-
-                    if (maxGoldenCandy) {
-                        PollPattern(patterns.fishingFleet.bribery.button, { doClick : true, predicatePattern : patterns.fishingFleet.bribery.goldenCandy })
-                        FindPattern(patterns.fishingFleet.bribery.goldenCandy, { doClick : true })
-
-                        Loop, % maxGoldenCandy {
-                            if (A_Index = "1") {
-                                Continue
-                            }
-
-                            sleep 500
-                            FindPattern(patterns.fishingFleet.bribery.add, { doClick : true })
-                        }
-                        sleep 500
-                        PollPattern(patterns.fishingFleet.bribery.use, { doClick : true, predicatePattern : patterns.prompt.close })
-                        sleep 500
-                        PollPattern(patterns.prompt.close, { doClick : true, predicatePattern : patterns.fishingFleet.setSail })
-                        sleep 1000
-                    }
-
-                    PollPattern(patterns.fishingFleet.setSail, { doClick : true })
-                    sleep 200
-                }
-
-                sleep 2000
-            }
-
             done := true
+        } else if InStr(result.comment, "tabs.stronghold") {
+            ClickResult(result)
+            Sleep, 2000
         }
 
         sleep, 250
     } until (done)
-
-    if (mode) {
-        ExitApp
-    }
 }
 
 Verify() {

@@ -94,7 +94,7 @@ AutoDarkGate(type = "", opts = "") {
         }
     }
 
-    if (mode) {
+    if (mode && mode != "AutoDailies") {
         ExitApp
     }
 }

@@ -116,7 +116,7 @@ GrindItemWorld(itemWorldOptions, oneTime := false) {
         }
     }
 
-    if (mode) {
+    if (mode && mode != "AutoDailies") {
         ExitApp
     }
 }

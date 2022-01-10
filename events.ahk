@@ -52,7 +52,7 @@ EventReview1() {
         }
     }
 
-    if (mode) {
+    if (mode && mode != "AutoDailies") {
         ExitApp
     }
 }
@@ -97,7 +97,7 @@ CharacterGate1() {
         }
     }
 
-    if (mode) {
+    if (mode && mode != "AutoDailies") {
         ExitApp
     }
 }
@@ -148,10 +148,13 @@ EventAutoClear() {
     }
 }
 
-EventStoryFarm() {
+EventStoryFarm(battleCount := "") {
     global patterns, settings, guiHwnd, mode
     SetStatus(A_ThisFunc)
-    ControlGetText, battleCount, edit2, % "ahk_id " . guiHwnd
+
+    if (!battleCount) {
+        ControlGetText, battleCount, edit2, % "ahk_id " . guiHwnd
+    }
     SetStatus(battleCount, 2)
 
     battleOptions := settings.battleOptions.event
@@ -207,7 +210,7 @@ EventStoryFarm() {
         }
     }
 
-    if (mode) {
+    if (mode && mode != "AutoDailies") {
         ExitApp
     }
 }
@@ -378,7 +381,7 @@ EventStory500Pct() {
         }
     } until (done)
 
-    if (mode) {
+    if (mode && mode != "AutoDailies") {
         ExitApp
     }
 }
@@ -461,7 +464,7 @@ EventRaidAutoClaim() {
         }
     }
 
-    if (mode) {
+    if (mode && mode != "AutoDailies") {
         ExitApp
     }
 }
@@ -484,7 +487,7 @@ EventRaidAutoVault() {
         sleep 250
     }
 
-    if (mode) {
+    if (mode && mode != "AutoDailies") {
         ExitApp
     }
 }

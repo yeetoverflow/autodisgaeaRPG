@@ -102,7 +102,7 @@ InitPatternsCallback(key, value, parent, path) {
 
 DoBattle(battleOptions) {
     SetStatus(A_ThisFunc, 2)
-    global patterns, settings
+    global patterns, settings, guiHwnd
 
     targetCompanions := []
     for k, v in battleOptions.companions
@@ -133,6 +133,7 @@ DoBattle(battleOptions) {
             if (battleOptions.skipTicketCount) {
                 UseSkipTickets()
                 battleOptions.skipTicketCount--
+                ControlSetText, edit4, % battleOptions.skipTicketCount,  % "ahk_id " . guiHwnd
             }
             else {
                 ClickResult(result)

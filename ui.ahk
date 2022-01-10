@@ -29,6 +29,15 @@ ResetUI() {
     Gui Add, Text, cWhite xs+10, General
     Gui, Font, Normal
     Gui Add, Link, x+5,<a href="https://github.com/yeetoverflow/autodisgaeaRPG/blob/main/README.md#general-video">?</a>
+    Gui, Add, Progress, xs+10 vProgressBar_AutoDailies -Smooth w80 h18 c0x66FF66 border
+    Gui Add, Text, cBlack xp wp hp center vProgressText_AutoDailies BackgroundTrans, Start AutoDailies
+    Gui, Add, Progress, x+10 w50 h18 c0x66FF66 vsettingsmodal_dailies
+    Gui Add, Text, xp+5 wp hp r1 +0x4000 cBlack BackgroundTrans left, Settings
+    Gui Add, Text, x+10 cWhite, Start: 
+    AddSetting("settings_dailies_current", "1", { hideLabel : true, optsOverride : "x+10" } )
+    ; Gui Add, Text, x+10 cWhite, Current:
+    ; Gui Add, DropDownList, x+10 w100 uppercase, Red|Blue|Green|Yellow|Black
+    
     Gui, Add, Progress, xs+10 vProgressBar_AutoShop -Smooth w80 h18 c0x66FF66 border
     Gui Add, Text, cBlack xp wp hp center vProgressText_AutoShop BackgroundTrans, Start AutoShop
     Gui, Add, Progress, x+10 vProgressBar_AutoFriends -Smooth w100 h18 c0x66FF66 border
@@ -37,14 +46,31 @@ ResetUI() {
     Gui Add, Text, cBlack xp wp hp center vProgressText_AutoDailySummon BackgroundTrans, Start AutoDailySummon
     Gui, Add, Progress, x+10 vProgressBar_AutoDope -Smooth w80 h18 c0x66FF66 border
     Gui Add, Text, cBlack xp wp hp center vProgressText_AutoDope BackgroundTrans, Start AutoDope
+
+    Gui, Add, Progress, xs+10 vProgressBar_AutoFish -Smooth w120 h18 c0x66FF66 border
+    Gui Add, Text, cBlack xp wp hp center vProgressText_AutoFish BackgroundTrans, Start AutoFish
+    Gui, Add, Progress, x+10 w50 h18 c0x66FF66 vsettingsmodal_fishingFleet_bribe
+    Gui Add, Text, xp+5 wp hp r1 +0x4000 cBlack BackgroundTrans left, Settings
+
     Gui, Add, Progress, xs+10 vProgressBar_AutoDarkAssembly -Smooth w120 h18 c0x66FF66 border
     Gui Add, Text, cBlack xp wp hp center vProgressText_AutoDarkAssembly BackgroundTrans, Start AutoDarkAssembly
     Gui, Add, Progress, x+10 w50 h18 c0x66FF66 vsettingsmodal_general_darkAssembly
     Gui Add, Text, xp+5 wp hp r1 +0x4000 cBlack BackgroundTrans left, Settings
     AddSetting("settings_general_darkAssembly_targetBill", "1", { hideLabel : true, optsOverride : "x+10" } )
-    Gui, Add, Progress, xs+10 vProgressBar_AutoFish -Smooth w120 h18 c0x66FF66 border
-    Gui Add, Text, cBlack xp wp hp center vProgressText_AutoFish BackgroundTrans, Start AutoFish
-    Gui, Add, Progress, x+10 w50 h18 c0x66FF66 vsettingsmodal_fishingFleet_bribe
+
+    Gui, Add, Progress, xs+10 vProgressBar_AutoDailyDarkGateHL -Smooth w200 h18 c0x66FF66 border
+    Gui Add, Text, cBlack xp wp hp center vProgressText_AutoDailyDarkGateHL BackgroundTrans, Start AutoDailyDarkGateHL
+    Gui, Add, Progress, x+10 w50 h18 c0x66FF66 vsettingsmodal_darkGateOptions_hl
+    Gui Add, Text, xp+5 wp hp r1 +0x4000 cBlack BackgroundTrans left, Settings
+    
+    Gui, Add, Progress, xs+10 vProgressBar_AutoDailyDarkGateMatsHuman -Smooth w200 h18 c0x66FF66 border
+    Gui Add, Text, cBlack xp wp hp center vProgressText_AutoDailyDarkGateMatsHuman BackgroundTrans, Start AutoDailyDarkGateMatsHuman
+    Gui, Add, Progress, x+10 w50 h18 c0x66FF66 vsettingsmodal_darkGateOptions_matsHuman
+    Gui Add, Text, xp+5 wp hp r1 +0x4000 cBlack BackgroundTrans left, Settings
+
+    Gui, Add, Progress, xs+10 vProgressBar_AutoDailyDarkGateMatsMonster -Smooth w200 h18 c0x66FF66 border
+    Gui Add, Text, cBlack xp wp hp center vProgressText_AutoDailyDarkGateMatsMonster BackgroundTrans, Start AutoDailyDarkGateMatsMonster
+    Gui, Add, Progress, x+10 w50 h18 c0x66FF66 vsettingsmodal_darkGateOptions_matsMonster
     Gui Add, Text, xp+5 wp hp r1 +0x4000 cBlack BackgroundTrans left, Settings
 
     Gui Add, Text, 0x10 xs w400 h10

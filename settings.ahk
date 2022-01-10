@@ -35,7 +35,6 @@ InitPatterns() {
 
 GenerateSettingMetadata() {
     metadata := {}
-
     metadata.debug := {}
     metadata.debug.drop := {}
     metadata.debug.drop.newLine := true
@@ -137,8 +136,44 @@ GenerateSettingMetadata() {
     metadata.darkGateOptions.selectedGate := {}
     metadata.darkGateOptions.selectedGate.type := "Radio"
     metadata.darkGateOptions.selectedGate.options := ["hl", "matsHuman", "matsMonster"]
+    metadata.darkGateOptions.hl := {}
+    metadata.darkGateOptions.hl.count := {}
+    metadata.darkGateOptions.hl.count.type := "Number"
+    metadata.darkGateOptions.hl.skip := {}
+    metadata.darkGateOptions.hl.skip.type := "Number"
+    metadata.darkGateOptions.matsHuman := {}
+    metadata.darkGateOptions.matsHuman.count := {}
+    metadata.darkGateOptions.matsHuman.count.type := "Number"
+    metadata.darkGateOptions.matsHuman.skip := {}
+    metadata.darkGateOptions.matsHuman.skip.type := "Number"
+    metadata.darkGateOptions.matsMonster := {}
+    metadata.darkGateOptions.matsMonster.count := {}
+    metadata.darkGateOptions.matsMonster.count.type := "Number"
+    metadata.darkGateOptions.matsMonster.skip := {}
+    metadata.darkGateOptions.matsMonster.skip.type := "Number"
 
     InitMetaDataItemWorldOptions(metadata)
+
+
+    ; metadata.dailies := ["AutoShop", "AutoFriends", "AutoDailySummon", "AutoDope", "AutoFish", "AutoDarkAssemblyHL", "AutoDailyDarkGateHL"
+    ;                     , "AutoDarkAssemblyMatsHuman", "AutoDailyDarkGateMatsHuman", "AutoDarkAssemblyMatsMonster", "AutoDailyDarkGateMatsMonster"]
+
+    metadata.dailies := {}
+    metadata.dailies.displayOrder := ["AutoShop", "AutoFriends", "AutoDailySummon", "AutoDope", "AutoFish", "AutoDarkAssemblyHL", "AutoDailyDarkGateHL"
+                                    , "AutoDarkAssemblyDrops", "AutoDailyDarkGateMatsHuman", "AutoDarkAssemblyDrops2", "AutoDailyDarkGateMatsMonster"
+                                    , "AutoDarkAssemblyEvent60", "EventStory500Pct", "DailyEventStoryFarm", "CharacterGate1", "EventReview1"
+                                    , "GrindItemWorldLoop1", "GrindItemWorldLoop2"]
+    dailiesOptions := ""
+    for k, v in metadata.dailies.displayOrder {
+        metadata.dailies[v] := {}
+        metadata.dailies[v].type := "Checkbox"
+        metadata.dailies[v].newLine := true
+        dailiesOptions .= v . "|"
+    }
+
+    metadata.dailies.current := {}
+    metadata.dailies.current.type := "DropDown"
+    metadata.dailies.current.options := dailiesOptions
 
     metadata.userPatterns := {}
 
@@ -400,6 +435,26 @@ AddSetting(settingInfo, targetGui, opts := "") {
             GuiControl,, % settingUnderscore, % settingInfo.setting[settingInfo.key]
             Gui, %targetGui%:Add, Text, xs y+5 0x10 w400 cWhite
         }
+        case "Number":
+        {
+            Gui, %targetGui%:Add, Text, xs+5 y+5 cWhite, % settingInfo.path
+
+            local targetKey := ""
+            RegExMatch(settingUnderscore, "[^_]+?$", targetKey)
+            local newRow := settingInfo.metaData.newLine
+            local controlOpts := "x+10 gSettingChanged v" . settingUnderscore 
+                . (newRow ? " xs+" . opts.offsetX . " y+5" : " x+10")
+            if (settingInfo.metaData.optsOverride) {
+                controlOpts := "x+10 Number gSettingChanged v" . settingUnderscore . " " . settingInfo.metaData.optsOverride
+            }
+            if (opts.optsOverride) {
+                controlOpts := "x+10 Number gSettingChanged v" . settingUnderscore . " " . opts.optsOverride
+            }
+            ;Gui %targetGui%:Add, Text, cWhite, % CapitalizeFirstLetter(targetKey) . ": "
+            Gui %targetGui%:Add, Edit, % controlOpts,
+            GuiControl,, % settingUnderscore, % settingInfo.setting[settingInfo.key]
+            Gui, %targetGui%:Add, Text, xs y+5 0x10 w400 cWhite
+        }
         case "Checkbox":
         {
             local targetKey := ""
@@ -437,6 +492,28 @@ AddSetting(settingInfo, targetGui, opts := "") {
             }
 
             GuiControl,, % settingUnderscore . "_" . settingInfo.setting[settingInfo.key], 1
+
+            if (!opts.hideLabel) {
+                Gui, %targetGui%:Add, Text, xs y+5 0x10 w400 cWhite
+            }
+        }
+        case "Dropdown":
+        {
+            if (!opts.hideLabel) {
+                Gui,  %targetGui%:Add, Text, xs+5 y+5 cWhite, % settingInfo.path
+            }
+
+            local controlOpts := "x+10 gSettingChanged v" . settingUnderscore 
+                . (newRow ? " xs+" . opts.offsetX . " y+5" : " x+10")
+            if (settingInfo.metaData.optsOverride) {
+                controlOpts := "x+10 gSettingChanged v" . settingUnderscore . " " . settingInfo.metaData.optsOverride
+            }
+            if (opts.optsOverride) {
+                controlOpts := "x+10 gSettingChanged v" . settingUnderscore . " " . opts.optsOverride
+            }
+
+            Gui %targetGui%:Add, DropDownList, % controlOpts, % settingInfo.metaData.options
+            GuiControl, ChooseString, % settingUnderscore, % settingInfo.setting[settingInfo.key]
 
             if (!opts.hideLabel) {
                 Gui, %targetGui%:Add, Text, xs y+5 0x10 w400 cWhite
@@ -958,6 +1035,12 @@ SettingChanged()
             settingInfo.setting[settingInfo.key] := textVal
             settings.Save(true)
         }
+        case "Number":
+        {
+            GuiControlGet, textVal, , % A_GuiControl
+            settingInfo.setting[settingInfo.key] := textVal
+            settings.Save(true)
+        }
         case "Checkbox":
         {
             GuiControlGet, boolVal, , % A_GuiControl
@@ -967,6 +1050,12 @@ SettingChanged()
         case "Radio":
         {
             settingInfo.setting[settingInfo.key] := targetValue
+            settings.Save(true)
+        }
+        case "DropDown":
+        {
+            GuiControlGet, textVal, , % A_GuiControl
+            settingInfo.setting[settingInfo.key] := textVal
             settings.Save(true)
         }
         case "Array":
