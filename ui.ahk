@@ -41,6 +41,7 @@ ResetUI() {
     Gui Add, Text, cBlack xp wp hp center vProgressText_AutoDarkAssembly BackgroundTrans, Start AutoDarkAssembly
     Gui, Add, Progress, x+10 w50 h18 c0x66FF66 vsettingsmodal_general_darkAssembly
     Gui Add, Text, xp+5 wp hp r1 +0x4000 cBlack BackgroundTrans left, Settings
+    AddSetting("settings_general_darkAssembly_targetBill", "1", { hideLabel : true, optsOverride : "x+10" } )
     Gui, Add, Progress, xs+10 vProgressBar_AutoFish -Smooth w120 h18 c0x66FF66 border
     Gui Add, Text, cBlack xp wp hp center vProgressText_AutoFish BackgroundTrans, Start AutoFish
     Gui, Add, Progress, x+10 w50 h18 c0x66FF66 vsettingsmodal_fishingFleet_bribe
@@ -65,9 +66,10 @@ ResetUI() {
     Gui Add, Text, cBlack xp wp hp center vProgressText_EventStoryFarm BackgroundTrans, Start EventStoryFarm
     Gui Add, Text, cWhite x+10, Count
     Gui Add, Edit, cBlack w50 x+10 Number, 1
-    Gui, Add, Progress, x+10 w100 h18 c0x66FF66 vsettingsmodal_eventOptions_story
-    Gui Add, Text, xp+5 wp hp r1 +0x4000 cBlack BackgroundTrans left vsettingsText_eventOptions_story, % GetSettingDisplay("settings_eventOptions_story")
-    GuiControl,, % "eventOptions_storyTarget_" . settings.eventOptions.storyTarget, 1
+    AddSetting("settings_eventOptions_story_farmTarget", "1", { hideLabel : true, optsOverride : "x+10" } )
+    ; Gui, Add, Progress, x+10 w100 h18 c0x66FF66 vsettingsmodal_eventOptions_story
+    ; Gui Add, Text, xp+5 wp hp r1 +0x4000 cBlack BackgroundTrans left vsettingsText_eventOptions_story, % GetSettingDisplay("settings_eventOptions_story")
+    ;GuiControl,, % "eventOptions_storyTarget_" . settings.eventOptions.storyTarget, 1
 
     Gui, Add, Progress, xs+10 vProgressBar_EventStory500Pct -Smooth w120 h18 c0x66FF66 border
     Gui Add, Text, cBlack xp wp hp center vProgressText_EventStory500Pct BackgroundTrans, Start EventStory500Pct
@@ -129,19 +131,23 @@ ResetUI() {
     Gui, Font, Normal
     Gui Add, Link, x+5,<a href="https://github.com/yeetoverflow/autodisgaeaRPG/blob/main/README.md#darkgate-video">?</a>
 
-    Gui Add, Text, cWhite x+10, Count:
-    Gui Add, Edit, cBlack w50 x+10 Number vDarkGateCount, 1
-    Gui Add, Text, cWhite x+10, Skip:
-    Gui Add, Edit, cBlack w50 x+10 Number vDarkGateSkipCount, 0
+    Gui Add, Text, cWhite x+5, Count:
+    Gui Add, Edit, cBlack w30 x+5 Number vDarkGateCount, 1
+    Gui Add, Text, cWhite x+5, Skip:
+    Gui Add, Edit, cBlack w30 x+5 Number vDarkGateSkipCount, 0
 
-    Gui, Add, Progress, xs+10 vProgressBar_DoDarkGateHL -Smooth w100 h18 c0x66FF66 border
-    Gui Add, Text, cBlack xp wp hp center vProgressText_DoDarkGateHL BackgroundTrans, Start DoDarkGateHL
+    Gui, Add, Progress, xs+10 vProgressBar_AutoDarkGate -Smooth w100 h18 c0x66FF66 border
+    Gui Add, Text, cBlack xp wp hp center vProgressText_AutoDarkGate BackgroundTrans, Start AutoDarkGate
+    AddSetting("settings_darkGateOptions_selectedGate", "1", { hideLabel : true, optsOverride : "x+10" } )
 
-    Gui, Add, Progress, x+5 vProgressBar_DoDarkGateMatsHuman -Smooth w150 h18 c0x66FF66 border
-    Gui Add, Text, cBlack xp wp hp center vProgressText_DoDarkGateMatsHuman BackgroundTrans, Start DoDarkGateMatsHuman
+    ; Gui, Add, Progress, xs+10 vProgressBar_DoDarkGateHL -Smooth w100 h18 c0x66FF66 border
+    ; Gui Add, Text, cBlack xp wp hp center vProgressText_DoDarkGateHL BackgroundTrans, Start DoDarkGateHL
 
-    Gui, Add, Progress, x+5 vProgressBar_DoDarkGateMatsMonster -Smooth w150 h18 c0x66FF66 border
-    Gui Add, Text, cBlack xp wp hp center vProgressText_DoDarkGateMatsMonster BackgroundTrans, Start DoDarkGateMatsMonster
+    ; Gui, Add, Progress, x+5 vProgressBar_DoDarkGateMatsHuman -Smooth w150 h18 c0x66FF66 border
+    ; Gui Add, Text, cBlack xp wp hp center vProgressText_DoDarkGateMatsHuman BackgroundTrans, Start DoDarkGateMatsHuman
+
+    ; Gui, Add, Progress, x+5 vProgressBar_DoDarkGateMatsMonster -Smooth w150 h18 c0x66FF66 border
+    ; Gui Add, Text, cBlack xp wp hp center vProgressText_DoDarkGateMatsMonster BackgroundTrans, Start DoDarkGateMatsMonster
 
     Gui Tab, Settings
 

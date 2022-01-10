@@ -117,6 +117,9 @@ GenerateSettingMetadata() {
     metadata.general.darkAssembly.maxCrabMiso := {}
     metadata.general.darkAssembly.maxCrabMiso.type := "Radio"
     metadata.general.darkAssembly.maxCrabMiso.options := [0, 1, 2, 3, 4, 5]
+    metadata.general.darkAssembly.targetBill := {}
+    metadata.general.darkAssembly.targetBill.type := "Radio"
+    metadata.general.darkAssembly.targetBill.options := ["drops", "hl", "event60mins"]
 
     metadata.fishingFleet := {}
     metadata.fishingFleet.bribe := {}
@@ -129,6 +132,11 @@ GenerateSettingMetadata() {
     metadata.fishingFleet.bribe.maxCrabMiso := {}
     metadata.fishingFleet.bribe.maxCrabMiso.type := "Radio"
     metadata.fishingFleet.bribe.maxCrabMiso.options := [0, 1]
+
+    metadata.darkGateOptions := {}
+    metadata.darkGateOptions.selectedGate := {}
+    metadata.darkGateOptions.selectedGate.type := "Radio"
+    metadata.darkGateOptions.selectedGate.options := ["hl", "matsHuman", "matsMonster"]
 
     InitMetaDataItemWorldOptions(metadata)
 
@@ -410,21 +418,29 @@ AddSetting(settingInfo, targetGui, opts := "") {
         }
         case "Radio":
         {
-            Gui,  %targetGui%:Add, Text, xs+5 y+5 cWhite, % settingInfo.path
+            if (!opts.hideLabel) {
+                Gui,  %targetGui%:Add, Text, xs+5 y+5 cWhite, % settingInfo.path
+            }
 
             for i, opt in settingInfo.metaData.options {
                 local newRow := false
                 if (i = 1 || Mod(i - 1, settingInfo.metaData.itemsPerRow) = 0) {
                     newRow := true
                 }
-                
-                Gui %targetGui%:Add, Radio, % "cWhite gSettingChanged v" . settingUnderscore . "_" . opt
-                    . (newRow ? " xs+10 y+5" : " x+10"), % opt
+                local controlOpts := % "cWhite gSettingChanged v" . settingUnderscore . "_" . opt . (newRow ? " xs+10 y+5" : " x+10")
+
+                if (opts.optsOverride) {
+                    controlOpts := "cWhite gSettingChanged v" . settingUnderscore . "_" . opt . " " . opts.optsOverride
+                }
+
+                Gui %targetGui%:Add, Radio, % controlOpts, % opt
             }
 
             GuiControl,, % settingUnderscore . "_" . settingInfo.setting[settingInfo.key], 1
 
-            Gui, %targetGui%:Add, Text, xs y+5 0x10 w400 cWhite
+            if (!opts.hideLabel) {
+                Gui, %targetGui%:Add, Text, xs y+5 0x10 w400 cWhite
+            }
         }
         case "Array":
         {

@@ -15,9 +15,9 @@ msgToMode := { 0x1001 : "EventStoryFarm"
              , 0x1003 : "EventRaidLoop"
              , 0x1004 : "AutoShop"
              , 0x1005 : "AutoDarkAssembly"
-             , 0x1006 : "DoDarkGateHL"
-             , 0x1007 : "DoDarkGateMatsHuman"
-             , 0x1008 : "DoDarkGateMatsMonster"
+            ;  , 0x1006 : "DoDarkGateHL"
+            ;  , 0x1007 : "DoDarkGateMatsHuman"
+            ;  , 0x1008 : "DoDarkGateMatsMonster"
              , 0x1009 : "AutoClear"
              , 0x1010 : "FarmItemWorldSingle"
              , 0x1011 : "EventAutoClear"
@@ -33,7 +33,8 @@ msgToMode := { 0x1001 : "EventStoryFarm"
              , 0x1021 : "CharacterGate1"
              , 0x1022 : "EventReview1"
              , 0x1023 : "AutoDailySummon"
-             , 0x1024 : "AutoDope"  }
+             , 0x1024 : "AutoDope"
+             , 0x1025 : "AutoDarkGate"  }
 modeToMsg := {}
 handlers := {}
 
@@ -338,101 +339,133 @@ AutoDarkAssembly() {
     global patterns, settings, mode
     SetStatus(A_ThisFunc)
 
+    targetBill := settings.general.darkAssembly.targetBill
     maxCrabMiso := settings.general.darkAssembly.maxCrabMiso
     maxGoldBar := settings.general.darkAssembly.maxGoldBar
     maxGoldenCandy := settings.general.darkAssembly.maxGoldenCandy
 
     senators := ["x315 y210", "x215 y265", "x115 y296", "x428 y293", "x227 y387", "x74 y451", "x427 y405", "x176 y521"]
 
-    ;crabMiso loop
-    for k, v in senators {
-        if (maxCrabMiso <= 0) {
-            Break
-        }
-
-        result := FindPattern(patterns.darkAssembly.viability)
-        viability := StrReplace(result.comment, "darkAssembly.viability.")
+    done := false
+    Loop {
+        result := FindPattern([patterns.stronghold.gemsIcon, patterns.darkAssembly.title, patterns.prompt.corner, patterns.darkAssembly.startVoting])
         
-        if (viability = "almostCertain") {
-            Break
+        if InStr(result.comment, "stronghold.gemsIcon") {
+            PollPattern(patterns.tabs.facilities.tab, { doClick : true })
+            sleep 500
+            PollPattern(patterns.tabs.facilities.darkAssembly, { doClick : true })
+            sleep 3000
+        } else if InStr(result.comment, "darkAssembly.title") {
+            ScrollUntilDetect(patterns.darkAssembly.bills[targetBill], { variancePct : 10 })
+        } else if InStr(result.comment, "prompt.corner") {
+            FindPattern(patterns.prompt.yes, { doClick : true })
+            sleep 2000
+        } else if InStr(result.comment, "darkAssembly.startVoting") {
+            sleep 2000
+
+            ;crabMiso loop
+            for k, v in senators {
+                if (maxCrabMiso <= 0) {
+                    Break
+                }
+
+                result := FindPattern(patterns.darkAssembly.viability)
+                viability := StrReplace(result.comment, "darkAssembly.viability.")
+                
+                if (viability = "almostCertain") {
+                    Break
+                }
+                
+                Click(v)
+                sleep, 250
+                Click(v)
+                sleep, 250
+
+                result := FindPattern(patterns.darkAssembly.affinity)
+                affinity := StrReplace(result.comment, "darkAssembly.affinity.")
+
+                ;MsgBox, % viability . "`n" . affinity
+                if (maxCrabMiso > 0 && affinity = "negative") {
+                    FindPattern(patterns.darkAssembly.bribe.crabMiso, { doClick : true })
+                    maxCrabMiso--
+                }
+
+                sleep, 250
+            }
+
+            ;goldenBar loop
+            for k, v in senators {
+                if (maxGoldBar <= 0) {
+                    Break
+                }
+
+                result := FindPattern(patterns.darkAssembly.viability)
+                viability := StrReplace(result.comment, "darkAssembly.viability.")
+                
+                if (viability = "almostCertain") {
+                    Break
+                }
+                
+                Click(v)
+                sleep, 250
+                Click(v)
+                sleep, 250
+
+                result := FindPattern(patterns.darkAssembly.affinity)
+                affinity := StrReplace(result.comment, "darkAssembly.affinity.")
+
+                ;MsgBox, % viability . "`n" . affinity
+                if (maxGoldBar > 0 && affinity != "feelingTheLove" && affinity != "prettyFavorable" && affinity != "favorable") {
+                    FindPattern(patterns.darkAssembly.bribe.goldBar, { doClick : true })
+                    maxGoldBar--
+                } 
+
+                sleep, 250
+            }
+
+            ;goldenCandy loop
+            for k, v in senators {
+                if (maxGoldenCandy <= 0) {
+                    Break
+                }
+
+                result := FindPattern(patterns.darkAssembly.viability)
+                viability := StrReplace(result.comment, "darkAssembly.viability.")
+                
+                if (viability = "almostCertain") {
+                    Break
+                }
+                
+                Click(v)
+                sleep, 250
+                Click(v)
+                sleep, 250
+
+                result := FindPattern(patterns.darkAssembly.affinity)
+                affinity := StrReplace(result.comment, "darkAssembly.affinity.")
+
+                ;MsgBox, % viability . "`n" . affinity
+                if (maxGoldenCandy > 0 && affinity != "feelingTheLove" && affinity != "prettyFavorable" && affinity != "favorable") {
+                    FindPattern(patterns.darkAssembly.bribe.goldenCandy, { doClick : true })
+                    maxGoldenCandy--
+                } 
+
+                sleep, 250
+            }
+
+            sleep 1000
+            PollPattern(patterns.darkAssembly.startVoting, { doClick : true, predicatePattern : patterns.prompt.corner })
+            PollPattern(patterns.prompt.yes, { doClick : true })
+            PollPattern(patterns.prompt.corner)
+            result := PollPattern([patterns.darkAssembly.billPassed, patterns.darkAssembly.votedDown])
+            if InStr(result.comment, "billPassed") {
+                done := true
+            }
+            PollPattern(patterns.prompt.back, { doClick : true })
         }
-        
-        Click(v)
-        sleep, 250
-        Click(v)
-        sleep, 250
-
-        result := FindPattern(patterns.darkAssembly.affinity)
-        affinity := StrReplace(result.comment, "darkAssembly.affinity.")
-
-        ;MsgBox, % viability . "`n" . affinity
-        if (maxCrabMiso > 0 && affinity = "negative") {
-            FindPattern(patterns.darkAssembly.bribe.crabMiso, { doClick : true })
-            maxCrabMiso--
-        }
 
         sleep, 250
-    }
-
-    ;goldenBar loop
-    for k, v in senators {
-        if (maxGoldBar <= 0) {
-            Break
-        }
-
-        result := FindPattern(patterns.darkAssembly.viability)
-        viability := StrReplace(result.comment, "darkAssembly.viability.")
-        
-        if (viability = "almostCertain") {
-            Break
-        }
-        
-        Click(v)
-        sleep, 250
-        Click(v)
-        sleep, 250
-
-        result := FindPattern(patterns.darkAssembly.affinity)
-        affinity := StrReplace(result.comment, "darkAssembly.affinity.")
-
-        ;MsgBox, % viability . "`n" . affinity
-        if (maxGoldBar > 0 && affinity != "feelingTheLove" && affinity != "prettyFavorable" && affinity != "favorable") {
-            FindPattern(patterns.darkAssembly.bribe.goldBar, { doClick : true })
-            maxGoldBar--
-        } 
-
-        sleep, 250
-    }
-
-    ;goldenCandy loop
-    for k, v in senators {
-        if (maxGoldenCandy <= 0) {
-            Break
-        }
-
-        result := FindPattern(patterns.darkAssembly.viability)
-        viability := StrReplace(result.comment, "darkAssembly.viability.")
-        
-        if (viability = "almostCertain") {
-            Break
-        }
-        
-        Click(v)
-        sleep, 250
-        Click(v)
-        sleep, 250
-
-        result := FindPattern(patterns.darkAssembly.affinity)
-        affinity := StrReplace(result.comment, "darkAssembly.affinity.")
-
-        ;MsgBox, % viability . "`n" . affinity
-        if (maxGoldenCandy > 0 && affinity != "feelingTheLove" && affinity != "prettyFavorable" && affinity != "favorable") {
-            FindPattern(patterns.darkAssembly.bribe.goldenCandy, { doClick : true })
-            maxGoldenCandy--
-        } 
-
-        sleep, 250
-    }
+    } until (done)
 
     if (mode) {
         ExitApp
