@@ -73,6 +73,11 @@ ResetUI() {
     Gui, Add, Progress, x+10 w50 h18 c0x66FF66 vsettingsmodal_darkGateOptions_matsMonster
     Gui Add, Text, xp+5 wp hp r1 +0x4000 cBlack BackgroundTrans left, Settings
 
+    Gui, Add, Progress, xs+10 vProgressBar_AutoDailyEventStoryFarm -Smooth w200 h18 c0x66FF66 border
+    Gui Add, Text, cBlack xp wp hp center vProgressText_AutoDailyEventStoryFarm BackgroundTrans, Start AutoDailyEventStoryFarm
+    Gui, Add, Progress, x+10 w50 h18 c0x66FF66 vsettingsmodal_dailies_event_story
+    Gui Add, Text, xp+5 wp hp r1 +0x4000 cBlack BackgroundTrans left, Settings
+
     Gui Add, Text, 0x10 xs w400 h10
     Gui, Font, Bold
     Gui Add, Text, cWhite xs+10, Story
@@ -224,7 +229,7 @@ ResetUI() {
     Gui Add, Button, x+10 gCopyPatternToClipboard, Copy To Clipboard
     Gui Add, Button, x+10 gOpenUserPattern, UserPattern
     Gui Add, Text, cWhite xs+10 y+10, Variance:
-    Gui Add, Slider, w200 tickinterval5 tooltip vTestPatternVariance
+    Gui Add, Slider, w200 tickinterval5 tooltip vTestPatternVariance, 15
     InitPatternsTree()
 
     Gui Show, w450

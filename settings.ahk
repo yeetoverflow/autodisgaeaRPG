@@ -159,7 +159,7 @@ GenerateSettingMetadata() {
     metadata.dailies := {}
     metadata.dailies.displayOrder := ["AutoShop", "AutoFriends", "AutoDailySummon", "AutoDope", "AutoFish", "AutoDarkAssemblyHL", "AutoDailyDarkGateHL"
                                     , "AutoDarkAssemblyDrops", "AutoDailyDarkGateMatsHuman", "AutoDarkAssemblyDrops2", "AutoDailyDarkGateMatsMonster"
-                                    , "AutoDarkAssemblyEvent60", "EventStory500Pct", "DailyEventStoryFarm", "CharacterGate1", "EventReview1"
+                                    , "AutoDarkAssemblyEvent60", "EventStory500Pct", "AutoDailyEventStoryFarm", "CharacterGate1", "EventReview1"
                                     , "GrindItemWorldLoop1", "GrindItemWorldLoop2", "EventRaidLoop"]
     dailiesOptions := ""
     for k, v in metadata.dailies.displayOrder {
@@ -172,6 +172,14 @@ GenerateSettingMetadata() {
     metadata.dailies.current := {}
     metadata.dailies.current.type := "DropDown"
     metadata.dailies.current.options := dailiesOptions
+
+    metadata.dailies.event := {}
+    metadata.dailies.event.story := {}
+    metadata.dailies.event.story.farmCount := {}
+    metadata.dailies.event.story.farmCount.type := "Number"
+    ; metadata.dailies.event.story.farmTarget := {}
+    ; metadata.dailies.event.story.farmTarget.type := "Radio"
+    ; metadata.dailies.event.story.farmTarget.options := ["oneStar", "exp", "hl"]
 
     metadata.userPatterns := {}
 
@@ -626,7 +634,7 @@ AddSetting(settingInfo, targetGui, opts := "") {
 
             Gui Add, Checkbox, % "x15 yp+15 cWhite vPatternSettingTestMulti_" . settingUnderscore, Multi
             Gui Add, Text, cWhite x+5, FG Variance:
-            Gui Add, Slider, % "x+5 w200 tickinterval5 tooltip vPatternSettingTestVariance_" . settingUnderscore
+            Gui Add, Slider, % "x+5 w200 tickinterval5 tooltip vPatternSettingTestVariance_" . settingUnderscore, 15
             Gui Add, Button, % "x15 y+5 gTestPatternSetting vPatternSettingTest_" . settingUnderscore, Test
 
             Gui Add, Text, x15 y+5,
@@ -717,7 +725,7 @@ TestPatternSetting() {
     GuiControlGet, patternVariance,, % "PatternSettingTestVariance_" . settingUnderscore
     GuiControlGet, patternTestMulti,, % "PatternSettingTestMulti_" . settingUnderscore
 
-    opts := { multi : patternTestMulti, fgVariancePct : patternVariance, bgVariancePct : patternVariance }
+    opts := { multi : patternTestMulti, variancePct : patternVariance }
     result := FindPattern(pattern, opts)
 
     if (result.IsSuccess) {
@@ -1262,4 +1270,34 @@ InitUserPatterns(patterns, node, path := "") {
             InitUserPatterns(patterns, v, path . "." . k)
         }
     }
+}
+
+GetDailyStats() {
+    currentDateUTC := A_NowUTC
+    FormatTime, hour, % currentDateUTC, h
+    if (hour <= 4) {    ;UTC reset hour
+        currentDateUTC += -1, D
+    }
+    FormatTime, date, % currentDateUTC, yyyyMMdd
+
+    fileName := date . ".json"
+	fileDir := "dailies"
+	filePath := fileDir . "\" . fileName
+
+	IF !FileExist(fileDir)
+	{
+		FileCreateDir, %fileDir%
+	}
+
+    IF !FileExist(filePath)
+	{
+		dailyStats := new JsonFile(filePath) ;- Create instance.
+        settings.save(true)
+	}
+	Else
+	{
+		dailyStats := new JsonFile(filePath) ;- Create instance.
+	}
+
+    Return dailyStats
 }

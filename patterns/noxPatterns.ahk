@@ -118,7 +118,8 @@ GenerateNoxPatterns() {
     patterns.prompt.yes := ["|<>0x1D2F4C@0.66$34.s1U003UC00070k000S60000sM0001n0D0y7A3a6ADUQQMEQ1UlU1k777k70TwDUQ1U071k700A70AAEkQ0TVyU"
                         , "|<>0x112240@0.59$34.s30003UA00071U000SC0000sk3UD1q0z1y7s76A8D0MQs0Q1Vns1kDz7s70M07kQ1U071k728Q70CMvU00C0sU"
                         , "|<>0xFFFFFF@1.00$36.Xz7zzz1y7zzzUyDzzzUyDzzzkwTzzzs8Tlz3s8y0Q1w1w4M0y1wA8Ry3w087z3w0A1z3w0S0z3wDTkz3wCNsz3y4MEz3y0M1zzzVz3U"
-                        , "|<>0xFFFFFF@1.00$36.3y7zzz1wDzzzVwDzzzksTzzzkMTzzzsMz1y3s1y0M1w1w8Mly3wQMTy7s087z7s0A1z7sTy0z7sTPkz7wAMky7y0M1z7z0w3U"]
+                        , "|<>0xFFFFFF@1.00$36.3y7zzz1wDzzzVwDzzzksTzzzkMTzzzsMz1y3s1y0M1w1w8Mly3wQMTy7s087z7s0A1z7sTy0z7sTPkz7wAMky7y0M1z7z0w3U"
+                        , "|<>0xFEFEFE@1.00$36.Xy7zzz1y7zzzVwDzzzUwTzzzkMTzzzsMz1w3s1y0M1w1w8Mty3wQ8xy3wQ87z7s0A1z7s0S0z7wTTUz7wCNkz7w0M0z7z0Q3U"]
     patterns.prompt.retry := "|<>0x050B14@0.44$57.zs00000007zs0000000s7000k00070w00C0000s7U01k00070w3kTnis3sD1zXyTrUrzkAA63kQ6zs3VkkQ3lb70QC63UCAsw3zkkQ1n73kQ063U7MsC3U0kQ0y70sQ063U3ks7VkUkQ0Q70S7w7nU1U000000008000000003000000000k4"
     patterns.prompt.ok := ["|<>0x370F13@0.65$28.7y0kAsA31b0sAAs1klXU73AA0QBUk0sw303XsA0SBkk1knXU737C0MASQ3UkwsQ31kz0A3U"
                         , "|<>0x3F1216@0.75$30.1y0M673UMAC1kMMQ0sMkQ0sNUM0sP0s0MS0s0QT0s0MPUM0MNkM0sMkQ0sMsA0kMQ61UMC3z0M7U"
@@ -205,6 +206,10 @@ GenerateNoxPatterns() {
     patterns.darkAssembly.startVoting := "|<>#1125@0.80$139.z7zzzzzzzzzzzzzzzzTzzzzw0Tzzzzzzzy7zXzzzz7zzzzwC7zzzzzzzzVzXzzzz3zzzzwTXszzzzyDzkzlzzz7lzzzzyDzwTzzzz7zsDszzz3zzzzzy7zyDzzzzXzy7szzzlzzzzzzVzw1yDwn0Dz3wTszUCDADz8E7y0Q1w0U7zkyTk3k3703w0Q0zVwMS0QTzsSDkkwDXUkwQT07sySD3yDzy77lwT7lkwSC7s1wTz3Xz7zz3bsy7XssyC7Xz0SDw1lzXzzlXsTXlwQT73VzwD7s0szlzzsHwDlsyCDXllzy7XssQTszzw1y7swT77lsEvzXlsQCDwTzz0zXsSDXXsy1szVswS77yDzzUzlwD7llwSDwDVwS73Xz7zzsTwQDXssyD0D01y1U0lzUTzwTy0DkAQT7U1s1zVsAwzsDzzzzkDwCSDXk0E"
     patterns.darkAssembly.billPassed := "|<>0xE4E1E1@1.00$65.zzzzzzzzzztzzzzzzzzzznzzzzzzzzzzbzzzzzzzzzzDzzzzzzzzzyTzzzzzzzzz407kDUS1w3s0070C0M1k3U0A6MQMln3770QDkMTVyC4D1sQ0k70Q08S3kU1k70M0Ew7V33sDUlzVsD2C7wDlVvXUA48AsHX3b300M081U70C003s8s7UT0z03zzzzzzzzzz7zzzzzzzzzyDzzzzzzzzzwTzzzzzzzzzw"
     patterns.darkAssembly.votedDown := "|<>0xE4E1E1@1.00$123.zzzzzzzzyzzzjzzzzzzzzzzzzzzzz3zzlzzzzzzzzzzzzzzzzsTzyDzzzzzzzzzzzyDzzz3zzlzzzzzzzzzzzzlzzzsTzyDzzzzzzzzzzzyDzzz3zzlzzzzzzzz3lsD0T3w0Ty0DkwDDa8TsSC0s3UD03zU1s1VkwE0z3XV3lsEksTwAC2467607sAMQCC7673z3lkskUEkkzVX3VlksksTsSAD242CC7y0sQCC04D3z3lVsE0Flkzk73Vlk0VsTsSAD30UCC7z1sQCC7y73z3lVsM43lkzsD3VlkwksTwQC77VkyC6DXw0S30603zU1k0yC7lkkwTk7kQ1s0Ty070DltyC6DzzXz7wztzzyzzDzzzzzvU"
+    patterns.darkAssembly.0over100 := "|<>0x0D0A17@0.80$74.zzk3zlk7s1w0zzw0TsQ1y0D07zy07yD0T03U1zzU0z3w7k0s0DzsMDkz1wA623zy63wTkT31UUzzVUy7w7kkM8DzsMDVz1wA623zy63kzkT31UUzzVUwDw7kkM8DzsMD7z1wA623zy63VzkT31UUzzUUsTw7kEM8Dzs0SDz1w0C07zz073zkTU3k1zzk1lzw7s0w0M"
+    patterns.darkAssembly.25over100 := "|<>0x0D0A17@0.80$81.zk7k0zss3w0y0Tw0S07y70TU3k1zU1k0zls3s0Q0DzsC0DwDkT03U0zz1kzzVy3sMA47zkC3zwTkT31UUzy3k0z3y3sMA47zUS07sTkT31UUzs7k0S7y3sMA47z0zy3kzkT31UUzkDzkSDy3sMA47w3zw3VzkT31UUzUzzUwDy3s8A47s07w7XzkT03U1z00z1sTy3w0S0Ds07sT7zkTU3k1zzzzrzzzzzzzzw"
+    ;patterns.darkAssembly.50over100 := "|<>0x08060E@0.80$80.z03k3zlk7s1w0zk0w0TsQ1y0D07w0C07yD0T03U1z07U0z3w7k0s0DkzsMDkz1w4623wDy63wTkT11UUz07VUy7w7kEM8Dk0sMDVz1w4623w0663kzkT11UUzz1VUwDw7kEM8DzUMMD7z1w4623zs663VzkT11UUzy3UUsTw7kEM8Dz0s0SDz1w0C07zkT073zkTU3k1zwDk1lzw7s0w0Tzbzzzzzzzzzzy"
+    patterns.darkAssembly.addAssemblyPts := "|<>0xFEFEFE@0.65$21.0Tk0A1U2020U0A800V0E6M20m0E3k70SDzXlzwS0s3M20P0E6820lU0A4010M0E0kA03y0U"
 
     patterns.dimensionGate := {}
     patterns.dimensionGate.background := "|<>0x6C776B@0.80$71.0000000000000000000000000000000000000000000000000000000000001k00000000003k00000000007U0000000000C00001s00000000007s0000000000Tk0000000700zk0000000S01z00000300w01y00000Tk0k01s00001zU0000000003zU0000000007z0000000000Dy0000000000Tw0000000200zs0000000D00zU0000000S00w000s0000s000001s00000000003k00001"

@@ -39,7 +39,8 @@ msgToMode := { 0x1001 : "EventStoryFarm"
              , 0x1027 : "AutoDarkAssemblyDrops"
              , 0x1028 : "AutoDarkAssemblyEvent60"
              , 0x1029 : "AutoDailies"
-             , 0x1030 : "GoToStronghold" }
+             , 0x1030 : "GoToStronghold"
+             , 0x1031 : "AutoDailyEventStoryFarm" }
 modeToMsg := {}
 handlers := {}
 
@@ -353,7 +354,7 @@ AutoFish() {
             PollPattern(patterns.tabs.facilities.tab, { doClick : true })
             sleep 500
             PollPattern(patterns.tabs.facilities.fishingFleet, { doClick : true })
-            sleep 3000
+            sleep 4000
         } else if InStr(result.comment, "fishingFleet.title") {
             fleets := ["x73 y348", "x231 y506", "x405 y364"]
             maxCrabMiso := settings.fishingFleet.bribe.maxCrabMiso
@@ -471,6 +472,15 @@ AutoDarkAssembly(targetBill := "") {
             PollPattern(patterns.tabs.facilities.darkAssembly, { doClick : true })
             sleep 3000
         } else if InStr(result.comment, "darkAssembly.title") {
+            sleep 500
+            ;check if insufficient assembly points
+            result := FindPattern([patterns.darkAssembly.0over100, patterns.darkAssembly.25over100], { variancePct : 10 })
+            if (result.IsSuccess) {
+                PollPattern(patterns.darkAssembly.addAssemblyPts, { doClick : true, predicatePattern : patterns.prompt.yes })
+                PollPattern(patterns.prompt.yes, { doClick : true, predicatePattern : patterns.prompt.close })
+                PollPattern(patterns.prompt.close, { doClick : true, predicatePattern : patterns.darkAssembly.title })
+            }
+
             ScrollUntilDetect(patterns.darkAssembly.bills[targetBill], { variancePct : 5 })
         } else if InStr(result.comment, "prompt.corner") {
             FindPattern(patterns.prompt.yes, { doClick : true })
@@ -577,6 +587,7 @@ AutoDarkAssembly(targetBill := "") {
                 done := true
             }
             PollPattern(patterns.prompt.back, { doClick : true })
+            sleep 2000
         }
 
         sleep, 250
@@ -603,19 +614,58 @@ AutoDarkAssemblyEvent60() {
     AutoDarkAssembly("event60mins")
 }
 
+AutoDailyDarkGate(type) {
+    global settings, mode
+
+    count := settings["darkGateOptions"][type]["count"]
+    skip := settings["darkGateOptions"][type]["skip"]
+    currentDaily := A_ThisFunc . type
+
+    dailyStats := GetDailyStats()
+    if (dailyStats[currentDaily]) {
+        if (dailyStats[currentDaily].count) {
+            count := count - dailyStats[currentDaily].count
+        }
+        if (dailyStats[currentDaily].skip) {
+            skip := skip - dailyStats[currentDaily].skip
+        }
+    }
+
+    if (count > 0) {
+        AutoDarkGate(type, { count : count, skip : skip })
+    }
+
+    if (mode && mode != "AutoDailies") {
+        ExitApp
+    }
+}
+
 AutoDailyDarkGateHL() {
-    global settings
-    AutoDarkGate("hl", { count : settings.darkGateOptions.hl.count, skip : settings.darkGateOptions.hl.skip })
+    AutoDailyDarkGate("hl")
 }
 
 AutoDailyDarkGateMatsHuman() {
-    global settings
-    AutoDarkGate("matsHuman", { count : settings.darkGateOptions.matsHuman.count, skip : settings.darkGateOptions.matsHuman.skip })
+    AutoDailyDarkGate("matsHuman")
 }
 
 AutoDailyDarkGateMatsMonster() {
+    AutoDailyDarkGate("matsMonster")
+}
+
+AutoDailyEventStoryFarm() {
     global settings
-    AutoDarkGate("matsMonster", { count : settings.darkGateOptions.matsMonster.count, skip : settings.darkGateOptions.matsMonster.skip })
+
+    farmCount := settings["dailies"]["event"]["story"]["farmCount"]
+    currentDaily := A_ThisFunc
+
+    dailyStats := GetDailyStats()
+    if (dailyStats[currentDaily]) {
+        if (dailyStats[currentDaily].count) {
+            farmCount := farmCount - dailyStats[currentDaily].count
+        }
+    }
+
+    EventStoryFarm(farmCount)
 }
 
 AutoDailies() {
@@ -701,6 +751,9 @@ Test() {
     global patterns, hwnd, settings
     SetStatus(A_ThisFunc)
 
+    ; dailyStats := GetDailyStats()
+    ; dailyStats.test := true
+    ; dailyStats.save(true)
     ; w := 450
     ; h := 800
     

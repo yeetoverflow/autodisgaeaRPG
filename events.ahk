@@ -13,7 +13,8 @@ EventReview1() {
     loopTargets := [patterns.stronghold.gemsIcon, patterns.dimensionGate.background,
         , patterns.battle.start, patterns.battle.auto, patterns.companions.title, patterns.events.review.title
         , patterns.events.title, patterns.darkGates.stage.threeStars
-        , patterns.battle.prompt.battleAgain, patterns.touchScreen, patterns.events.characterGate.noMore]
+        , patterns.battle.prompt.battleAgain, patterns.touchScreen, patterns.events.characterGate.noMore
+        , patterns.raid.message]
     Loop {
         result := PollPattern(loopTargets)
 
@@ -49,6 +50,9 @@ EventReview1() {
             if (battleCount > 4) {
                 Break
             }
+        }
+        else if InStr(result.comment, "raid.message") {
+            HandleRaid()
         }
     }
 
@@ -155,8 +159,10 @@ EventStoryFarm(battleCount := "") {
     if (!battleCount) {
         ControlGetText, battleCount, edit2, % "ahk_id " . guiHwnd
     }
+    ControlSetText, edit2, % battleCount,  % "ahk_id " . guiHwnd
     SetStatus(battleCount, 2)
 
+    farmTarget := settings.eventOptions.story.farmTarget
     battleOptions := settings.battleOptions.event
     battleOptions.startPatterns := [patterns.battle.start, patterns.battle.prompt.battle]
     battleOptions.donePatterns := [patterns.raid.appear.advanceInStory, patterns.battle.prompt.quitBattle]
@@ -188,6 +194,24 @@ EventStoryFarm(battleCount := "") {
             battleCount--
             ControlSetText, edit2, % battleCount,  % "ahk_id " . guiHwnd
             SetStatus(battleCount, 2)
+            if (mode = "AutoDailies" || InStr(mode, "AutoDailyEventStoryFarm")) {
+                if (mode = "AutoDailies") {
+                    currentDaily := settings.dailies.current
+                } else {
+                    currentDaily := mode
+                }
+                
+                dailyStats := GetDailyStats()
+                if (!dailyStats[currentDaily]) {
+                    dailyStats[currentDaily] := {}
+                }
+                if (!dailyStats[currentDaily].count) {
+                    dailyStats[currentDaily].count := 0
+                }
+                dailyStats[currentDaily].count++
+                dailyStats.save(true)
+            }
+
             PollPattern(loopTargets, { clickPattern : patterns.battle.done, pollInterval : 250 })
             sleep 2000
             if (battleCount <= 0) {
@@ -203,7 +227,7 @@ EventStoryFarm(battleCount := "") {
             Click("x470 y443")
         }
         else if InStr(result.comment, "events.stage.title") {
-            FindPattern(patterns.events.stage[settings.eventOptions.story.farmTarget], { doClick : true })
+            FindPattern(patterns.events.stage[farmTarget], { doClick : true })
         }
         else if InStr(result.comment, "raid.message") {
             HandleRaid()

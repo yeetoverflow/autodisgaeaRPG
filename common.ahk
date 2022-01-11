@@ -102,7 +102,7 @@ InitPatternsCallback(key, value, parent, path) {
 
 DoBattle(battleOptions) {
     SetStatus(A_ThisFunc, 2)
-    global patterns, settings, guiHwnd
+    global patterns, settings, guiHwnd, mode
 
     targetCompanions := []
     for k, v in battleOptions.companions
@@ -134,6 +134,23 @@ DoBattle(battleOptions) {
                 UseSkipTickets()
                 battleOptions.skipTicketCount--
                 ControlSetText, edit4, % battleOptions.skipTicketCount,  % "ahk_id " . guiHwnd
+                if (mode = "AutoDailies" || InStr(mode, "AutoDailyDarkGate")) {
+                    if (mode = "AutoDailies") {
+                        currentDaily := settings.dailies.current
+                    } else {
+                        currentDaily := mode
+                    }
+                    
+                    dailyStats := GetDailyStats()
+                    if (!dailyStats[currentDaily]) {
+                        dailyStats[currentDaily] := {}
+                    }
+                    if (!dailyStats[currentDaily].skip) {
+                        dailyStats[currentDaily].skip := 0
+                    }
+                    dailyStats[currentDaily].skip++
+                    dailyStats.save(true)
+                }
             }
             else {
                 ClickResult(result)

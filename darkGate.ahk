@@ -19,6 +19,7 @@ if (!patterns)
 AutoDarkGate(type = "", opts = "") {
     global mode, patterns, settings, guiHwnd
 
+    firstGate := true
     if (!type && !settings.darkGateOptions.selectedGate) {
         MsgBox, No gate type selected
         return
@@ -33,13 +34,11 @@ AutoDarkGate(type = "", opts = "") {
     if (opts.skip) {
         ControlSetText, edit4, % opts.skip,  % "ahk_id " . guiHwnd
     }
-
+    
     SetStatus(A_ThisFunc . "_" . type)
     ControlGetText, gateCount, edit3, % "ahk_id " . guiHwnd
     ControlGetText, gateSkipCount, edit4, % "ahk_id " . guiHwnd
     SetStatus(gateCount, 2)
-
-    gateCount++
 
     if (type = "hl") {
         battleOptions := settings.battleOptions.darkGateHL
@@ -77,9 +76,32 @@ AutoDarkGate(type = "", opts = "") {
             sleep 1000
         }
         else if InStr(result.comment, "darkGates.stage.title") {
-            gateCount--
+            if (firstGate) {
+                firstGate := false
+            }
+            else {
+                gateCount--
+            }
+            
             ControlSetText, edit3, % gateCount,  % "ahk_id " . guiHwnd
             SetStatus(gateCount, 2)
+            if (mode = "AutoDailies" || InStr(mode, "AutoDailyEventStoryFarm")) {
+                if (mode = "AutoDailies") {
+                    currentDaily := settings.dailies.current
+                } else {
+                    currentDaily := mode
+                }
+                
+                dailyStats := GetDailyStats()
+                if (!dailyStats[currentDaily]) {
+                    dailyStats[currentDaily] := {}
+                }
+                if (!dailyStats[currentDaily].count) {
+                    dailyStats[currentDaily].count := 0
+                }
+                dailyStats[currentDaily].count++
+                dailyStats.save(true)
+            }
 
             if (gateCount <= 0) {
                 Break

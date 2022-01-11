@@ -1,12 +1,15 @@
 logs/*
 settings.json
 patterns.json
+dailies/*
 exe/logs/*
 exe/screenCaps/*
 exe/settings.json
 exe/patterns.json
+exe/dailies/*
 experimental/logs/*
 experimental/screenCaps/*
 experimental/settings.json
 experimental/patterns.json
+experimental/dailies/*
 screenCaps/*
