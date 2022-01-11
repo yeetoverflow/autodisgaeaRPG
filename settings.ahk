@@ -1275,7 +1275,7 @@ InitUserPatterns(patterns, node, path := "") {
 GetDailyStats() {
     currentDateUTC := A_NowUTC
     FormatTime, hour, % currentDateUTC, h
-    if (hour <= 4) {    ;UTC reset hour
+    if (hour < 4) {    ;UTC reset hour
         currentDateUTC += -1, D
     }
     FormatTime, date, % currentDateUTC, yyyyMMdd

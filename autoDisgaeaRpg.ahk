@@ -751,9 +751,9 @@ Test() {
     global patterns, hwnd, settings
     SetStatus(A_ThisFunc)
 
-    ; dailyStats := GetDailyStats()
-    ; dailyStats.test := true
-    ; dailyStats.save(true)
+    dailyStats := GetDailyStats()
+    dailyStats.test := true
+    dailyStats.save(true)
     ; w := 450
     ; h := 800
     
