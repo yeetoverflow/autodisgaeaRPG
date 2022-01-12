@@ -330,6 +330,7 @@ EventStory500Pct() {
     SetStatus(A_ThisFunc)
 
     done := false
+    clickedHard := false
     battleOptions := settings.battleOptions.event
     battleOptions.startPatterns := [patterns.battle.start, patterns.battle.prompt.battle]
     battleOptions.donePatterns := [patterns.raid.appear.advanceInStory, patterns.battle.prompt.quitBattle, patterns.events.title]
@@ -366,11 +367,19 @@ EventStory500Pct() {
         }
         else if InStr(result.comment, "events.title") {
             sleep 1000
+
+            if (!clickedHard) {
+                PollPattern(patterns.events.hard, { doClick : true, predicatePattern : patterns.events.hard.enabled, pollInterval : 2000 })
+                clickedHard := true
+                Continue
+            }
+
             result := FindPattern([patterns.events.overview.500Pct], { variancePct : 20 })
+            
             if InStr(result.comment, "overview.500Pct") {
                 result.Y := result.Y + 30
                 ClickResult(result)
-                sleep 50
+                sleep 250
                 ClickResult(result)
             }
             else {

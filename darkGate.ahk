@@ -29,9 +29,6 @@ AutoDarkGate(type = "", opts = "") {
 
     if (opts.count) {
         ControlSetText, edit3, % opts.count,  % "ahk_id " . guiHwnd
-    }
-
-    if (opts.skip) {
         ControlSetText, edit4, % opts.skip,  % "ahk_id " . guiHwnd
     }
     
@@ -81,27 +78,27 @@ AutoDarkGate(type = "", opts = "") {
             }
             else {
                 gateCount--
+                if (mode = "AutoDailies" || InStr(mode, "AutoDailyEventStoryFarm")) {
+                    if (mode = "AutoDailies") {
+                        currentDaily := settings.dailies.current
+                    } else {
+                        currentDaily := mode
+                    }
+                    
+                    dailyStats := GetDailyStats()
+                    if (!dailyStats[currentDaily]) {
+                        dailyStats[currentDaily] := {}
+                    }
+                    if (!dailyStats[currentDaily].count) {
+                        dailyStats[currentDaily].count := 0
+                    }
+                    dailyStats[currentDaily].count++
+                    dailyStats.save(true)
+                }
             }
             
             ControlSetText, edit3, % gateCount,  % "ahk_id " . guiHwnd
             SetStatus(gateCount, 2)
-            if (mode = "AutoDailies" || InStr(mode, "AutoDailyEventStoryFarm")) {
-                if (mode = "AutoDailies") {
-                    currentDaily := settings.dailies.current
-                } else {
-                    currentDaily := mode
-                }
-                
-                dailyStats := GetDailyStats()
-                if (!dailyStats[currentDaily]) {
-                    dailyStats[currentDaily] := {}
-                }
-                if (!dailyStats[currentDaily].count) {
-                    dailyStats[currentDaily].count := 0
-                }
-                dailyStats[currentDaily].count++
-                dailyStats.save(true)
-            }
 
             if (gateCount <= 0) {
                 Break

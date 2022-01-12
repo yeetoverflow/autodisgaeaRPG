@@ -34,7 +34,7 @@ ResetUI() {
     Gui, Add, Progress, x+10 w50 h18 c0x66FF66 vsettingsmodal_dailies
     Gui Add, Text, xp+5 wp hp r1 +0x4000 cBlack BackgroundTrans left, Settings
     Gui Add, Text, x+10 cWhite, Start: 
-    AddSetting("settings_dailies_current", "1", { hideLabel : true, optsOverride : "x+10" } )
+    AddSetting("settings_dailies_current", "1", { hideLabel : true, optsOverride : "w200 x+10" } )
     ; Gui Add, Text, x+10 cWhite, Current:
     ; Gui Add, DropDownList, x+10 w100 uppercase, Red|Blue|Green|Yellow|Black
     

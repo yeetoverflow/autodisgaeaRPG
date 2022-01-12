@@ -448,7 +448,7 @@ AddSetting(settingInfo, targetGui, opts := "") {
             local targetKey := ""
             RegExMatch(settingUnderscore, "[^_]+?$", targetKey)
             local newRow := settingInfo.metaData.newLine
-            local controlOpts := "x+10 gSettingChanged v" . settingUnderscore 
+            local controlOpts := "x+10 w25 gSettingChanged v" . settingUnderscore 
                 . (newRow ? " xs+" . opts.offsetX . " y+5" : " x+10")
             if (settingInfo.metaData.optsOverride) {
                 controlOpts := "x+10 Number gSettingChanged v" . settingUnderscore . " " . settingInfo.metaData.optsOverride
@@ -1274,7 +1274,7 @@ InitUserPatterns(patterns, node, path := "") {
 
 GetDailyStats() {
     currentDateUTC := A_NowUTC
-    FormatTime, hour, % currentDateUTC, h
+    FormatTime, hour, % currentDateUTC, H
     if (hour < 4) {    ;UTC reset hour
         currentDateUTC += -1, D
     }
