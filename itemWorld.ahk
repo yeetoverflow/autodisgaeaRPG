@@ -304,14 +304,14 @@ DoItemDrop(lootTarget) {
         Loop {
             FindPattern(patterns.enemy.A, { doClick : true, bounds : { x1 : 270, x2 : 330, y1 : 420, y2 : 470 }, offsetX : 40, offsetY : -30 })
 
-            Loop, 30 {
+            Loop, 10 {
                 result := FindPattern(patterns.enemy.target)
             } until (result.IsSuccess)
         } until (result.IsSuccess)
 
         loop {
             if (FindPattern(patterns.battle.skills.label).IsSuccess) {
-                Loop, 30 {
+                Loop, 10 {
                     result := FindPattern(patterns.enemy.A, { bounds : { x1 : 270, x2 : 330, y1 : 420, y2 : 470 } })
                 } until (result.IsSuccess)
 
