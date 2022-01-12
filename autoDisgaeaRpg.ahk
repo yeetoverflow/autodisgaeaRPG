@@ -811,7 +811,7 @@ Recover(mode) {
 
     if (result.IsSuccess)
     {
-        result := FindPattern([patterns.prompt.dateHasChanged, patterns.prompt.invalidRequest])
+        result := FindPattern([patterns.prompt.dateHasChanged, patterns.prompt.invalidRequest, patterns.prompt.failedToConnect])
         if (result.IsSuccess) {
             FindPattern(patterns.prompt.ok, { doClick : true, predicatePattern : patterns.criware })
             doRecover := true

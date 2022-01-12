@@ -151,7 +151,8 @@ GenerateNoxPatterns() {
                              , "|<>0xE3E0E3@0.70$25.zzzaTzznDzztbzzsnzzwNzzwAzzy6Tzz3DzzVbzzknzzsNzzkAzz06Tz83Dzj1bzXknzlsNzkQAw00CM0070007U00DnzzzlzzzU0000E"]
     patterns.prompt.invalidRequest := "|<>0xE4E1E1@1.00$142.zzzzzzwDzyDzzzzzzzzzzzzwTzzzzzklzszzzzzzzzzzzzzlzzzzzz33zXzzzzzzzzzzzzy7zzzzzwATyDzzzzzzzzzzzzUTzzzzzklzszzzzzzzzzzzzy1zzzzzz3zzXzzzzzzzzzzzzs60ADbUwAS0Dy0w7s0lsy3s60M0EwM1klk0zs3UD0373U7081UVVlX33673zUA8MMAQCAAMs6763CwAAMwDy7llXUlkkslzUMwQ8w0klXszsy00D373030y1XlkbU336DXzXs00wAQA0A0s6D7UQ4AAMwDyDVz3klklzw3UMwS1lkklVkzsy7aC3733nS61XlwD333663zXwAMMAACCAsM6D7kw04AQ0DyDk1U0k0s0k3UMwTbs0Els0zszUD03U3k70CDzzzzvzzzzzzzzrz4Dzzvzzyzzzzzzzzzzzzzzzzkzzzzzzzzzzzzzzzzzzzzzzz3zzzzzzzzzzzzzzzzzzzzzzwDzzzzzzzzzzzzzzzzzzzzzzlzzzzzzy"
     patterns.prompt.back := "|<>0xFFFFFF@1.00$47.0DzzzzVy07zzzz3wA7zzzy7syDzzzwDlwTzzzsM3kw1w0kV03k1k1U603b31v0Q07T67y1sy7UADw3lwA0MTs3XsEMkzk37kVlVzU603110n240D030664"
-
+    patterns.prompt.failedToConnect := "|<>0xE4E1E1@1.00$175.01zz77zzz3zzzzzzU3zzzzzzzzzzzU0zzVXzzzXzxzzzzU1zzzzzzzzzzxk0TzklzzzlzsTzzzUszzzzzzzzzzsMzzzwszzzszwDzzzUyTzzzzzzzzzwATzzzQTzz4Ty7zzzkzzzzzzzzzzzy6DzUS6D0y0Dy0w7zkTzkT0707s7s2003U7370C07z0M0zsTzU7U1U1s1k1001nVVX333XzkwQDwDzVUkkkkskkwkk0vkklXl3lzsQC7y7zksMsMQMQMTsszy0MMk0VszwC73z3zswAQACA04TwQTy0AAM0EwTy73UzUzwS6C67200DyCDy666ATsSDz3VkzkTyD3733V3z7z77z73367a77zVksTw7t3VXVVkVxVzXXzVVVX3n33zkwQDy3kVklkksMwkwklzk0Elk1U0zs60Dzk0M0ssMQA0Q0M0zw08Mw1s0zy3UDzw0y0wQACD0T0C2"
+    
     patterns.homeScreen := {}
     patterns.homeScreen.playStore := "|<>0xFDFDFD@0.60$55.4000w00E06000n00803bXkEbDCQtH9886qmGFdYa43+99cymH21x4boTN9V2UWG2MgYUnNF918DXkD78aQU3100000001UU000001"
     patterns.homeScreen.disgaea := "|<>0xFFFFFF@0.60$68.y9swADX0ST7gmFNX20k4qPD4Y40sUQ1BWUl9V0+850HMcAGCHYXl87bmT4UoNwUy1NUXn952T8DUGM8QWHNgG244q3DkXXm6zV15USU"

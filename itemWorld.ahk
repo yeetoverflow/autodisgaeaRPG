@@ -310,15 +310,15 @@ DoItemDrop(lootTarget) {
         } until (result.IsSuccess)
 
         loop {
-            if (FindPattern(patterns.battle.skills.label).IsSuccess) {
-                Loop, 10 {
-                    result := FindPattern(patterns.enemy.A, { bounds : { x1 : 270, x2 : 330, y1 : 420, y2 : 470 } })
-                } until (result.IsSuccess)
+            PollPattern(patterns.battle.skills.label)
 
-                if (result.IsSuccess) {
-                    FindPattern(singleTargetActions, { doClick : true })
-                    sleep 250
-                }
+            Loop, 10 {
+                result := FindPattern(patterns.enemy.A, { bounds : { x1 : 270, x2 : 330, y1 : 420, y2 : 470 } })
+            } until (result.IsSuccess)
+
+            if (result.IsSuccess) {
+                FindPattern(singleTargetActions, { doClick : true })
+                sleep 250
             }
         } until (!result.IsSuccess)
         
