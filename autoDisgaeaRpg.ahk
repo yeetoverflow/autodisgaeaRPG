@@ -474,7 +474,7 @@ AutoDarkAssembly(targetBill := "") {
         } else if InStr(result.comment, "darkAssembly.title") {
             sleep 500
             ;check if insufficient assembly points
-            result := FindPattern([patterns.darkAssembly.0over100, patterns.darkAssembly.25over100], { variancePct : 10 })
+            result := FindPattern([patterns.darkAssembly.0over100, patterns.darkAssembly.25over100], { variancePct : 5 })
             if (result.IsSuccess) {
                 PollPattern(patterns.darkAssembly.addAssemblyPts, { doClick : true, predicatePattern : patterns.prompt.yes })
                 PollPattern(patterns.prompt.yes, { doClick : true, predicatePattern : patterns.prompt.close })
@@ -714,11 +714,11 @@ GoToStronghold() {
     
     done := false
     Loop {
-        result := FindPattern([patterns.stronghold.gemsIcon, patterns.tabs.stronghold, patterns.raid.message])
+        result := FindPattern([patterns.stronghold.gemsIcon, patterns.tabs.stronghold, patterns.raid.message, patterns.battle.prompt.quitBattle])
         
         if InStr(result.comment, "stronghold.gemsIcon") {
             done := true
-        } else if InStr(result.comment, "tabs.stronghold") {
+        } else if InStr(result.comment, "tabs.stronghold") || InStr(result.comment, "battle.prompt.quitBattle") {
             ClickResult(result)
             Sleep, 2000
         } else if InStr(result.comment, "raid.message") {

@@ -157,8 +157,8 @@ GenerateSettingMetadata() {
     InitMetaDataItemWorldOptions(metadata)
 
     metadata.dailies := {}
-    metadata.dailies.displayOrder := ["AutoShop", "AutoFriends", "AutoDailySummon", "AutoDope", "AutoFish", "AutoDarkAssemblyHL", "AutoDailyDarkGateHL"
-                                    , "AutoDarkAssemblyDrops", "AutoDailyDarkGateMatsHuman", "AutoDarkAssemblyDrops2", "AutoDailyDarkGateMatsMonster"
+    metadata.dailies.displayOrder := ["AutoShop", "AutoFriends", "AutoDailySummon", "AutoDope", "AutoFish", "AutoDarkAssemblyDrops", "AutoDailyDarkGateMatsHuman"
+                                    , "AutoDarkAssemblyHL", "AutoDailyDarkGateHL", "AutoDarkAssemblyDrops2", "AutoDailyDarkGateMatsMonster"
                                     , "AutoDarkAssemblyEvent60", "EventStory500Pct", "AutoDailyEventStoryFarm", "CharacterGate1", "EventReview1"
                                     , "GrindItemWorldLoop1", "GrindItemWorldLoop2", "EventRaidLoop"]
     dailiesOptions := ""
