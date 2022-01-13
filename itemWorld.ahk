@@ -323,7 +323,7 @@ DoItemDrop(lootTarget) {
         } until (!result.IsSuccess)
         
         sleep 1500
-        result := FindDrop()
+        result := FindDrop(lootTarget)
 
         if (result.IsSuccess && (lootTarget = "any" || InStr(lootTarget, result.type))) {
             Break
@@ -337,7 +337,13 @@ DoItemDrop(lootTarget) {
 
 GiveUpAndTryAgain(battleOptions) {
     global patterns
-    PollPattern(patterns.menu.button, { doClick : true, predicatePattern : patterns.menu.giveUp })
+
+    result := FindPattern(patterns.prompt.close)
+
+    if (!result.IsSuccess) {
+        PollPattern(patterns.menu.button, { doClick : true, predicatePattern : patterns.menu.giveUp })
+    }
+    
     PollPattern(patterns.menu.giveUp, { doClick : true, predicatePattern : patterns.prompt.yes })
     PollPattern(patterns.prompt.yes, { doClick : true, predicatePattern : patterns.prompt.retry })
     PollPattern(patterns.prompt.retry, { doClick : true })
@@ -358,7 +364,7 @@ GiveUpAndTryAgain(battleOptions) {
     }
 }
 
-FindDrop() {
+FindDrop(lootTarget := "") {
     global settings, patterns
 
     findDropMode := settings.itemWorldOptions.findDropMode
@@ -375,7 +381,6 @@ FindDrop() {
         if (settings.debug.drop) {
             FindText().ScreenShot()
         }
-        PollPattern(patterns.prompt.close, { doClick : true, predicatePattern : patterns.menu.button })
     }
     else {
         ; legendResult := FindPattern(patterns.itemWorld.drop, { variancePct : 15, bounds : { x1 : 359, y1 : 51, x2 : 378, y2 : 89 } })
@@ -398,6 +403,10 @@ FindDrop() {
     }
     else if (anyResult.IsSuccess) {
         result := { type : "any", IsSuccess : true, X : anyResult.X, Y : anyResult.Y }
+    }
+
+    if (findDropMode = "menu" && result.IsSuccess && (lootTarget = "any" || InStr(lootTarget, result.type))) {
+        PollPattern(patterns.prompt.close, { doClick : true, predicatePattern : patterns.menu.button })
     }
 
     if (settings.debug.drop) {
