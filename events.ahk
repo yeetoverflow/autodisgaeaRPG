@@ -94,7 +94,7 @@ CharacterGate1() {
         else if InStr(result.comment, "companions.title") || InStr(result.comment, "battle.auto") || InStr(result.comment, "battle.prompt.battleAgain") || InStr(result.comment, "touchScreen") || InStr(result.comment, "battle.start") {
             sleep 500
             DoBattle(battleOptions)
-            PollPattern(loopTargets, { clickPattern : patterns.battle.done, pollInterval : 250 })
+            PollPattern(loopTargets, { clickPattern : [patterns.battle.done, patterns.touchScreen], pollInterval : 250 })
         }
         else if InStr(result.comment, "events.characterGate.noMore") {
             Break
