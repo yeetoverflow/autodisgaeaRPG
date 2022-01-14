@@ -291,7 +291,7 @@ UseSkipTickets() {
         sleep 500
     }
 
-    PollPattern(patterns.prompt.use, { doClick : true, predicatePattern : patterns.darkGates.skip.ticket })
+    PollPattern(patterns.prompt.use, { doClick : true, predicatePattern : patterns.battle.done })
 }
 
 Resize(reset := "") {
