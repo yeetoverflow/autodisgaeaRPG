@@ -1,6 +1,6 @@
 #Include common.ahk
 
-EventReview1() {
+AutoDailyEventReview1() {
     global patterns, settings, mode
     SetStatus(A_ThisFunc)
 
@@ -61,7 +61,7 @@ EventReview1() {
     }
 }
 
-CharacterGate1() {
+AutoDailyCharacterGate1() {
     global patterns, settings, mode
     SetStatus(A_ThisFunc)
 
