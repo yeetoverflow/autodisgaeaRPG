@@ -12,7 +12,7 @@ ResetUI() {
     ;Gui, +HwndHwndMainGui
     statusBarText := "||"
     Gui Add, StatusBar,, % statusBarText
-    Gui Add, Tab3, cWhite section vTopTabs, Main|Settings|Handlers|Patterns
+    Gui Add, Tab3, cWhite section vTopTabs, Main|Settings|Handlers|Patterns|Logs
     GuiControl, choose, TopTabs, 1
 
     Gui Tab, Main
@@ -171,15 +171,6 @@ ResetUI() {
     Gui Add, Text, cBlack xp wp hp center vProgressText_AutoDarkGate BackgroundTrans, Start AutoDarkGate
     AddSetting("settings_darkGateOptions_selectedGate", "1", { hideLabel : true, optsOverride : "x+10" } )
 
-    ; Gui, Add, Progress, xs+10 vProgressBar_DoDarkGateHL -Smooth w100 h18 c0x66FF66 border
-    ; Gui Add, Text, cBlack xp wp hp center vProgressText_DoDarkGateHL BackgroundTrans, Start DoDarkGateHL
-
-    ; Gui, Add, Progress, x+5 vProgressBar_DoDarkGateMatsHuman -Smooth w150 h18 c0x66FF66 border
-    ; Gui Add, Text, cBlack xp wp hp center vProgressText_DoDarkGateMatsHuman BackgroundTrans, Start DoDarkGateMatsHuman
-
-    ; Gui, Add, Progress, x+5 vProgressBar_DoDarkGateMatsMonster -Smooth w150 h18 c0x66FF66 border
-    ; Gui Add, Text, cBlack xp wp hp center vProgressText_DoDarkGateMatsMonster BackgroundTrans, Start DoDarkGateMatsMonster
-
     Gui Tab, Settings
 
     Gui, Font, Bold
@@ -230,13 +221,30 @@ ResetUI() {
     Gui Add, Button, x+10 gOpenUserPattern, UserPattern
     Gui Add, Text, cWhite xs+10 y+10, Variance:
     Gui Add, Slider, w200 tickinterval5 tooltip vTestPatternVariance, 15
+    Gui Add, Text, cWhite xs+10 y+5, Bounds: 
+    Gui Add, Edit, x+10 vTestBounds w100,
+    Gui Add, Button, x+10 gGenerateBounds, Generate
     InitPatternsTree()
+
+    Gui, Tab, Logs
+    AddSetting("settings_debug_doLog", "1")
+    Gui Add, Text, hidden, EditLog
+    Gui Add, Edit, xp yp r60 w400 vEditLog
 
     Gui Show, w450
 
     guiHwnd := GetGuiHwnd()
+    editLogHwnd := GetControlHwnd("EditLog")
     LV_Modify(1, "Select")
     InitWindow()
+}
+
+GenerateBounds() {
+    global hwnd
+    result := LetUserSelectRect()
+    FindText().ScreenToWindow(x1, y1, result.x1, result.y1, hwnd)
+    FindText().ScreenToWindow(x2, y2, result.x2, result.y2, hwnd)
+    GuiControl,, TestBounds, % "{ x1 : " . x1 . ", y1 : " . y1 . ", x2 : " . x2 . ", y2 : " . y2 . " }"
 }
 
 SelectBattleOption() {

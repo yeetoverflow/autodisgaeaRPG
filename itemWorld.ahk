@@ -14,7 +14,8 @@ GrindItemWorldSingle1() {
 GrindItemWorld(itemWorldOptions, oneTime := false) {
     global mode, patterns, settings
     SetStatus(A_ThisFunc)
-   
+    AddLog(A_ThisFunc)
+
     sortDone := false
     doWeapon := itemWorldOptions.targetItemType = "weapon" ? true : false
     
@@ -162,6 +163,7 @@ ItemWorldOnBattleAction(bribe, result) {
 
 DoItem() {
     SetStatus(A_ThisFunc)
+    AddLog(A_ThisFunc)
     global patterns, settings
 
     battleOptions := settings.battleOptions.itemWorld
@@ -186,6 +188,7 @@ DoItem() {
 
 DoItemDrop(lootTarget) {
     SetStatus(A_ThisFunc, 2)
+    AddLog(A_ThisFunc)
     global patterns, settings
 
     battleOptions := settings.battleOptions.itemWorld
@@ -325,6 +328,8 @@ DoItemDrop(lootTarget) {
         sleep 1500
         result := FindDrop(lootTarget)
 
+        AddLog("Detected drop: " . result.type)
+
         if (result.IsSuccess && (lootTarget = "any" || InStr(lootTarget, result.type))) {
             Break
         }
@@ -393,7 +398,7 @@ FindDrop(lootTarget := "") {
         }
     }
 
-    result := { IsSuccess : false }
+    result := { IsSuccess : false, type : "none" }
 
     if (legendResult.IsSuccess) {
         result := { type : "legendary", IsSuccess : true, X : legendResult.X, Y : legendResult.Y }
@@ -423,6 +428,7 @@ FindDrop(lootTarget := "") {
 
 DoSubdue(bribe) {
     global patterns
+    AddLog(A_ThisFunc)
     
     if (bribe && bribe != "None") {
         PollPattern(patterns.itemWorld.bribe.block, { doClick : true, predicatePattern : patterns.itemWorld.bribe[bribe] })

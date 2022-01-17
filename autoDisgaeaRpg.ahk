@@ -53,6 +53,7 @@ for k, v in msgToMode {
 if (mode) {
     windowTarget := StrReplace(A_Args.1, "id=")
     guiHwnd := GetGuiHwnd()
+    editLogHwnd := GetControlHwnd("EditLog")
     InitWindow()
     
     msg := modeToMsg[mode]
@@ -751,43 +752,7 @@ Test() {
     global patterns, hwnd, settings
     SetStatus(A_ThisFunc)
 
-    dailyStats := GetDailyStats()
-    dailyStats.test := true
-    dailyStats.save(true)
-    ; w := 450
-    ; h := 800
-    
-    ; loop {
-    ;     w := w + 1
-    ;     h := h + 1
-    
-    ;     ResizeWin("ahk_id " hwnd, w, h)
-    ;     sleep 1000
-
-    ;     result := FindPattern(battle.attack)
-    ; } until (result.IsSucces)
-
-    ; MsgBox, % w . "x" . h
-
-    ; ClickResult({ x: 400, y: 400 })
-    ; result := LetUserSelectRect()
-    ; FindText().ScreenToWindow(x1, y1, result.x1, result.y1, hwnd)
-    ; FindText().ScreenToWindow(x2, y2, result.x2, result.y2, hwnd)
-
-    ; battleOptions := settings.battleOptions.default
-
-    ; targetCompanions := []
-    ; for k, v in battleOptions.companions
-    ;     targetCompanions.push(patterns["companions"]["targets"][v])
-
-    ; ScrollUntilDetect(targetCompanions)
-
-    ; targetBattleContext := "default"
-    ; display := GetSettingDisplay("settings_battleOptions_" . targetBattleContext . "_companions")
-    ; GuiControl, %guiHwnd%:Text, battleOptionsText_default_companions, % display
-
-    ; battleOption := "Default"
-    ; MsgBox, % GetSettingDisplay("settings_battleOptions_" . battleOption . "_allyTarget")
+    AddLog("Test!!")
 }
 
 Recover(mode) {

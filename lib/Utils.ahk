@@ -12,8 +12,13 @@ LogFile := "logs/log" . TimeString . ".txt"
 
 AddLog(message)
 {
-	global LogFile
-	FileAppend, %A_Now% %message%`n, %LogFile%
+	global LogFile, editLogHwnd, settings
+
+    if (settings.debug.doLog) {
+        FileAppend, %A_Now% %message%`n, %LogFile%
+        AppendText(editLogHwnd, A_Now . " " message . "`r`n")
+        SendMessage, 0x0115, 7, 0,, ahk_id %editLogHwnd% ;WM_VSCROLL
+    }
 }
 
 ToolTipExpire(message)
@@ -684,4 +689,11 @@ hasValue(haystack, needle) {
         if(v==needle)
             return true
     return false
+}
+
+;https://www.autohotkey.com/board/topic/52441-append-text-to-an-edit-control/
+AppendText(hEdit, text) {
+    SendMessage, 0x000E, 0, 0,, ahk_id %hEdit% ;WM_GETTEXTLENGTH
+    SendMessage, 0x00B1, ErrorLevel, ErrorLevel,, ahk_id %hEdit% ;EM_SETSEL
+    SendMessage, 0x00C2, False, &text,, ahk_id %hEdit% ;EM_REPLACESEL
 }

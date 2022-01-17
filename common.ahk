@@ -104,6 +104,8 @@ DoBattle(battleOptions) {
     SetStatus(A_ThisFunc, 2)
     global patterns, settings, guiHwnd, mode
 
+    start := A_TickCount
+
     targetCompanions := []
     for k, v in battleOptions.companions
         targetCompanions.push(patterns["companions"]["targets"][v])
@@ -221,7 +223,7 @@ DoBattle(battleOptions) {
         }
         else {
             FindPattern(patterns.battle.auto.enabled, { doClick : true })
-            result := FindPattern(patterns.battle.skills.label)
+            result := FindPattern(patterns.battle.skills.label, { bounds : { x1 : 122, y1 : 487, x2 : 583, y2 : 804 } })
             if (result.IsSuccess) {
                 if (battleOptions.selectStandby && !standbySelected) {
                     result := FindPattern(patterns.battle.standby, { doClick : true, clickDelay : 500 })
@@ -241,7 +243,7 @@ DoBattle(battleOptions) {
                     allyTargeted := true
                 }
 
-                result := FindPattern(actions)
+                result := FindPattern(actions, { bounds : { x1 : 122, y1 : 487, x2 : 583, y2 : 804 } })
                 if (result.IsSuccess && battleOptions.onBattleAction)
                 {
                     battleOptions.onBattleAction.Call(result)
@@ -265,6 +267,9 @@ DoBattle(battleOptions) {
             Resize(true)
         }
     }
+
+    logMessage := "Do Battle: " . (A_TickCount - start) / 1000.0
+    AddLog(logMessage)
 }
 
 UseSkipTickets() {
@@ -489,4 +494,23 @@ GetHwnd(targetWindow, mode) {
 	;MsgBox, % proc.CommandLine
     WinGet, hwnd, ID, % "ahk_pid" . proc.ProcessId
 	Return hwnd
+}
+
+;Hidden text control indicates that the name of the next control
+GetControlHwnd(hiddenText) {
+    global guiHwnd
+
+    ;https://www.autohotkey.com/docs/commands/WinGet.htm
+    WinGet, controlHwnds, ControlListHwnd, % "ahk_id " . guiHwnd
+    Loop, Parse, controlHwnds, `n
+    {
+        if (found = true) {
+            Return A_LoopField
+        }
+
+        ControlGetText, controlText,, ahk_id %A_LoopField%
+        if (hiddenText = controlText) {
+            found := true
+        }
+    }
 }
