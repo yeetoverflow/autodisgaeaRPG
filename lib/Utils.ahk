@@ -15,10 +15,16 @@ AddLog(message)
 	global LogFile, editLogHwnd, settings
 
     if (settings.debug.doLog) {
-        FileAppend, %A_Now% %message%`n, %LogFile%
-        AppendText(editLogHwnd, A_Now . " " message . "`r`n")
+        FormatTime, ts, %A_Now%, yyyyMMdd HH:mm:ss
+        FileAppend, %ts% %message%`n, %LogFile%
+        AppendText(editLogHwnd, ts . " " message . "`r`n")
         SendMessage, 0x0115, 7, 0,, ahk_id %editLogHwnd% ;WM_VSCROLL
     }
+}
+
+DisplayTimeStampDiff(startTick, endTick) {
+    secondsDiff := (endTick - startTick) / 1000.0
+    Return Format("{:02d}m {:02d}s", secondsDiff / 60, Mod(secondsDiff, 60))
 }
 
 ToolTipExpire(message)

@@ -104,7 +104,7 @@ DoBattle(battleOptions) {
     SetStatus(A_ThisFunc, 2)
     global patterns, settings, guiHwnd, mode
 
-    start := A_TickCount
+    startTick := A_TickCount
 
     targetCompanions := []
     for k, v in battleOptions.companions
@@ -118,7 +118,7 @@ DoBattle(battleOptions) {
     allyTargeted := false
 
     donePatterns := []
-    donePatterns.push(patterns.battle.done)
+    ;donePatterns.push(patterns.battle.done)
 
     if (battleOptions.donePatterns) {
         donePatterns.push(battleOptions.donePatterns)
@@ -206,7 +206,7 @@ DoBattle(battleOptions) {
     Loop {
         count := 0
 
-        result := FindPattern([patterns.battle.wave.1over3, patterns.battle.wave.2over3, patterns.battle.wave.3over3])
+        result := FindPattern([patterns.battle.wave.1over3, patterns.battle.wave.2over3, patterns.battle.wave.3over3], { bounds : { x1 : 269, y1 : 71, x2 : 377, y2 : 149 }})
         if (result.IsSuccess) {
             RegExMatch(result.comment, "(?P<wave>\d)over(?P<numWaves>\d)", matches)
             SetStatus(A_ThisFunc . ": " . matchesWave . "/" .  matchesNumWaves . "(" . count . ")", 2)
@@ -215,14 +215,14 @@ DoBattle(battleOptions) {
         battleOptions.preBattle()
 
         if (battleOptions.auto) {
-            FindPattern(patterns.battle.auto.disabled, { doClick : true })
+            FindPattern(patterns.battle.auto.disabled, { doClick : true, bounds : { x1 : 430, y1 : 23, x2 : 584, y2 : 99 } })
             if (battleOptions.onBattleAction)
             {
                 battleOptions.onBattleAction.Call("")
             }
         }
         else {
-            FindPattern(patterns.battle.auto.enabled, { doClick : true })
+            FindPattern(patterns.battle.auto.enabled, { doClick : true, bounds : { x1 : 430, y1 : 23, x2 : 584, y2 : 99 } })
             result := FindPattern(patterns.battle.skills.label, { bounds : { x1 : 122, y1 : 487, x2 : 583, y2 : 804 } })
             if (result.IsSuccess) {
                 if (battleOptions.selectStandby && !standbySelected) {
@@ -254,7 +254,12 @@ DoBattle(battleOptions) {
             }
         }
 
-        if (FindPattern(donePatterns).IsSuccess) {
+        if (FindPattern(patterns.battle.done.2, { bounds : { x1 : 106, y1 : 38, x2 : 174, y2 : 108 } }).IsSuccess) {
+            SetStatus(A_ThisFunc . ": Done", 2)
+            Break
+        }
+
+        if (donePatterns.Length() > 1 && FindPattern(donePatterns).IsSuccess) {
             SetStatus(A_ThisFunc . ": Done", 2)
             Break
         }
@@ -268,8 +273,7 @@ DoBattle(battleOptions) {
         }
     }
 
-    logMessage := "Do Battle: " . (A_TickCount - start) / 1000.0
-    AddLog(logMessage)
+    AddLog(A_ThisFunc . " " . DisplayTimeStampDiff(startTick, A_TickCount))
 }
 
 UseSkipTickets() {

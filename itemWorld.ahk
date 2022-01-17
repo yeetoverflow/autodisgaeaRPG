@@ -47,7 +47,8 @@ GrindItemWorld(itemWorldOptions, oneTime := false) {
     }
 
     battleOptions := settings.battleOptions.itemWorld
-    battleOptions.donePatterns := [patterns.itemWorld.title, patterns.itemWorld.leave, patterns.itemWorld.armor]
+    ;battleOptions.donePatterns := [patterns.itemWorld.title, patterns.itemWorld.leave, patterns.itemWorld.armor]
+    battleOptions.donePatterns := ""
     battleOptions.preBattle := Func("ItemWorldPreBattle").Bind(farmTrigger, lootTarget)
     battleOptions.onBattleAction := Func("ItemWorldOnBattleAction").Bind(bribe)
 
@@ -136,7 +137,7 @@ ItemWorldPreBattle(farmTrigger, lootTarget) {
     SetStatus("DoItem")
     global patterns, settings
 
-    result := FindPattern(farmTrigger, { variancePct : 1 })
+    result := FindPattern(farmTrigger, { variancePct : 1, bounds : { x1 : 168, y1 : 25, x2 : 404, y2 : 85 } })
 
     if (result.IsSuccess) {
         if (!FindPattern([patterns.battle.done, patterns.itemWorld.drop], { variancePct : 15 }).IsSuccess)
@@ -150,12 +151,12 @@ ItemWorldPreBattle(farmTrigger, lootTarget) {
 ItemWorldOnBattleAction(bribe, result) {
     global patterns
 
-    IF FindPattern(patterns.prompt.innocentIsAppearing).IsSuccess {
+    IF FindPattern(patterns.prompt.innocentIsAppearing, { bounds : { x1 : 128, y1 : 433, x2 : 447, y2 : 519 } }).IsSuccess {
         FindPattern(patterns.prompt.no, { doClick : true })
         sleep 1000
     }
 
-    IF FindPattern(patterns.itemWorld.subdue).IsSuccess
+    IF FindPattern(patterns.itemWorld.subdue, { bounds : { x1 : 270, y1 : 424, x2 : 443, y2 : 570 } }).IsSuccess
         DoSubdue(bribe)
     Else If (result)
         ClickResult(result)
@@ -164,6 +165,8 @@ ItemWorldOnBattleAction(bribe, result) {
 DoItem() {
     SetStatus(A_ThisFunc)
     AddLog(A_ThisFunc)
+    startTick := A_TickCount
+
     global patterns, settings
 
     battleOptions := settings.battleOptions.itemWorld
@@ -184,6 +187,7 @@ DoItem() {
     }
 
     FindPattern(patterns.blueStacks.trimMemory, { doClick : true})
+    AddLog(A_ThisFunc . " " . DisplayTimeStampDiff(startTick, A_TickCount))
 }
 
 DoItemDrop(lootTarget) {
