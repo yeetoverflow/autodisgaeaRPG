@@ -174,6 +174,7 @@ ScreenCap() {
 AutoClear() {
     global patterns, settings
     SetStatus(A_ThisFunc)
+    AddLog(A_ThisFunc)
 
     battleOptions := settings["battleOptions"][settings.battleContext]
     autoRefillAP.autoRefillAP := false
@@ -206,6 +207,8 @@ AutoClear() {
 
 AutoShop() {
     global patterns, mode
+    SetStatus(A_ThisFunc)
+    AddLog(A_ThisFunc)
     
     done := false
     Loop {
@@ -241,6 +244,8 @@ AutoShop() {
 
 AutoFriends() {
     global patterns, mode
+    SetStatus(A_ThisFunc)
+    AddLog(A_ThisFunc)
     
     done := false
     Loop {
@@ -281,6 +286,8 @@ AutoFriends() {
 
 AutoDailySummon() {
     global patterns, mode
+    SetStatus(A_ThisFunc)
+    AddLog(A_ThisFunc)
     
     done := false
     Loop {
@@ -311,6 +318,7 @@ AutoDailySummon() {
 
 AutoDope() {
     SetStatus(A_ThisFunc)
+    AddLog(A_ThisFunc)
     global patterns, settings, mode
 
 
@@ -344,6 +352,7 @@ AutoDope() {
 
 AutoFish() {
     SetStatus(A_ThisFunc)
+    AddLog(A_ThisFunc)
     global patterns, settings, mode
 
 
@@ -450,8 +459,8 @@ AutoFish() {
 
 AutoDarkAssembly(targetBill := "") {
     global patterns, settings, mode
-    SetStatus(A_ThisFunc)
-
+    SetStatus(A_ThisFunc . "_" . targetBill)
+    AddLog(A_ThisFunc . "_" . targetBill)
     
     maxCrabMiso := settings.general.darkAssembly.maxCrabMiso
     maxGoldBar := settings.general.darkAssembly.maxGoldBar
@@ -670,6 +679,8 @@ AutoDailyEventStoryFarm() {
 }
 
 AutoDailies() {
+    SetStatus(A_ThisFunc)
+    AddLog(A_ThisFunc)
     global settings, metadata, guiHwnd, mode
 
     currentDaily := settings.dailies.current

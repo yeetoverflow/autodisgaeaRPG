@@ -133,6 +133,7 @@ DoBattle(battleOptions) {
         if (battleOptions.startPatterns) {
             result := FindPattern(battleOptions.startPatterns)
             if (battleOptions.skipTicketCount) {
+                AddLog(A_ThisFunc . " Using SkipTickets")
                 UseSkipTickets()
                 battleOptions.skipTicketCount--
                 ControlSetText, edit4, % battleOptions.skipTicketCount,  % "ahk_id " . guiHwnd
@@ -164,6 +165,11 @@ DoBattle(battleOptions) {
         if (battleOptions.autoRefillAP) {
             HandleInsufficientAP()
             sleep 1000
+        }
+
+        if (FindPattern(patterns.battle.done.2, { bounds : { x1 : 106, y1 : 38, x2 : 174, y2 : 108 } }).IsSuccess) {
+            SetStatus(A_ThisFunc . ": Done", 2)
+            Break
         }
 
         result := FindPattern([patterns.battle.auto, donePatterns])

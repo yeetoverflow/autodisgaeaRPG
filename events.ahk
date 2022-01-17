@@ -3,6 +3,7 @@
 AutoDailyEventReview1() {
     global patterns, settings, mode
     SetStatus(A_ThisFunc)
+    AddLog(A_ThisFunc)
 
     battleOptions := settings.battleOptions.event
     battleOptions.startPatterns := [patterns.battle.start, patterns.battle.prompt.battle]
@@ -64,10 +65,11 @@ AutoDailyEventReview1() {
 AutoDailyCharacterGate1() {
     global patterns, settings, mode
     SetStatus(A_ThisFunc)
+    AddLog(A_ThisFunc)
 
     battleOptions := settings.battleOptions.event
     battleOptions.startPatterns := [patterns.battle.start, patterns.battle.prompt.battle]
-    battleOptions.donePatterns := [patterns.raid.appear.advanceInStory, patterns.battle.prompt.quitBattle]
+    battleOptions.donePatterns := [patterns.raid.appear.advanceInStory, patterns.battle.prompt.quitBattle, patterns.touchScreen]
    
     loopTargets := [patterns.stronghold.gemsIcon, patterns.dimensionGate.background, patterns.dimensionGate.events.select
         , patterns.battle.start, patterns.battle.auto, patterns.companions.title, patterns.events.characterGate.enter
@@ -91,7 +93,7 @@ AutoDailyCharacterGate1() {
             ClickResult(result)
             sleep 1000
         }
-        else if InStr(result.comment, "companions.title") || InStr(result.comment, "battle.auto") || InStr(result.comment, "battle.prompt.battleAgain") || InStr(result.comment, "touchScreen") || InStr(result.comment, "battle.start") {
+        else if InStr(result.comment, "companions.title") || InStr(result.comment, "battle.auto") || InStr(result.comment, "battle.prompt.battleAgain") || InStr(result.comment, "battle.start") {
             sleep 500
             DoBattle(battleOptions)
             PollPattern(loopTargets, { clickPattern : [patterns.battle.done, patterns.touchScreen], pollInterval : 250 })
@@ -109,6 +111,7 @@ AutoDailyCharacterGate1() {
 EventAutoClear() {
     global patterns, settings
     SetStatus(A_ThisFunc)
+    AddLog(A_ThisFunc)
 
     battleOptions := settings.battleOptions.event
     autoRefillAP.autoRefillAP := false
@@ -155,6 +158,7 @@ EventAutoClear() {
 EventStoryFarm(battleCount := "") {
     global patterns, settings, guiHwnd, mode
     SetStatus(A_ThisFunc)
+    AddLog(A_ThisFunc)
 
     if (!battleCount) {
         ControlGetText, battleCount, edit2, % "ahk_id " . guiHwnd
@@ -241,7 +245,7 @@ EventStoryFarm(battleCount := "") {
 
 HandleRaid() {
     global settings, patterns
-
+    AddLog(A_ThisFunc)
 
     switch (settings.eventOptions.raid.appearAction)
     {
@@ -328,6 +332,7 @@ HandleRaid() {
 EventStory500Pct() {
     global mode, patterns, settings
     SetStatus(A_ThisFunc)
+    AddLog(A_ThisFunc)
 
     done := false
     clickedHard := false
@@ -422,6 +427,7 @@ EventStory500Pct() {
 EventRaidLoop() {
     global patterns, settings
     SetStatus(A_ThisFunc)
+    AddLog(A_ThisFunc)
 
     loopNumChecksBeforeRefresh := settings.eventOptions.raid.loopNumChecksBeforeRefresh ? settings.eventOptions.raid.loopNumChecksBeforeRefresh : 50
 
@@ -478,6 +484,7 @@ RaidClickCallback() {
 EventRaidAutoClaim() {
     global mode, patterns
     SetStatus(A_ThisFunc)
+    AddLog(A_ThisFunc)
     
     Loop
     {
@@ -507,6 +514,7 @@ EventRaidAutoClaim() {
 EventRaidAutoVault() {
     global mode, patterns
     SetStatus(A_ThisFunc)
+    AddLog(A_ThisFunc)
     
     Loop
     {

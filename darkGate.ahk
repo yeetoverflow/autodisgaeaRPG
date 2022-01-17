@@ -4,18 +4,6 @@ if (!patterns)
     patterns := {}
 }
 
-; DoDarkGateHL() {
-;     DoDarkGate("hl")
-; }
-
-; DoDarkGateMatsHuman() {
-;     DoDarkGate("matsHuman")
-; }
-
-; DoDarkGateMatsMonster() {
-;     DoDarkGate("matsMonster")
-; }
-
 AutoDarkGate(type = "", opts = "") {
     global mode, patterns, settings, guiHwnd
 
@@ -32,7 +20,9 @@ AutoDarkGate(type = "", opts = "") {
         ControlSetText, edit4, % opts.skip,  % "ahk_id " . guiHwnd
     }
     
+    
     SetStatus(A_ThisFunc . "_" . type)
+    AddLog(A_ThisFunc . "_" . type)
     ControlGetText, gateCount, edit3, % "ahk_id " . guiHwnd
     ControlGetText, gateSkipCount, edit4, % "ahk_id " . guiHwnd
     SetStatus(gateCount, 2)
