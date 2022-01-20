@@ -108,6 +108,10 @@ GenerateSettingMetadata() {
     metadata.eventOptions.raid.fightAttempts.options := ["1", "2", "3"]
     metadata.eventOptions.raid.loopNumChecksBeforeRefresh := {}
     metadata.eventOptions.raid.loopNumChecksBeforeRefresh.type := "Number"
+    metadata.eventOptions.raid.claimType := {}
+    metadata.eventOptions.raid.claimType.type := "Radio"
+    metadata.eventOptions.raid.claimType.options := ["claim", "vault", "innocent"]
+
 
     metadata.general := {}
     metadata.general.darkAssembly := {}

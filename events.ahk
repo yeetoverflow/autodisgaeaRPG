@@ -89,7 +89,7 @@ AutoDailyCharacterGate1() {
             ScrollUntilDetect(patterns.dimensionGate.events.banners.characterGate1)
             sleep 3000
         }
-        else if InStr(result.comment, "events.characterGate.enter") || InStr(result.comment, "stage.threeStars") {
+        else if InStr(result.comment, "events.characterGate.enter") || InStr(result.comment, "stage.threeStars") || InStr(result.comment, "touchScreen") {
             ClickResult(result)
             sleep 1000
         }
@@ -482,52 +482,59 @@ RaidClickCallback() {
 }
 
 EventRaidAutoClaim() {
-    global mode, patterns
+    global settings, mode, patterns
     SetStatus(A_ThisFunc)
     AddLog(A_ThisFunc)
     
-    Loop
-    {
-        result := FindPattern([patterns.raid.claim.prize, patterns.prompt.close], { variancePct : 20 })
-        if (result.IsSuccess)
-        {
-            ClickResult(result)
-        }
+    switch (settings.eventOptions.raid.claimType) {
+        case "claim":
+            Loop
+            {
+                result := FindPattern([patterns.raid.claim.prize, patterns.prompt.close], { variancePct : 30 })
+                if (result.IsSuccess)
+                {
+                    ClickResult(result)
+                }
 
-        sleep 250
+                sleep 250
 
-        if (!result.IsSuccess)
-        {
-            ScrollDown()
-        }
+                if (!result.IsSuccess)
+                {
+                    ScrollDown()
+                }
 
-        if (FindPattern(patterns.scroll.down.max).IsSuccess) {
-            Break
-        }
-    }
+                if (FindPattern(patterns.scroll.down.max).IsSuccess) {
+                    Break
+                }
+            }
+        case "vault":
+            Loop
+            {
+                result := PollPattern([patterns.events.vault.acquired, patterns.prompt.close], { maxCount : 10 })
+                if (result.IsSuccess)
+                {
+                    ClickResult(result)
+                }
+                else {
+                    Break
+                }
 
-    if (mode && mode != "AutoDailies") {
-        ExitApp
-    }
-}
+                sleep 250
+            }
+        case "innocent":
+            Loop
+            {
+                result := PollPattern([patterns.events.vault.innocentChance, patterns.prompt.close], { maxCount : 10 })
+                if (result.IsSuccess)
+                {
+                    ClickResult(result)
+                }
+                else {
+                    Break
+                }
 
-EventRaidAutoVault() {
-    global mode, patterns
-    SetStatus(A_ThisFunc)
-    AddLog(A_ThisFunc)
-    
-    Loop
-    {
-        result := PollPattern([patterns.events.vault.acquired, patterns.prompt.close], { maxCount : 10 })
-        if (result.IsSuccess)
-        {
-            ClickResult(result)
-        }
-        else {
-            Break
-        }
-
-        sleep 250
+                sleep 250
+            }
     }
 
     if (mode && mode != "AutoDailies") {

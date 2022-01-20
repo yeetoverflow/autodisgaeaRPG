@@ -104,9 +104,6 @@ ResetUI() {
     Gui Add, Text, cWhite x+10, Count
     Gui Add, Edit, cBlack w50 x+10 Number, 1
     AddSetting("settings_eventOptions_story_farmTarget", "1", { hideLabel : true, optsOverride : "x+10" } )
-    ; Gui, Add, Progress, x+10 w100 h18 c0x66FF66 vsettingsmodal_eventOptions_story
-    ; Gui Add, Text, xp+5 wp hp r1 +0x4000 cBlack BackgroundTrans left vsettingsText_eventOptions_story, % GetSettingDisplay("settings_eventOptions_story")
-    ;GuiControl,, % "eventOptions_storyTarget_" . settings.eventOptions.storyTarget, 1
 
     Gui, Add, Progress, xs+10 vProgressBar_EventStory500Pct -Smooth w120 h18 c0x66FF66 border
     Gui Add, Text, cBlack xp wp hp center vProgressText_EventStory500Pct BackgroundTrans, Start EventStory500Pct
@@ -124,11 +121,13 @@ ResetUI() {
     Gui, Add, Progress, xs+10 vProgressBar_EventRaidLoop -Smooth w100 h18 c0x66FF66 border
     Gui Add, Text, cBlack xp wp hp center vProgressText_EventRaidLoop BackgroundTrans, Start EventRaidLoop
 
-    Gui, Add, Progress, x+10 vProgressBar_EventRaidAutoClaim -Smooth w130 h18 c0x66FF66 border
+    Gui, Add, Progress, xs+10 vProgressBar_EventRaidAutoClaim -Smooth w130 h18 c0x66FF66 border
     Gui Add, Text, cBlack xp wp hp center vProgressText_EventRaidAutoClaim BackgroundTrans, Start EventRaidAutoClaim
 
-    Gui, Add, Progress, x+10 vProgressBar_EventRaidAutoVault -Smooth w130 h18 c0x66FF66 border
-    Gui Add, Text, cBlack xp wp hp center vProgressText_EventRaidAutoVault BackgroundTrans, Start EventRaidAutoVault
+    AddSetting("settings_eventOptions_raid_claimType", "1", { hideLabel : true, optsOverride : "x+10" } )
+
+    ; Gui, Add, Progress, x+10 vProgressBar_EventRaidAutoVault -Smooth w130 h18 c0x66FF66 border
+    ; Gui Add, Text, cBlack xp wp hp center vProgressText_EventRaidAutoVault BackgroundTrans, Start EventRaidAutoVault
 
     Gui Add, Text, 0x10 xs w400 h10
     Gui Font, Bold
