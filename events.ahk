@@ -514,7 +514,7 @@ EventRaidAutoClaim() {
         case "vault":
             Loop
             {
-                result := PollPattern([patterns.events.vault.acquired, patterns.prompt.close], { maxCount : 10 })
+                result := PollPattern([patterns.events.vault.acquired, patterns.prompt.close], { maxCount : 20 })
                 if (result.IsSuccess)
                 {
                     ClickResult(result)
@@ -528,7 +528,7 @@ EventRaidAutoClaim() {
         case "innocent":
             Loop
             {
-                result := PollPattern([patterns.events.vault.innocentChance, patterns.prompt.close], { maxCount : 10 })
+                result := PollPattern([patterns.events.vault.innocentChance, patterns.prompt.close], { maxCount : 20 })
                 if (result.IsSuccess)
                 {
                     ClickResult(result)
