@@ -135,7 +135,11 @@ EventAutoClear() {
             ScrollUntilDetect(patterns.dimensionGate.events.banners.story)
             sleep 3000
         }
-        else if InStr(result.comment, "battle.start") || InStr(result.comment, "companions.title") {
+        else if InStr(result.comment, "battle.start") {
+            ClickResult(result)
+            sleep 500
+        }
+        else if InStr(result.comment, "companions.title") {
             sleep 500
             DoBattle(battleOptions)
             PollPattern(loopTargets, { clickPattern : patterns.battle.done, pollInterval : 250 })
