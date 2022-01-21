@@ -15,7 +15,7 @@ InitWindow()
 
     switch (settings.window.emulator) {
         case "nox":
-            ;hwnd := DllCall("user32\FindWindow", "Str","Qt5QWindowIcon", "Str", settings.window.name, "Ptr")
+            ;hwnd := DllCall("user32\FindWindow", "Str","Qt5QWindowIcon", "Str", settings.window.emulator, "Ptr")
             WinGet, hwnd, ID, % settings.window.name . " ahk_exe Nox.exe"
         case "testPaintBs":
             SetTitleMatchMode, 2
@@ -361,10 +361,10 @@ HandleInsufficientAP() {
     result := FindPattern(patterns.prompt.insufficientAP)
     
     if (result.IsSuccess) {
-        ClickResult(result)
+        PollPattern(patterns.prompt.insufficientAP, { doClick : true, predicatePattern : patterns.prompt.use })
         PollPattern(patterns.prompt.use, { doClick : true, predicatePattern : patterns.prompt.yes })
         PollPattern(patterns.prompt.yes, { doClick : true, predicatePattern : patterns.prompt.close })
-        PollPattern(patterns.prompt.close, { doClick : true })
+        PollPattern(patterns.prompt.close, { doClick : true, predicatePattern : patterns.apAdd })
         return true
     }
 
