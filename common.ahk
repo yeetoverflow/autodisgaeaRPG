@@ -265,7 +265,7 @@ DoBattle(battleOptions) {
             Break
         }
 
-        if (donePatterns.Length() > 1 && FindPattern(donePatterns).IsSuccess) {
+        if (donePatterns.Length() > 0 && FindPattern(donePatterns).IsSuccess) {
             SetStatus(A_ThisFunc . ": Done", 2)
             Break
         }

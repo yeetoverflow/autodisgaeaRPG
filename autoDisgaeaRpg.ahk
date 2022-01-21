@@ -770,17 +770,24 @@ Recover(mode) {
     global patterns
 
     Resize()
-    result := FindPattern(patterns.homeScreen.playStore)
+    result := FindPattern(patterns.homeScreen.playStore, patterns.homeScreen.openAppAgain)
     
     doRecover := false
     doClickDisgaeaIcon := false
 
-    if (result.IsSuccess) {
+    if InStr(result.comment, "homeScreen.playStore") {
         if(FindPattern([patterns.homeScreen.disgaea]).IsSuccess)
         {
             doRecover := true
-            doClickDisgaeaIcon := true
+            PollPattern([patterns.homeScreen.disgaea], { doClick : true, predicatePattern : patterns.criware, pollInterval : 1000 })
         }
+    } else if InStr(result.comment, "homeScreen.openAppAgain") {
+        doRecover := true
+        PollPattern([patterns.homeScreen.openAppAgain], { doClick : true, predicatePattern : patterns.criware, pollInterval : 1000 })
+    }
+
+    if (result.IsSuccess) {
+        
     }
 
     result := FindPattern(patterns.prompt.corner)
@@ -802,9 +809,6 @@ Recover(mode) {
     if (doRecover) {
         AddLog("Recover")
         HandleAction("Stop", mode)
-        if (doClickDisgaeaIcon) {
-            PollPattern([patterns.homeScreen.disgaea], { doClick : true, predicatePattern : patterns.criware, pollInterval : 1000 })
-        }
         PollPattern([patterns.criware], { doClick : true, predicatePattern : patterns.stronghold.gemsIcon, pollInterval : 1000, callback : Func("RecoverCallback") })
         Resize()
         HandleAction("Start", mode)
