@@ -770,7 +770,7 @@ Recover(mode) {
     global patterns
 
     Resize()
-    result := FindPattern(patterns.homeScreen.playStore, patterns.homeScreen.openAppAgain)
+    result := FindPattern([patterns.homeScreen.playStore, patterns.homeScreen.openAppAgain])
     
     doRecover := false
     doClickDisgaeaIcon := false

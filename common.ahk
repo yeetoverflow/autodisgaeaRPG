@@ -132,7 +132,7 @@ DoBattle(battleOptions) {
 
         if (battleOptions.startPatterns) {
             result := FindPattern(battleOptions.startPatterns)
-            if (battleOptions.skipTicketCount) {
+            if (!FindPattern(patterns.companions.refresh).IsSuccess && battleOptions.skipTicketCount) {
                 AddLog(A_ThisFunc . " Using SkipTickets")
                 UseSkipTickets()
                 battleOptions.skipTicketCount--
@@ -154,12 +154,12 @@ DoBattle(battleOptions) {
                     dailyStats[currentDaily].skip++
                     dailyStats.save(true)
                 }
+                sleep 1000
             }
-            else {
+            else if (result.IsSuccess) {
                 ClickResult(result)
+                sleep 1000
             }
-
-            sleep 1000
         }
 
         if (battleOptions.autoRefillAP) {
