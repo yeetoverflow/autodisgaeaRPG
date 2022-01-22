@@ -364,7 +364,7 @@ HandleInsufficientAP() {
         PollPattern(patterns.prompt.insufficientAP, { doClick : true, predicatePattern : patterns.prompt.use })
         PollPattern(patterns.prompt.use, { doClick : true, predicatePattern : patterns.prompt.yes })
         PollPattern(patterns.prompt.yes, { doClick : true, predicatePattern : patterns.prompt.close })
-        PollPattern(patterns.prompt.close, { doClick : true, predicatePattern : patterns.apAdd })
+        PollPattern(patterns.prompt.close, { doClick : true, predicatePattern : [patterns.apAdd, patterns.battle.prompt.battle, patterns.battle.start] })
         return true
     }
 
