@@ -282,41 +282,18 @@ DoItemDrop(lootTarget) {
             Break
         }
 
-        ;check 4 times just in case
-        ; loop 4 {
-        ;     result := FindPattern(patterns.enemy.target)
-
-        ;     while (!result.IsSuccess) {
-        ;         PollPattern(patterns.enemy.A, { variancePct : 15, doClick : true, bounds : { x1 : 270, x2 : 330, y1 : 420, y2 : 470 }, offsetX : 40, offsetY : -30 })
-        ;         sleep 500
-        ;         result := FindPattern(patterns.enemy.target)
-        ;     }
-        ; }
-
-        ; count := 0
-        ; loop {
-        ;     if (FindPattern(patterns.battle.skills.label.IsSuccess)) {
-        ;         result := FindPattern(singleTargetActions)
-        ;         if (FindPattern(patterns.enemy.A, { bounds : { x1 : 270, x2 : 330, y1 : 420, y2 : 470 } }).IsSuccess) {
-        ;             ClickResult(result)
-        ;         }
-        ;     }
-            
-        ;     result := FindPattern(patterns.enemy.A, { bounds : { x1 : 270, x2 : 330, y1 : 420, y2 : 470 } })
-        ;     count++
-        ; } until (count > 8 && !result.IsSuccess && !FindPattern(patterns.enemy.target).IsSuccess)
-
         PollPattern(patterns.battle.skills.label)
 
         Loop {
             FindPattern(patterns.enemy.A, { doClick : true, bounds : { x1 : 270, x2 : 330, y1 : 420, y2 : 470 }, offsetX : 40, offsetY : -30 })
+            sleep 250
 
             Loop, 10 {
                 result := FindPattern(patterns.enemy.target)
             } until (result.IsSuccess)
         } until (result.IsSuccess)
 
-        loop {
+        Loop {
             PollPattern(patterns.battle.skills.label)
 
             Loop, 10 {
