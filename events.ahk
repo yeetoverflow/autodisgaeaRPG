@@ -494,7 +494,7 @@ EventRaidAutoClaim() {
         case "claim":
             Loop
             {
-                result := FindPattern([patterns.raid.claim.prize, patterns.prompt.close], { variancePct : 30 })
+                result := FindPattern([patterns.raid.claim.prize, patterns.prompt.close], { variancePct : 30, bounds : { x1 : 16, y1 : 282, x2 : 571, y2 : 1200 } })
                 if (result.IsSuccess)
                 {
                     ClickResult(result)

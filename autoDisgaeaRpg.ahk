@@ -786,17 +786,13 @@ Recover(mode) {
         PollPattern([patterns.homeScreen.openAppAgain], { doClick : true, predicatePattern : patterns.criware, pollInterval : 1000 })
     }
 
-    if (result.IsSuccess) {
-        
-    }
-
     result := FindPattern(patterns.prompt.corner)
 
     if (result.IsSuccess)
     {
         result := FindPattern([patterns.prompt.dateHasChanged, patterns.prompt.invalidRequest, patterns.prompt.failedToConnect])
         if (result.IsSuccess) {
-            FindPattern(patterns.prompt.ok, { doClick : true, predicatePattern : patterns.criware })
+            FindPattern(patterns.prompt.ok, { doClick : true, predicatePattern : patterns.criware, clickPattern : patterns.homeScreen.disgaea })
             doRecover := true
         }
 
