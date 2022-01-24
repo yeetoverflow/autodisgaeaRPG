@@ -289,7 +289,7 @@ DoItemDrop(lootTarget) {
             sleep 250
 
             Loop, 10 {
-                result := FindPattern(patterns.enemy.target)
+                result := FindPattern(patterns.enemy.target, { variancePct : 20 })
             } until (result.IsSuccess)
         } until (result.IsSuccess)
 
