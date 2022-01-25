@@ -290,6 +290,7 @@ GenerateBluestacksPatterns() {
 
     patterns.itemWorld.itemTarget := {}
     patterns.itemWorld.itemTarget.rarity := {}
+    patterns.itemWorld.itemTarget.rarity.any := "|<>0xF0A485@0.80$36.wk0000ykwDsSylwDwzznABgnnnABgzlnzBgyUVzBgTU"
     patterns.itemWorld.itemTarget.rarity.common := ["|<>0xB9A98E@0.80$45.D7ABV763RAlgRglEFaRn8rC26viT6xkEzRzspy37jfj6bkMxhBsoy34hdj6XMRYh9gYNls1cBwV36000204"
                                                     , "|<>0xD6BFA3@0.80$44.TDATXDA44HW8YMW16taR2QUkiNrEZ8A+uLQBS32aZZ3HkkddNMYw6OG2K85VoUU4q16C081708"]
     patterns.itemWorld.itemTarget.rarity.rare := ["|<>*113$25.9tqnUMk83AMUVaAEQmH9B7NXU3aknok/Nn3Zotnsu2"

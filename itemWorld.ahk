@@ -28,7 +28,7 @@ GrindItemWorld(itemWorldOptions, oneTime := false) {
 
     switch (itemWorldOptions.targetItemRarity) {
         case "any":
-            targetItem := patterns.itemWorld.itemTarget.rarity
+            targetItem := patterns.itemWorld.itemTarget.rarity.any
         case "legendary":
             targetItem := patterns.itemWorld.itemTarget.rarity.legendary
         case "rareOrLegendary":
