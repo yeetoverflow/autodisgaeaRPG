@@ -1164,7 +1164,7 @@ InitMetaDataItemWorldOptions(metadata) {
     itemWorldOptionsMetaData.targetItemType.options := ["armor", "weapon"]
     itemWorldOptionsMetaData.targetItemSort := {}
     itemWorldOptionsMetaData.targetItemSort.type := "Radio"
-    itemWorldOptionsMetaData.targetItemSort.options := ["gained", "rarity", "retain"]
+    itemWorldOptionsMetaData.targetItemSort.options := ["gained", "rarity", "innocents", "retain"]
     itemWorldOptionsMetaData.targetItemRarity := {}
     itemWorldOptionsMetaData.targetItemRarity.type := "Radio"
     itemWorldOptionsMetaData.targetItemRarity.options := ["any", "legendary", "rareOrLegendary", "rare", "common"]
