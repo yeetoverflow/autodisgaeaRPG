@@ -86,7 +86,7 @@ AutoDailyCharacterGate1() {
             sleep 1000
         }
         else if InStr(result.comment, "dimensionGate.events.select") {
-            ScrollUntilDetect(patterns.dimensionGate.events.banners.characterGate1)
+            ScrollUntilDetect(patterns.dimensionGate.events.banners.characterGate1, { variancePct : 30 })
             sleep 3000
         }
         else if InStr(result.comment, "events.characterGate.enter") || InStr(result.comment, "stage.threeStars") || InStr(result.comment, "touchScreen") {
