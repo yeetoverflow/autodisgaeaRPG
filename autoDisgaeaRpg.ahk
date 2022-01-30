@@ -40,7 +40,8 @@ msgToMode := { 0x1001 : "EventStoryFarm"
              , 0x1028 : "AutoDarkAssemblyEvent60"
              , 0x1029 : "AutoDailies"
              , 0x1030 : "GoToStronghold"
-             , 0x1031 : "AutoDailyEventStoryFarm" }
+             , 0x1031 : "AutoDailyEventStoryFarm"
+             , 0x1032 : "AutoShopItems" }
 modeToMsg := {}
 handlers := {}
 
@@ -205,40 +206,133 @@ AutoClear() {
     }
 }
 
-AutoShop() {
-    global patterns, mode
+AutoShopItems() {
+    AutoShop("items")
+}
+
+AutoShop(shopType := "") {
+    global settings, patterns, mode
     SetStatus(A_ThisFunc)
     AddLog(A_ThisFunc)
     
     done := false
-    Loop {
-        result := FindPattern([patterns.stronghold.gemsIcon, patterns.tabs.shop.items.tab, patterns.tabs.shop.items.hl.disabled, patterns.tabs.shop.items.hl.enabled])
-        
-        if InStr(result.comment, "stronghold.gemsIcon") {
-            PollPattern(patterns.tabs.shop.tab, { doClick : true })
-        } else if InStr(result.comment, "tabs.shop.items.tab") || InStr(result.comment, "tabs.shop.items.hl.disabled") {
-            ClickResult(result)
-        } else if InStr(result.comment, "tabs.shop.items.hl.enabled") {
+
+    if (!shopType) {
+        shopType := settings.shop.shopType
+        skipRefresh := settings.shop.skipRefresh
+    }
+
+    switch (shopType) {
+        case "items":
             Loop {
-                result := FindPattern(patterns.tabs.shop.items.blocks)
-
-                if (result.IsSuccess) {
+                result := FindPattern([patterns.stronghold.gemsIcon, patterns.shop.items.tab, patterns.shop.items.hl.disabled, patterns.shop.items.hl.enabled])
+                
+                if InStr(result.comment, "stronghold.gemsIcon") {
+                    PollPattern(patterns.tabs.shop, { doClick : true })
+                } else if InStr(result.comment, "shop.items.tab") || InStr(result.comment, "shop.items.hl.disabled") {
                     ClickResult(result)
-                    PollPattern(patterns.slider.max, { doClick : true, variancePct : 1 })
-                    PollPattern(patterns.prompt.yes, { doClick : true })
-                    PollPattern(patterns.prompt.close, { doClick : true })
-                    sleep, 1500
+                } else if InStr(result.comment, "shop.items.hl.enabled") {
+                    Loop {
+                        result := FindPattern(patterns.shop.items.block)
+
+                        if (result.IsSuccess) {
+                            ClickResult(result)
+                            PollPattern(patterns.slider.max, { doClick : true, variancePct : 1 })
+                            PollPattern(patterns.prompt.yes, { doClick : true })
+                            PollPattern(patterns.prompt.close, { doClick : true })
+                            sleep, 1500
+                        }
+                    } until (!result.IsSuccess)
+
+                    done := true
                 }
-            } until (!result.IsSuccess)
 
-            done := true
-        }
+                sleep, 250
+            } until (done)
+        case "equipment":
+            Loop {
+                result := FindPattern([patterns.stronghold.gemsIcon, patterns.shop.equipment.tab, patterns.shop.equipment.title])
+                
+                if InStr(result.comment, "stronghold.gemsIcon") {
+                    PollPattern(patterns.tabs.shop, { doClick : true })
+                } else if InStr(result.comment, "shop.equipment.tab") {
+                    ClickResult(result)
+                } else if InStr(result.comment, "shop.equipment.title") {
+                    result := FindPattern(patterns.shop.zeroRefreshRemaining)
+                    if (result.IsSuccess) {
+                        done := true
+                        Continue
+                    }
 
-        sleep, 250
-    } until (done)
+                    if (!skipRefresh) {
+                        PollPattern(patterns.shop.refresh, { doClick : true, predicatePattern : patterns.shop.customerRank.subtract })
+                        PollPattern(patterns.shop.customerRank.subtract.enabled, { doClick : true, predicatePattern : patterns.shop.customerRank.subtract.disabled })
+                        PollPattern(patterns.prompt.ok, { doClick : true, predicatePattern : patterns.shop.refresh })
+                    }
+                    
+                    PollPattern(patterns.itemWorld.weapon.disabled, { doClick : true, predicatePattern : patterns.itemWorld.weapon.enabled, pollInterval : 2000 })
+                    AutoShopBuyEquipmentWithInnocents()
+                    PollPattern(patterns.itemWorld.armor.disabled, { doClick : true, predicatePattern : patterns.itemWorld.armor.enabled, pollInterval : 2000 })
+                    AutoShopBuyEquipmentWithInnocents()
+                    PollPattern(patterns.itemWorld.weapon.disabled, { doClick : true, predicatePattern : patterns.itemWorld.weapon.enabled, pollInterval : 2000 })
+                    AutoShopBuyEquipmentWithInnocents()
+                    PollPattern(patterns.itemWorld.armor.disabled, { doClick : true, predicatePattern : patterns.itemWorld.armor.enabled, pollInterval : 2000 })
+                    AutoShopBuyEquipmentWithInnocents()
+                    sleep 2000
+
+                    if (skipRefresh) {
+                        done := true
+                        Continue
+                    }
+                }
+
+                sleep, 250
+            } until (done)
+    }
+
+    
 
     if (mode && mode != "AutoDailies") {
         ExitApp
+    }
+}
+
+AutoShopBuyEquipmentWithInnocents() {
+    global patterns
+
+    Loop {
+        targetInnocents := {}
+        result := FindPattern(patterns.shop.innocent.1, { multi : true })
+
+        for k, v in result.multi {
+            targetInnocents[v.Y] := true
+        }
+
+        result := FindPattern(patterns.shop.innocent.2, { multi : true })
+
+        for k, v in result.multi {
+            targetInnocents[v.Y] := true
+        }
+
+        for k, v in targetInnocents {
+            Click("x200 " . " y" . k)
+            sleep, 500
+        }
+
+        if (FindPattern(patterns.scroll.down.max).IsSuccess) {
+            Break
+        }
+        else {
+            ScrollDown()
+        }
+        
+        sleep, 700
+    }
+
+    if FindPattern(patterns.shop.purchase).IsSuccess {
+        PollPattern(patterns.shop.purchase, { doClick : true, predicatePattern : patterns.prompt.yes })
+        PollPattern(patterns.prompt.yes, { doClick : true, predicatePattern : patterns.prompt.ok })
+        PollPattern(patterns.prompt.ok, { doClick : true, predicatePattern : patterns.shop.equipment.title, clickPattern : patterns.touchScreen })
     }
 }
 

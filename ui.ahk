@@ -40,7 +40,10 @@ ResetUI() {
     
     Gui, Add, Progress, xs+10 vProgressBar_AutoShop -Smooth w80 h18 c0x66FF66 border
     Gui Add, Text, cBlack xp wp hp center vProgressText_AutoShop BackgroundTrans, Start AutoShop
-    Gui, Add, Progress, x+10 vProgressBar_AutoFriends -Smooth w100 h18 c0x66FF66 border
+    AddSetting("settings_shop_shopType", "1", { hideLabel : true, optsOverride : "x+10" } )
+    AddSetting("settings_shop_skipRefresh", "1", { hideLabel : true, optsOverride : "x+10" } )
+    
+    Gui, Add, Progress, xs+10 vProgressBar_AutoFriends -Smooth w100 h18 c0x66FF66 border
     Gui Add, Text, cBlack xp wp hp center vProgressText_AutoFriends BackgroundTrans, Start AutoFriends
     Gui, Add, Progress, x+10 vProgressBar_AutoDailySummon -Smooth w120 h18 c0x66FF66 border
     Gui Add, Text, cBlack xp wp hp center vProgressText_AutoDailySummon BackgroundTrans, Start AutoDailySummon

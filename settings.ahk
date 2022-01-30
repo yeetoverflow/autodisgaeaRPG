@@ -128,6 +128,13 @@ GenerateSettingMetadata() {
     metadata.general.darkAssembly.targetBill.type := "Radio"
     metadata.general.darkAssembly.targetBill.options := ["drops", "hl", "event60mins"]
 
+    metadata.shop := {}
+    metadata.shop.shopType := {}
+    metadata.shop.shopType.type := "Radio"
+    metadata.shop.shopType.options := ["items", "equipment"]
+    metadata.shop.skipRefresh := {}
+    metadata.shop.skipRefresh.type := "Checkbox"
+
     metadata.fishingFleet := {}
     metadata.fishingFleet.bribe := {}
     metadata.fishingFleet.bribe.maxGoldenCandy := {}
@@ -163,7 +170,7 @@ GenerateSettingMetadata() {
     InitMetaDataItemWorldOptions(metadata)
 
     metadata.dailies := {}
-    metadata.dailies.displayOrder := ["AutoShop", "AutoFriends", "AutoDailySummon", "AutoDope", "AutoFish", "AutoDailyCharacterGate1", "AutoDailyEventReview1"
+    metadata.dailies.displayOrder := ["AutoShopItems", "AutoFriends", "AutoDailySummon", "AutoDope", "AutoFish", "AutoDailyCharacterGate1", "AutoDailyEventReview1"
                                     , "AutoDarkAssemblyDrops", "AutoDailyDarkGateMatsHuman"
                                     , "AutoDarkAssemblyHL", "AutoDailyDarkGateHL", "AutoDarkAssemblyDrops2", "AutoDailyDarkGateMatsMonster"
                                     , "AutoDarkAssemblyEvent60", "EventStory500Pct", "AutoDailyEventStoryFarm"
