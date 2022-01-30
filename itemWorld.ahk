@@ -49,7 +49,7 @@ GrindItemWorld(itemWorldOptions, oneTime := false) {
     battleOptions := settings.battleOptions.itemWorld
     ;battleOptions.donePatterns := [patterns.itemWorld.title, patterns.itemWorld.leave, patterns.itemWorld.armor]
     battleOptions.donePatterns := ""
-    battleOptions.preBattle := Func("ItemWorldPreBattle").Bind(farmTrigger, lootTarget)
+    battleOptions.preBattle := Func("ItemWorldPreBattle").Bind(farmTrigger, lootTarget, itemWorldOptions.lootTargetLegendaryOnLvl100)
     battleOptions.onBattleAction := Func("ItemWorldOnBattleAction").Bind(bribe)
 
     loopTargets := [patterns.stronghold.gemsIcon, patterns.dimensionGate.background, patterns.itemWorld.title, patterns.itemWorld.leave, patterns.battle.auto]
@@ -133,16 +133,26 @@ GrindItemWorldSingle2() {
     GrindItemWorld(settings.itemWorldOptions.2, true)
 }
 
-ItemWorldPreBattle(farmTrigger, lootTarget) {
+ItemWorldPreBattle(farmTrigger, lootTarget, lootTargetLegendaryOnLvl100) {
     SetStatus("DoItem")
     global patterns, settings
 
     result := FindPattern(farmTrigger, { variancePct : 1, bounds : { x1 : 168, y1 : 25, x2 : 404, y2 : 85 } })
 
+    if (result.IsSuccess) { ; double check
+        sleep 500
+        result := FindPattern(farmTrigger, { variancePct : 1, bounds : { x1 : 168, y1 : 25, x2 : 404, y2 : 85 } })
+    }
+
     if (result.IsSuccess) {
         if (!FindPattern([patterns.battle.done, patterns.itemWorld.drop], { variancePct : 15 }).IsSuccess)
         {
-            DoItemDrop(lootTarget)
+            if lootTargetLegendaryOnLvl100 && InStr(result.comment, "level.100") {
+                DoItemDrop("legendary")
+            }
+            else {
+                DoItemDrop(lootTarget)
+            }
         }
     }
 }

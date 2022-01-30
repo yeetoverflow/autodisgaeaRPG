@@ -1165,7 +1165,7 @@ GetSettingInfo(settingUnderscore) {
 
 InitMetaDataItemWorldOptions(metadata) {
     itemWorldOptionsMetaData := {}
-    itemWorldOptionsMetaData.displayOrder := ["targetItemType", "targetItemSort", "targetItemSortOrder", "prioritizeEquippedItems", "targetItemRarity", "lootTarget", "bribe", "farmLevels"]
+    itemWorldOptionsMetaData.displayOrder := ["targetItemType", "targetItemSort", "targetItemSortOrder", "prioritizeEquippedItems", "targetItemRarity", "lootTarget", "bribe", "farmLevels", "lootTargetLegendaryOnLvl100"]
     itemWorldOptionsMetaData.targetItemType := {}
     itemWorldOptionsMetaData.targetItemType.type := "Radio"
     itemWorldOptionsMetaData.targetItemType.options := ["armor", "weapon"]
@@ -1195,7 +1195,10 @@ InitMetaDataItemWorldOptions(metadata) {
     itemWorldOptionsMetaData.farmLevels.presets.default := [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
     itemWorldOptionsMetaData.farmLevels.presets.none := []
     itemWorldOptionsMetaData.farmLevels.presets.higherDropRate := [30, 60, 100]
-
+    itemWorldOptionsMetaData.lootTargetLegendaryOnLvl100 := {}
+    itemWorldOptionsMetaData.lootTargetLegendaryOnLvl100.newLine := true
+    itemWorldOptionsMetaData.lootTargetLegendaryOnLvl100.type := "CheckBox"
+    
     metadata.itemWorldOptions := {}
     metadata.itemWorldOptions.findDropMode := {}
     metadata.itemWorldOptions.findDropMode.type := "Radio"
