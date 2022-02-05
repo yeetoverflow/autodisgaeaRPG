@@ -12,7 +12,7 @@ GrindItemWorldSingle1() {
 }
 
 GrindItemWorld(itemWorldOptions, oneTime := false) {
-    global mode, patterns, settings
+    global mode, patterns, settings, itemWorldBattleCountHwnd
     SetStatus(A_ThisFunc)
     AddLog(A_ThisFunc)
 
@@ -51,6 +51,7 @@ GrindItemWorld(itemWorldOptions, oneTime := false) {
     battleOptions.donePatterns := ""
     battleOptions.preBattle := Func("ItemWorldPreBattle").Bind(farmTrigger, lootTarget, itemWorldOptions.lootTargetLegendaryOnLvl100)
     battleOptions.onBattleAction := Func("ItemWorldOnBattleAction").Bind(bribe)
+    totalNumBattles := 0
 
     loopTargets := [patterns.stronghold.gemsIcon, patterns.dimensionGate.background, patterns.itemWorld.title, patterns.itemWorld.leave, patterns.battle.auto]
     Loop {
@@ -104,6 +105,15 @@ GrindItemWorld(itemWorldOptions, oneTime := false) {
             PollPattern(patterns.itemWorld.go, { doClick : true, predicatePattern : patterns.battle.start })
             PollPattern(patterns.battle.start, { doClick : true })
             DoItem()
+            ControlGetText, battleCount,, % "ahk_id " . itemWorldBattleCountHwnd
+            if (itemWorldOptions.autoClaimRepeatMission && battleCount >= 300) {
+                AddLog("Reached 300 battles. Starting mission claim repeat.")
+                GoToStronghold()
+                AutoMissionClaim("repeat")
+                GoToStronghold()
+                ControlSetText,, 0, % "ahk_id " . itemWorldBattleCountHwnd
+            }
+
             sleep 2000
             if (oneTime) {
                 Break
@@ -177,12 +187,16 @@ DoItem() {
     AddLog(A_ThisFunc)
     startTick := A_TickCount
 
-    global patterns, settings
+    global patterns, settings, itemWorldBattleCountHwnd
 
     battleOptions := settings.battleOptions.itemWorld
+    ControlGetText, battleCount,, % "ahk_id " . itemWorldBattleCountHwnd
 
     Loop {
         DoBattle(battleOptions)
+        battleCount++
+        ControlSetText,, % battleCount, % "ahk_id " . itemWorldBattleCountHwnd
+        AddLog("Total ItemWorld Battles: " . battleCount)
 
         ;Would rather know how it's getting stuck here but oh well
         if (FindPattern(patterns.itemWorld.title).IsSuccess) {
@@ -429,4 +443,3 @@ DoSubdue(bribe) {
 
     PollPattern([patterns.itemWorld.subdue], { doClick : true })
 }
-

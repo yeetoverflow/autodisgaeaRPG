@@ -140,6 +140,10 @@ ResetUI() {
     Gui, Add, Progress, x+10 w50 h18 c0x66FF66 vsettingsmodal_itemWorldOptions
     Gui Add, Text, xp+5 wp hp r1 +0x4000 cBlack BackgroundTrans left, Settings
     
+    Gui Add, Text, x+5 cWhite, Battle Count : 
+    Gui Add, Text, x+5 hidden, ItemWorldBattleCount
+    Gui Add, Text, xp yp cWhite w100, 0
+    
     Gui, Add, Progress, xs+10 vProgressBar_GrindItemWorldLoop1 -Smooth w150 h18 c0x66FF66 border
     Gui Add, Text, cBlack xp wp hp center vProgressText_GrindItemWorldLoop1 BackgroundTrans, Start GrindItemWorldLoop1
 
@@ -206,7 +210,6 @@ ResetUI() {
     
     Gui Add, TreeView, h300 cBlack vHandlersTree
     Gui Add, Button, gTestHandler, Test
-    InitHandlersTree()
 
     Gui, Tab, Patterns
     Gui, Add, Text, cWhite, Filter:
@@ -226,7 +229,6 @@ ResetUI() {
     Gui Add, Text, cWhite xs+10 y+5, Bounds: 
     Gui Add, Edit, x+10 vTestBounds w100,
     Gui Add, Button, x+10 gGenerateBounds, Generate
-    InitPatternsTree()
 
     Gui, Tab, Logs
     AddSetting("settings_debug_doLog", "1")
@@ -235,9 +237,8 @@ ResetUI() {
 
     Gui Show, w450
 
-    guiHwnd := GetGuiHwnd()
-    editLogHwnd := GetControlHwnd("EditLog")
     LV_Modify(1, "Select")
+    InitHandlersTree()
     InitWindow()
 }
 
@@ -386,21 +387,25 @@ InitBattleOptionsUI() {
 }
 
 InitHandlersTree() {
-    global handlers, handlersTree
+    global guiHwnd, handlers, handlersTree
     
-    Gui TreeView, handlersTree
-    Traverse(handlers, { parentId : 0 }, { dataCallBack : Func("TreeAddDataCallback"), skipFields : ["Func"] } )
+    if (guiHwnd) {
+        Gui TreeView, handlersTree
+        Traverse(handlers, { parentId : 0 }, { dataCallBack : Func("TreeAddDataCallback"), skipFields : ["Func"] } )
+    }
 }
 
 InitPatternsTree(root := "", opts := "") {
-    global patterns, mode, patternsTree
+    global guiHwnd, patterns, mode, patternsTree
 
-    Gui TreeView, patternsTree
-    root := (root ? root : patterns)
-    opts := InitOps(opts, { startPath : "" })
-    
-    Traverse(root, { parentId : 0, path : opts.startPath }, { doDebug : opts.doDebug, dataCallBack : Func("TreeAddDataCallback")
-        , callback : Func("TreeAddPatternsCallback"), skipFields : opts.skipFields } )
+    if (guiHwnd) {
+        Gui TreeView, patternsTree
+        root := (root ? root : patterns)
+        opts := InitOps(opts, { startPath : "" })
+        
+        Traverse(root, { parentId : 0, path : opts.startPath }, { doDebug : opts.doDebug, dataCallBack : Func("TreeAddDataCallback")
+            , callback : Func("TreeAddPatternsCallback"), skipFields : opts.skipFields } )
+    }
 }
 
 TreeAddPatternsCallback(node, data, opts) {

@@ -29,12 +29,6 @@ InitWindow()
             WinGet, hwnd, ID, % settings.window.name . " ahk_exe HD-Player.exe"
     }
 
-    patterns := InitPatterns()
-    InitPatternsTree()
-    
-    ;SetTitleMatchMode, 2
-    ;WinGet, hwnd, ID,Photos
-
     WinActivate, % ahk_id hwnd
     FindText().BindWindow(hwnd, (settings.window.scanMode ? settings.window.scanMode : 4))>
     
@@ -74,6 +68,13 @@ InitWindow()
 
     WinSetTitle, % "ahk_id " . guiHwnd,, % settings.window.name
     Menu, Tray, Tip, % settings.window.name
+
+    guiHwnd := GetGuiHwnd()
+    editLogHwnd := GetControlHwnd("EditLog")
+    itemWorldBattleCountHwnd := GetControlHwnd("ItemWorldBattleCount")
+
+    patterns := InitPatterns()
+    InitPatternsTree()
 }
 
 InitPatternsCallback(key, value, parent, path) {

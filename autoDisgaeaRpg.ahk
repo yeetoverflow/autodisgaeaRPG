@@ -41,7 +41,8 @@ msgToMode := { 0x1001 : "EventStoryFarm"
              , 0x1029 : "AutoDailies"
              , 0x1030 : "GoToStronghold"
              , 0x1031 : "AutoDailyEventStoryFarm"
-             , 0x1032 : "AutoShopItems" }
+             , 0x1032 : "AutoShopItems"
+             , 0x1033 : "AutoMissionClaim" }
 modeToMsg := {}
 handlers := {}
 
@@ -53,8 +54,7 @@ for k, v in msgToMode {
 
 if (mode) {
     windowTarget := StrReplace(A_Args.1, "id=")
-    guiHwnd := GetGuiHwnd()
-    editLogHwnd := GetControlHwnd("EditLog")
+    
     InitWindow()
     
     msg := modeToMsg[mode]
@@ -376,6 +376,40 @@ AutoFriends() {
     if (mode && mode != "AutoDailies") {
         ExitApp
     }
+}
+
+AutoMissionClaim(claimType := "") {
+    global patterns, mode
+    if (!claimType) {
+        claimType := "all"
+    }
+    SetStatus(A_ThisFunc . "_" . claimType)
+    AddLog(A_ThisFunc . "_" . claimType)
+
+    done := false
+    Loop {
+        result := FindPattern([patterns.stronghold.gemsIcon, patterns.missions.title])
+        
+        if InStr(result.comment, "stronghold.gemsIcon") {
+            PollPattern(patterns.missions.icon, { doClick : true })
+        } else if InStr(result.comment, "missions.title") {
+            if (claimType = "all" || claimType = "repeat") {
+                PollPattern(patterns.missions.repeat.disabled, { doClick : true, predicatePattern : patterns.missions.repeat.enabled })
+
+                sleep 1000
+                result := FindPattern(patterns.missions.claimAll)
+                if (result.IsSuccess) {
+                    PollPattern(patterns.missions.claimAll, { doClick : true, predicatePattern : patterns.prompt.close })
+                    PollPattern(patterns.prompt.close, { doClick : true, predicatePattern : patterns.missions.repeat })
+                }
+
+                sleep 1000
+            }
+            done := true
+        }
+
+        sleep, 250
+    } until (done)
 }
 
 AutoDailySummon() {
@@ -854,10 +888,11 @@ TestDrop() {
 
 Test() {
     ;global patterns, settings, hwnd, guiHwnd
-    global patterns, hwnd, settings
+    global patterns, hwnd, settings, itemWorldBattleCountHwnd
     SetStatus(A_ThisFunc)
 
-    AddLog("Test!!")
+    battleCount := 100
+    ControlSetText,, % battleCount, % "ahk_id " . itemWorldBattleCountHwnd
 }
 
 Recover(mode) {

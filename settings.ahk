@@ -339,7 +339,7 @@ SettingsModal(targetSettings, opts := "")
         }
     }
     
-    Gui, SettingsModal:Add, Button, gSettingsModalGuiClose, Done
+    Gui, SettingsModal:Add, Button, y+10 gSettingsModalGuiClose, Done
     Gui, SettingsModal:Show
 }
 
@@ -1165,7 +1165,7 @@ GetSettingInfo(settingUnderscore) {
 
 InitMetaDataItemWorldOptions(metadata) {
     itemWorldOptionsMetaData := {}
-    itemWorldOptionsMetaData.displayOrder := ["targetItemType", "targetItemSort", "targetItemSortOrder", "prioritizeEquippedItems", "targetItemRarity", "lootTarget", "bribe", "farmLevels", "lootTargetLegendaryOnLvl100"]
+    itemWorldOptionsMetaData.displayOrder := ["targetItemType", "targetItemSort", "targetItemSortOrder", "prioritizeEquippedItems", "targetItemRarity", "lootTarget", "bribe", "farmLevels", "lootTargetLegendaryOnLvl100", "autoClaimRepeatMission"]
     itemWorldOptionsMetaData.targetItemType := {}
     itemWorldOptionsMetaData.targetItemType.type := "Radio"
     itemWorldOptionsMetaData.targetItemType.options := ["armor", "weapon"]
@@ -1198,7 +1198,11 @@ InitMetaDataItemWorldOptions(metadata) {
     itemWorldOptionsMetaData.lootTargetLegendaryOnLvl100 := {}
     itemWorldOptionsMetaData.lootTargetLegendaryOnLvl100.newLine := true
     itemWorldOptionsMetaData.lootTargetLegendaryOnLvl100.type := "CheckBox"
+    itemWorldOptionsMetaData.autoClaimRepeatMission := {}
+    itemWorldOptionsMetaData.autoClaimRepeatMission.newLine := true
+    itemWorldOptionsMetaData.autoClaimRepeatMission.type := "CheckBox"
     
+
     metadata.itemWorldOptions := {}
     metadata.itemWorldOptions.findDropMode := {}
     metadata.itemWorldOptions.findDropMode.type := "Radio"
