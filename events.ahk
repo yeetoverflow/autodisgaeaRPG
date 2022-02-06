@@ -160,14 +160,14 @@ EventAutoClear() {
 }
 
 EventStoryFarm(battleCount := "") {
-    global patterns, settings, guiHwnd, mode
+    global patterns, settings, mode, eventStoryFarmCountHwnd
     SetStatus(A_ThisFunc)
     AddLog(A_ThisFunc)
 
     if (!battleCount) {
-        ControlGetText, battleCount, edit2, % "ahk_id " . guiHwnd
+        ControlGetText, battleCount,, % "ahk_id " . eventStoryFarmCountHwnd
     }
-    ControlSetText, edit2, % battleCount,  % "ahk_id " . guiHwnd
+    ControlSetText,, % battleCount, % "ahk_id " . eventStoryFarmCountHwnd
     SetStatus(battleCount, 2)
 
     farmTarget := settings.eventOptions.story.farmTarget
@@ -200,7 +200,7 @@ EventStoryFarm(battleCount := "") {
         else if InStr(result.comment, "battle.prompt.battle") || InStr(result.comment, "companions.title") {
             DoBattle(battleOptions)
             battleCount--
-            ControlSetText, edit2, % battleCount,  % "ahk_id " . guiHwnd
+            ControlSetText,, % battleCount, % "ahk_id " . eventStoryFarmCountHwnd
             SetStatus(battleCount, 2)
             if (mode = "AutoDailies" || InStr(mode, "AutoDailyEventStoryFarm")) {
                 if (mode = "AutoDailies") {

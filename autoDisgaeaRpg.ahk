@@ -83,32 +83,36 @@ Return
 
 Battle() {
     SetStatus(A_ThisFunc)
-    global settings, patterns, battleCount, mode
+    global settings, patterns, battleCountHwnd, mode
     Gui Submit, NoHide
     
     battleOptions := settings["battleOptions"][settings.battleContext]
     battleOptions.donePatterns := [patterns.raid.appear.advanceInStory]
     battleOptions.startPatterns := [patterns.battle.start]
+    ControlGetText, battleCount,, % "ahk_id " . battleCountHwnd
 
     result := FindPattern([patterns.battle.auto.enabled, patterns.battle.auto.disabled]) 
     if (InStr(result.comment, "battle.auto")) {
         DoBattle(battleOptions)
         battleCount--
-        GuiControl,,battleCount, % battleCount
+        ControlSetText,, % battleCount, % "ahk_id " . battleCountHwnd
     }
 
     SetStatus(battleCount, 2)
 
     while battleCount > 0 {
-        PollPattern([patterns.battle.start, patterns.battle.prompt.battle], { variancePct: 5 })
-        result := PollPattern([patterns.battle.start, patterns.battle.prompt.battle], { variancePct: 5, doClick : true
+        PollPattern([patterns.battle.start, patterns.battle.prompt.battle])
+        result := PollPattern([patterns.battle.start, patterns.battle.prompt.battle], { doClick : true
             , predicatePattern : [patterns.battle.auto, patterns.companions.refresh, patterns.prompt.insufficientAP] })
         sleep 500
         
         DoBattle(battleOptions)
+        
         sleep 1000
         battleCount--
-        GuiControl,,battleCount, % battleCount
+        ControlSetText,, % battleCount, % "ahk_id " . battleCountHwnd
+
+        PollPattern([patterns.battle.start, patterns.battle.prompt.battle], { clickPattern : patterns.battle.done, pollInterval : 250 })
     }
 
     if (mode && mode != "AutoDailies") {

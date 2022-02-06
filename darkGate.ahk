@@ -5,7 +5,7 @@ if (!patterns)
 }
 
 AutoDarkGate(type = "", opts = "") {
-    global mode, patterns, settings, guiHwnd
+    global mode, patterns, settings, darkGateCountHwnd, darkGateSkipCountHwnd
 
     firstGate := true
     if (!type && !settings.darkGateOptions.selectedGate) {
@@ -16,15 +16,16 @@ AutoDarkGate(type = "", opts = "") {
     }
 
     if (opts.count) {
-        ControlSetText, edit3, % opts.count,  % "ahk_id " . guiHwnd
-        ControlSetText, edit4, % opts.skip,  % "ahk_id " . guiHwnd
+        ControlSetText,, % opts.count, % "ahk_id " . darkGateCountHwnd
+        ControlSetText,, % opts.skip, % "ahk_id " . darkGateSkipCountHwnd
     }
     
     
     SetStatus(A_ThisFunc . "_" . type)
     AddLog(A_ThisFunc . "_" . type)
-    ControlGetText, gateCount, edit3, % "ahk_id " . guiHwnd
-    ControlGetText, gateSkipCount, edit4, % "ahk_id " . guiHwnd
+
+    ControlGetText, gateCount,, % "ahk_id " . darkGateCountHwnd
+    ControlGetText, gateSkipCount,, % "ahk_id " . darkGateSkipCountHwnd
     SetStatus(gateCount, 2)
 
     if (type = "hl") {
@@ -87,7 +88,7 @@ AutoDarkGate(type = "", opts = "") {
                 }
             }
             
-            ControlSetText, edit3, % gateCount,  % "ahk_id " . guiHwnd
+            ControlSetText,, % gateCount, % "ahk_id " . darkGateCountHwnd
             SetStatus(gateCount, 2)
 
             if (gateCount <= 0) {

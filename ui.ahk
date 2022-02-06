@@ -22,7 +22,8 @@ ResetUI() {
     Gui, Add, Progress, xs+120 y+10 vProgressBar_Battle -Smooth w80 h18 c0x66FF66 border
     Gui Add, Text, cBlack xp wp hp center vProgressText_Battle BackgroundTrans, Start Battle
     Gui Add, Text, cWhite x+10, Count: 
-    Gui Add, Edit, cBlack w50 x+10 Number vBattleCount, 1
+    Gui Add, Text, x+10 hidden, BattleCount
+    Gui Add, Edit, xp yp w50 Number, 1
 
     Gui Add, Text, 0x10 xs w400 h10
     Gui, Font, Bold
@@ -104,8 +105,9 @@ ResetUI() {
 
     Gui, Add, Progress, xs+10 vProgressBar_EventStoryFarm -Smooth w120 h18 c0x66FF66 border
     Gui Add, Text, cBlack xp wp hp center vProgressText_EventStoryFarm BackgroundTrans, Start EventStoryFarm
-    Gui Add, Text, cWhite x+10, Count
-    Gui Add, Edit, cBlack w50 x+10 Number, 1
+    Gui Add, Text, cWhite x+10, Count: 
+    Gui Add, Text, x+10 hidden, EventStoryFarmCount
+    Gui Add, Edit, xp yp w50 Number, 1
     AddSetting("settings_eventOptions_story_farmTarget", "1", { hideLabel : true, optsOverride : "x+10" } )
 
     Gui, Add, Progress, xs+10 vProgressBar_EventStory500Pct -Smooth w120 h18 c0x66FF66 border
@@ -140,9 +142,9 @@ ResetUI() {
     Gui, Add, Progress, x+10 w50 h18 c0x66FF66 vsettingsmodal_itemWorldOptions
     Gui Add, Text, xp+5 wp hp r1 +0x4000 cBlack BackgroundTrans left, Settings
     
-    Gui Add, Text, x+5 cWhite, Battle Count : 
+    Gui Add, Text, x+5 cWhite, Current Battle Count:
     Gui Add, Text, x+5 hidden, ItemWorldBattleCount
-    Gui Add, Text, xp yp cWhite w100, 0
+    Gui Add, Edit, xp yp w50 Number, 0
     
     Gui, Add, Progress, xs+10 vProgressBar_GrindItemWorldLoop1 -Smooth w150 h18 c0x66FF66 border
     Gui Add, Text, cBlack xp wp hp center vProgressText_GrindItemWorldLoop1 BackgroundTrans, Start GrindItemWorldLoop1
@@ -169,9 +171,11 @@ ResetUI() {
     Gui Add, Link, x+5,<a href="https://github.com/yeetoverflow/autodisgaeaRPG/blob/main/README.md#darkgate-video">?</a>
 
     Gui Add, Text, cWhite x+5, Count:
-    Gui Add, Edit, cBlack w30 x+5 Number vDarkGateCount, 1
+    Gui Add, Text, x+5 hidden, DarkGateCount
+    Gui Add, Edit, xp yp w30 Number, 1
     Gui Add, Text, cWhite x+5, Skip:
-    Gui Add, Edit, cBlack w30 x+5 Number vDarkGateSkipCount, 0
+    Gui Add, Text, x+5 hidden, DarkGateSkipCount
+    Gui Add, Edit, xp yp w30 Number, 0
 
     Gui, Add, Progress, xs+10 vProgressBar_AutoDarkGate -Smooth w100 h18 c0x66FF66 border
     Gui Add, Text, cBlack xp wp hp center vProgressText_AutoDarkGate BackgroundTrans, Start AutoDarkGate

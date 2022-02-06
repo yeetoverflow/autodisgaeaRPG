@@ -72,7 +72,10 @@ InitWindow()
     guiHwnd := GetGuiHwnd()
     editLogHwnd := GetControlHwnd("EditLog")
     itemWorldBattleCountHwnd := GetControlHwnd("ItemWorldBattleCount")
-
+    battleCountHwnd := GetControlHwnd("BattleCount")
+    eventStoryFarmCountHwnd := GetControlHwnd("EventStoryFarmCount")
+    darkGateCountHwnd := GetControlHwnd("DarkGateCount")
+    darkGateSkipCountHwnd := GetControlHwnd("DarkGateSkipCount")
     patterns := InitPatterns()
     InitPatternsTree()
 }
@@ -103,7 +106,7 @@ InitPatternsCallback(key, value, parent, path) {
 
 DoBattle(battleOptions) {
     SetStatus(A_ThisFunc, 2)
-    global patterns, settings, guiHwnd, mode
+    global patterns, settings, mode, darkGateSkipCountHwnd
 
     startTick := A_TickCount
 
@@ -137,7 +140,7 @@ DoBattle(battleOptions) {
                 AddLog(A_ThisFunc . " Using SkipTickets")
                 UseSkipTickets()
                 battleOptions.skipTicketCount--
-                ControlSetText, edit4, % battleOptions.skipTicketCount,  % "ahk_id " . guiHwnd
+                ControlSetText,, % battleOptions.skipTicketCount, % "ahk_id " . darkGateSkipCountHwnd
                 if (mode = "AutoDailies" || InStr(mode, "AutoDailyDarkGate")) {
                     if (mode = "AutoDailies") {
                         currentDaily := settings.dailies.current
