@@ -209,15 +209,7 @@ EventStoryFarm(battleCount := "") {
                     currentDaily := mode
                 }
                 
-                dailyStats := GetDailyStats()
-                if (!dailyStats[currentDaily]) {
-                    dailyStats[currentDaily] := {}
-                }
-                if (!dailyStats[currentDaily].count) {
-                    dailyStats[currentDaily].count := 0
-                }
-                dailyStats[currentDaily].count++
-                dailyStats.save(true)
+                IncrementDailyStat([currentDaily, "count"])
             }
 
             PollPattern(loopTargets, { clickPattern : patterns.battle.done, pollInterval : 250 })

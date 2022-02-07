@@ -759,11 +759,11 @@ AutoDarkAssemblyEvent60() {
 AutoDailyDarkGate(type) {
     global settings, mode
 
+    dailyStats := InitDailyStats()
     count := settings["darkGateOptions"][type]["count"]
     skip := settings["darkGateOptions"][type]["skip"]
     currentDaily := A_ThisFunc . type
 
-    dailyStats := GetDailyStats()
     if (dailyStats[currentDaily]) {
         if (dailyStats[currentDaily].count) {
             count := count - dailyStats[currentDaily].count
@@ -797,10 +797,10 @@ AutoDailyDarkGateMatsMonster() {
 AutoDailyEventStoryFarm() {
     global settings
 
+    dailyStats := InitDailyStats()
     farmCount := settings["dailies"]["event"]["story"]["farmCount"]
     currentDaily := A_ThisFunc
 
-    dailyStats := GetDailyStats()
     if (dailyStats[currentDaily]) {
         if (dailyStats[currentDaily].count) {
             farmCount := farmCount - dailyStats[currentDaily].count
@@ -895,8 +895,8 @@ Test() {
     global patterns, hwnd, settings, itemWorldBattleCountHwnd
     SetStatus(A_ThisFunc)
 
-    battleCount := 100
-    ControlSetText,, % battleCount, % "ahk_id " . itemWorldBattleCountHwnd
+    ; battleCount := 100
+    ; ControlSetText,, % battleCount, % "ahk_id " . itemWorldBattleCountHwnd
 }
 
 Recover(mode) {

@@ -148,15 +148,7 @@ DoBattle(battleOptions) {
                         currentDaily := mode
                     }
                     
-                    dailyStats := GetDailyStats()
-                    if (!dailyStats[currentDaily]) {
-                        dailyStats[currentDaily] := {}
-                    }
-                    if (!dailyStats[currentDaily].skip) {
-                        dailyStats[currentDaily].skip := 0
-                    }
-                    dailyStats[currentDaily].skip++
-                    dailyStats.save(true)
+                    IncrementDailyStat([currentDaily, "skip"])
                 }
                 sleep 1000
             }

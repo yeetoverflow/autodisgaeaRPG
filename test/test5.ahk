@@ -30,6 +30,15 @@ SetWorkingDir, %A_ScriptDir%
 
 ; MsgBox, % Format("{:02d}m {:02d}s", seconds / 60, Mod(seconds, 60))
 
-FormatTime, TimeString, %A_Now%, yyyyMMdd HH:mm:ss
+; FormatTime, TimeString, %A_Now%, yyyyMMdd HH:mm:ss
 
-MsgBox, % TimeString
+; MsgBox, % TimeString
+
+FormatTime, currentHour, % A_NowUTC, yyyyMMddHH
+
+; MsgBox, % lastHour
+
+if ("2022020617" > "2022020618")
+    MsgBox, Bigger
+Else
+    MsgBox, Smaller

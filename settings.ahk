@@ -1293,32 +1293,63 @@ InitUserPatterns(patterns, node, path := "") {
     }
 }
 
-GetDailyStats() {
-    currentDateUTC := A_NowUTC
-    FormatTime, hour, % currentDateUTC, H
-    if (hour < 4) {    ;UTC reset hour
-        currentDateUTC += -1, D
+InitDailyStats() {
+    global dailyStats, lastHourChecked
+
+    FormatTime, currentHour, % A_NowUTC, yyyyMMddHH
+
+    if (!lastHourChecked || currentHour > lastHourChecked) {
+        currentDateUTC := A_NowUTC
+        FormatTime, hour, % currentDateUTC, H
+        if (hour < 4) {    ;UTC reset hour
+            currentDateUTC += -1, D
+        }
+        FormatTime, date, % currentDateUTC, yyyyMMdd
+
+        fileName := date . ".json"
+        fileDir := "dailies"
+        filePath := fileDir . "\" . fileName
+
+        IF !FileExist(fileDir)
+        {
+            FileCreateDir, %fileDir%
+        }
+
+        IF !FileExist(filePath)
+        {
+            dailyStats := new JsonFile(filePath) ;- Create instance.
+            settings.save(true)
+        }
+        Else
+        {
+            dailyStats := new JsonFile(filePath) ;- Create instance.
+        }
+
+        lastHourChecked := currentHour
     }
-    FormatTime, date, % currentDateUTC, yyyyMMdd
-
-    fileName := date . ".json"
-	fileDir := "dailies"
-	filePath := fileDir . "\" . fileName
-
-	IF !FileExist(fileDir)
-	{
-		FileCreateDir, %fileDir%
-	}
-
-    IF !FileExist(filePath)
-	{
-		dailyStats := new JsonFile(filePath) ;- Create instance.
-        settings.save(true)
-	}
-	Else
-	{
-		dailyStats := new JsonFile(filePath) ;- Create instance.
-	}
 
     Return dailyStats
+}
+
+IncrementDailyStat(sectionPath) {
+    dailyStats := InitDailyStats()
+    targetStat := dailyStats
+    sectionLength := sectionPath.Length()
+    targetKey := sectionPath[sectionLength]
+
+    Loop % sectionLength - 1 {
+        key := sectionPath[A_Index]
+        if (!targetStat[key]) {
+            targetStat[key] := {}
+        }
+        targetStat := targetStat[key]
+    }
+
+    if (targetStat[targetKey]) {
+        targetStat[targetKey]++
+    } else {
+        targetStat[targetKey] := 1
+    }
+    
+    dailyStats.Save(true)
 }

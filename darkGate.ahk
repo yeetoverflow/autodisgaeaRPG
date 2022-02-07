@@ -69,22 +69,14 @@ AutoDarkGate(type = "", opts = "") {
             }
             else {
                 gateCount--
-                if (mode = "AutoDailies" || InStr(mode, "AutoDailyEventStoryFarm")) {
+                if (mode = "AutoDailies" || InStr(mode, "AutoDailyDarkGate")) {
                     if (mode = "AutoDailies") {
                         currentDaily := settings.dailies.current
                     } else {
                         currentDaily := mode
                     }
                     
-                    dailyStats := GetDailyStats()
-                    if (!dailyStats[currentDaily]) {
-                        dailyStats[currentDaily] := {}
-                    }
-                    if (!dailyStats[currentDaily].count) {
-                        dailyStats[currentDaily].count := 0
-                    }
-                    dailyStats[currentDaily].count++
-                    dailyStats.save(true)
+                    IncrementDailyStat([currentDaily, "count"])
                 }
             }
             
