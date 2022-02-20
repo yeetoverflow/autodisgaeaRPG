@@ -41,6 +41,8 @@ GenerateSettingMetadata() {
     metadata.debug.drop.type := "Checkbox"    
     metadata.debug.doLog := {}
     metadata.debug.doLog.type := "Checkbox"
+    metadata.debug.patterns := {}
+    metadata.debug.patterns.type := "Checkbox"
     
     metadata.window := {}
     metadata.window.emulator := {}

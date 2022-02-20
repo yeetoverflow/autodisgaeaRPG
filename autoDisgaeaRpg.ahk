@@ -46,6 +46,7 @@ msgToMode := { 0x1001 : "EventStoryFarm"
 modeToMsg := {}
 handlers := {}
 
+OnMessage(0x1000, "OnCustomMessage")
 for k, v in msgToMode {
     modeToMsg[v] := k
     handlers[v] := { Func : Func(v) }

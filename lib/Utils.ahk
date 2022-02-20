@@ -74,173 +74,6 @@ Click(target) {
     ControlClick, %target%, % "ahk_id" hwnd
 }
 
-PollPattern(pattern, opts := "") {
-	opts := InitOps(opts, { doClick : false, clickDelay : 0, bounds : "", pollInterval : 500, doubleCheck: false, doubleCheckDelay: 500, predicatePattern : "", maxCount : "", clickPattern : ""})
-
-    opts.callback()
-    count := 0
-	originalDoClick := opts.doClick
-    originalDoubleCheck := opts.doubleCheck
-    opts.doClick := false
-    opts.doubleCheck := false
-
-    ;keep polling until predicatePattern is found
-    if (opts.predicatePattern) {
-        result := FindPattern(pattern, opts)
-        targetResult := FindPattern(opts.predicatePattern, opts)
-
-        if (targetResult.IsSuccess)
-        {
-            if (originalDoClick) {
-                sleep, opts.clickDelay
-                ClickResult(result)
-            }
-        }
-        else {
-            while (!targetResult.IsSuccess) {
-                SetStatus("Try " . count, 2)
-                
-                opts.callback()
-                sleep, opts.pollInterval
-                result := FindPattern(pattern, opts)
-
-                if (originalDoubleCheck) {
-                    sleep, opts.doubleCheckDelay
-                    result := FindPattern(pattern, opts)
-                }
-
-                if (result.IsSuccess && originalDoClick) {
-                    successResult := result
-                    sleep, opts.clickDelay
-                    ClickResult(result)
-                    sleep, opts.pollInterval
-                }
-
-                if (opts.clickPattern) {
-                    FindPattern(opts.clickPattern, { doClick : true })
-                }
-
-                targetResult := FindPattern(opts.predicatePattern, opts)
-            }
-        }
-        
-        if (!result.comment) {
-            result := initialResult
-        }
-
-        if (opts.maxCount && opt.maxCount >= count) {
-            result.IsSuccess := false
-        }
-
-        if (!successResult) {
-            successResult := result
-        }
-
-        Return successResult
-    }
-
-    result := FindPattern(pattern, opts)
-    while (!result.IsSuccess && (!opts.maxCount || count < opts.maxCount)) {
-        SetStatus("Try " . count, 2)
-        sleep, opts.pollInterval
-        opts.callback()
-
-        if (opts.clickPattern) {
-            FindPattern(opts.clickPattern, { doClick : true })
-        }
-
-        result := FindPattern(pattern, opts)
-        count++
-    }
-
-    if (originalDoubleCheck) {
-        sleep, opts.doubleCheckDelay
-        result := FindPattern(pattern, opts)
-    }
-    
-    if (originalDoClick) {
-        sleep, opts.clickDelay
-        ClickResult(result)
-    }
-
-	return result
-}
-
-FindPattern(pattern, opts := "") {
-	global hwnd
-
-	opts := InitOps(opts, { multi : false, variancePct : 15, fgVariancePct : 0, bgVariancePct : 0, bounds : "", doClick : false, clickDelay : 0, offsetX : 0, offsetY : 0, doubleCheck: false, doubleCheckDelay: 500})
-    arrPattern := ToFlatArray(pattern)
-    updateCallback := opts.updateCallback
-
-    fgVariancePct := (opts.fgVariancePct ? opts.fgVariancePct : opts.variancePct) / 100
-    bgVariancePct := (opts.bgVariancePct ? opts.bgVariancePct : opts.variancePct) / 100
-
-    result := FindPatternLoop(arrPattern, { multi: opts.multi, err1 : fgVariancePct, err0 : bgVariancePct, bounds : opts.bounds })
-
-    if (opts.doubleCheck) {
-        sleep, opts.doubleCheckDelay
-        result := FindPatternLoop(arrPattern, { multi: false, err1 : fgVariancePct, err0 : bgVariancePct, bounds : bounds })
-    }
-
-    if (result.IsSuccess && opts.offsetX) {
-        result.X += opts.offsetX
-    }
-
-    if (result.IsSuccess && opts.offsetY) {
-        result.Y += opts.offsetY
-    }
-
-	if (result.IsSuccess && opts.doClick) {
-		sleep, opts.clickDelay
-		ClickResult(result)
-	}
-
-	Return result
-}
-
-FindPatternLoop(arrPattern, opts := "") {
-    global hwnd
-    result := { IsSuccess: false }
-    opts := InitOps(opts, { multi : false, err1 : 0, err0 : 0, bounds : "" })
-
-    if (opts.bounds) {
-        FindText().ClientToScreen(x1, y1, opts.bounds.x1, opts.bounds.y1, hwnd)
-        FindText().ClientToScreen(x2, y2, opts.bounds.x2, opts.bounds.y2, hwnd)
-        opts.bounds := { x1 : x1, y1 : y1, x2 : x2, y2 : y2 }
-    }
-    else {
-        opts.bounds := { x1 : 0, y1 : 0, x2 : 0, y2 : 0 }
-    }
-
-    for index, pattern in arrPattern {
-        RegExMatch(pattern, "<(?P<comment>.*)>", matches)   ;https://www.autohotkey.com/docs/commands/RegExMatch.htm#NamedSubPat
-        SetStatus("Finding: " . matchesComment, 3)
-
-        ok := FindText(X, Y, opts.bounds.x1, opts.bounds.y1, opts.bounds.x2, opts.bounds.y2, opts.err1, opts.err0, pattern, 1, opts.multi)
-        if (ok)
-        {
-            result.IsSuccess := true
-            FindText().ScreenToWindow(x, y, ok.1.x, ok.1.y, hwnd)
-            result.X := x
-            result.Y := y
-            if (matchesComment)
-                result.comment := matchesComment
-
-            if (opts.multi) {
-                result.multi := []
-                for k, v in ok {
-                    FindText().ScreenToWindow(x, y, v.x, v.y, hwnd)
-                    result.multi.push({ X : x, Y : y })
-                }
-            }
-            Break
-        }
-    }
-
-    return result
-}
-
 InitOps(opts, defaultOpts) {
     if (opts) {
         for key, val in defaultOpts
@@ -702,4 +535,24 @@ AppendText(hEdit, text) {
     SendMessage, 0x000E, 0, 0,, ahk_id %hEdit% ;WM_GETTEXTLENGTH
     SendMessage, 0x00B1, ErrorLevel, ErrorLevel,, ahk_id %hEdit% ;EM_SETSEL
     SendMessage, 0x00C2, False, &text,, ahk_id %hEdit% ;EM_REPLACESEL
+}
+
+ShowRectangle(x1, y1, x2, y2, c := "Red", r := 3, t := 2000) {
+    Loop 4 {
+        Gui, r%A_Index%: -Caption +ToolWindow +AlwaysOnTop
+        Gui, r%A_Index%: Color, %c%
+    }
+
+    ; Update the "selection rectangle".
+    Gui, r1:Show, % "NA X" x1 " Y" y1 " W" x2-x1 " H" r
+    Gui, r2:Show, % "NA X" x1 " Y" y2-r " W" x2-x1 " H" r
+    Gui, r3:Show, % "NA X" x1 " Y" y1 " W" r " H" y2-y1
+    Gui, r4:Show, % "NA X" x2-r " Y" y1 " W" r " H" y2-y1
+
+    SetTimer, RemoveRectangle, % -t
+}
+
+RemoveRectangle() {
+    Loop 4
+        Gui, r%A_Index%: Destroy
 }

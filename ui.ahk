@@ -198,6 +198,7 @@ ResetUI() {
     Gui, Font, Normal
     
     AddSetting("settings_debug_drop", "1")
+    AddSetting("settings_debug_patterns", "1")
 
     Gui, Font, Bold
     Gui Add, Text, cRed x+100 y+10 vAttached2, DETACHED
@@ -606,6 +607,7 @@ GetProgressBarArgs(mode) {
 
 CleanUp() {
     global timers, mode, pbArgs, modeToMsg, guiHwnd
+
     if (timers) {
         for mode, v in timers {
             HandleAction("Stop", mode)
@@ -640,6 +642,11 @@ OnCustomMessage(wParam, lParam, msg, hwnd)
     }
 
     mode := msgToMode[msg]
+
+    if (msg = 0x1000) {
+        ExitApp
+    }
+
     if (!mode) {
         MsgBox, % "Unmapped mode: " . mode
     }
@@ -735,8 +742,10 @@ HandleAction(action, mode) {
     }
     else if (action = "Stop") {
         hwnd := GetHwnd(settings.window.name, mode)
-        WinClose, % "ahk_id " . hwnd
-        WinWaitClose, % "ahk_id " . hwnd,,5
+        ;Send command to exit
+        SendMessage, 0x1000, 0, 0, , % "ahk_id " . hwnd
+        ;WinClose, % "ahk_id " . hwnd
+        ;WinWaitClose, % "ahk_id " . hwnd,,5
     }
 }
 
