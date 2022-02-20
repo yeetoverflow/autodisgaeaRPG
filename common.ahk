@@ -654,20 +654,24 @@ FindPatternLoop(arrPattern, opts := "") {
     if (opts.bounds) {
         FindText().ClientToScreen(x1, y1, opts.bounds.x1, opts.bounds.y1, hwnd)
         FindText().ClientToScreen(x2, y2, opts.bounds.x2, opts.bounds.y2, hwnd)
-        opts.bounds := { x1 : x1, y1 : y1, x2 : x2, y2 : y2 }
+        bounds := { x1 : x1, y1 : y1, x2 : x2, y2 : y2 }
     }
     else {
-        opts.bounds := { x1 : 0, y1 : 0, x2 : 0, y2 : 0 }
+        bounds := { x1 : 0, y1 : 0, x2 : 0, y2 : 0 }
     }
 
     for index, pattern in arrPattern {
         RegExMatch(pattern, "<(?P<comment>.*)>", matches)   ;https://www.autohotkey.com/docs/commands/RegExMatch.htm#NamedSubPat
         SetStatus("Finding: " . matchesComment, 3)
 
-        if (settings.debug.patterns && opts.bounds) {
-            ShowRectangle(opts.bounds.x1, opts.bounds.y1, opts.bounds.x2, opts.bounds.y2, "Blue")
+        ; if (opts.boundsMap[matchesComment]) {
+        ;     bounds := opts.boundsMap[matchesComment]
+        ; }
+
+        if (settings.debug.patterns && bounds) {
+            ShowRectangle(bounds.x1, bounds.y1, bounds.x2, bounds.y2, "Blue")
         }
-        ok := FindText(X, Y, opts.bounds.x1, opts.bounds.y1, opts.bounds.x2, opts.bounds.y2, opts.err1, opts.err0, pattern, 1, opts.multi)
+        ok := FindText(X, Y, bounds.x1, bounds.y1, bounds.x2, bounds.y2, opts.err1, opts.err0, pattern, 1, opts.multi)
         if (ok)
         {
             if (settings.debug.patterns) {
