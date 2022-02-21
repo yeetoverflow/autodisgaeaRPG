@@ -61,6 +61,10 @@ GenerateSettingMetadata() {
     metadata.window.emulator.testPaintNox := {}
     metadata.window.emulator.testPaintNox.targetWidth := 800
     metadata.window.emulator.testPaintNox.targetHeight := 1200
+    metadata.window.recover := {}
+    metadata.window.recover.freeze := {}
+    metadata.window.recover.freeze.newLine := true
+    metadata.window.recover.freeze.type := "Checkbox"
 
     metadata.window.name := {}
     metadata.window.name.type := "Text"

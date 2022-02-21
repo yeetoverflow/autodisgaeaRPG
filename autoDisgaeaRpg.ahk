@@ -924,35 +924,43 @@ Test() {
     ;x := pBitmap
 
     ;MsgBox, % JEE_FilesMatchContents("screenCaps/lastMinute.png", "screenCaps/current.png")
-    Recover("ItemWorldGrind1")
+    ; Recover("ItemWorldGrind1")
 }
 
 Recover(mode) {
-    global patterns
+    global patterns, settings
 
-    AddLog("Recover " . mode . " Invoked...")
+    ; AddLog("Recover " . mode . " Invoked...")
     Resize()
 
-    FindText().ScreenShot()
-    FindText().SavePic("screenCaps/current.png")
+    if (settings.window.recover.freeze)
+    {
+        IF !FileExist("screenCaps")
+        {
+            FileCreateDir, screenCaps
+        }
 
-    frozenScreen := JEE_FilesMatchContents("screenCaps/lastMinute.png", "screenCaps/current.png")
-    if (frozenScreen) {
-        Loop 5 {
-            sleep 1000
-            FindText().ScreenShot()
-            FindText().SavePic("screenCaps/current.png")
-            frozenScreen := JEE_FilesMatchContents("screenCaps/lastMinute.png", "screenCaps/current.png")
-        } until (!frozenScreen)
-    }
+        FindText().ScreenShot()
+        FindText().SavePic("screenCaps/current.png")
 
-    if (frozenScreen) {
-        AddLog("Frozen Screen Detected")
-        if (FindPattern(patterns.homeScreen.tasks).IsSuccess) {
-            PollPattern(patterns.homeScreen.tasks, { doClick : true, predicatePattern : patterns.homeScreen.clearAllTasks})
-            PollPattern(patterns.homeScreen.clearAllTasks, { doClick : true, predicatePattern : patterns.homeScreen.playStore})
-            sleep 3000
-            AddLog("Recovered From Screen Detected")
+        frozenScreen := JEE_FilesMatchContents("screenCaps/lastMinute.png", "screenCaps/current.png")
+        if (frozenScreen) {
+            Loop 5 {
+                sleep 1000
+                FindText().ScreenShot()
+                FindText().SavePic("screenCaps/current.png")
+                frozenScreen := JEE_FilesMatchContents("screenCaps/lastMinute.png", "screenCaps/current.png")
+            } until (!frozenScreen)
+        }
+
+        if (frozenScreen) {
+            AddLog("Frozen Screen Detected")
+            if (FindPattern(patterns.homeScreen.tasks).IsSuccess) {
+                PollPattern(patterns.homeScreen.tasks, { doClick : true, predicatePattern : patterns.homeScreen.clearAllTasks})
+                PollPattern(patterns.homeScreen.clearAllTasks, { doClick : true, predicatePattern : patterns.homeScreen.playStore})
+                sleep 3000
+                AddLog("Recovered From Screen Detected")
+            }
         }
     }
 
@@ -996,8 +1004,10 @@ Recover(mode) {
         HandleAction("Start", mode)
     }
 
-    FindText().ScreenShot()
-    FindText().SavePic("screenCaps/lastMinute.png")
+    if (settings.window.recover.freeze) {
+        FindText().ScreenShot()
+        FindText().SavePic("screenCaps/lastMinute.png")
+    }
 }
 
 RecoverCallback() {

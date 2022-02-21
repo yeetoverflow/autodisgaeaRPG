@@ -194,6 +194,12 @@ ResetUI() {
     AddSetting("settings_window_scanMode", "1")
     
     Gui, Font, Bold
+    Gui Add, Text, cWhite xs+10 y+20, Recover 
+    Gui, Font, Normal
+
+    AddSetting("settings_window_recover_freeze", "1")
+
+    Gui, Font, Bold
     Gui Add, Text, cWhite xs+10 y+20, Debug 
     Gui, Font, Normal
     
