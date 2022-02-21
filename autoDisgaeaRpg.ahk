@@ -898,12 +898,64 @@ Test() {
 
     ; battleCount := 100
     ; ControlSetText,, % battleCount, % "ahk_id " . itemWorldBattleCountHwnd
+
+    FindText().ScreenShot()
+
+    ; IF !FileExist("screenCaps")
+    ; {
+    ;     FileCreateDir, screenCaps
+    ; }
+
+    ;FindText().SavePic("screenCaps/current.png")
+    ;FindText().SavePic("screenCaps/lastMinute.png")
+    
+    ;lastMinute := LoadPicture("screenCaps/lastMinute.png")
+    ; VarSetCapacity(bm, size:=(A_PtrSize=8 ? 32:24), 0)
+    ; r:=DllCall("GetObject", "Ptr",lastMinute, "int",size, "Ptr",&bm)
+    ; w:=NumGet(bm,4,"int"), h:=Abs(NumGet(bm,8,"int"))
+
+    ; x := 5
+
+    ;FileRead, lastMinute, screenCaps/lastMinute.png
+    ;FileRead, current, screenCaps/current.png
+    ;MsgBox % Memory_Compare(lastMinute,current)
+
+
+    ;x := pBitmap
+
+    ;MsgBox, % JEE_FilesMatchContents("screenCaps/lastMinute.png", "screenCaps/current.png")
+    Recover("ItemWorldGrind1")
 }
 
 Recover(mode) {
     global patterns
 
+    AddLog("Recover " . mode . " Invoked...")
     Resize()
+
+    FindText().ScreenShot()
+    FindText().SavePic("screenCaps/current.png")
+
+    frozenScreen := JEE_FilesMatchContents("screenCaps/lastMinute.png", "screenCaps/current.png")
+    if (frozenScreen) {
+        Loop 5 {
+            sleep 1000
+            FindText().ScreenShot()
+            FindText().SavePic("screenCaps/current.png")
+            frozenScreen := JEE_FilesMatchContents("screenCaps/lastMinute.png", "screenCaps/current.png")
+        } until (!frozenScreen)
+    }
+
+    if (frozenScreen) {
+        AddLog("Frozen Screen Detected")
+        if (FindPattern(patterns.homeScreen.tasks).IsSuccess) {
+            PollPattern(patterns.homeScreen.tasks, { doClick : true, predicatePattern : patterns.homeScreen.clearAllTasks})
+            PollPattern(patterns.homeScreen.clearAllTasks, { doClick : true, predicatePattern : patterns.homeScreen.playStore})
+            sleep 3000
+            AddLog("Recovered From Screen Detected")
+        }
+    }
+
     result := FindPattern([patterns.homeScreen.playStore, patterns.homeScreen.openAppAgain])
     
     doRecover := false
@@ -937,12 +989,15 @@ Recover(mode) {
     }
 
     if (doRecover) {
-        AddLog("Recover")
+        AddLog("Recover " . mode)
         HandleAction("Stop", mode)
         PollPattern([patterns.criware], { doClick : true, predicatePattern : patterns.stronghold.gemsIcon, pollInterval : 1000, callback : Func("RecoverCallback") })
         Resize()
         HandleAction("Start", mode)
     }
+
+    FindText().ScreenShot()
+    FindText().SavePic("screenCaps/lastMinute.png")
 }
 
 RecoverCallback() {

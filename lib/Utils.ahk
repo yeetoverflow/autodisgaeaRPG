@@ -556,3 +556,25 @@ RemoveRectangle() {
     Loop 4
         Gui, r%A_Index%: Destroy
 }
+
+;https://www.autohotkey.com/boards/viewtopic.php?t=41039
+JEE_FilesMatchContents(vPath1, vPath2)
+{
+	FileGetSize, vSize1, % vPath1
+	FileGetSize, vSize2, % vPath2
+	if !(vSize1 = vSize2)
+		return 0
+	if (vSize1 = 0) && (vSize2 = 0)
+		return 1
+	;FileRead, vData1, % "*c " vPath1
+	;FileRead, vData2, % "*c " vPath2
+	oFile := FileOpen(vPath1, "r")
+	oFile.Pos := 0
+	oFile.RawRead(vData1, oFile.Length)
+	oFile.Close()
+	oFile := FileOpen(vPath2, "r")
+	oFile.Pos := 0
+	oFile.RawRead(vData2, oFile.Length)
+	oFile.Close()
+	return !DllCall("msvcrt\memcmp", Ptr,&vData1, Ptr,&vData2, UPtr,vSize1, "Cdecl Int")
+}
