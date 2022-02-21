@@ -991,7 +991,7 @@ Recover(mode) {
     if (doRecover) {
         AddLog("Recover " . mode)
         HandleAction("Stop", mode)
-        PollPattern([patterns.criware], { doClick : true, predicatePattern : patterns.stronghold.gemsIcon, pollInterval : 1000, callback : Func("RecoverCallback") })
+        PollPattern([patterns.criware], { doClick : true, predicatePattern : patterns.stronghold.gemsIcon, clickPattern : patterns.homeScreen.disgaea, pollInterval : 1000, callback : Func("RecoverCallback") })
         Resize()
         HandleAction("Start", mode)
     }
