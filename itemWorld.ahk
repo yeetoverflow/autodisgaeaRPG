@@ -72,7 +72,7 @@ GrindItemWorld(itemWorldOptions, oneTime := false) {
             }
             
             if (!sortDone) {
-                PollPattern(patterns.sort.button, { doClick : true, predicatePattern : patterns.sort.title })
+                PollPattern(patterns.sort.button, { doClick : true, predicatePattern : patterns.sort.abilitiesLabel })
                 if (targetItemSort != "retain" && FindPattern(patterns["sort"][targetItemSort]["disabled"], { variancePct : 20 }).IsSuccess) {
                     PollPattern(patterns["sort"][targetItemSort]["disabled"], { variancePct : 20, doClick : true, predicatePattern : patterns["sort"][targetItemSort]["enabled"], pollInterval : 2000 })
                     sleep 100
