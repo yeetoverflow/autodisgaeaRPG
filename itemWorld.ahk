@@ -86,12 +86,12 @@ GrindItemWorld(itemWorldOptions, oneTime := false) {
                 switch (prioritizeEquippedItems) {
                     case "yes":
                         if (FindPattern(patterns["sort"]["prioritizeEquippedItems"]["unchecked"], { variancePct: 5 }).IsSuccess) {
-                            PollPattern(patterns["sort"]["prioritizeEquippedItems"]["unchecked"], { variancePct: 5, doClick : true, offsetX : 40, predicatePattern : patterns["sort"]["prioritizeEquippedItems"]["checked"], pollInterval : 2000 })
+                            PollPattern(patterns["sort"]["prioritizeEquippedItems"]["unchecked"], { variancePct: 5, doClick : true, offsetX : 70, predicatePattern : patterns["sort"]["prioritizeEquippedItems"]["checked"], pollInterval : 2000 })
                             sleep 100
                         }
                     case "no":
                         if (FindPattern(patterns["sort"]["prioritizeEquippedItems"]["checked"], { variancePct: 5 }).IsSuccess) {
-                            PollPattern(patterns["sort"]["prioritizeEquippedItems"]["checked"], { variancePct: 5, doClick : true, offsetX : 40, predicatePattern : patterns["sort"]["prioritizeEquippedItems"]["unchecked"], pollInterval : 2000 })
+                            PollPattern(patterns["sort"]["prioritizeEquippedItems"]["checked"], { variancePct: 5, doClick : true, offsetX : 70, predicatePattern : patterns["sort"]["prioritizeEquippedItems"]["unchecked"], pollInterval : 2000 })
                             sleep 100
                         }
                 }
