@@ -62,6 +62,7 @@ AutoDailyEventReview1() {
     }
 }
 
+;This needs to handle what happens if skipping doesn't have enough AP
 AutoDailyCharacterGate1() {
     global patterns, settings, mode
     SetStatus(A_ThisFunc)
@@ -92,6 +93,12 @@ AutoDailyCharacterGate1() {
         else if InStr(result.comment, "events.characterGate.enter") || InStr(result.comment, "stage.threeStars") || InStr(result.comment, "touchScreen") {
             ClickResult(result)
             sleep 1000
+        }
+        else if InStr(result.comment, "battle.start") {
+            PollPattern(patterns.events.characterGate.skipBattle, { doClick : true, predicatePattern : patterns.prompt.close })
+            PollPattern(patterns.slider.max, { doClick : true, predicatePattern : patterns.prompt.use })
+            PollPattern(patterns.prompt.use, { doClick : true, predicatePattern : [patterns.battle.done, patterns.touchScreen] })
+            PollPattern(loopTargets, { clickPattern : [patterns.battle.done, patterns.touchScreen], pollInterval : 250 })
         }
         else if InStr(result.comment, "companions.title") || InStr(result.comment, "battle.auto") || InStr(result.comment, "battle.prompt.battleAgain") || InStr(result.comment, "battle.start") {
             sleep 500
