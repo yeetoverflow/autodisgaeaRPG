@@ -226,10 +226,10 @@ GenerateBluestacksPatterns() {
     patterns.dimensionGate.events.block := "|<>0xF9E7CC@0.80$21.1Y08AU51o1s6U08w097U38w0t3kD0S1t3kTMS3X3sMMT0P3szQz7vzwzTzbzzwzzzzrzzyzzzY"
     patterns.dimensionGate.events.select := "|<>0x080808@0.60$121.Ds00Q0000007zU000000CC00C0000003zk000000C30070000601U0000000q0003U000300k0000000PU001k0001U0M0000000Bs07UsDUDny0A0Q33sDwTTU6QQAsCMM070733a7i3bw66CCAC0A03znVXXXXVUz73767C0601k0sVVlVkk3nznXzb0300k0QkzsksM0tk1lk3U1U0M07EQ0MQA0Qs0sk1k0k0A03sA0AC6UCA0QM0s0M0600w70673MC72CC4C6A03UkQ1VX3Vry1z73y3y7k1zw60TVVkw"
     patterns.dimensionGate.events.banners := {}
-    patterns.dimensionGate.events.banners.story := ""
-    patterns.dimensionGate.events.banners.raid := ""
-    patterns.dimensionGate.events.banners.characterGate1 := ""
-    patterns.dimensionGate.events.banners.eventReview1 := ""
+    patterns.dimensionGate.events.banners.story := {}
+    patterns.dimensionGate.events.banners.raid := {}
+    patterns.dimensionGate.events.banners.characterGate1 := {}
+    patterns.dimensionGate.events.banners.eventReview1 := {}
     patterns.dimensionGate.eventReview := "|<>0xD94D8E@0.80$21.TzzvzzxTTzjvzwyTzbXzssTz73zsszz4bzs4zz0Lzs0zyE7zo0zy17zkEzw07zUMzw03T0UHsA"
 
     patterns.raid := {}

@@ -64,9 +64,11 @@ ResetUI() {
 
     Gui, Add, Progress, xs+10 vProgressBar_AutoDailyCharacterGate1 -Smooth w200 h18 c0x66FF66 border
     Gui Add, Text, cBlack xp wp hp center vProgressText_AutoDailyCharacterGate1 BackgroundTrans, Start AutoDailyCharacterGate1
+    Gui Add, Button, x+10 h18 gSelectPatternUI vsettings_userPatterns_dimensionGate_events_banners_characterGate1, Select Banner
 
     Gui, Add, Progress, xs+10 vProgressBar_AutoDailyEventReview1 -Smooth w200 h18 c0x66FF66 border
     Gui Add, Text, cBlack xp wp hp center vProgressText_AutoDailyEventReview1 BackgroundTrans, Start AutoDailyEventReview1
+    Gui Add, Button, x+10 h18 gSelectPatternUI vsettings_userPatterns_dimensionGate_events_banners_eventReview1, Select Banner
 
     Gui, Add, Progress, xs+10 vProgressBar_AutoDailyDarkGateHL -Smooth w200 h18 c0x66FF66 border
     Gui Add, Text, cBlack xp wp hp center vProgressText_AutoDailyDarkGateHL BackgroundTrans, Start AutoDailyDarkGateHL
@@ -101,7 +103,14 @@ ResetUI() {
     Gui Add, Text, cWhite xs+10, Event
     Gui, Font, Normal
     Gui Add, Link, x+5,<a href="https://github.com/yeetoverflow/autodisgaeaRPG/blob/main/README.md#event-video">?</a>
-    Gui Add, Button, x+10 gSelectBanners, Select Banners
+
+    Gui, Add, Progress, xs+10 vProgressBar_EventStory500Pct -Smooth w120 h18 c0x66FF66 border
+    Gui Add, Text, cBlack xp wp hp center vProgressText_EventStory500Pct BackgroundTrans, Start EventStory500Pct
+
+    Gui, Add, Progress, x+10 vProgressBar_EventAutoClear -Smooth w100 h18 c0x66FF66 border
+    Gui Add, Text, cBlack xp wp hp center vProgressText_EventAutoClear BackgroundTrans, Start EventAutoClear
+
+    Gui Add, Button, x+10 h18 gSelectPatternUI vsettings_userPatterns_dimensionGate_events_banners_story, Select Story Banner
 
     Gui, Add, Progress, xs+10 vProgressBar_EventStoryFarm -Smooth w120 h18 c0x66FF66 border
     Gui Add, Text, cBlack xp wp hp center vProgressText_EventStoryFarm BackgroundTrans, Start EventStoryFarm
@@ -109,12 +118,6 @@ ResetUI() {
     Gui Add, Text, x+10 hidden, EventStoryFarmCount
     Gui Add, Edit, xp yp w50 Number, 1
     AddSetting("settings_eventOptions_story_farmTarget", "1", { hideLabel : true, optsOverride : "x+10" } )
-
-    Gui, Add, Progress, xs+10 vProgressBar_EventStory500Pct -Smooth w120 h18 c0x66FF66 border
-    Gui Add, Text, cBlack xp wp hp center vProgressText_EventStory500Pct BackgroundTrans, Start EventStory500Pct
-
-    Gui, Add, Progress, x+10 vProgressBar_EventAutoClear -Smooth w100 h18 c0x66FF66 border
-    Gui Add, Text, cBlack xp wp hp center vProgressText_EventAutoClear BackgroundTrans, Start EventAutoClear
 
     Gui, Font, Bold
     Gui Add, Text, cWhite xs+10, Raid
@@ -125,6 +128,8 @@ ResetUI() {
 
     Gui, Add, Progress, xs+10 vProgressBar_EventRaidLoop -Smooth w100 h18 c0x66FF66 border
     Gui Add, Text, cBlack xp wp hp center vProgressText_EventRaidLoop BackgroundTrans, Start EventRaidLoop
+
+    Gui Add, Button, x+10 h18 gSelectPatternUI vsettings_userPatterns_dimensionGate_events_banners_raid, Select Raid Banner
 
     Gui, Add, Progress, xs+10 vProgressBar_EventRaidAutoClaim -Smooth w130 h18 c0x66FF66 border
     Gui Add, Text, cBlack xp wp hp center vProgressText_EventRaidAutoClaim BackgroundTrans, Start EventRaidAutoClaim
@@ -556,10 +561,8 @@ FilterPatterns() {
     InitPatternsTree(tempRoot)
 }
 
-SelectBanners() {
-    global metadata
-    metadata.userPatterns.dimensionGate.events.banners.disableAdd := true
-    SettingsModal("settings_userPatterns_dimensionGate_events_banners")
+SelectPatternUI() {
+    SettingsModal(A_GuiControl)
 }
 
 GuiClose() {

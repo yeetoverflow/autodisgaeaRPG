@@ -1001,7 +1001,7 @@ AddPatternSetting() {
     settingInfo := GetSettingInfo(settingUnderscore)
     patternObject := settingInfo.setting[settingInfo.key]
     
-    if (!patternObject || IsArray(patternObject)) {
+    if (!patternObject || IsArray(patternObject) || !IsObject(patternObject)) {
         settingInfo.setting[settingInfo.key] := {}
         patternObject := settingInfo.setting[settingInfo.key]
     }

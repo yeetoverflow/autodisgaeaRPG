@@ -243,10 +243,10 @@ GenerateNoxPatterns() {
     patterns.dimensionGate.events.block := "|<>0x48141B@0.80$31.1V0880lk444Mw242AS0216B010X6E001a8020n42E0NW1804lUY06MEE13ws00XyA20ky61VsT10k4DU082bk041Hs020Vw000Mw000AS0006D00027U0011k0010w001US001kD001s7U01w3U01y1m01z0NU1zk"
     patterns.dimensionGate.events.select := "|<>0x080808@0.60$121.Ds00Q0000007zU000000CC00C0000003zk000000C30070000601U0000000q0003U000300k0000000PU001k0001U0M0000000Bs07UsDUDny0A0Q33sDwTTU6QQAsCMM070733a7i3bw66CCAC0A03znVXXXXVUz73767C0601k0sVVlVkk3nznXzb0300k0QkzsksM0tk1lk3U1U0M07EQ0MQA0Qs0sk1k0k0A03sA0AC6UCA0QM0s0M0600w70673MC72CC4C6A03UkQ1VX3Vry1z73y3y7k1zw60TVVkw"
     patterns.dimensionGate.events.banners := {}
-    patterns.dimensionGate.events.banners.story := ""
-    patterns.dimensionGate.events.banners.raid := ""
-    patterns.dimensionGate.events.banners.characterGate1 := ""
-    patterns.dimensionGate.events.banners.eventReview1 := ""
+    patterns.dimensionGate.events.banners.story := {}
+    patterns.dimensionGate.events.banners.raid := {}
+    patterns.dimensionGate.events.banners.characterGate1 := {}
+    patterns.dimensionGate.events.banners.eventReview1 := {}
     patterns.dimensionGate.eventReview := "|<>0xECE6CE@0.80$33.0400007U0001s0000D00007s0080y001UDkE0A3y601kTUk0C7wC03szUk0T7wq03szzE0Tbzu03Qbzk0La7y05zU5k0Tk0S07y03k1y00C0D00Bk1U00zMM807v2700zQkE07vo001zzUE0Dzw201zzUU0Tzw43bzzU0Tzzw83zzzX0TzzwM4"
 
     patterns.raid := {}
