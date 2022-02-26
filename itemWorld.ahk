@@ -436,10 +436,10 @@ DoSubdue(bribe) {
     AddLog(A_ThisFunc)
     
     if (bribe && bribe != "None") {
-        PollPattern(patterns.itemWorld.bribe.block, { doClick : true, predicatePattern : patterns.itemWorld.bribe[bribe], clickPattern : patterns.prompt.close })
-        PollPattern(patterns.itemWorld.bribe[bribe], { doClick : true, predicatePattern : patterns.itemWorld.confirm, clickPattern : patterns.prompt.close })
-        PollPattern(patterns.itemWorld.bribe.confirm, { doClick : true, predicatePattern : patterns.itemWorld.subdue, clickPattern : patterns.prompt.close })
+        PollPattern(patterns.itemWorld.bribe.block, { doClick : true, predicatePattern : patterns.itemWorld.bribe[bribe], clickPattern : patterns.prompt.no })
+        PollPattern(patterns.itemWorld.bribe[bribe], { doClick : true, predicatePattern : patterns.itemWorld.confirm, clickPattern : patterns.prompt.no })
+        PollPattern(patterns.itemWorld.bribe.confirm, { doClick : true, predicatePattern : patterns.itemWorld.subdue, clickPattern : patterns.prompt.no })
     }
 
-    PollPattern([patterns.itemWorld.subdue], { doClick : true, clickPattern : patterns.prompt.close })
+    PollPattern([patterns.itemWorld.subdue], { doClick : true, clickPattern : patterns.prompt.no })
 }
