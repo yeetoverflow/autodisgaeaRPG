@@ -290,10 +290,10 @@ UseSkipTickets() {
     if (!FindPattern(patterns.darkGates.skip.remainingZero).IsSuccess) {
         PollPattern(patterns.prompt.close, { doClick : true, predicatePattern : patterns.battle.start })
         PollPattern(patterns.apAdd, { doClick : true, predicatePatern : patterns.prompt.use })
-        PollPattern(patterns.prompt.use, { doClick : true, predicatePatern : patterns.prompt.yes })
-        PollPattern(patterns.prompt.yes, { doClick : true, predicatePatern : patterns.battle.close })
+        PollPattern(patterns.prompt.use, { doClick : true, predicatePatern : patterns.prompt.close })
+        PollPattern(patterns.prompt.use, { doClick : true, predicatePatern : patterns.prompt.close, bounds : { x1 : 182, y1 : 655, x2 : 390, y2 : 742 } })
         PollPattern(patterns.prompt.close, { doClick : true, predicatePatern : patterns.battle.start })
-
+        sleep 500
         PollPattern(patterns.darkGates.skip.ticket, { doClick : true, predicatePattern : patterns.darkGates.skip.add })
         sleep 500
         FindPattern(patterns.darkGates.skip.add, { doClick : true })
@@ -358,8 +358,8 @@ HandleInsufficientAP() {
     
     if (result.IsSuccess) {
         PollPattern(patterns.prompt.insufficientAP, { doClick : true, predicatePattern : patterns.prompt.use })
-        PollPattern(patterns.prompt.use, { doClick : true, predicatePattern : patterns.prompt.yes })
-        PollPattern(patterns.prompt.yes, { doClick : true, predicatePattern : patterns.prompt.close })
+        PollPattern(patterns.prompt.use, { doClick : true, predicatePatern : patterns.prompt.close })
+        PollPattern(patterns.prompt.use, { doClick : true, predicatePatern : patterns.prompt.close, bounds : { x1 : 182, y1 : 655, x2 : 390, y2 : 742 } })
         PollPattern(patterns.prompt.close, { doClick : true, predicatePattern : [patterns.apAdd, patterns.battle.prompt.battle, patterns.battle.start] })
         return true
     }
