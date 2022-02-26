@@ -118,7 +118,6 @@ GenerateSettingMetadata() {
     metadata.eventOptions.raid.claimType.type := "Radio"
     metadata.eventOptions.raid.claimType.options := ["claim", "vault", "innocent"]
 
-
     metadata.general := {}
     metadata.general.darkAssembly := {}
     metadata.general.darkAssembly.maxGoldenCandy := {}
@@ -162,16 +161,25 @@ GenerateSettingMetadata() {
     metadata.darkGateOptions.hl.count.type := "Number"
     metadata.darkGateOptions.hl.skip := {}
     metadata.darkGateOptions.hl.skip.type := "Number"
+    metadata.darkGateOptions.hl.useGateKeysOnFirstSkip := {}
+    metadata.darkGateOptions.hl.useGateKeysOnFirstSkip.type := "Checkbox"
+    metadata.darkGateOptions.hl.useGateKeysOnFirstSkip.newLine := "Checkbox"
     metadata.darkGateOptions.matsHuman := {}
     metadata.darkGateOptions.matsHuman.count := {}
     metadata.darkGateOptions.matsHuman.count.type := "Number"
     metadata.darkGateOptions.matsHuman.skip := {}
     metadata.darkGateOptions.matsHuman.skip.type := "Number"
+    metadata.darkGateOptions.matsHuman.useGateKeysOnFirstSkip := {}
+    metadata.darkGateOptions.matsHuman.useGateKeysOnFirstSkip.type := "Checkbox"
+    metadata.darkGateOptions.matsHuman.useGateKeysOnFirstSkip.newLine := "Checkbox"
     metadata.darkGateOptions.matsMonster := {}
     metadata.darkGateOptions.matsMonster.count := {}
     metadata.darkGateOptions.matsMonster.count.type := "Number"
     metadata.darkGateOptions.matsMonster.skip := {}
     metadata.darkGateOptions.matsMonster.skip.type := "Number"
+    metadata.darkGateOptions.matsMonster.useGateKeysOnFirstSkip := {}
+    metadata.darkGateOptions.matsMonster.useGateKeysOnFirstSkip.type := "Checkbox"
+    metadata.darkGateOptions.matsMonster.useGateKeysOnFirstSkip.newLine := "Checkbox"
 
     InitMetaDataItemWorldOptions(metadata)
 

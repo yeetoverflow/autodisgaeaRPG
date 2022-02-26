@@ -5,7 +5,7 @@ if (!patterns)
 }
 
 AutoDarkGate(type = "", opts = "") {
-    global mode, patterns, settings, darkGateCountHwnd, darkGateSkipCountHwnd
+    global mode, patterns, settings, darkGateCountHwnd, darkGateSkipCountHwnd, darkGateUseGateKeysOnFirstSkipHwnd
 
     firstGate := true
     if (!type && !settings.darkGateOptions.selectedGate) {
@@ -19,7 +19,10 @@ AutoDarkGate(type = "", opts = "") {
         ControlSetText,, % opts.count, % "ahk_id " . darkGateCountHwnd
         ControlSetText,, % opts.skip, % "ahk_id " . darkGateSkipCountHwnd
     }
-    
+
+    if (opts.useGateKeysOnFirstSkip) {
+        Control, Check,,, % "ahk_id " . darkGateUseGateKeysOnFirstSkipHwnd
+    }
     
     SetStatus(A_ThisFunc . "_" . type)
     AddLog(A_ThisFunc . "_" . type)

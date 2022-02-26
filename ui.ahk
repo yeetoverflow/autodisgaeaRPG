@@ -176,6 +176,8 @@ ResetUI() {
     Gui Add, Text, cWhite x+5, Skip:
     Gui Add, Text, x+5 hidden, DarkGateSkipCount
     Gui Add, Edit, xp yp w30 Number, 0
+    Gui Add, Text, x+5 hidden, DarkGateUseGateKeysOnFirstSkip
+    Gui Add, Checkbox, cWhite xp yp, UseGateKeysOnFirstSkip
 
     Gui, Add, Progress, xs+10 vProgressBar_AutoDarkGate -Smooth w100 h18 c0x66FF66 border
     Gui Add, Text, cBlack xp wp hp center vProgressText_AutoDarkGate BackgroundTrans, Start AutoDarkGate

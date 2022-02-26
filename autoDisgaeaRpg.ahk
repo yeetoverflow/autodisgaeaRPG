@@ -769,6 +769,7 @@ AutoDailyDarkGate(type) {
     dailyStats := InitDailyStats()
     count := settings["darkGateOptions"][type]["count"]
     skip := settings["darkGateOptions"][type]["skip"]
+    useGateKeysOnFirstSkip := settings["darkGateOptions"][type]["useGateKeysOnFirstSkip"]
     currentDaily := A_ThisFunc . type
 
     if (dailyStats[currentDaily]) {
@@ -777,11 +778,12 @@ AutoDailyDarkGate(type) {
         }
         if (dailyStats[currentDaily].skip) {
             skip := skip - dailyStats[currentDaily].skip
+            useGateKeysOnFirstSkip := false
         }
     }
 
     if (count > 0) {
-        AutoDarkGate(type, { count : count, skip : skip })
+        AutoDarkGate(type, { count : count, skip : skip, useGateKeysOnFirstSkip : useGateKeysOnFirstSkip })
     }
 
     if (mode && mode != "AutoDailies") {

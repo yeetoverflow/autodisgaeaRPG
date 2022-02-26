@@ -76,6 +76,8 @@ InitWindow()
     eventStoryFarmCountHwnd := GetControlHwnd("EventStoryFarmCount")
     darkGateCountHwnd := GetControlHwnd("DarkGateCount")
     darkGateSkipCountHwnd := GetControlHwnd("DarkGateSkipCount")
+    darkGateUseGateKeysOnFirstSkipHwnd := GetControlHwnd("DarkGateUseGateKeysOnFirstSkip")
+    
     patterns := InitPatterns()
     InitPatternsTree()
 }
@@ -106,7 +108,7 @@ InitPatternsCallback(key, value, parent, path) {
 
 DoBattle(battleOptions) {
     SetStatus(A_ThisFunc, 2)
-    global patterns, settings, mode, darkGateSkipCountHwnd
+    global patterns, settings, mode, darkGateSkipCountHwnd, darkGateUseGateKeysOnFirstSkipHwnd
 
     startTick := A_TickCount
 
@@ -279,29 +281,60 @@ DoBattle(battleOptions) {
 }
 
 UseSkipTickets() {
-    global patterns
+    global patterns, darkGateUseGateKeysOnFirstSkipHwnd
+    ControlGet, useGateKeysOnFirstSkip, Checked,,, % "ahk_id " . darkGateUseGateKeysOnFirstSkipHwnd
 
     PollPattern(patterns.darkGates.skip.ticket, { doClick : true, predicatePattern : patterns.darkGates.skip.add })
     sleep 500
-    FindPattern(patterns.darkGates.skip.add, { doClick : true })
-    sleep 1000
-    FindPattern(patterns.darkGates.skip.add, { doClick : true })
-    sleep 500
-    if (!FindPattern(patterns.darkGates.skip.remainingZero).IsSuccess) {
-        PollPattern(patterns.prompt.close, { doClick : true, predicatePattern : patterns.battle.start })
-        PollPattern(patterns.apAdd, { doClick : true, predicatePatern : patterns.prompt.use })
-        PollPattern(patterns.prompt.use, { doClick : true, predicatePatern : patterns.prompt.close })
-        PollPattern(patterns.prompt.use, { doClick : true, predicatePatern : patterns.prompt.close, bounds : { x1 : 182, y1 : 655, x2 : 390, y2 : 742 } })
-        PollPattern(patterns.prompt.close, { doClick : true, predicatePatern : patterns.battle.start })
-        sleep 500
-        PollPattern(patterns.darkGates.skip.ticket, { doClick : true, predicatePattern : patterns.darkGates.skip.add })
-        sleep 500
-        FindPattern(patterns.darkGates.skip.add, { doClick : true })
-        sleep 1000
-        FindPattern(patterns.darkGates.skip.add, { doClick : true })
-        sleep 500
-    }
 
+    if (useGateKeysOnFirstSkip) {
+        Loop 7 {
+            FindPattern(patterns.darkGates.skip.add, { doClick : true })
+            sleep 500
+        }
+
+        sleep 1000
+        if (!FindPattern(patterns.darkGates.skip.unlockingZero).IsSuccess) {
+            Loop 2 {
+                PollPattern(patterns.prompt.close, { doClick : true, predicatePattern : patterns.battle.start })
+                PollPattern(patterns.apAdd, { doClick : true, predicatePatern : patterns.prompt.use })
+                PollPattern(patterns.prompt.use, { doClick : true, predicatePatern : patterns.prompt.close })
+                PollPattern(patterns.prompt.use, { doClick : true, predicatePatern : patterns.prompt.close, bounds : { x1 : 182, y1 : 655, x2 : 390, y2 : 742 } })
+                PollPattern(patterns.prompt.close, { doClick : true, predicatePatern : patterns.battle.start })
+                sleep 500
+            }
+            PollPattern(patterns.darkGates.skip.ticket, { doClick : true, predicatePattern : patterns.darkGates.skip.add })
+            sleep 500
+            Loop 7 {
+                FindPattern(patterns.darkGates.skip.add, { doClick : true })
+                sleep 500
+            }
+        }
+        Control, UnCheck,,, % "ahk_id " . darkGateUseGateKeysOnFirstSkipHwnd    
+    }
+    else {
+        Loop 2 {
+            FindPattern(patterns.darkGates.skip.add, { doClick : true })
+            sleep 500
+        }
+
+        sleep 1000
+        if (!FindPattern(patterns.darkGates.skip.remainingZero).IsSuccess) {
+            PollPattern(patterns.prompt.close, { doClick : true, predicatePattern : patterns.battle.start })
+            PollPattern(patterns.apAdd, { doClick : true, predicatePatern : patterns.prompt.use })
+            PollPattern(patterns.prompt.use, { doClick : true, predicatePatern : patterns.prompt.close })
+            PollPattern(patterns.prompt.use, { doClick : true, predicatePatern : patterns.prompt.close, bounds : { x1 : 182, y1 : 655, x2 : 390, y2 : 742 } })
+            PollPattern(patterns.prompt.close, { doClick : true, predicatePatern : patterns.battle.start })
+            sleep 500
+            PollPattern(patterns.darkGates.skip.ticket, { doClick : true, predicatePattern : patterns.darkGates.skip.add })
+            sleep 500
+            Loop 2 {
+                FindPattern(patterns.darkGates.skip.add, { doClick : true })
+                sleep 500
+            }
+        }
+    }
+    
     PollPattern(patterns.prompt.use, { doClick : true, predicatePattern : patterns.battle.done })
 }
 
