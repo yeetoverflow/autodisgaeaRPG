@@ -424,17 +424,23 @@ AutoDailySummon() {
     
     done := false
     Loop {
-        result := FindPattern([patterns.stronghold.gemsIcon, patterns.summon.premium, patterns.general.autoClear.skip, patterns.touchScreen, patterns.prompt.ok, patterns.summon.result])
+        result := FindPattern([patterns.stronghold.gemsIcon, patterns.summon.title, patterns.summon.premium, patterns.general.autoClear.skip, patterns.touchScreen, patterns.prompt.ok, patterns.summon.result])
         
         if InStr(result.comment, "stronghold.gemsIcon") {
             FindPattern(patterns.tabs.summon, { doClick : true })
-        } else if InStr(result.comment, "summon.premium") {
-            result := FindPattern(patterns.summon.exclamation, { doClick : true })
-            if (!result.IsSuccess) {
-                done := true
+        } else if InStr(result.comment, "summon.title") {
+            sleep, 1000
+            result := FindPattern(patterns.summon.premium)
+            if (result.IsSuccess) {
+                result := FindPattern(patterns.summon.exclamation, { doClick : true })
+                if (!result.IsSuccess) {
+                    done := true
+                }
             }
-        }
-        else if InStr(result.comment, "general.autoClear.skip") || InStr(result.comment, "touchScreen") || InStr(result.comment, "prompt.ok"){
+            else {
+                FindPattern(patterns.summon.rightArrow, { doClick : true })
+            }
+        } else if InStr(result.comment, "general.autoClear.skip") || InStr(result.comment, "touchScreen") || InStr(result.comment, "prompt.ok"){
             ClickResult(result)
         }
         else if InStr(result.comment, "summon.result") {
