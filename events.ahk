@@ -96,7 +96,19 @@ AutoDailyCharacterGate1() {
         }
         else if InStr(result.comment, "battle.start") {
             PollPattern(patterns.events.characterGate.skipBattle, { doClick : true, predicatePattern : patterns.prompt.close })
-            PollPattern(patterns.slider.max, { doClick : true, predicatePattern : patterns.prompt.use })
+            PollPattern(patterns.slider.max, { doClick : true, predicatePattern : [patterns.prompt.use, patterns.general.exclamation] })
+
+            if (FindPattern(patterns.general.exclamation).IsSuccess) {
+                PollPattern(patterns.prompt.close, { doClick : true, predicatePattern : patterns.battle.start })
+                PollPattern(patterns.apAdd, { doClick : true, predicatePatern : patterns.prompt.use, bounds : { x1 : 223, y1 : 63, x2 : 313, y2 : 130 } })
+                PollPattern(patterns.prompt.use, { doClick : true, predicatePatern : patterns.prompt.close })
+                PollPattern(patterns.prompt.use, { doClick : true, predicatePatern : patterns.prompt.close, bounds : { x1 : 182, y1 : 655, x2 : 390, y2 : 742 } })
+                PollPattern(patterns.prompt.close, { doClick : true, predicatePatern : patterns.battle.start })
+
+                PollPattern(patterns.events.characterGate.skipBattle, { doClick : true, predicatePattern : patterns.prompt.close })
+                PollPattern(patterns.slider.max, { doClick : true, predicatePattern : patterns.prompt.use })
+            }
+
             PollPattern(patterns.prompt.use, { doClick : true, predicatePattern : [patterns.battle.done, patterns.touchScreen] })
             PollPattern(loopTargets, { clickPattern : [patterns.battle.done, patterns.touchScreen], pollInterval : 250 })
         }

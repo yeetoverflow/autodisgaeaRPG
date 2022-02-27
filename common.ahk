@@ -290,14 +290,14 @@ UseSkipTickets() {
     if (useGateKeysOnFirstSkip) {
         Loop 7 {
             FindPattern(patterns.darkGates.skip.add, { doClick : true })
-            sleep 500
+            sleep 750
         }
 
         sleep 1000
         if (!FindPattern(patterns.darkGates.skip.unlockingZero).IsSuccess) {
             Loop 2 {
                 PollPattern(patterns.prompt.close, { doClick : true, predicatePattern : patterns.battle.start })
-                PollPattern(patterns.apAdd, { doClick : true, predicatePatern : patterns.prompt.use })
+                PollPattern(patterns.apAdd, { doClick : true, predicatePatern : patterns.prompt.use, bounds : { x1 : 223, y1 : 63, x2 : 313, y2 : 130 } })
                 PollPattern(patterns.prompt.use, { doClick : true, predicatePatern : patterns.prompt.close })
                 PollPattern(patterns.prompt.use, { doClick : true, predicatePatern : patterns.prompt.close, bounds : { x1 : 182, y1 : 655, x2 : 390, y2 : 742 } })
                 PollPattern(patterns.prompt.close, { doClick : true, predicatePatern : patterns.battle.start })
@@ -307,7 +307,7 @@ UseSkipTickets() {
             sleep 500
             Loop 7 {
                 FindPattern(patterns.darkGates.skip.add, { doClick : true })
-                sleep 500
+                sleep 750
             }
         }
         Control, UnCheck,,, % "ahk_id " . darkGateUseGateKeysOnFirstSkipHwnd    
@@ -315,13 +315,13 @@ UseSkipTickets() {
     else {
         Loop 2 {
             FindPattern(patterns.darkGates.skip.add, { doClick : true })
-            sleep 500
+            sleep 750
         }
 
         sleep 1000
         if (!FindPattern(patterns.darkGates.skip.remainingZero).IsSuccess) {
             PollPattern(patterns.prompt.close, { doClick : true, predicatePattern : patterns.battle.start })
-            PollPattern(patterns.apAdd, { doClick : true, predicatePatern : patterns.prompt.use })
+            PollPattern(patterns.apAdd, { doClick : true, predicatePatern : patterns.prompt.use, bounds : { x1 : 223, y1 : 63, x2 : 313, y2 : 130 } })
             PollPattern(patterns.prompt.use, { doClick : true, predicatePatern : patterns.prompt.close })
             PollPattern(patterns.prompt.use, { doClick : true, predicatePatern : patterns.prompt.close, bounds : { x1 : 182, y1 : 655, x2 : 390, y2 : 742 } })
             PollPattern(patterns.prompt.close, { doClick : true, predicatePatern : patterns.battle.start })
@@ -330,7 +330,7 @@ UseSkipTickets() {
             sleep 500
             Loop 2 {
                 FindPattern(patterns.darkGates.skip.add, { doClick : true })
-                sleep 500
+                sleep 750
             }
         }
     }
