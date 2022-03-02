@@ -243,8 +243,8 @@ AutoShop(shopType := "") {
                         if (result.IsSuccess) {
                             ClickResult(result)
                             PollPattern(patterns.slider.max, { doClick : true, variancePct : 1 })
-                            PollPattern(patterns.prompt.yes, { doClick : true })
-                            PollPattern(patterns.prompt.close, { doClick : true })
+                            PollPattern(patterns.prompt.yes, { doClick : true, predicatePattern : patterns.prompt.close })
+                            PollPattern(patterns.prompt.close, { doClick : true, predicatePattern : patterns.shop.items.hl.enabled })
                             sleep, 1500
                         }
                     } until (!result.IsSuccess)
