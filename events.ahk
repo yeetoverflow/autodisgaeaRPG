@@ -513,7 +513,11 @@ EventRaidAutoClaim() {
                     ScrollDown()
                 }
 
-                if (FindPattern(patterns.raid.claim.disabled).IsSuccess) {
+                Loop, 50 {
+                    result := FindPattern(patterns.raid.claim.disabled)
+                } until (!result.IsSuccess)
+
+                if (result.IsSuccess) {
                     Break
                 }
             }
