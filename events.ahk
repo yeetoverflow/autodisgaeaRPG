@@ -331,14 +331,9 @@ HandleRaid() {
         }
         default:    ;askForHelp
         {
-            PollPattern(patterns.raid.appear.fightRaidBoss, { doClick : true, predicatePattern : patterns.raid.helpRequests })
             PollPattern(patterns.raid.helpRequests, { doClick : true, predicatePattern : patterns.prompt.ok })
-            PollPattern(patterns.prompt.ok, { doClick : true, predicatePattern : patterns.stage.back })
-            result := PollPattern([patterns.stronghold.gemsIcon, patterns.prompt.close], { clickPattern : patterns.stage.back })
-            if InStr(result.comment, "prompt.close") {
-                PollPattern(patterns.prompt.close, { doClick : true, predicatePattern : patterns.tabs.stronghold })
-                PollPattern(patterns.tabs.stronghold, { doClick : true, predicatePattern : patterns.stronghold.gemsIcon })
-            }
+            PollPattern(patterns.prompt.ok, { doClick : true, predicatePattern : patterns.raid.appear.advanceInStory })
+            PollPattern(patterns.raid.appear.advanceInStory, { doClick : true, predicatePattern : patterns.stage.back })
         }
     }
     
