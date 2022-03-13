@@ -205,7 +205,9 @@ AutoClear() {
             PollPattern(loopTargets, { clickPattern : patterns.battle.done, pollInterval : 250 })
         }
         else if InStr(result.comment, "raid.appear.advanceInStory") {
-            ClickResult(result)
+            PollPattern(patterns.raid.helpRequests, { doClick : true, predicatePattern : patterns.prompt.ok })
+            PollPattern(patterns.prompt.ok, { doClick : true, predicatePattern : patterns.raid.appear.advanceInStory })
+            PollPattern(patterns.raid.appear.advanceInStory, { doClick : true, predicatePattern : patterns.stage.back })
             sleep, 1000
         }
     }
