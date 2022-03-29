@@ -1001,6 +1001,16 @@ AddPatternSetting() {
     settingInfo := GetSettingInfo(settingUnderscore)
     patternObject := settingInfo.setting[settingInfo.key]
     
+    if (!key) {
+        MsgBox, 262144, Warning, Key needs a value...
+        Return
+    }
+
+    firstCharacter := SubStr(key, 1, 1)
+    if (firstCharacter is Number) {
+        key := "_" . key
+    }
+
     if (!patternObject || IsArray(patternObject) || !IsObject(patternObject)) {
         settingInfo.setting[settingInfo.key] := {}
         patternObject := settingInfo.setting[settingInfo.key]
