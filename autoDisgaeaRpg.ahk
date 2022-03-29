@@ -434,7 +434,7 @@ AutoDailySummon() {
             sleep, 1000
             result := FindPattern(patterns.summon.premium)
             if (result.IsSuccess) {
-                result := FindPattern(patterns.summon.exclamation, { doClick : true })
+                result := FindPattern(patterns.summon.exclamation, { doClick : true, bounds: { x1 : 126, y1 : 737, x2 : 274, y2 : 848 } })
                 if (!result.IsSuccess) {
                     done := true
                 }
