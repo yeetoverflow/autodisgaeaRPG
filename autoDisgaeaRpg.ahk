@@ -737,6 +737,11 @@ AutoDarkAssembly(targetBill := "") {
             if InStr(result.comment, "billPassed") {
                 done := true
             }
+            else {
+                maxCrabMiso := settings.general.darkAssembly.maxCrabMiso
+                maxGoldBar := settings.general.darkAssembly.maxGoldBar
+                maxGoldenCandy := settings.general.darkAssembly.maxGoldenCandy
+            }
             PollPattern(patterns.prompt.back, { doClick : true })
             sleep 2000
         }
