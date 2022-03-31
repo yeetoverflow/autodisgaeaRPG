@@ -441,7 +441,7 @@ EventRaidLoop() {
 
     loopNumChecksBeforeRefresh := settings.eventOptions.raid.loopNumChecksBeforeRefresh ? settings.eventOptions.raid.loopNumChecksBeforeRefresh : 50
 
-    loopTargets := [patterns.stronghold.gemsIcon, patterns.dimensionGate.background, patterns.dimensionGate.events.select, patterns.raid.activeBoss]
+    loopTargets := [patterns.stronghold.gemsIcon, patterns.dimensionGate.background, patterns.dimensionGate.events.select, patterns.raid.activeBoss, patterns.raid.reload]
     Loop {
         result := PollPattern(loopTargets)
 
@@ -457,7 +457,7 @@ EventRaidLoop() {
             ScrollUntilDetect(patterns.dimensionGate.events.banners.raid)
             sleep 3000
         }
-        else if InStr(result.comment, "raid.activeBoss") {
+        else if InStr(result.comment, "raid.activeBoss") || InStr(result.comment, "raid.reload")  {
             Loop {
                 result := PollPattern(patterns.raid.helper, { maxCount : loopNumChecksBeforeRefresh })
                 if (result.IsSuccess) {
@@ -477,7 +477,7 @@ EventRaidLoop() {
                 }
 
                 DoBattle(settings.battleOptions.raid)
-                PollPattern(patterns.raid.activeBoss, { clickPattern : patterns.battle.done, callback : Func("RaidClickCallback"), pollInterval : 250 })
+                PollPattern([patterns.raid.activeBoss, patterns.raid.reload], { clickPattern : patterns.battle.done, callback : Func("RaidClickCallback"), pollInterval : 250 })
             }
         }
 
