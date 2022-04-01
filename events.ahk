@@ -287,7 +287,7 @@ HandleRaid() {
                 PollPattern([patterns.battle.auto])
                 DoBattle(settings.battleOptions.raid)
                 battleCount++
-                PollPattern(patterns.raid.activeBoss, { clickPattern : patterns.battle.done, callback : Func("RaidClickCallback"), pollInterval : 250 })
+                PollPattern([patterns.raid.activeBoss, patterns.raid.reload], { clickPattern : patterns.battle.done, callback : Func("RaidClickCallback"), pollInterval : 250 })
             } Until (settings.eventOptions.raid.fightAttempts && battleCount >= settings.eventOptions.raid.fightAttempts)
 
             result := PollPattern([patterns.raid.finder, patterns.stage.back])
@@ -312,7 +312,7 @@ HandleRaid() {
             PollPattern(patterns.menu.button, { doClick : true, predicatePattern : patterns.menu.giveUp })
             PollPattern(patterns.menu.giveUp, { doClick : true, predicatePattern : patterns.prompt.yes })
             PollPattern(patterns.prompt.yes, { doClick : true, predicatePattern : patterns.battle.done })
-            PollPattern(patterns.raid.activeBoss, { clickPattern : patterns.battle.done, callback : Func("RaidClickCallback"), pollInterval : 250 })
+            PollPattern([patterns.raid.activeBoss, patterns.raid.reload], { clickPattern : patterns.battle.done, callback : Func("RaidClickCallback"), pollInterval : 250 })
             PollPattern(patterns.raid.finder, { doClick : true, predicatePattern : patterns.raid.helpRequests })
             PollPattern(patterns.raid.helpRequests, { doClick : true, predicatePattern : patterns.prompt.ok })
             PollPattern(patterns.prompt.ok, { doClick : true, predicatePattern : patterns.stage.back })
