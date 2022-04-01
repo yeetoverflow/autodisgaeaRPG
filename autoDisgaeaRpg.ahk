@@ -1034,6 +1034,7 @@ RecoverCallback() {
         PollPattern(patterns.prompt.no, { doClick : true })
     }
 
+    FindPattern(patterns.exit, { doClick : true })
     FindPattern(patterns.prompt.close, { doClick : true })
 
     Click("x500 y300")
