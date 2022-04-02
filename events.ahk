@@ -269,36 +269,26 @@ HandleRaid() {
             PollPattern(patterns.raid.appear.fightRaidBoss, { doClick : true, predicatePattern : patterns.raid.helpRequests })
 
             battleCount := 0
-            Loop {
-                result := PollPattern([patterns.battle.start, patterns.raid.finder, patterns.stage.back])
-                if InStr(result.comment, "raid.finder") {
-                    ClickResult(result)
-                    sleep 1000
-                    Continue
+            if (settings.eventOptions.raid.fightAttempts) {
+                while (settings.eventOptions.raid.fightAttempts && battleCount < settings.eventOptions.raid.fightAttempts) {
+                    PollPattern(patterns.battle.start, { doClick : true, predicatePattern : patterns.menu.button })
+                    DoBattle(settings.battleOptions.raid)
+                    battleCount++
+                    result := PollPattern([patterns.battle.start, patterns.raid.activeBoss, patterns.raid.reload], { clickPattern : patterns.battle.done, callback : Func("RaidClickCallback"), pollInterval : 250 })
+                    if InStr(result.comment, "raid.activeBoss") || InStr(result.comment, "raid.reload") {
+                        break
+                    }
                 }
-                else if InStr(result.comment, "stage.back") {
-                    sleep 1000
-                    Break
-                }
-                else {
-                    ClickResult(result)
-                }
-
-                PollPattern([patterns.battle.auto])
-                DoBattle(settings.battleOptions.raid)
-                battleCount++
-                PollPattern([patterns.raid.activeBoss, patterns.raid.reload], { clickPattern : patterns.battle.done, callback : Func("RaidClickCallback"), pollInterval : 250 })
-            } Until (settings.eventOptions.raid.fightAttempts && battleCount >= settings.eventOptions.raid.fightAttempts)
-
-            result := PollPattern([patterns.raid.finder, patterns.stage.back])
-
-            if (InStr(result.comment, "raid.finder") && settings.eventOptions.raid.fightAttempts && battleCount >= settings.eventOptions.raid.fightAttempts) {
-                PollPattern(patterns.raid.finder, { doClick : true, predicatePattern : patterns.raid.helpRequests })
-                PollPattern(patterns.raid.helpRequests, { doClick : true, predicatePattern : patterns.prompt.ok })
-                PollPattern(patterns.prompt.ok, { doClick : true, predicatePattern : patterns.stage.back })
-                sleep 1000
             }
 
+            result := PollPattern([patterns.raid.helpRequests, patterns.battle.start, patterns.raid.activeBoss, patterns.raid.reload])
+
+            if InStr(result.comment, "raid.helpRequests") {
+                PollPattern(patterns.raid.helpRequests, { doClick : true, predicatePattern : patterns.prompt.ok })
+                PollPattern(patterns.prompt.ok, { doClick : true, predicatePattern : patterns.stage.back })
+            }
+            
+            PollPattern([patterns.stronghold.gemsIcon, patterns.prompt.close], { clickPattern : patterns.stage.back })
             result := PollPattern([patterns.stronghold.gemsIcon, patterns.prompt.close], { clickPattern : patterns.stage.back })
             if InStr(result.comment, "prompt.close") {
                 PollPattern(patterns.prompt.close, { doClick : true, predicatePattern : patterns.tabs.stronghold })
@@ -308,16 +298,14 @@ HandleRaid() {
         case "fightThenPullOut":
         {
             PollPattern(patterns.raid.appear.fightRaidBoss, { doClick : true, predicatePattern : patterns.raid.helpRequests })
+            PollPattern(patterns.raid.helpRequests, { doClick : true, predicatePattern : patterns.prompt.ok })
+            PollPattern(patterns.prompt.ok, { doClick : true, predicatePattern : patterns.stage.back })
             PollPattern(patterns.battle.start, { doClick : true, predicatePattern : patterns.menu.button })
             PollPattern(patterns.menu.button, { doClick : true, predicatePattern : patterns.menu.giveUp })
             PollPattern(patterns.menu.giveUp, { doClick : true, predicatePattern : patterns.prompt.yes })
             PollPattern(patterns.prompt.yes, { doClick : true, predicatePattern : patterns.battle.done })
             PollPattern([patterns.raid.activeBoss, patterns.raid.reload], { clickPattern : patterns.battle.done, callback : Func("RaidClickCallback"), pollInterval : 250 })
-            PollPattern(patterns.raid.finder, { doClick : true, predicatePattern : patterns.raid.helpRequests })
-            PollPattern(patterns.raid.helpRequests, { doClick : true, predicatePattern : patterns.prompt.ok })
-            PollPattern(patterns.prompt.ok, { doClick : true, predicatePattern : patterns.stage.back })
             sleep 1000
-
             result := PollPattern([patterns.stronghold.gemsIcon, patterns.prompt.close], { clickPattern : patterns.stage.back })
             if InStr(result.comment, "prompt.close") {
                 PollPattern(patterns.prompt.close, { doClick : true, predicatePattern : patterns.tabs.stronghold })
