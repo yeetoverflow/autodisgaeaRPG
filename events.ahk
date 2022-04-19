@@ -281,7 +281,17 @@ HandleRaid() {
                 }
             }
 
-            result := PollPattern([patterns.raid.helpRequests, patterns.battle.start, patterns.raid.activeBoss, patterns.raid.reload])
+            result := PollPattern([patterns.raid.helpRequests, patterns.battle.start, patterns.raid.activeBoss, patterns.raid.reload, patterns.raid.finder])
+
+            Sleep, 1000
+
+            result := PollPattern([patterns.raid.helpRequests, patterns.raid.finder])
+
+            if InStr(result.comment, "raid.finder") {
+                PollPattern(patterns.raid.finder, { doClick : true, predicatePattern : patterns.raid.helpRequests })
+                PollPattern(patterns.raid.helpRequests, { doClick : true, predicatePattern : patterns.prompt.ok })
+                PollPattern(patterns.prompt.ok, { doClick : true, predicatePattern : patterns.stage.back })
+            }
 
             if InStr(result.comment, "raid.helpRequests") {
                 PollPattern(patterns.raid.helpRequests, { doClick : true, predicatePattern : patterns.prompt.ok })
