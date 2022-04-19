@@ -281,7 +281,7 @@ HandleRaid() {
                 }
             }
 
-            result := PollPattern([patterns.raid.helpRequests, patterns.battle.start, patterns.raid.activeBoss, patterns.raid.reload, patterns.raid.finder])
+            result := PollPattern([patterns.raid.helpRequests, patterns.battle.start, patterns.raid.activeBoss, patterns.raid.reload, patterns.raid.finder], { maxCount : 10 })
 
             Sleep, 1000
 
