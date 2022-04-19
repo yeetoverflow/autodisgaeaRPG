@@ -437,6 +437,7 @@ EventRaidLoop() {
     SetStatus(A_ThisFunc)
     AddLog(A_ThisFunc)
 
+    settings.battleOptions.raid.donePatterns := patterns.prompt.ok
     loopNumChecksBeforeRefresh := settings.eventOptions.raid.loopNumChecksBeforeRefresh ? settings.eventOptions.raid.loopNumChecksBeforeRefresh : 50
 
     loopTargets := [patterns.stronghold.gemsIcon, patterns.dimensionGate.background, patterns.dimensionGate.events.select, patterns.raid.activeBoss, patterns.raid.reload]
