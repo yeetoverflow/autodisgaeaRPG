@@ -198,7 +198,7 @@ EventStoryFarm(battleCount := "") {
         , patterns.battle.start, patterns.events.title, patterns.events.stage.title, patterns.battle.prompt.battle
         , patterns.raid.message, patterns.companions.title]
     Loop {
-        result := PollPattern(loopTargets)
+        result := PollPattern(loopTargets, { clickPattern : patterns.prompt.ok })
 
         if InStr(result.comment, "stronghold.gemsIcon") {
             FindPattern(patterns.tabs.dimensionGate, { doClick : true })
