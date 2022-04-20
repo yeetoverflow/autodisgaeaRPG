@@ -173,6 +173,10 @@ DoBattle(battleOptions) {
         result := FindPattern([patterns.battle.auto, donePatterns])
     } until (result.IsSuccess)
 
+    if (FindPattern([donePatterns, patterns.battle.done]).IsSuccess) {
+        Return
+    }
+
     if (battleOptions.targetEnemyMiddle) {
         Loop {
             ClickResult({ X : 342, Y : 388 })
