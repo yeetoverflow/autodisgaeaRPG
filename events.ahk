@@ -476,7 +476,7 @@ EventRaidLoop() {
                 }
 
                 DoBattle(settings.battleOptions.raid)
-                PollPattern([patterns.raid.activeBoss, patterns.raid.reload], { clickPattern : patterns.battle.done, callback : Func("RaidClickCallback"), pollInterval : 250 })
+                PollPattern([patterns.raid.activeBoss, patterns.raid.reload], { clickPattern : [patterns.battle.done, patterns.prompt.ok], callback : Func("RaidClickCallback"), pollInterval : 250 })
             }
         }
 
