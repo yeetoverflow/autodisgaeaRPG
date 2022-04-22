@@ -270,7 +270,7 @@ DoItemDrop(lootTarget) {
         Loop {
             FindPattern(patterns.battle.auto.enabled, { doClick : true })
 
-            result := FindPattern([patterns.battle.wave.1over3, patterns.battle.wave.2over3, patterns.battle.wave.3over3])
+            result := FindPattern([patterns.battle.wave.1over3, patterns.battle.wave.2over3, patterns.battle.wave.3over3], { bounds : { x1 : 237, y1 : 73, x2 : 417, y2 : 150 }})
             if (result.IsSuccess) {
                 RegExMatch(result.comment, "(?P<wave>\d)over(?P<numWaves>\d)", matches)
                 SetStatus(A_ThisFunc . ": " . matchesWave . "/" .  matchesNumWaves . "(" . count . ")", 2)
