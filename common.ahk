@@ -292,7 +292,7 @@ UseSkipTickets() {
     sleep 500
 
     if (useGateKeysOnFirstSkip) {
-        Loop 7 {
+        Loop 10 {
             FindPattern(patterns.darkGates.skip.add, { doClick : true })
             sleep 750
         }
