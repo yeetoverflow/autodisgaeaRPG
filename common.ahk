@@ -309,7 +309,7 @@ UseSkipTickets() {
             }
             PollPattern(patterns.darkGates.skip.ticket, { doClick : true, predicatePattern : patterns.darkGates.skip.add })
             sleep 500
-            Loop 7 {
+            Loop 10 {
                 FindPattern(patterns.darkGates.skip.add, { doClick : true })
                 sleep 750
             }
