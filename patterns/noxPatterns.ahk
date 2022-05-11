@@ -314,7 +314,7 @@ GenerateNoxPatterns() {
     patterns.itemWorld.level.80 := "|<>0x000000@1.00$79.zzzzzzzVzzzzzVzzzzzzkzw3y3kzzzzzzsTs0w0sTzzzzzwDsQCCADzzzzzy7wC6727zlswyD3y333V3zU8SQ1VzU33kVzk6CC0kzs3Vs0zlV34AMTw0kw0Tskla64DsE8S0Dw0M3027wC4D27y0S3U33yDX3V3z7j1kxVz3lVkU0VblwAkzUkskk0M3sz0MTs0w0s0C3yzkQTz0zUy"
     patterns.itemWorld.level.90 := "|<>0x000000@1.00$79.zzzzzzzVzzzzzVzzzzzzkzs7y3kzzzzzzsTs0w0sTzzzzzwDsQSCADzzzzzy7wC6727zlswyD3y733V3zU8SQ1Vz3V3kVzk6CC0kzVkVs0zlV34AMTkEEw0Tskla64Dw08S0Dw0M3027z04D27y0S3U33zz73V3z7j1kxVzz3VkU0VblwAkzn3skk0M3sz0MTs3w0s0C3yzkQTw7zUy"
     patterns.itemWorld.level.100 := "|<>0x000000@1.00$91.zzzzzzzXzzzzzzzXzzzzzzlzz7w3w1lzzzzzzszy3w0Q0MzzzzzzwTw1wCCC4TzzzzzyDy0yD272DzVlwwD7z8T7V3l7zU8SA1XzwD3kXsXzU4CA0lzy7VsFwFzlV76A8zz3kw8y0zksV6C4TzVsS4T0Ts0MX02DzkwD2DWDw0Q3U37zsT7V3l7y7j1kxXzwDXkVkU0XXUwQFzy7kkssE0E3sy0Mzz3w0Q0M0S3yzkQTzXz0zUy"
-    patterns.itemWorld.drop := ["|<>0xFFFFFF@0.94$15.z1yQ7nUSQ3nUSQ3nUSQ3nUTs3z0Q", "|<>0xFFFFFF@0.90$19.TsDjw7rC0zb0TnUDts7ww3yS1zD0zb0RnUCtk7Ts3jw1s"]
+    patterns.itemWorld.drop := ["|<>0xFFFFFF@0.94$15.z1yQ7nUSQ3nUSQ3nUSQ3nUTs3z0Q", "|<>0xFFFFFF@0.90$19.TsDjw7rC0zb0TnUDts7ww3yS1zD0zb0RnUCtk7Ts3jw1s", "|<>0xFFFFFF@0.90$17.TVxn0Db0zC1yQ7QsStktnXXaC3wTs"]
                             ;, "|<>0xFFFFFF@0.94$15.zVyA3lUSA3lkSC3lkSA3lUTw3TUQ"
                             ;, "|<>0xFFFFFF@0.87$15.T1zwDnUSQ3nUSQ3nUSQ3nUSQ3zUTw3U"
                             ;, "|<>0xFFFFFF@1.00$15.TVyA3lUSA3lkSC3lUSA3lUTw3TUQ"
