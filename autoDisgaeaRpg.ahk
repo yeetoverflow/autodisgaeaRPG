@@ -140,39 +140,39 @@ ScreenCap() {
     sleep 500
 
     ; FindText().ScreenShot()
-    ; FindText().SavePic("cap_" . A_Now . ".png")
+    ; FindText().SavePic("cap_" . A_Now . ".bmp")
 
     FindText().BindWindow(hwnd)>
     FindText().ScreenShot()
-    FindText().SavePic("cap_mode_0.png")
+    FindText().SavePic("cap_mode_0.bmp")
 
     sleep 250
 
     FindText().BindWindow(hwnd,1)>
     FindText().ScreenShot()
-    FindText().SavePic("cap_mode_1.png")
+    FindText().SavePic("cap_mode_1.bmp")
 
     sleep 250
 
     FindText().BindWindow(hwnd,2)>
     FindText().ScreenShot()
-    FindText().SavePic("cap_mode_2.png")
+    FindText().SavePic("cap_mode_2.bmp")
 
     sleep 250
 
     FindText().BindWindow(hwnd,3)>
     FindText().ScreenShot()
-    FindText().SavePic("cap_mode_3.png")
+    FindText().SavePic("cap_mode_3.bmp")
 
     sleep 250
 
     FindText().BindWindow(hwnd,4)>
     FindText().ScreenShot()
-    FindText().SavePic("cap_mode_4.png")
+    FindText().SavePic("cap_mode_4.bmp")
 
     ; FindText().BindWindow(0)>
     ; FindText().ScreenShot()
-    ; FindText().SavePic("cap_mode_none.png")
+    ; FindText().SavePic("cap_mode_none.bmp")
 
     ; sleep 250
 }
@@ -921,24 +921,24 @@ Test() {
     ;     FileCreateDir, screenCaps
     ; }
 
-    ;FindText().SavePic("screenCaps/current.png")
-    ;FindText().SavePic("screenCaps/lastMinute.png")
+    ;FindText().SavePic("screenCaps/current.bmp")
+    ;FindText().SavePic("screenCaps/lastMinute.bmp")
     
-    ;lastMinute := LoadPicture("screenCaps/lastMinute.png")
+    ;lastMinute := LoadPicture("screenCaps/lastMinute.bmp")
     ; VarSetCapacity(bm, size:=(A_PtrSize=8 ? 32:24), 0)
     ; r:=DllCall("GetObject", "Ptr",lastMinute, "int",size, "Ptr",&bm)
     ; w:=NumGet(bm,4,"int"), h:=Abs(NumGet(bm,8,"int"))
 
     ; x := 5
 
-    ;FileRead, lastMinute, screenCaps/lastMinute.png
-    ;FileRead, current, screenCaps/current.png
+    ;FileRead, lastMinute, screenCaps/lastMinute.bmp
+    ;FileRead, current, screenCaps/current.bmp
     ;MsgBox % Memory_Compare(lastMinute,current)
 
 
     ;x := pBitmap
 
-    ;MsgBox, % JEE_FilesMatchContents("screenCaps/lastMinute.png", "screenCaps/current.png")
+    ;MsgBox, % JEE_FilesMatchContents("screenCaps/lastMinute.bmp", "screenCaps/current.bmp")
     ; Recover("ItemWorldGrind1")
 }
 
@@ -956,15 +956,15 @@ Recover(mode) {
         }
 
         FindText().ScreenShot()
-        FindText().SavePic("screenCaps/current.png")
+        FindText().SavePic("screenCaps/current.bmp")
 
-        frozenScreen := JEE_FilesMatchContents("screenCaps/lastMinute.png", "screenCaps/current.png")
+        frozenScreen := JEE_FilesMatchContents("screenCaps/lastMinute.bmp", "screenCaps/current.bmp")
         if (frozenScreen) {
             Loop 5 {
                 sleep 1000
                 FindText().ScreenShot()
-                FindText().SavePic("screenCaps/current.png")
-                frozenScreen := JEE_FilesMatchContents("screenCaps/lastMinute.png", "screenCaps/current.png")
+                FindText().SavePic("screenCaps/current.bmp")
+                frozenScreen := JEE_FilesMatchContents("screenCaps/lastMinute.bmp", "screenCaps/current.bmp")
             } until (!frozenScreen)
         }
 
@@ -1021,7 +1021,7 @@ Recover(mode) {
 
     if (settings.window.recover.freeze) {
         FindText().ScreenShot()
-        FindText().SavePic("screenCaps/lastMinute.png")
+        FindText().SavePic("screenCaps/lastMinute.bmp")
     }
 }
 

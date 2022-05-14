@@ -425,7 +425,7 @@ FindDrop(lootTarget := "") {
             FileCreateDir, screenCaps
         }
 
-        FindText().SavePic("screenCaps/" . A_Now . "_" . (result.type ? result.type : "none") . ".png")
+        FindText().SavePic("screenCaps/" . A_Now . "_" . (result.type ? result.type : "none") . ".bmp")
     }
 
     Return result
