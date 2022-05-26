@@ -651,7 +651,7 @@ PollPattern(pattern, opts := "") {
 }
 
 FindPattern(pattern, opts := "") {
-	global hwnd
+	global hwnd, settings
 
 	opts := InitOps(opts, { multi : false, variancePct : 15, fgVariancePct : 0, bgVariancePct : 0, bounds : "", doClick : false, clickDelay : 0, offsetX : 0, offsetY : 0, doubleCheck: false, doubleCheckDelay: 500})
     arrPattern := ToFlatArray(pattern)
@@ -659,6 +659,10 @@ FindPattern(pattern, opts := "") {
 
     fgVariancePct := (opts.fgVariancePct ? opts.fgVariancePct : opts.variancePct) / 100
     bgVariancePct := (opts.bgVariancePct ? opts.bgVariancePct : opts.variancePct) / 100
+    if (settings.window.extraVariance) {
+        fgVariancePct += settings.window.extraVariance / 100
+        bgVariancePct += settings.window.extraVariance / 100
+    }
 
     result := FindPatternLoop(arrPattern, { multi: opts.multi, err1 : fgVariancePct, err0 : bgVariancePct, bounds : opts.bounds })
 

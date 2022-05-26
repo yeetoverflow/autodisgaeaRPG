@@ -65,6 +65,8 @@ GenerateSettingMetadata() {
     metadata.window.recover.freeze := {}
     metadata.window.recover.freeze.newLine := true
     metadata.window.recover.freeze.type := "Checkbox"
+    metadata.window.extraVariance := {}
+    metadata.window.extraVariance.type := "Number"
 
     metadata.window.name := {}
     metadata.window.name.type := "Text"

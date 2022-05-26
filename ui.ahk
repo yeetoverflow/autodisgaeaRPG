@@ -199,6 +199,7 @@ ResetUI() {
     AddSetting("settings_window_emulator", "1")
     AddSetting("settings_window_name", "1")
     AddSetting("settings_window_scanMode", "1")
+    AddSetting("settings_window_extraVariance", "1")
     
     Gui, Font, Bold
     Gui Add, Text, cWhite xs+10 y+20, Recover 
