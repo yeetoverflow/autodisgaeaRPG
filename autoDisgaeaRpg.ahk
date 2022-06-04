@@ -1035,6 +1035,7 @@ RecoverCallback() {
     }
 
     FindPattern(patterns.exit, { doClick : true })
+    FindPattern(patterns.bingo.start, { doClick : true })
     FindPattern(patterns.prompt.close, { doClick : true })
 
     Click("x500 y300")
