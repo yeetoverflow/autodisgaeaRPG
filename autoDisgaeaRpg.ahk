@@ -988,10 +988,12 @@ Recover(mode) {
         if(FindPattern([patterns.homeScreen.disgaea]).IsSuccess)
         {
             doRecover := true
+            AddLog("Found pattern " . result.comment)
             PollPattern([patterns.homeScreen.disgaea], { doClick : true, predicatePattern : patterns.criware, pollInterval : 1000 })
         }
     } else if InStr(result.comment, "homeScreen.openAppAgain") {
         doRecover := true
+        AddLog("Found pattern " . result.comment)
         PollPattern([patterns.homeScreen.openAppAgain], { doClick : true, predicatePattern : patterns.criware, pollInterval : 1000 })
     }
 
@@ -1003,15 +1005,19 @@ Recover(mode) {
         if (result.IsSuccess) {
             FindPattern(patterns.prompt.ok, { doClick : true, predicatePattern : patterns.criware, clickPattern : patterns.homeScreen.disgaea })
             doRecover := true
+            AddLog("Found pattern " . result.comment)
         }
 
         result := FindPattern(patterns.prompt.communicationError)
         if (result.IsSuccess) {
+            AddLog("Found pattern " . result.comment)
             FindPattern(patterns.prompt.ok, { doClick : true})
         }
     }
 
     if (doRecover) {
+        FindText().ScreenShot()
+        FindText().SavePic("screenCaps/recover.bmp")
         AddLog("Recover " . mode)
         HandleAction("Stop", mode)
         PollPattern([patterns.criware], { doClick : true, predicatePattern : patterns.stronghold.gemsIcon, clickPattern : patterns.homeScreen.disgaea, pollInterval : 1000, callback : Func("RecoverCallback") })
