@@ -48,7 +48,7 @@ AutoDailyEventReview1() {
             DoBattle(battleOptions)
             PollPattern(loopTargets, { clickPattern : patterns.battle.done, pollInterval : 250 })
             battleCount++
-            if (battleCount > 6) {
+            if (battleCount > 8) {
                 Break
             }
         }
